@@ -9,8 +9,9 @@ using WebSocketSharp;
 public class JsonDataFormat
 {
     public float torque;
+    public float speed;
     public float position;
-    public float count;
+    public float rotationAngleFromInitialPosition;
 }
 
 public class webSocketClient : MonoBehaviour
@@ -20,12 +21,15 @@ public class webSocketClient : MonoBehaviour
     private Queue<string> _messageQueue;
     private JsonDataFormat receivedData;
     private string text = "hello";
+    private bool changed = false;
     public bool connected = false;
 
     [SerializeField]
-    private string ESP32PrivateIP = "192.168.1.1";
+    private string ESP32PrivateIP = "192.168.128.17";
     [SerializeField]
     private Text viwer;
+    [SerializeField]
+    private GameObject weight;
     
 
     void Awake()
@@ -45,15 +49,21 @@ public class webSocketClient : MonoBehaviour
     void Update()
     {
         viwer.text = text;
+        if(changed)
+        {
+            changed = false;
+            Debug.Log(this.weight);
+            this.weight.GetComponent<shortTrainingBar>().changeBarStatusFlag(receivedData);
+        }
         
         
     }
 
     private void changeText(string txt)
     {
-        Debug.Log("change start");
+        //Debug.Log("change start");
         text = txt;
-        Debug.Log("change end");
+        //Debug.Log("change end");
 
     }
 
@@ -62,14 +72,16 @@ public class webSocketClient : MonoBehaviour
         _socket.OnOpen += (sender,e) => 
         {
             Debug.Log("WebSocket Open");
+            this.changeText("WebSocket Open");
             connected = true;
         };
 
         _socket.OnMessage += (s,e) => 
         {
-            Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            //Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             receivedData = JsonUtility.FromJson<JsonDataFormat>(e.Data);
-            this.changeText($"torque: {receivedData.torque}\nposition: {receivedData.position}\ncount: {receivedData.count}");
+            this.changeText($"torque: {receivedData.torque}\nspeed: {receivedData.speed}\nposition: {receivedData.position}\nangle: {receivedData.rotationAngleFromInitialPosition}");
+            changed = true;
         };
         
         _socket.OnClose += (sender, e) =>

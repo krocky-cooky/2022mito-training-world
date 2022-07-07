@@ -124,7 +124,6 @@ public class OVRMeshRenderer : MonoBehaviour
 		if ((_ovrSkeleton != null))
 		{
 			int numSkinnableBones = _ovrSkeleton.GetCurrentNumSkinnableBones();
-			//Debug.Log(numSkinnableBones);
 			var bindPoses = new Matrix4x4[numSkinnableBones];
 			var bones = new Transform[numSkinnableBones];
 			var localToWorldMatrix = transform.localToWorldMatrix;
