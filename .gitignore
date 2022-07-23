@@ -50,3 +50,8 @@ XR_MecanimlKPlus/
 XR_MecanimIKPlus/
 Yughues Free PBR Metal Plates/
 NatureManufacture Assets/
+
+# Large DLLs
+
+*.dll 
+*.onnx
