@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using webSocket.client;
 
 public class shortTrainingBar : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class shortTrainingBar : MonoBehaviour
             ref yVelocity,
             smoothTime
         );
-        Vector3 nextScaleVector = new Vector3(nextScale,0.1f,nextScale);
+        Vector3 nextScaleVector = new Vector3(targetScale,0.1f,targetScale);
         foreach(GameObject weight in weights)
         {
             weight.transform.localScale = nextScaleVector;

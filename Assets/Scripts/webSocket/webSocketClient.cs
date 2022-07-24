@@ -6,102 +6,104 @@ using UnityEngine.UI;
 
 using WebSocketSharp;
 
-public class JsonDataFormat
-{
-    public float torque;
-    public float speed;
-    public float position;
-    public float rotationAngleFromInitialPosition;
-}
+namespace webSocket.client{
 
-public class webSocketClient : MonoBehaviour
-{
-    // Start is called before the first frame update
-    private WebSocket _socket;
-    private Queue<string> _messageQueue;
-    private JsonDataFormat receivedData;
-    private string text = "hello";
-    private bool changed = false;
-    public bool connected = false;
-
-    [SerializeField]
-    private string ESP32PrivateIP = "192.168.128.17";
-    [SerializeField]
-    private Text viwer;
-    [SerializeField]
-    private GameObject weight;
-    
-
-    void Awake()
+    public class JsonDataFormat
     {
-        _socket = new WebSocket($"ws://{ESP32PrivateIP}/");
-    }
-    
-    void Start()
-    {
-        Connect();
-        viwer.text = text;
-        
-        
+        public float torque;
+        public float speed;
+        public float position;
+        public float rotationAngleFromInitialPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    public class webSocketClient : MonoBehaviour
     {
-        viwer.text = text;
-        if(changed)
+        // Start is called before the first frame update
+        private WebSocket _socket;
+        private Queue<string> _messageQueue;
+        private JsonDataFormat receivedData;
+        private string text = "hello";
+        private bool changed = false;
+        public bool connected = false;
+
+        [SerializeField]
+        private string ESP32PrivateIP = "192.168.128.17";
+        [SerializeField]
+        private Text viwer;
+        [SerializeField]
+        private GameObject weight;
+        
+
+        void Awake()
         {
-            changed = false;
-            Debug.Log(this.weight);
-            this.weight.GetComponent<shortTrainingBar>().changeBarStatusFlag(receivedData);
+            _socket = new WebSocket($"ws://{ESP32PrivateIP}/");
         }
         
-        
-    }
-
-    private void changeText(string txt)
-    {
-        //Debug.Log("change start");
-        text = txt;
-        //Debug.Log("change end");
-
-    }
-
-    private void Connect()
-    {
-        _socket.OnOpen += (sender,e) => 
+        void Start()
         {
-            Debug.Log("WebSocket Open");
-            this.changeText("WebSocket Open");
-            connected = true;
-        };
+            Connect();
+            viwer.text = text;
+            
+            
+        }
 
-        _socket.OnMessage += (s,e) => 
+        // Update is called once per frame
+        void Update()
         {
-            //Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            receivedData = JsonUtility.FromJson<JsonDataFormat>(e.Data);
-            this.changeText($"torque: {receivedData.torque}\nspeed: {receivedData.speed}\nposition: {receivedData.position}\nangle: {receivedData.rotationAngleFromInitialPosition}");
-            changed = true;
-        };
-        
-        _socket.OnClose += (sender, e) =>
+            viwer.text = text;
+            if(changed)
+            {
+                changed = false;
+                Debug.Log(this.weight);
+                this.weight.GetComponent<shortTrainingBar>().changeBarStatusFlag(receivedData);
+            }
+            
+            
+        }
+
+        private void changeText(string txt)
         {
-            Debug.Log("WebSocket Close");
-            connected = false;
-        };
+            //Debug.Log("change start");
+            text = txt;
+            //Debug.Log("change end");
 
-        _socket.Connect();
-    }
+        }
 
-    private void OnDestroy()
-    {
-        _socket.Close();
-        _socket = null;
-    }
+        private void Connect()
+        {
+            _socket.OnOpen += (sender,e) => 
+            {
+                Debug.Log("WebSocket Open");
+                this.changeText("WebSocket Open");
+                connected = true;
+            };
 
-    public JsonDataFormat getReceivedData()
-    {
-        if(receivedData == null)return null;
-        else return receivedData;
+            _socket.OnMessage += (s,e) => 
+            {
+                receivedData = JsonUtility.FromJson<JsonDataFormat>(e.Data);
+                this.changeText($"torque: {receivedData.torque}\nspeed: {receivedData.speed}\nposition: {receivedData.position}\nangle: {receivedData.rotationAngleFromInitialPosition}");
+                changed = true;
+            };
+            
+            _socket.OnClose += (sender, e) =>
+            {
+                Debug.Log("WebSocket Close");
+                connected = false;
+            };
+
+            _socket.Connect();
+        }
+
+        private void OnDestroy()
+        {
+            _socket.Close();
+            _socket = null;
+        }
+
+        public JsonDataFormat getReceivedData()
+        {
+            if(receivedData == null)return null;
+            else return receivedData;
+        }
     }
 }
