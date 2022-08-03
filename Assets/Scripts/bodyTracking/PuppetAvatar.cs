@@ -10,7 +10,10 @@ public class PuppetAvatar : MonoBehaviour
     Dictionary<JointId, Quaternion> absoluteOffsetMap;
     Animator PuppetAnimator;
     public GameObject RootPosition;
+    public GameObject HeadPosition;
     public Transform CharacterRootTransform;
+    public Transform CharacterHeadTransform;
+    public bool moveToBodyPosition;
     public float OffsetY;
     public float OffsetZ;
     private static HumanBodyBones MapKinectJoint(JointId joint)
@@ -45,6 +48,7 @@ public class PuppetAvatar : MonoBehaviour
     private void Start()
     {
         PuppetAnimator = GetComponent<Animator>();
+        Debug.Log((int)JointId.Head);
         Transform _rootJointTransform = CharacterRootTransform;
 
         absoluteOffsetMap = new Dictionary<JointId, Quaternion>();
@@ -90,6 +94,7 @@ public class PuppetAvatar : MonoBehaviour
             if (MapKinectJoint((JointId)j) != HumanBodyBones.LastBone && absoluteOffsetMap.ContainsKey((JointId)j))
             {
                 // get the absolute offset
+                //if(j == (int)JointId.WristRight || j == (int)JointId.WristLeft)continue;
                 Quaternion absOffset = absoluteOffsetMap[(JointId)j];
                 Transform finalJoint = PuppetAnimator.GetBoneTransform(MapKinectJoint((JointId)j));
                 finalJoint.rotation = absOffset * Quaternion.Inverse(absOffset) * KinectDevice.absoluteJointRotations[j] * absOffset;
@@ -99,6 +104,12 @@ public class PuppetAvatar : MonoBehaviour
                     finalJoint.position = CharacterRootTransform.position + new Vector3(RootPosition.transform.localPosition.x, RootPosition.transform.localPosition.y + OffsetY, RootPosition.transform.localPosition.z - OffsetZ);
                 }
             }
+        }
+        if(moveToBodyPosition)
+        {
+            Vector3 toHeadVector = CharacterHeadTransform.position - PuppetAnimator.GetBoneTransform(MapKinectJoint((JointId)26)).position;
+            Transform pelvisJoint = PuppetAnimator.GetBoneTransform(MapKinectJoint((JointId)0));
+            pelvisJoint.position += toHeadVector;
         }
     }
 
