@@ -21,6 +21,7 @@ public class enableTracking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         Debug.Log(OVRPlugin.GetHandTrackingEnabled());
         if(Input.GetKeyDown(KeyCode.R))
         {
@@ -31,5 +32,6 @@ public class enableTracking : MonoBehaviour
             handTrackingRight.SetActive(true);
             handTrackingLeft.SetActive(true);
         }
+        */
     }
 }

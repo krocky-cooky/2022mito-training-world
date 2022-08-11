@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using webSocket.client;
+using game;
 
 public class shortTrainingBar : MonoBehaviour
 {
     private GameObject _webSocketClient;
-    private JsonDataFormat _jsonData;
+    private ReceivingDataFormat _jsonData;
     private bool _changeBarSizeFlag = false;
     private Gradient _gradient = default;
     private float currentScale = 5.0f;
@@ -30,7 +30,7 @@ public class shortTrainingBar : MonoBehaviour
         }
     }
 
-    public void changeBarStatusFlag(JsonDataFormat data)
+    public void changeBarStatusFlag(ReceivingDataFormat data)
     {
         _jsonData = data ;
         _changeBarSizeFlag = true;
@@ -39,14 +39,14 @@ public class shortTrainingBar : MonoBehaviour
     private void changeBarStatus()
     {
         //color
-        float colorFrac = _jsonData.torque / 2.0f;
+        float colorFrac = _jsonData.trq / 2.0f;
         GameObject child = transform.GetChild(0).gameObject;
 
         //child.GetComponent<Renderer>().material.color = _gradient.Evaluate(colorFrac);
 
         //size
         GameObject[] weights = GameObject.FindGameObjectsWithTag("Weight");
-        float targetScale = _jsonData.torque*10 + 5.0f;
+        float targetScale = _jsonData.trq*10 + 5.0f;
         float nextScale = Mathf.SmoothDamp(
             currentScale,
             targetScale,
