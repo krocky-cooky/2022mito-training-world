@@ -27,7 +27,7 @@ namespace game
             target = "trq";
             trq = -0.1f;
             spd = -0.1f;
-            spdLimit = -0.1f;
+            spdLimit = 2.0f;
         }
 
         public string target;
@@ -61,6 +61,7 @@ namespace game
         private List<int> timestampList = new List<int>();
 
         public bool connected = false;
+        public string message = "neutral";
 
         [SerializeField]
         private string ESP32PrivateIP = "192.168.128.192";
@@ -83,6 +84,7 @@ namespace game
         {
             Connect();
             viwer.text = text;
+            message = "neutral";
 
             
             
@@ -123,7 +125,7 @@ namespace game
             {
                 receivedData = JsonUtility.FromJson<ReceivingDataFormat>(e.Data);
                 checkData(receivedData);
-                changeText($"target: {receivedData.target}\ntorque: {receivedData.spd}\nposition: {receivedData.trq}\nspeed: {receivedData.spd}");
+                changeText($"target: {receivedData.target}\ntorque: {receivedData.trq}\nspeed: {receivedData.spd}\ntimestamp: {receivedData.timestamp}\nmessage: {message}");
                 changed = true;
 
 
