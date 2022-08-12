@@ -8,6 +8,7 @@ TagManager:
   - Weight
   - ReflectionCamera
   - RoomLight
+  - controller
   layers:
   - Default
   - TransparentFX

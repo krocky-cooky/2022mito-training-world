@@ -2,47 +2,88 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using util;
 
 
 using WebSocketSharp;
 
-namespace webSocket.client{
+namespace game
+{
 
-    public class JsonDataFormat
+    public class ReceivingDataFormat
     {
-        public float torque;
-        public float speed;
-        public float position;
-        public float rotationAngleFromInitialPosition;
+        public string target;
+        public float trq;
+        public float spd;
+        public float pos;
+        public float integrationAngle;
+        public int timestamp;
+    }
+
+    public class SendingDataFormat
+    {
+        public SendingDataFormat()
+        {
+            target = "trq";
+            trq = -0.1f;
+            spd = -0.1f;
+            spdLimit = -0.1f;
+        }
+
+        public string target;
+        public float trq;
+        public float spd;
+        public float spdLimit;
+
+        public void setTorque(float torque)
+        {
+            target = "trq";
+            trq = torque;
+        }
+
+        public void setSpeed(float speed)
+        {
+            target = "spd";
+            spd = speed;
+        }
     }
 
     public class webSocketClient : MonoBehaviour
     {
         // Start is called before the first frame update
-        private WebSocket _socket;
-        private Queue<string> _messageQueue;
-        private JsonDataFormat receivedData;
+        private WebSocket _socket; //websocketオブジェクト
+        private ReceivingDataFormat receivedData; //websocketで受信したデータを格納
+        private Master gameMaster; //ゲームマスターオブジェクト
+        private string previousState = "neutral"; //直前のESP32の状態
         private string text = "hello";
-        private bool changed = false;
+        private bool changed = false; 
+        private List<float> torqueList = new List<float>();
+        private List<int> timestampList = new List<int>();
+
         public bool connected = false;
 
         [SerializeField]
-        private string ESP32PrivateIP = "192.168.128.17";
+        private string ESP32PrivateIP = "192.168.128.192";
         [SerializeField]
         private Text viwer;
         [SerializeField]
         private GameObject weight;
+
+        public bool registerTorqueMode = false; //トルク記録モードかどうか
+
         
 
         void Awake()
         {
-            _socket = new WebSocket($"ws://{ESP32PrivateIP}/");
+            _socket = new WebSocket($"ws://{ESP32PrivateIP}/ws");
+            gameMaster = transform.parent.gameObject.GetComponent<Master>();
         }
         
         void Start()
         {
             Connect();
             viwer.text = text;
+
             
             
         }
@@ -80,9 +121,20 @@ namespace webSocket.client{
 
             _socket.OnMessage += (s,e) => 
             {
-                receivedData = JsonUtility.FromJson<JsonDataFormat>(e.Data);
-                this.changeText($"torque: {receivedData.torque}\nspeed: {receivedData.speed}\nposition: {receivedData.position}\nangle: {receivedData.rotationAngleFromInitialPosition}");
+                receivedData = JsonUtility.FromJson<ReceivingDataFormat>(e.Data);
+                checkData(receivedData);
+                changeText($"target: {receivedData.target}\ntorque: {receivedData.spd}\nposition: {receivedData.trq}\nspeed: {receivedData.spd}");
                 changed = true;
+
+
+                //トルク記録モードの場合トルクを保存していく
+                if(registerTorqueMode)
+                {
+                    float torque = receivedData.trq;
+                    int timestamp = receivedData.timestamp;
+                    torqueList.Add(torque);
+                    timestampList.Add(timestamp);
+                }
             };
             
             _socket.OnClose += (sender, e) =>
@@ -100,10 +152,35 @@ namespace webSocket.client{
             _socket = null;
         }
 
-        public JsonDataFormat getReceivedData()
+        public ReceivingDataFormat getReceivedData()
         {
             if(receivedData == null)return null;
             else return receivedData;
         }
+
+        //データの送信
+        public void sendData(SendingDataFormat data) 
+        {
+            string datajson = JsonUtility.ToJson(data);
+            _socket.Send(datajson);
+        }
+
+        private void checkData(ReceivingDataFormat data) 
+        {
+            return;
+        }
+        
+        
+
+        
+
+        public void saveRegisteredTorque()
+        {
+            SaveManager.saveTorque(torqueList,timestampList);
+            torqueList = new List<float>();
+            timestampList = new List<int>();
+        }
+
+        
     }
 }
