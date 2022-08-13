@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using util;
 
 
@@ -83,7 +84,6 @@ namespace game
         void Start()
         {
             Connect();
-            viwer.text = text;
             message = "neutral";
 
             
@@ -93,7 +93,7 @@ namespace game
         // Update is called once per frame
         void Update()
         {
-            viwer.text = text;
+            //viwer.text = text;
             if(changed)
             {
                 changed = false;
@@ -112,12 +112,19 @@ namespace game
 
         }
 
-        private void Connect()
+        public void Connect()
         {
+            if(connected)
+            {
+                gameMaster.addLog("already connected");
+                Debug.Log("already connected");
+                return;
+            }
             _socket.OnOpen += (sender,e) => 
             {
                 Debug.Log("WebSocket Open");
-                this.changeText("WebSocket Open");
+                gameMaster.addLog("web socket opened");
+
                 connected = true;
             };
 
@@ -125,7 +132,7 @@ namespace game
             {
                 receivedData = JsonUtility.FromJson<ReceivingDataFormat>(e.Data);
                 checkData(receivedData);
-                changeText($"target: {receivedData.target}\ntorque: {receivedData.trq}\nspeed: {receivedData.spd}\ntimestamp: {receivedData.timestamp}\nmessage: {message}");
+                //changeText($"target: {receivedData.target}\ntorque: {receivedData.trq}\nspeed: {receivedData.spd}\ntimestamp: {receivedData.timestamp}\nmessage: {message}");
                 changed = true;
 
 
@@ -142,6 +149,7 @@ namespace game
             _socket.OnClose += (sender, e) =>
             {
                 Debug.Log("WebSocket Close");
+                gameMaster.addLog("web socket closed");
                 connected = false;
             };
 
@@ -164,7 +172,21 @@ namespace game
         public void sendData(SendingDataFormat data) 
         {
             string datajson = JsonUtility.ToJson(data);
-            _socket.Send(datajson);
+            if(connected)
+            {
+                try
+                {
+                    _socket.Send(datajson);
+                }
+                catch (Exception e)
+                {
+                    gameMaster.addLog("web socket not opened");
+                }
+            }
+            else
+            {
+                gameMaster.addLog("web socket not opened");
+            }
         }
 
         private void checkData(ReceivingDataFormat data) 
