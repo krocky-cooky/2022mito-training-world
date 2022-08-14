@@ -16,8 +16,8 @@ namespace util
         private float deviceHorizontalDistance = 0.2f;
         [SerializeField]
         private float deviceDownDistance = 0.08f;
-        [SerializeField]
-        private Quaternion additionalRotation = Quaternion.Euler(0.0f,0.0f,0.0f);
+        //[SerializeField]
+        private Quaternion initialRotation = Quaternion.Euler(-90.0f,0.0f,180.0f);
 
         [SerializeField]
         float forwardWaight = 0.527f;
@@ -44,7 +44,7 @@ namespace util
         {
             horizontal = - (forwardWaight*rightControllerTransform.forward + (1-forwardWaight)*rightControllerTransform.up);
 
-            if(OVRInput.GetDown(OVRInput.RawButton.A))
+            if(OVRInput.GetDown(OVRInput.RawButton.A) || (OVRInput.GetDown(OVRInput.RawButton.LHandTrigger)))
             {
                 down = new Vector3(0,-1,0);
                 float horizontalDotDown = Vector3.Dot(horizontal,down);
@@ -52,12 +52,15 @@ namespace util
                 projectionToXZ = (horizontal - projectionToUp).normalized;
                 toDevice = Vector3.Scale(Vector3.Cross(down, projectionToXZ).normalized,new Vector3(deviceVerticalDistance,deviceVerticalDistance,deviceVerticalDistance));
                 trainingDevice.transform.position = rightControllerTransform.position + toDevice;
-                Quaternion rot = Quaternion.FromToRotation(trainingDevice.transform.right,-projectionToXZ);
-                trainingDevice.transform.rotation *= rot;
+                Quaternion rotX = Quaternion.FromToRotation(trainingDevice.transform.right,-projectionToXZ);
+                Quaternion rotY = Quaternion.FromToRotation(trainingDevice.transform.forward, new Vector3(0,0,1));
+                
+                trainingDevice.transform.rotation *= rotX;
+                //trainingDevice.transform.rotation *= rotY;
 
                 trainingDevice.transform.position += Vector3.Scale(projectionToXZ,new Vector3(deviceHorizontalDistance,deviceHorizontalDistance,deviceHorizontalDistance));
                 trainingDevice.transform.position += Vector3.Scale(down,new Vector3(deviceDownDistance,deviceDownDistance,deviceDownDistance));
-                trainingDevice.transform.rotation *= additionalRotation;
+                //trainingDevice.transform.rotation *= additionalRotation;
                 
 
 
