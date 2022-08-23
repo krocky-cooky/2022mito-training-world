@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+
+using trainingObjects;
 using util;
 
 
 using WebSocketSharp;
+
 
 namespace game
 {
@@ -28,21 +31,24 @@ namespace game
             target = "trq";
             trq = -0.1f;
             spd = -0.1f;
+            trqLimit = 6.0f;
             spdLimit = 2.0f;
         }
 
+        private string DEFAULT_TARGET = "trq";
         public string target;
         public float trq;
         public float spd;
         public float spdLimit;
+        public float trqLimit;
 
-        public void setTorque(float torque)
+        public void setTorque(float torque, float spdLimit = 6.0f)
         {
             target = "trq";
             trq = torque;
         }
 
-        public void setSpeed(float speed)
+        public void setSpeed(float speed, float trqLimit = 2.0f)
         {
             target = "spd";
             spd = speed;
@@ -55,14 +61,12 @@ namespace game
         private WebSocket _socket; //websocketオブジェクト
         private ReceivingDataFormat receivedData; //websocketで受信したデータを格納
         private Master gameMaster; //ゲームマスターオブジェクト
-        private string previousState = "neutral"; //直前のESP32の状態
-        private string text = "hello";
-        private bool changed = false; 
+        private bool isChanged = false; 
         private List<float> torqueList = new List<float>();
         private List<int> timestampList = new List<int>();
 
-        public bool connected = false;
-        public string message = "neutral";
+        public bool isConnected = false;
+
 
         [SerializeField]
         private string ESP32PrivateIP = "192.168.128.192";
@@ -84,20 +88,14 @@ namespace game
         void Start()
         {
             Connect();
-            message = "neutral";
-
-            
-            
         }
 
         // Update is called once per frame
         void Update()
         {
-            //viwer.text = text;
-            if(changed)
+            if(isChanged)
             {
-                changed = false;
-                Debug.Log(this.weight);
+                isChanged = false;
                 this.weight.GetComponent<shortTrainingBar>().changeBarStatusFlag(receivedData);
             }
             
@@ -106,34 +104,26 @@ namespace game
 
         private void changeText(string txt)
         {
-            //Debug.Log("change start");
-            text = txt;
-            //Debug.Log("change end");
-
         }
 
         public void Connect()
         {
-            if(connected)
+            if(isConnected)
             {
                 gameMaster.addLog("already connected");
-                Debug.Log("already connected");
                 return;
             }
             _socket.OnOpen += (sender,e) => 
             {
-                Debug.Log("WebSocket Open");
                 gameMaster.addLog("web socket opened");
-
-                connected = true;
+                isConnected = true;
             };
 
             _socket.OnMessage += (s,e) => 
             {
                 receivedData = JsonUtility.FromJson<ReceivingDataFormat>(e.Data);
                 checkData(receivedData);
-                //changeText($"target: {receivedData.target}\ntorque: {receivedData.trq}\nspeed: {receivedData.spd}\ntimestamp: {receivedData.timestamp}\nmessage: {message}");
-                changed = true;
+                isChanged = true;
 
 
                 //トルク記録モードの場合トルクを保存していく
@@ -148,9 +138,8 @@ namespace game
             
             _socket.OnClose += (sender, e) =>
             {
-                Debug.Log("WebSocket Close");
                 gameMaster.addLog("web socket closed");
-                connected = false;
+                isConnected = false;
             };
 
             _socket.Connect();
@@ -164,15 +153,14 @@ namespace game
 
         public ReceivingDataFormat getReceivedData()
         {
-            if(receivedData == null)return null;
-            else return receivedData;
+            return receivedData;
         }
 
         //データの送信
         public void sendData(SendingDataFormat data) 
         {
             string datajson = JsonUtility.ToJson(data);
-            if(connected)
+            if(isConnected)
             {
                 try
                 {

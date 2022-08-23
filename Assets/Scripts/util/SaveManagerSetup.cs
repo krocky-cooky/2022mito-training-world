@@ -22,7 +22,7 @@ namespace util
 
     public static class SaveManager
     {
-        const string SAVE_FILE_PATH = "save.json";
+        const string SAVE_FILE_PATH = "Assets/Scripts/save.json";
         private static SaveData sd;
 
         public static void load()

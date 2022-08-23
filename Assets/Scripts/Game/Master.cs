@@ -17,6 +17,12 @@ namespace game
 
     public class Master : MonoBehaviour
     {
+        const int MAX_REGISTER_TIME = 20;
+        const float REEL_SPEED = 3.0f;
+        const int ESP_DATA_RATE_MS = 100; 
+        const int MAX_LOG_LINES = 10;
+
+        
         public GameState state = GameState.Idle;
         public Queue<string> viewerTextQueue = new Queue<string>();
 
@@ -29,9 +35,7 @@ namespace game
 
         private webSocketClient _socketClient;
         private Battle _battle;
-        const int MAX_REGISTER_TIME = 20;
-        const int ESP_DATA_RATE_MS = 100; 
-        const int MAX_LOG_LINES = 5;
+        
 
         
 
@@ -75,7 +79,6 @@ namespace game
 
         public void startRegisterMode()
         {
-            Debug.Log("registermode start");
             state = GameState.Register;
 
             //ゲームロジックコルーチンの開始
@@ -84,7 +87,6 @@ namespace game
 
         public void startSendTorqueMode()
         {
-            Debug.Log("send torque mode start");
             state = GameState.SendTorque;
 
             //ゲームロジックコルーチンの開始
@@ -120,7 +122,7 @@ namespace game
         private void reelWire()
         {
             SendingDataFormat data = new SendingDataFormat();
-            data.setSpeed(2.0f);
+            data.setSpeed(REEL_SPEED);
             _socketClient.sendData(data);
         }
 
@@ -135,9 +137,10 @@ namespace game
 
         public IEnumerator registerModeCoroutine(int seconds)
         {
-            if(!_socketClient.connected)
+            if(!_socketClient.isConnected)
             {
                 addLog("web socket not opened");
+                state = GameState.Idle;
                 yield break;
             }
 
@@ -145,15 +148,13 @@ namespace game
             SendingDataFormat data = new SendingDataFormat();
             data.setSpeed(0.0f);
             _socketClient.sendData(data);
-            Debug.Log("coroutine start");
             addLog("register mode started");
-            _socketClient.message = "coroutine start";
 
 
             //記録開始前の3秒カウントダウン
             for(int i = 0; i < 3; ++i)
             {
-                Debug.Log(i);
+                addLog($"count down : {3-i}");
                 yield return new WaitForSeconds(1.0f);
             } 
 
@@ -161,7 +162,6 @@ namespace game
 
             for(int i = 0;i < MAX_REGISTER_TIME;i++)
             {
-                Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!");
                 ReceivingDataFormat receivedData = _socketClient.getReceivedData();
                 
                 if(receivedData != null)
@@ -170,10 +170,7 @@ namespace game
                     {
                         _socketClient.registerTorqueMode = true;
                         endTimestamp = receivedData.timestamp + 1000*seconds;
-                        Debug.Log($"data logging start!! until : {endTimestamp}");
-                        _socketClient.message = $"data logging start!! until : {endTimestamp}";
                         addLog("data logging start !!");
-
 
                     }
                 }
@@ -186,26 +183,24 @@ namespace game
             state = GameState.Idle;
 
             restore();
-            Debug.Log("coroutine end !!!");
             addLog("register mode end");
-            _socketClient.message = "coroutine end !!!";
 
         }
 
         public IEnumerator sendTorqueModeCoroutine()
         {
 
-            if(!_socketClient.connected)
+            if(!_socketClient.isConnected)
             {
                 addLog("web socket not opened");
+                state = GameState.Idle;
                 yield break;
             }
             
             SendingDataFormat data = new SendingDataFormat();
             List<float> torqueList = new List<float>();
             List<int> timestamp = new List<int>();
-            Debug.Log("Coroutine start");
-            _socketClient.message = "coroutine start !!!";
+            
             addLog("send torque mode start !!!");
 
 
@@ -218,15 +213,11 @@ namespace game
                 data.setTorque(torque);
                 _socketClient.sendData(data);
                 yield return new WaitForSeconds((float)interval/1000.0f);
-                
-
             }
             
             restore();
-            Debug.Log("send data coroutine done");
             addLog("send torque mode end !!!");
 
-            _socketClient.message = "send data coroutine done !!!";
             state = GameState.Idle;
 
 

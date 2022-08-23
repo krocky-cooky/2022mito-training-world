@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class Recenter : MonoBehaviour
+namespace util
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Recenter : MonoBehaviour
     {
-        Debug.Log("recenter script started");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (OVRInput.Get(OVRInput.RawButton.A))
+        // Start is called before the first frame update
+        void Start()
         {
-            //InputTracking.Recenter();
-            //bool done = XRInputSubsystem.TryRecenter();
-            //InputDevices.GetDeviceAtXRNode(XRNode.Head).subsystem.TryRecenter();
+            Debug.Log("recenter script started");
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (OVRInput.Get(OVRInput.RawButton.A))
+            {
+                //InputTracking.Recenter();
+                //bool done = XRInputSubsystem.TryRecenter();
+                //InputDevices.GetDeviceAtXRNode(XRNode.Head).subsystem.TryRecenter();
+            }
         }
     }
 }

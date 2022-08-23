@@ -9,6 +9,7 @@ TagManager:
   - ReflectionCamera
   - RoomLight
   - controller
+  - OpponentAvatar
   layers:
   - Default
   - TransparentFX
