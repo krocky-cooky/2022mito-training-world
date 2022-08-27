@@ -6,24 +6,33 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedScenePath-0:
-      value: 22424703114646740e1b0037036c692259241b2f222d357f0e261327f0ef3834e7f51be6e33f332f7717e1351027
-      flags: 0
-    RecentlyUsedScenePath-1:
       value: 224247031146467d181c022b04364d1529101d397d6735332827187df7ee3d2cfb
       flags: 0
-    RecentlyUsedScenePath-2:
+    RecentlyUsedScenePath-1:
       value: 224247031146466804031c2e1563781104161f2f631b2535232c0e7cc5e12639e5e276dae43f31397717e1351027
       flags: 0
-    RecentlyUsedScenePath-3:
+    RecentlyUsedScenePath-2:
       value: 22424703114646740e1b0037036c7319062401242f67153328271820adcc3d28d1fe38ead81e3a31364cfa320d2a18
       flags: 0
-    RecentlyUsedScenePath-4:
+    RecentlyUsedScenePath-3:
       value: 22424703114646680e0b0227036c6c111b07142f1f2b233e2867083debf42d
       flags: 0
+    RecentlyUsedScenePath-4:
+      value: 22424703114646780200052415314c502d35371e0815690228271936f0a00431f2e23ae0e93f7f0f2c12ff33162a4e1de703051fbb02044b233eb22a14f21f5c32ca16cc1ccd0d0f8b3a1dddd953c4eddcc2cd
+      flags: 0
     RecentlyUsedScenePath-5:
-      value: 22424703114646680e0b0227036c6f0313021c251f2b233e2867083debf42d
+      value: 22424703114646780200052415314c502d35371e0815690228271936f0a00431f2e23ae0e93f7f0f2c12ff33162a4e0ac03a462ff306054b243ccd4132f01e1a17c00ad65aeb1e0fdf5929fcfd53c4eddcc2cd
       flags: 0
     RecentlyUsedScenePath-6:
+      value: 224247031146467a1e1d093620225c1b05582823222d6616223b1820f6df1837f5d739e5fe751b39340ddc3f01300470c40f0e02e20a1e021e00cd0f12f45e061fcc0cdc
+      flags: 0
+    RecentlyUsedScenePath-7:
+      value: 224247031146467a1e1d093620225c1b05582823222d6616223b1820f6df1837f5d739e5fe751b39340ddc3f01300470c40f0e0ee20a1e021e00c22a14f21f2012c016c054dd1115df00
+      flags: 0
+    RecentlyUsedScenePath-8:
+      value: 22424703114646680e0b0227036c6f0313021c251f2b233e2867083debf42d
+      flags: 0
+    RecentlyUsedScenePath-9:
       value: 22424703114646680e0b0227036c6b02171e1623222f15332827187df7ee3d2cfb
       flags: 0
     vcSharedLogLevel:
