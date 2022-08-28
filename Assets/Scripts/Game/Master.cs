@@ -29,7 +29,7 @@ namespace game
 
 
         [SerializeField]
-        private int registerSeconds = 3;
+        private int registerSeconds = 5;
         [SerializeField]
         private GameObject viewerObject;
 
@@ -208,7 +208,7 @@ namespace game
             timestamp.Add(timestamp[timestamp.Count-1] + ESP_DATA_RATE_MS);
             for(int i = 0;i < torqueList.Count;i++)
             {
-                float torque = torqueList[i];
+                float torque = torqueList[i] * 1.2f;
                 int interval = timestamp[i+1] - timestamp[i];
                 data.setTorque(torque);
                 _socketClient.sendData(data);
