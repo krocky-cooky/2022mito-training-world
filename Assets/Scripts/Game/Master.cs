@@ -27,7 +27,6 @@ namespace game
         public Queue<string> viewerTextQueue = new Queue<string>();
 
 
-
         [SerializeField]
         private int registerSeconds = 3;
         [SerializeField]
@@ -35,16 +34,18 @@ namespace game
 
         private webSocketClient _socketClient;
         private Battle _battle;
-        
-
-        
-
+        private Text FrontViewUI;
 
         // Start is called before the first frame update
         void Start()
         {
             _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
             _battle = GameObject.FindWithTag("controller").GetComponent<Battle>();
+            FrontViewUI = GameObject.FindWithTag("FrontViewUI").GetComponent<Text>();
+
+            // 正面のUIを初期化
+            SetTextOnFrontViewUI("TRAVE");
+
             addLog("process started");
 
             
@@ -149,12 +150,14 @@ namespace game
             data.setSpeed(0.0f);
             _socketClient.sendData(data);
             addLog("register mode started");
+            SetTextOnFrontViewUI("register mode started");
 
 
             //記録開始前の3秒カウントダウン
             for(int i = 0; i < 3; ++i)
             {
                 addLog($"count down : {3-i}");
+                SetTextOnFrontViewUI($"count down : {3-i}");
                 yield return new WaitForSeconds(1.0f);
             } 
 
@@ -171,6 +174,7 @@ namespace game
                         _socketClient.registerTorqueMode = true;
                         endTimestamp = receivedData.timestamp + 1000*seconds;
                         addLog("data logging start !!");
+                        SetTextOnFrontViewUI("data logging start !!");
 
                     }
                 }
@@ -184,6 +188,7 @@ namespace game
 
             restore();
             addLog("register mode end");
+            SetTextOnFrontViewUI("register mode end");
 
         }
 
@@ -202,6 +207,7 @@ namespace game
             List<int> timestamp = new List<int>();
             
             addLog("send torque mode start !!!");
+            SetTextOnFrontViewUI("send torque mode start !!!");
 
 
             SaveManager.getRegisteredTorque(ref torqueList,ref timestamp);
@@ -217,14 +223,18 @@ namespace game
             
             restore();
             addLog("send torque mode end !!!");
+            SetTextOnFrontViewUI("send torque mode end !!!");
 
             state = GameState.Idle;
-
-
-            
             
         }
 
+        
+        // 正面のUIのテキスト表示を更新する
+        void SetTextOnFrontViewUI(string textOnFrontViewUI){
+            FrontViewUI.text = textOnFrontViewUI;
+        }
+        
         
     }
 }

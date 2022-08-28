@@ -10,6 +10,7 @@ TagManager:
   - RoomLight
   - controller
   - OpponentAvatar
+  - FrontViewUI
   layers:
   - Default
   - TransparentFX
