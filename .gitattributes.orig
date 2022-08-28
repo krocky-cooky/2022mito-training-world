@@ -3,7 +3,9 @@
 
 *.unity binary
 *.prefab binary
-
+<<<<<<< HEAD
 *.asset binary
 
-
+=======
+*.asset binary
+>>>>>>> origin/feature/ui
