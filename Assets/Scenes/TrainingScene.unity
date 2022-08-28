@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 29817255}
   m_Layer: 6
   m_Name: Weight2
-  m_TagString: Weight
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2224,7 +2224,7 @@ GameObject:
   - component: {fileID: 438224491}
   m_Layer: 6
   m_Name: Weight1
-  m_TagString: Weight
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4882,7 +4882,7 @@ MonoBehaviour:
   isConnected: 0
   ESP32PrivateIP: 192.168.128.192
   viwer: {fileID: 813061344}
-  weight: {fileID: 1016066518}
+  weight: {fileID: 819968518}
   registerTorqueMode: 0
 --- !u!224 &1344860653 stripped
 RectTransform:
@@ -12180,6 +12180,7 @@ GameObject:
   - component: {fileID: 8956488233253311334}
   - component: {fileID: 8956488233253311335}
   - component: {fileID: 8956488233253311336}
+  - component: {fileID: 8956488233253311337}
   m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
@@ -15088,6 +15089,26 @@ MonoBehaviour:
   - {fileID: 8956488233901726335}
   twistRotation: []
 --- !u!114 &8956488233253311336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956488233253311190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb34da6f42aac4d408b198cfd261ffea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twistValue: 0.5
+  twistBone:
+  - {fileID: 8956488234061931961}
+  - {fileID: 8956488233581541498}
+  refBone:
+  - {fileID: 8956488233997987736}
+  - {fileID: 8956488233901726335}
+  twistRotation: []
+--- !u!114 &8956488233253311337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
