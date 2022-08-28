@@ -1,0 +1,26 @@
+VR/Metaverse Observation Point
+
+This package works only in Unity version 2020.2.2f1 and higher.
+If you need HDRP or URP version click on 'VR/Metaverse Observation Point (HDRP).unitypackage' or 'VR/Metaverse Observation Point (URP).unitypackage' in HDRP_URP_packages folder.
+
+VR/Metaverse Observation Point environment with well designed, optimised, detailed interior, and one HDRI with stars and a planet.
+This environment was ment for VR, but it can be used in any project.
+
+LOD's used where appropriate.
+
+HDRI_Star_Sky - 2048x2048
+
+Bench_LOD0 - 92 tris
+Bench_LOD1 - 40 tris
+
+Ceiling_Lamp - 768 tris
+
+Lamp - 88 tris
+
+Base:
+Base - 9100 tris
+Collider - 480 tris
+Door - 324 tris
+Shadow_proxy - 206 tris
+Window - 384 tris
+Window_frame - 1010 tris
