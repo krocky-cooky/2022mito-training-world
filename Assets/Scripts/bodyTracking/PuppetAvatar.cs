@@ -8,6 +8,11 @@ public class PuppetAvatar : MonoBehaviour
 {
     [SerializeField]
     private Quaternion headRotation;
+    [SerializeField]
+    private Quaternion leftWristRotation;
+    [SerializeField]
+    private Quaternion rightWristRotation;
+
     public TrackerHandler KinectDevice;
     Dictionary<JointId, Quaternion> absoluteOffsetMap;
     Animator PuppetAnimator;
@@ -103,6 +108,10 @@ public class PuppetAvatar : MonoBehaviour
                 finalJoint.rotation = absOffset * Quaternion.Inverse(absOffset) * KinectDevice.absoluteJointRotations[j] * absOffset;
                 if (j == (int)JointId.Head)
                     finalJoint.localRotation = headRotation;
+                if(j == (int)JointId.WristRight)
+                    finalJoint.localRotation = rightWristRotation;
+                if(j == (int)JointId.WristLeft)
+                    finalJoint.localRotation = leftWristRotation;
                 if (j == 0)
                 {
                     // character root plus translation reading from the kinect, plus the offset from the script public variables

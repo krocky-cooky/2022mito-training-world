@@ -4104,6 +4104,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad4f46a9ea232c4d93e5392cd1dfad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyTarget: {fileID: 0}
+  handTarget: {fileID: 0}
+  groundOffset: 0.1
+  followSpeed: 2.5
+  offsetX: 0
+  offsetZ: -0.3
+  inputName: Grip L
 --- !u!1 &991469164 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100008, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
@@ -4925,6 +4932,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad4f46a9ea232c4d93e5392cd1dfad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyTarget: {fileID: 0}
+  handTarget: {fileID: 0}
+  groundOffset: 0.1
+  followSpeed: 2.5
+  offsetX: 0
+  offsetZ: -0.3
+  inputName: Grip L
 --- !u!1001 &1369717884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5215,6 +5229,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efabd189b0cc8ec40a43cd266bc024d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eyeTransform: {fileID: 0}
+  leftHandTarget: {fileID: 0}
+  rightHandTarget: {fileID: 0}
+  leftFootTarget: {fileID: 0}
+  rightFootTarget: {fileID: 0}
+  pivotTransform: {fileID: 0}
+  offsetY: 0.5
+  offsetZ: 0
+  maxTorsionAngle: 45
+  armLength: 0.4
 --- !u!1 &1573728832
 GameObject:
   m_ObjectHideFlags: 0
@@ -6528,6 +6552,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headRotation: {x: 0, y: 0, z: 0, w: 0}
+  leftWristRotation: {x: 0, y: 0, z: 0, w: 0}
+  rightWristRotation: {x: 0, y: 0, z: 0, w: 0}
   KinectDevice: {fileID: 208286594}
   RootPosition: {fileID: 208286593}
   HeadPosition: {fileID: 1935189269}
@@ -7249,36 +7275,6 @@ Transform:
   - {fileID: 572606973}
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2130581201
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1471065477494724, guid: a984c5f1b96796a49b9e8c690f360551, type: 3}
-  m_PrefabInstance: {fileID: 156216985}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2130581202}
-  m_Layer: 0
-  m_Name: 'unitychan_VRAvatar (Missing Prefab with guid: a984c5f1b96796a49b9e8c690f360551)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2130581202
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4071754567189228, guid: a984c5f1b96796a49b9e8c690f360551, type: 3}
-  m_PrefabInstance: {fileID: 156216985}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130581201}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2030768071}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2137990787
 GameObject:
@@ -9152,6 +9148,30 @@ PrefabInstance:
     - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
       propertyPath: headRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
+      propertyPath: wristRotation.w
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
+      propertyPath: wristRotation.x
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
+      propertyPath: leftWristRotation.w
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
+      propertyPath: leftWristRotation.x
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
+      propertyPath: rightWristRotation.w
+      value: -0.00000004371139
+      objectReference: {fileID: 0}
+    - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
+      propertyPath: rightWristRotation.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8822654465618175664, guid: af2d5d7afd3a3fd4d8f321b78e223fd8, type: 3}
       propertyPath: CharacterHeadTransform
@@ -12158,6 +12178,8 @@ GameObject:
   - component: {fileID: 8956488233253311332}
   - component: {fileID: 8956488233253311333}
   - component: {fileID: 8956488233253311334}
+  - component: {fileID: 8956488233253311335}
+  - component: {fileID: 8956488233253311336}
   m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
@@ -15026,6 +15048,46 @@ MonoBehaviour:
   - {fileID: 8956488233901726335}
   twistRotation: []
 --- !u!114 &8956488233253311334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956488233253311190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb34da6f42aac4d408b198cfd261ffea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twistValue: 0.5
+  twistBone:
+  - {fileID: 8956488234061931961}
+  - {fileID: 8956488233581541498}
+  refBone:
+  - {fileID: 8956488233997987736}
+  - {fileID: 8956488233901726335}
+  twistRotation: []
+--- !u!114 &8956488233253311335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956488233253311190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb34da6f42aac4d408b198cfd261ffea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twistValue: 0.5
+  twistBone:
+  - {fileID: 8956488234061931961}
+  - {fileID: 8956488233581541498}
+  refBone:
+  - {fileID: 8956488233997987736}
+  - {fileID: 8956488233901726335}
+  twistRotation: []
+--- !u!114 &8956488233253311336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

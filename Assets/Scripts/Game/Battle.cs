@@ -58,6 +58,7 @@ namespace game
             if(opponentTrainingBar != null )//&& gameMaster.state == GameState.SendTorque)
             {
                 float ygap = rightControllerAnchor.transform.position.y - battleStartPosition.y;
+                ygap *= 0.8f;
                 Vector3 pos = opponentTrainingBar.transform.position;
                 pos.y = opponentStartPosition.y - ygap;
                 opponentTrainingBar.transform.position = pos;

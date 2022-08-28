@@ -180,14 +180,11 @@ namespace game
                     }
                 }
                 if(receivedData.timestamp >= endTimestamp && endTimestamp > 0)break;
-                addLog("1 sec passed");
                 yield return new WaitForSeconds(1.0f);
             }
 
             _socketClient.registerTorqueMode = false;
-            addLog("before torque register ");
             _socketClient.saveRegisteredTorque(username);
-            addLog("after torque register ");
 
             state = GameState.Idle;
 
