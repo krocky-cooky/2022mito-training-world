@@ -2,35 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeightManipulation : MonoBehaviour
+namespace handTracking 
 {
-    // Start is called before the first frame update
-
-    [SerializeField] 
-    private GameObject Weight;
-    private GameObject camObject;
-
-    private HandGeneral _handGeneral;
-    void Start()
+    public class WeightManipulation : MonoBehaviour
     {
-        this.camObject = GameObject.FindGameObjectsWithTag("MainCamera")[0];
-        this._handGeneral = this.camObject.GetComponent<HandGeneral>();
-    }
+        // Start is called before the first frame update
 
-    // Update is called once per frame
-    void Update()
-    {
-        this.GetComponent<MeshRenderer>().enabled = this._handGeneral.isTraining;
-        if(this._handGeneral.isTraining)
+        [SerializeField] 
+        private GameObject Weight;
+        private GameObject camObject;
+
+        private HandGeneral _handGeneral;
+        void Start()
         {
-            this.transform.position = this._handGeneral.handCenterPosition;
-            
+            this.camObject = GameObject.FindGameObjectsWithTag("MainCamera")[0];
+            this._handGeneral = this.camObject.GetComponent<HandGeneral>();
         }
-    
-        Vector3 aim = this.camObject.transform.position - this.transform.position;
-        Quaternion look = Quaternion.LookRotation(aim);
-        this.transform.rotation = look;
-        this.transform.Rotate(90.0f,90.0f,0.0f);
 
+        // Update is called once per frame
+        void Update()
+        {
+            this.GetComponent<MeshRenderer>().enabled = this._handGeneral.isTraining;
+            if(this._handGeneral.isTraining)
+            {
+                this.transform.position = this._handGeneral.handCenterPosition;
+                
+            }
+        
+            Vector3 aim = this.camObject.transform.position - this.transform.position;
+            Quaternion look = Quaternion.LookRotation(aim);
+            this.transform.rotation = look;
+            this.transform.Rotate(90.0f,90.0f,0.0f);
+
+        }
     }
 }
