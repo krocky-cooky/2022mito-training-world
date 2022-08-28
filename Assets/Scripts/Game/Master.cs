@@ -219,9 +219,6 @@ namespace game
             addLog("send torque mode end !!!");
 
             state = GameState.Idle;
-
-
-            
             
         }
 

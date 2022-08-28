@@ -21,6 +21,7 @@ namespace game
         void Start()
         {
             animationTarget = GetComponent<Animator>();
+            /*
             animationTarget.enabled = false;
             HumanPoseHandler handler = new HumanPoseHandler(animationTarget.avatar, animationTarget.transform);
             HumanPose humanpose = new HumanPose();
@@ -34,6 +35,7 @@ namespace game
             handler.SetHumanPose(ref humanpose);
 
             animationTarget.enabled = true;
+            */
             
         }
 
@@ -46,20 +48,7 @@ namespace game
             IKTarget.transform.position = pos;
             */
 
-            animationTarget = GetComponent<Animator>();
-            animationTarget.enabled = false;
-            HumanPoseHandler handler = new HumanPoseHandler(animationTarget.avatar, animationTarget.transform);
-            HumanPose humanpose = new HumanPose();
-            handler.GetHumanPose(ref humanpose);
-
-            for(int i = 55;i <= 94; ++i)
-            {
-                humanpose.muscles[i] = -1.0f;
-            }
-
-            handler.SetHumanPose(ref humanpose);
-
-            animationTarget.enabled = true;
+    
 
             
         }
@@ -74,7 +63,7 @@ namespace game
             animationTarget.SetIKPositionWeight(AvatarIKGoal.RightHand,1.0f);
             animationTarget.SetIKRotationWeight(AvatarIKGoal.RightHand,1.0f);
 
-            Quaternion palmUp = Quaternion.Euler(0,0,180); //* Quaternion.Euler(180,0,0);
+            Quaternion palmUp = Quaternion.Euler(0,0,180); 
             animationTarget.SetIKPosition(AvatarIKGoal.RightHand,IKTarget.position);
             animationTarget.SetIKRotation(AvatarIKGoal.RightHand,palmUp);
         }
