@@ -25,7 +25,8 @@ namespace game
         
         public GameState state = GameState.Idle;
         public Queue<string> viewerTextQueue = new Queue<string>();
-
+        public string username = "username";
+        public string loadingFileName = "loadingFileName";
 
         [SerializeField]
         private int registerSeconds = 3;
@@ -183,7 +184,8 @@ namespace game
             }
 
             _socketClient.registerTorqueMode = false;
-            _socketClient.saveRegisteredTorque();
+            _socketClient.saveRegisteredTorque(username);
+
             state = GameState.Idle;
 
             restore();
@@ -210,7 +212,7 @@ namespace game
             SetTextOnFrontViewUI("send torque mode start !!!");
 
 
-            SaveManager.getRegisteredTorque(ref torqueList,ref timestamp);
+            SaveManager.getRegisteredTorque(ref torqueList,ref timestamp, loadingFileName);
             timestamp.Add(timestamp[timestamp.Count-1] + ESP_DATA_RATE_MS);
             for(int i = 0;i < torqueList.Count;i++)
             {
