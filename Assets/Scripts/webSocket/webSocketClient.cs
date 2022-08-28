@@ -186,9 +186,9 @@ namespace game
 
         
 
-        public void saveRegisteredTorque()
+        public void saveRegisteredTorque(string username)
         {
-            SaveManager.saveTorque(torqueList,timestampList);
+            SaveManager.saveTorque(torqueList, timestampList, username);
             torqueList = new List<float>();
             timestampList = new List<int>();
         }
