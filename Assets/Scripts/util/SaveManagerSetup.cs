@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System ;
 using System.IO;
-
+using System.Linq;
 
 namespace util 
 {
@@ -70,12 +70,12 @@ namespace util
         //記録したトルクおよび継続時間の保存
         public static void saveTorque(List<float> torqueList,List<int> timestampList, string username)
         {
-            Debug.Log("inside coroutine");
-            //Debug.Log(sd.torqueLog);
+            // トルクの平均値を求める
+            float ave_trq = torqueList.Average();
 
             // ファイル名を作成
             DateTime TodayNow = DateTime.Now;
-            string filename = TodayNow.Year.ToString() + "_" + TodayNow.Month.ToString() + "_" + TodayNow.Day.ToString() + "_" + TodayNow.Hour.ToString() + "_" + TodayNow.Minute.ToString() + "_" + TodayNow.Second.ToString() + "_record_" + username + ".json";
+            string filename = "AveTrq_" + ave_trq.ToString() + "_" + username + "_" + TodayNow.Year.ToString() + "_" + TodayNow.Month.ToString() + "_" + TodayNow.Day.ToString() + "_" + TodayNow.Hour.ToString() + "_" + TodayNow.Minute.ToString() + "_" + TodayNow.Second.ToString() + "_record.json";
             Debug.Log(filename);
             // クラスの中身を記録
             sd.username = username;
