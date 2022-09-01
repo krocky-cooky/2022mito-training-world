@@ -32,7 +32,7 @@ namespace game
             trq = -0.1f;
             spd = -0.1f;
             trqLimit = 6.0f;
-            spdLimit = 2.0f;
+            spdLimit = 4.0f;
         }
 
         private string DEFAULT_TARGET = "trq";
@@ -42,10 +42,11 @@ namespace game
         public float spdLimit;
         public float trqLimit;
 
-        public void setTorque(float torque, float spdLimit = 6.0f)
+        public void setTorque(float torque, float spdLimit = 4.0f)
         {
             target = "trq";
             trq = torque;
+            spdLimit = spdLimit;
         }
 
         public void setSpeed(float speed, float trqLimit = 2.0f)
@@ -165,6 +166,7 @@ namespace game
                 try
                 {
                     _socket.Send(datajson);
+                    Debug.Log(datajson);
                 }
                 catch (Exception e)
                 {

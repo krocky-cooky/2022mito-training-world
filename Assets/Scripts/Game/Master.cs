@@ -124,7 +124,8 @@ namespace game
         private void reelWire()
         {
             SendingDataFormat data = new SendingDataFormat();
-            data.setSpeed(REEL_SPEED);
+            //data.setSpeed(REEL_SPEED);
+            data.setTorque(0.75f);
             _socketClient.sendData(data);
         }
 
