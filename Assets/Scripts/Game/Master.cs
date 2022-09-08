@@ -171,7 +171,7 @@ namespace game
                 
                 if(receivedData != null)
                 {
-                    if(receivedData.trq >= 0.5f && endTimestamp < 0)
+                    if(receivedData.trq >= 1.0f && endTimestamp < 0)
                     {
                         _socketClient.registerTorqueMode = true;
                         endTimestamp = receivedData.timestamp + 1000*seconds;
