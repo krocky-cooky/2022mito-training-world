@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using util;
-
+using communication;
 
 namespace game
 {
@@ -32,15 +32,16 @@ namespace game
         private int registerSeconds = 3;
         [SerializeField]
         private GameObject viewerObject;
+        [SerializeField]
+        private CommunicationInterface communicationInterface;
 
-        private webSocketClient _socketClient;
         private Battle _battle;
         private Text FrontViewUI;
 
         // Start is called before the first frame update
         void Start()
         {
-            _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
+            
             _battle = GameObject.FindWithTag("controller").GetComponent<Battle>();
             FrontViewUI = GameObject.FindWithTag("FrontViewUI").GetComponent<Text>();
 
@@ -126,7 +127,7 @@ namespace game
             SendingDataFormat data = new SendingDataFormat();
             //data.setSpeed(REEL_SPEED);
             data.setTorque(0.75f);
-            _socketClient.sendData(data);
+            communicationInterface.sendData(data);
         }
 
 
@@ -135,14 +136,14 @@ namespace game
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setSpeed(0.0f);
-            _socketClient.sendData(data);
+            communicationInterface.sendData(data);
         }
 
         public IEnumerator registerModeCoroutine(int seconds)
         {
-            if(!_socketClient.isConnected)
+            if(!communicationInterface.isConnected)
             {
-                addLog("web socket not opened");
+                addLog("connection not opened");
                 state = GameState.Idle;
                 yield break;
             }
@@ -150,7 +151,7 @@ namespace game
             //速度指令の送信
             SendingDataFormat data = new SendingDataFormat();
             data.setSpeed(0.0f);
-            _socketClient.sendData(data);
+            communicationInterface.sendData(data);
             addLog("register mode started");
             SetTextOnFrontViewUI("register mode started");
 
@@ -167,13 +168,13 @@ namespace game
 
             for(int i = 0;i < MAX_REGISTER_TIME;i++)
             {
-                ReceivingDataFormat receivedData = _socketClient.getReceivedData();
+                ReceivingDataFormat receivedData = communicationInterface.getReceivedData();
                 
                 if(receivedData != null)
                 {
                     if(receivedData.trq >= 1.0f && endTimestamp < 0)
                     {
-                        _socketClient.registerTorqueMode = true;
+                        communicationInterface.toggleRegisterTorqueMode(true);
                         endTimestamp = receivedData.timestamp + 1000*seconds;
                         addLog("data logging start !!");
                         SetTextOnFrontViewUI("data logging start !!");
@@ -184,8 +185,8 @@ namespace game
                 yield return new WaitForSeconds(1.0f);
             }
 
-            _socketClient.registerTorqueMode = false;
-            _socketClient.saveRegisteredTorque(username);
+            communicationInterface.toggleRegisterTorqueMode(false);
+            communicationInterface.saveRegisteredTorque(username);
 
             state = GameState.Idle;
 
@@ -198,9 +199,9 @@ namespace game
         public IEnumerator sendTorqueModeCoroutine()
         {
 
-            if(!_socketClient.isConnected)
+            if(communicationInterface.isConnected)
             {
-                addLog("web socket not opened");
+                addLog("connection not opened");
                 state = GameState.Idle;
                 yield break;
             }
@@ -220,7 +221,7 @@ namespace game
                 float torque = torqueList[i];
                 int interval = timestamp[i+1] - timestamp[i];
                 data.setTorque(torque);
-                _socketClient.sendData(data);
+                communicationInterface.sendData(data);
                 yield return new WaitForSeconds((float)interval/1000.0f);
             }
             
