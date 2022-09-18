@@ -13,22 +13,29 @@ namespace skySailing.game
     {   
         const int MAX_LOG_LINES = 10;
 
-        private FittnessDevice _fittnessDevice;
-
         public Queue<string> viewerTextQueue = new Queue<string>();
 
         [SerializeField]
         private GameObject viewerObject;
+        [SerializeField]
+        private GameObject gameObjectOfMyShip;
+        [SerializeField]
+        private float maxXRotationOfPillar;
+        [SerializeField]
+        private float minXRotationOfPillar;
 
         private webSocketClient _socketClient;
+        private FittnessDevice _fittnessDevice;
+        private SailingShip _mySailingShip;
 
         // Start is called before the first frame update
         void Start()
         {
             _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
 
-            // FitnessDeviceの初期化
+            // FitnessDeviceとMyShipの初期化
             _fittnessDevice = new FittnessDevice((float)Screen.height, 0.0f);
+            _mySailingShip = new SailingShip(gameObjectOfMyShip, maxXRotationOfPillar, minXRotationOfPillar);
         }
 
         // Update is called once per frame
@@ -49,6 +56,9 @@ namespace skySailing.game
             // FittnessDeviceの入力の相対位置を得る
             _fittnessDevice.getCurrentRelativePosition(Input.mousePosition.y);
             addLog(_fittnessDevice.currentRelativePosition.ToString());
+
+            // 帆の角度を変更する
+            _mySailingShip.changePillarRotation(_fittnessDevice.currentRelativePosition);
         }
 
         //VR空間上のログ情報に追加

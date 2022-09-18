@@ -11,6 +11,7 @@ TagManager:
   - controller
   - OpponentAvatar
   - FrontViewUI
+  - pillar
   layers:
   - Default
   - TransparentFX
