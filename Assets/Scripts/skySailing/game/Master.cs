@@ -4,13 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using util;
 using game;
+using skySailing.game;
 
-namespace SkySailing
+namespace skySailing.game
 {
 
     public class Master : MonoBehaviour
     {   
         const int MAX_LOG_LINES = 10;
+
+        private FittnessDevice _fittnessDevice;
 
         public Queue<string> viewerTextQueue = new Queue<string>();
 
@@ -22,7 +25,10 @@ namespace SkySailing
         // Start is called before the first frame update
         void Start()
         {
-            _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();         
+            _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
+
+            // FitnessDeviceの初期化
+            _fittnessDevice = new FittnessDevice((float)Screen.height, 0.0f);
         }
 
         // Update is called once per frame
@@ -39,7 +45,10 @@ namespace SkySailing
             }
 
             writeLog();
-            
+
+            // FittnessDeviceの入力の相対位置を得る
+            _fittnessDevice.getCurrentRelativePosition(Input.mousePosition.y);
+            addLog(_fittnessDevice.currentRelativePosition.ToString());
         }
 
         //VR空間上のログ情報に追加
