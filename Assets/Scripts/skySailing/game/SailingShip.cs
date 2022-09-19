@@ -1,31 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using skySailing.game;
 
 
 namespace skySailing.game
 {
     
-    public class SailingShip
+    public class SailingShip: MonoBehaviour
     {
         public Transform pillarTransform;
         public Transform shipTransform;
-        public Transform nextShipTransform;
         public float maxXRotationOfPillar;
         public float minXRotationOfPillar;
         public bool duringRace = false;
 
-        private Vector3 moveVector;
+        private Vector3 _moveVector;
+        private Master gameMaster;
 
-        public SailingShip(GameObject sailingShip, float inputMaxXRotationOfPillar, float inputMinXRotationOfPillar)
+        void Start()
         {
-            pillarTransform = GameObject.FindWithTag("pillar").GetComponent<Transform>();
-            shipTransform = sailingShip.GetComponent<Transform>();
-            nextShipTransform = shipTransform;
-            maxXRotationOfPillar = inputMaxXRotationOfPillar;
-            minXRotationOfPillar = inputMinXRotationOfPillar;
+            gameMaster = transform.parent.gameObject.GetComponent<Master>();
         }
+
+        void Update()
+        {
+            // Debug.Log("ship updating");
+            // 柱を回転
+            Debug.Log("device position is" + (gameMaster.fittnessDevice.currentRelativePosition).ToString());
+            changePillarRotation(gameMaster.fittnessDevice.currentRelativePosition);
+
+            //船を動かす
+            move(gameMaster.windSpeed);
+        }
+
+        // public SailingShip(GameObject sailingShip, float inputMaxXRotationOfPillar, float inputMinXRotationOfPillar)
+        // {
+        //     pillarTransform = GameObject.FindWithTag("pillar").GetComponent<Transform>();
+        //     shipTransform = sailingShip.GetComponent<Transform>();
+        //     maxXRotationOfPillar = inputMaxXRotationOfPillar;
+        //     minXRotationOfPillar = inputMinXRotationOfPillar;
+        // }
 
         // 柱の角度を変化
         // x軸周りの角度の相対位置を受け取ると、それに合わせて柱の角度変更
@@ -36,15 +51,15 @@ namespace skySailing.game
             if (minXRotationOfPillar < nextAngle & nextAngle < maxXRotationOfPillar){
                 pillarTransform.Rotate(rotationAngle, 0.0f, 0.0f);
             }
-            Debug.Log("xRotation is "+(pillarTransform.localEulerAngles.x).ToString());
+            Debug.Log("xRotation is "+(pillarTransform.eulerAngles.x).ToString());
             Debug.Log("next angular is " + (minXRotationOfPillar + (maxXRotationOfPillar - minXRotationOfPillar) * relativeXRotation - pillarTransform.localEulerAngles.x).ToString());
         }
 
         // 帆の傾きに合わせて船を動かす
-        public void move(Master master){
-            moveVector = Quaternion.Euler(pillarTransform.eulerAngles.x, pillarTransform.eulerAngles.y, pillarTransform.eulerAngles.z) * new Vector3(0.0f, 0.0f, -master.windSpeed);
-            shipTransform.position += moveVector;
-            Debug.Log("moveVector is " + moveVector.ToString());
+        public void move(float windSpeed){
+            _moveVector = Quaternion.Euler(pillarTransform.eulerAngles.x, pillarTransform.eulerAngles.y, pillarTransform.eulerAngles.z) * new Vector3(0.0f, 0.0f, -windSpeed);
+            shipTransform.position += _moveVector;
+            Debug.Log("_moveVector is " + _moveVector.ToString());
         }
 
         // void OnTriggerEnter(Collider other)

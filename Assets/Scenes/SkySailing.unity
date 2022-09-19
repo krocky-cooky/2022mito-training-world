@@ -3811,10 +3811,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windSpeed: 0.5
+  fittnessDevice: {fileID: 0}
   viewerObject: {fileID: 813061342}
-  gameObjectOfMyShip: {fileID: 1983296841}
-  maxXRotationOfPillar: 30
-  minXRotationOfPillar: -30
 --- !u!1 &1309862870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7717387b3a35b1a49a831f640422e916, type: 3}
@@ -5331,6 +5329,7 @@ GameObject:
   - component: {fileID: 1983296842}
   - component: {fileID: 1983296844}
   - component: {fileID: 1983296845}
+  - component: {fileID: 1983296843}
   m_Layer: 0
   m_Name: sailingShip
   m_TagString: Untagged
@@ -5355,6 +5354,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1983296843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983296841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0726309ce4fde6a419d3ba38e259d8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pillarTransform: {fileID: 186551678}
+  shipTransform: {fileID: 1586147472}
+  maxXRotationOfPillar: 30
+  minXRotationOfPillar: -30
+  duringRace: 0
 --- !u!65 &1983296844
 BoxCollider:
   m_ObjectHideFlags: 0
