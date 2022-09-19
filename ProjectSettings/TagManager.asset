@@ -12,7 +12,6 @@ TagManager:
   - OpponentAvatar
   - FrontViewUI
   - pillar
-  - start
   layers:
   - Default
   - TransparentFX
