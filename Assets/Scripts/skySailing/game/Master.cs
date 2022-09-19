@@ -15,29 +15,19 @@ namespace skySailing.game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public float windSpeed;
-        public FittnessDevice fittnessDevice;
 
         [SerializeField]
         private GameObject viewerObject;
-        // [SerializeField]
-        // // private GameObject gameObjectOfMyShip;
-        // [SerializeField]
-        // private float maxXRotationOfPillar;
-        // [SerializeField]
-        // private float minXRotationOfPillar;
 
         private webSocketClient _socketClient;
-        // private SailingShip _mySailingShip;
 
+        // レース中かどうかのフラグ
+        private bool duringRace = false;
 
         // Start is called before the first frame update
         void Start()
         {
             _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
-
-            // 初期化
-            fittnessDevice = new FittnessDevice((float)Screen.height, 0.0f);
-            // _mySailingShip = new SailingShip(gameObjectOfMyShip, maxXRotationOfPillar, minXRotationOfPillar);
         }
 
         // Update is called once per frame
@@ -54,16 +44,6 @@ namespace skySailing.game
             }
 
             writeLog();
-
-            // FittnessDeviceの入力の相対位置を得る
-            fittnessDevice.getCurrentRelativePosition(Input.mousePosition.y);
-            addLog(fittnessDevice.currentRelativePosition.ToString());
-
-            // // 帆の角度を変更する
-            // _mySailingShip.changePillarRotation(_fittnessDevice.currentRelativePosition);
-
-            // // 船の移動
-            // _mySailingShip.move(this);
 
             Debug.Log("master update");
         }

@@ -1287,7 +1287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &676475013
 Transform:
   m_ObjectHideFlags: 0
@@ -1322,7 +1322,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676475012}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3361,6 +3361,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ccca26b0182fb44290fd4f24fcc6986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1042189066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1042189067}
+  m_Layer: 0
+  m_Name: trainingDevice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1042189067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042189066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1290723663}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1078436898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3795,6 +3825,7 @@ Transform:
   m_Children:
   - {fileID: 1322611935}
   - {fileID: 1895901905}
+  - {fileID: 1042189067}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3811,7 +3842,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windSpeed: 0.5
-  fittnessDevice: {fileID: 0}
   viewerObject: {fileID: 813061342}
 --- !u!1 &1309862870 stripped
 GameObject:
@@ -4070,6 +4100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1412758179}
+  - component: {fileID: 1412758180}
   m_Layer: 6
   m_Name: trainingDevice
   m_TagString: Untagged
@@ -4093,6 +4124,22 @@ Transform:
   m_Father: {fileID: 1913683942}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1412758180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412758178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1576822f7a17ef84498e5b9c0378b29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAbsPosition: 0
+  minAbsPosition: 0
+  currentAbsPosition: 0
+  currentRelativePosition: 0
 --- !u!1001 &1434331695
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5367,10 +5414,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pillarTransform: {fileID: 186551678}
-  shipTransform: {fileID: 1586147472}
   maxXRotationOfPillar: 30
   minXRotationOfPillar: -30
   duringRace: 0
+  trainingDevice: {fileID: 1412758180}
+  gameMaster: {fileID: 1290723664}
 --- !u!65 &1983296844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5395,7 +5443,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
