@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4a8994f31e7d7a14798bbd39a27477de, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 946e22a9b588f244f8b1273ce61938ab, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -4424,6 +4424,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ship
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ab6b14e60b789a147bf564bf83f15995, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab6b14e60b789a147bf564bf83f15995, type: 3}
 --- !u!4 &1586147472 stripped
@@ -4864,6 +4868,10 @@ PrefabInstance:
     - target: {fileID: 400012, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -37.821
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: m_RenderingPath
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_CullingMask.m_Bits
@@ -5322,7 +5330,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1983296842}
   - component: {fileID: 1983296844}
-  - component: {fileID: 1983296843}
   - component: {fileID: 1983296845}
   m_Layer: 0
   m_Name: sailingShip
@@ -5348,23 +5355,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1983296843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1983296841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0726309ce4fde6a419d3ba38e259d8c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pillarTransform: {fileID: 0}
-  shipTransform: {fileID: 0}
-  nextShipTransform: {fileID: 0}
-  maxXRotationOfPillar: 0
-  minXRotationOfPillar: 0
 --- !u!65 &1983296844
 BoxCollider:
   m_ObjectHideFlags: 0

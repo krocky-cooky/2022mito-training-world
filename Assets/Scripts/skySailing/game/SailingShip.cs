@@ -7,14 +7,14 @@ using UnityEngine;
 namespace skySailing.game
 {
     
-    public class SailingShip : MonoBehaviour
+    public class SailingShip
     {
         public Transform pillarTransform;
         public Transform shipTransform;
         public Transform nextShipTransform;
         public float maxXRotationOfPillar;
         public float minXRotationOfPillar;
-        // public bool duringRace = false;
+        public bool duringRace = false;
 
         private Vector3 moveVector;
 
@@ -55,5 +55,5 @@ namespace skySailing.game
         //         Debug.Log("race start");
         //     }
         // }
-        }
+    }
 }

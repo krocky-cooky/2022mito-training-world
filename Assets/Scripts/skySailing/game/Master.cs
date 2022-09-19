@@ -64,6 +64,8 @@ namespace skySailing.game
 
             // 船の移動
             _mySailingShip.move(this);
+
+            Debug.Log("master update");
         }
 
         //VR空間上のログ情報に追加
