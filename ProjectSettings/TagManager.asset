@@ -13,6 +13,7 @@ TagManager:
   - FrontViewUI
   - pillar
   - start
+  - goal
   layers:
   - Default
   - TransparentFX

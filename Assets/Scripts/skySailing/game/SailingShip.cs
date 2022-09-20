@@ -12,7 +12,6 @@ namespace skySailing.game
         public Transform pillarTransform;
         public float maxXRotationOfPillar;
         public float minXRotationOfPillar;
-        public bool duringRace = false;
 
         [SerializeField]
         private TrainingDevice trainingDevice;
@@ -20,9 +19,11 @@ namespace skySailing.game
         private Master gameMaster;
 
         private Vector3 _moveVector;
+        private Transform _initShipTransform;
 
         void Start()
         {
+            _initShipTransform = transform;
         }
 
         void Update()
@@ -52,6 +53,22 @@ namespace skySailing.game
             _moveVector = Quaternion.Euler(pillarTransform.eulerAngles.x, pillarTransform.eulerAngles.y, pillarTransform.eulerAngles.z) * new Vector3(0.0f, 0.0f, -windSpeed);
             transform.position += _moveVector;
             Debug.Log("_moveVector is " + _moveVector.ToString());
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "start"){
+                gameMaster.duringRace = true;
+                Debug.Log("race start");
+            }
+            if (other.gameObject.tag == "goal"){
+                gameMaster.duringRace = false;
+                Debug.Log("race end");
+            }
+        }
+
+        public void returnToInitTransform(){
+            // transform = _initShipTransform;
         }
     }
 }
