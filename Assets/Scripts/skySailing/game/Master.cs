@@ -71,6 +71,10 @@ namespace skySailing.game
                 returnToInit();
                 Debug.Log("右ボタンが押されました。");
             }
+            if (OVRInput.GetDown(OVRInput.RawButton.X)){
+                returnToInit();
+                Debug.Log("xボタンが押されました。");
+            }            
         }
 
         //VR空間上のログ情報に追加
