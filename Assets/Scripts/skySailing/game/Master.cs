@@ -24,11 +24,14 @@ namespace skySailing.game
         private GameObject viewerObject;
         [SerializeField]
         private SailingShip SailingShip;
+        [SerializeField]
+        private float torqueDuringRace = 0.0f;
 
         private webSocketClient _socketClient;
         private float time = 0.0f;
         private Vector3  _initShipPosition;
         private Quaternion _initShipRotaion;
+        private float _previousTorqueDuringRace = 0.0f;
 
         // Start is called before the first frame update
         void Start()
@@ -45,7 +48,7 @@ namespace skySailing.game
             //ワイヤ巻き取り用ボタンイベント
             if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
             {
-                reelWire();
+                reelWire(0.75f);
             }
             if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
             {
@@ -54,12 +57,6 @@ namespace skySailing.game
 
             writeLog();
 
-            if (duringRace){
-                time += Time.deltaTime;
-                Debug.Log("time is " + time.ToString());
-            }
-            timerText.text = time.ToString();
-
             if(_socketClient.isConnected)
             {
                 addLog("web socket opened");
@@ -67,14 +64,25 @@ namespace skySailing.game
                 addLog("web socket not opened");
             }
 
-            if (Input.GetMouseButtonDown(1)){
+            // 初期状態に戻る
+            if ((OVRInput.GetDown(OVRInput.RawButton.X)) || (Input.GetMouseButtonDown(1))){
                 returnToInit();
-                Debug.Log("右ボタンが押されました。");
+            }     
+
+            // タイマーの表示
+            if (duringRace){
+                time += Time.deltaTime;
+                Debug.Log("time is " + time.ToString());
             }
-            if (OVRInput.GetDown(OVRInput.RawButton.X)){
-                returnToInit();
-                Debug.Log("xボタンが押されました。");
-            }            
+            timerText.text = time.ToString();
+            
+            // レース中のトルク指令
+            if (torqueDuringRace != _previousTorqueDuringRace){
+                float spdLimit = 1.0f;
+                reelWire(torqueDuringRace, spdLimit);
+                _previousTorqueDuringRace = torqueDuringRace;
+            }
+
         }
 
         //VR空間上のログ情報に追加
@@ -102,10 +110,10 @@ namespace skySailing.game
         }
 
         //ワイヤを巻き取る
-        private void reelWire()
+        private void reelWire(float torque, float speed = 4.0f)
         {
             SendingDataFormat data = new SendingDataFormat();
-            data.setTorque(0.75f);
+            data.setTorque(torque, speed);
             _socketClient.sendData(data);
         }
 

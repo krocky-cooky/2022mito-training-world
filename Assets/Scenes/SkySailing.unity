@@ -4041,6 +4041,7 @@ MonoBehaviour:
   duringRace: 0
   viewerObject: {fileID: 813061342}
   SailingShip: {fileID: 1983296843}
+  torqueDuringRace: 0
 --- !u!1 &1309862870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7717387b3a35b1a49a831f640422e916, type: 3}
@@ -4095,6 +4096,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isConnected: 0
+  integrationAngleForSkySailing: 0
   ESP32PrivateIP: 192.168.128.192
   viwer: {fileID: 813061344}
   weight: {fileID: 819968518}
@@ -4356,6 +4358,8 @@ MonoBehaviour:
   minAbsPosition: 0
   currentAbsPosition: 0
   currentRelativePosition: 0
+  rightControllerAnchor: {fileID: 1772564230}
+  SailingShip: {fileID: 1983296843}
 --- !u!1 &1422130395
 GameObject:
   m_ObjectHideFlags: 0
@@ -5492,6 +5496,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
   m_PrefabInstance: {fileID: 1772564228}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1772564230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1125068011842588, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+  m_PrefabInstance: {fileID: 1772564228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1775323738
 GameObject:
   m_ObjectHideFlags: 0
@@ -6084,7 +6093,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: -16, y: -17.4, z: -53.1}
+  m_Center: {x: -16, y: -17.4, z: -66.9}
 --- !u!54 &1983296845
 Rigidbody:
   m_ObjectHideFlags: 0

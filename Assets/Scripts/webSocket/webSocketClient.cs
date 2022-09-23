@@ -10,8 +10,6 @@ using util;
 
 using WebSocketSharp;
 
-using game;
-
 
 namespace game
 {
@@ -34,7 +32,7 @@ namespace game
             trq = -0.1f;
             spd = -0.1f;
             trqLimit = 6.0f;
-            spdLimit = 4.0f;
+            spdLimit = 20.0f;
         }
 
         private string DEFAULT_TARGET = "trq";
@@ -62,14 +60,14 @@ namespace game
     {
         // Start is called before the first frame update
         private WebSocket _socket; //websocketオブジェクト
-        private ReceivingDataFormat receivedData; //websocketで受信したデータを格納
-        // private Master gameMaster; //ゲームマスターオブジェクト
+        // private game.Master gameMaster; //ゲームマスターオブジェクト
         private bool isChanged = false; 
         private List<float> torqueList = new List<float>();
         private List<int> timestampList = new List<int>();
+        private ReceivingDataFormat receivedData; //websocketで受信したデータを格納
 
         public bool isConnected = false;
-
+        public float integrationAngleForSkySailing = 0.0f; // SkySailingのTrainigDevice.csと共有する用途
 
         [SerializeField]
         private string ESP32PrivateIP = "192.168.128.192";
@@ -137,6 +135,10 @@ namespace game
                     torqueList.Add(torque);
                     timestampList.Add(timestamp);
                 }
+
+                // SkySailingと回転角を共有
+                integrationAngleForSkySailing = receivedData.pos;
+                Debug.Log("integrationAngle is" + integrationAngleForSkySailing.ToString());
             };
             
             _socket.OnClose += (sender, e) =>
@@ -169,9 +171,11 @@ namespace game
                 {
                     _socket.Send(datajson);
                     Debug.Log(datajson);
+                    Debug.Log("succesfully send data");
                 }
                 catch (Exception e)
                 {
+                    Debug.Log("failure to send data");
                     //gameMaster.addLog("web socket not opened");
                 }
             }
