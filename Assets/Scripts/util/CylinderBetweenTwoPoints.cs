@@ -5,27 +5,21 @@ using UnityEngine;
 public class CylinderBetweenTwoPoints : MonoBehaviour {
     [SerializeField]
     private Transform cylinderPrefab;
+    [SerializeField]
+    private Transform transformOfBeginPoint;
+    [SerializeField]
+    private Transform transformOfEndPoint;
 
-    // private GameObject leftSphere;
-    // private GameObject rightSphere;
+    private GameObject leftSphere;
+    private GameObject rightSphere;
     private GameObject cylinder;
 
     private void Start () {
-        // leftSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        // rightSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        // leftSphere.transform.position = new Vector3(-1, 0, 0);
-        // rightSphere.transform.position = new Vector3(1, 0, 0);
-
-        // InstantiateCylinder(cylinderPrefab, leftSphere.transform.position, rightSphere.transform.position);
-        InstantiateCylinder(cylinderPrefab, new Vector3(-1, -2f * Mathf.Sin(Time.time), 0), new Vector3(1, 2f * Mathf.Sin(Time.time), 0));
+        InstantiateCylinder(cylinderPrefab, transformOfBeginPoint.position, transformOfEndPoint.position);
     }
 
     private void Update () {
-        // leftSphere.transform.position = new Vector3(-1, -2f * Mathf.Sin(Time.time), 0);
-        // rightSphere.transform.position = new Vector3(1, 2f * Mathf.Sin(Time.time), 0);
-
-        // UpdateCylinderPosition(cylinder, leftSphere.transform.position, rightSphere.transform.position);
-        UpdateCylinderPosition(cylinder, new Vector3(-1, -2f * Mathf.Sin(Time.time), 0), new Vector3(1, 2f * Mathf.Sin(Time.time), 0));
+        UpdateCylinderPosition(cylinder, transformOfBeginPoint.position, transformOfEndPoint.position);
     }
 
     private void InstantiateCylinder(Transform cylinderPrefab, Vector3 beginPoint, Vector3 endPoint)
