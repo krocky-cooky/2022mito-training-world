@@ -24,7 +24,7 @@ public class CylinderBetweenTwoPoints : MonoBehaviour {
 
     private void InstantiateCylinder(Transform cylinderPrefab, Vector3 beginPoint, Vector3 endPoint)
     {
-        cylinder = Instantiate<GameObject>(cylinderPrefab.gameObject, Vector3.zero, Quaternion.identity);
+        cylinder = Instantiate<GameObject>(cylinderPrefab.gameObject, Vector3.zero, Quaternion.identity, transform.parent.gameObject.transform);
         UpdateCylinderPosition(cylinder, beginPoint, endPoint);
     }
 
@@ -37,7 +37,7 @@ public class CylinderBetweenTwoPoints : MonoBehaviour {
         cylinder.transform.LookAt(beginPoint);
         cylinder.transform.Rotate(90.0f, 0.0f, 0.0f);
         Vector3 localScale = cylinder.transform.localScale;
-        localScale.y = (endPoint - beginPoint).magnitude;
+        localScale.y = (endPoint - beginPoint).magnitude * 0.5f;
         cylinder.transform.localScale = localScale;
     }
 }

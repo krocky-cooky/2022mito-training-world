@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 161778279}
   - component: {fileID: 161778278}
   m_Layer: 0
-  m_Name: Rope
+  m_Name: ropeFromPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cylinderPrefab: {fileID: 7975462023150494717, guid: 0b95f5cdf70572541ab225f66e361729, type: 3}
-  transformOfBeginPoint: {fileID: 855910966}
+  transformOfBeginPoint: {fileID: 1659653502}
   transformOfEndPoint: {fileID: 1970385558}
 --- !u!4 &161778279
 Transform:
@@ -483,7 +483,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161778277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.671847, y: -16.82793, z: -57.17917}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1983296842}
@@ -518,6 +518,7 @@ Transform:
   m_Children:
   - {fileID: 1690464009}
   - {fileID: 1434331696}
+  - {fileID: 1659653502}
   m_Father: {fileID: 1983296842}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -930,7 +931,7 @@ GameObject:
   m_Component:
   - component: {fileID: 428420423}
   m_Layer: 0
-  m_Name: wireRelay
+  m_Name: ropeRelayOfHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1533,7 +1534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676475012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0.39}
   m_LocalScale: {x: 0.77, y: 0.2, z: 0.35}
   m_Children: []
   m_Father: {fileID: 1412758179}
@@ -3648,7 +3649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1078436899
 Transform:
   m_ObjectHideFlags: 0
@@ -4082,7 +4083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317aca6b0b22bdd468701056319e2387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windSpeed: 0.5
+  windSpeed: 0.01
   timerText: {fileID: 1697318979}
   duringRace: 0
   viewerObject: {fileID: 813061342}
@@ -5047,6 +5048,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3149aedf0a0fa8a44b5ae4db34cd2732, type: 3}
   m_PrefabInstance: {fileID: 1630814695}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1659653501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1659653502}
+  m_Layer: 0
+  m_Name: ropeRelayOfPillar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1659653502
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659653501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 186551678}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1683800972
 GameObject:
   m_ObjectHideFlags: 0
@@ -6041,6 +6072,52 @@ Transform:
   m_Father: {fileID: 1983296842}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1938257696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1938257697}
+  - component: {fileID: 1938257698}
+  m_Layer: 0
+  m_Name: ropeFromHandle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1938257697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938257696}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1983296842}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1938257698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938257696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b9b8fb4ed72514fb70e13793c788c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cylinderPrefab: {fileID: 7975462023150494717, guid: 0b95f5cdf70572541ab225f66e361729, type: 3}
+  transformOfBeginPoint: {fileID: 428420423}
+  transformOfEndPoint: {fileID: 1970385558}
 --- !u!1 &1970385557
 GameObject:
   m_ObjectHideFlags: 0
@@ -6051,7 +6128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1970385558}
   m_Layer: 6
-  m_Name: wireRelay1
+  m_Name: ropeRelayOfMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6109,6 +6186,7 @@ Transform:
   - {fileID: 1683800973}
   - {fileID: 1913683942}
   - {fileID: 161778279}
+  - {fileID: 1938257697}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
