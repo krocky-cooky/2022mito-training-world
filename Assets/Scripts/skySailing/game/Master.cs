@@ -16,6 +16,7 @@ namespace skySailing.game
         public Queue<string> viewerTextQueue = new Queue<string>();
         public float windSpeed;
         public Text timerText;
+        public int numberOfCheckpointsPassed = 0;
 
         // レース中かどうかのフラグ
         public bool duringRace = false;
@@ -32,6 +33,7 @@ namespace skySailing.game
         private Vector3  _initShipPosition;
         private Quaternion _initShipRotaion;
         private float _previousTorqueDuringRace = 0.0f;
+        private string checkPointMessage;
 
         // Start is called before the first frame update
         void Start()
@@ -69,12 +71,13 @@ namespace skySailing.game
                 returnToInit();
             }     
 
-            // タイマーの表示
+            // タイマーとチェックポイント通過数の表示
             if (duringRace){
                 time += Time.deltaTime;
                 Debug.Log("time is " + time.ToString());
             }
-            timerText.text = time.ToString();
+            checkPointMessage = "\nYou passed " + numberOfCheckpointsPassed.ToString() + " check points";
+            timerText.text = time.ToString() + checkPointMessage;
             
             // レース中のトルク指令
             if (torqueDuringRace != _previousTorqueDuringRace){
@@ -132,6 +135,7 @@ namespace skySailing.game
             SailingShip.transform.rotation = _initShipRotaion;
             time = 0.0f;
             duringRace = false;
+            numberOfCheckpointsPassed = 0;
         }
         
     }

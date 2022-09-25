@@ -20,6 +20,9 @@ namespace skySailing.game
 
         private Vector3 _moveVector;
         private Transform _initShipTransform;
+        private float _time = 0.0f;
+        private float _previousCheckPointTime = 0.0f;
+        
 
         void Start()
         {
@@ -33,6 +36,8 @@ namespace skySailing.game
 
             //船を動かす
             move(gameMaster.windSpeed);
+
+            _time += Time.deltaTime;
         }
 
         // 柱の角度を変化
@@ -64,6 +69,13 @@ namespace skySailing.game
             if (other.gameObject.tag == "goal"){
                 gameMaster.duringRace = false;
                 Debug.Log("race end");
+            }
+            if (other.gameObject.tag == "checkPoint"){
+                if ((_time - _previousCheckPointTime) > 0.5){
+                    gameMaster.numberOfCheckpointsPassed += 1;
+                    _previousCheckPointTime = _time;
+                    Debug.Log("passing the check point");
+                }
             }
         }
 

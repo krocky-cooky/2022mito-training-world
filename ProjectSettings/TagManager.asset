@@ -15,6 +15,7 @@ TagManager:
   - start
   - goal
   - ropeSound
+  - checkPoint
   layers:
   - Default
   - TransparentFX
