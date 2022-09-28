@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2001a35b9ea31137973456efcd2bc53f350c3d10
 public class BleApi
 {
     // dll calls
@@ -99,4 +102,8 @@ public class BleApi
 
     [DllImport("BleWinrtDll.dll", EntryPoint = "GetError")]
     public static extern void GetError(out ErrorMessage buf);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2001a35b9ea31137973456efcd2bc53f350c3d10
