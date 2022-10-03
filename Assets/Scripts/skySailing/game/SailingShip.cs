@@ -55,7 +55,8 @@ namespace skySailing.game
 
         // 帆の傾きに合わせて船を動かす
         public void move(float windSpeed){
-            _moveVector = Quaternion.Euler(pillarTransform.eulerAngles.x, pillarTransform.eulerAngles.y, pillarTransform.eulerAngles.z) * new Vector3(0.0f, 0.0f, -windSpeed);
+            _moveVector =  Quaternion.Euler(pillarTransform.eulerAngles.x, pillarTransform.eulerAngles.y, pillarTransform.eulerAngles.z) * new Vector3(0.0f, 0.0f, -windSpeed);
+            _moveVector = Time.deltaTime * _moveVector;
             transform.position += _moveVector;
             Debug.Log("_moveVector is " + _moveVector.ToString());
         }

@@ -32,7 +32,7 @@ namespace skySailing.game
         private float time = 0.0f;
         private Vector3  _initShipPosition;
         private Quaternion _initShipRotaion;
-        private float _previousTorqueDuringRace = 0.0f;
+        public float _previousTorqueDuringRace = 0.0f;
         private string checkPointMessage;
 
         // Start is called before the first frame update
@@ -84,6 +84,7 @@ namespace skySailing.game
                 float spdLimit = 1.0f;
                 reelWire(torqueDuringRace, spdLimit);
                 _previousTorqueDuringRace = torqueDuringRace;
+                // Debug.Log("send torque" + torqueDuringRace.ToString());
             }
 
         }
@@ -118,6 +119,7 @@ namespace skySailing.game
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);
             _socketClient.sendData(data);
+            Debug.Log("send torque" + torqueDuringRace.ToString());
         }
 
 
