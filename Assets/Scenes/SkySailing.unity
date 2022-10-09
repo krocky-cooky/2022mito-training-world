@@ -788,6 +788,53 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 47.4, y: 0.91, z: 4.3}
   m_Center: {x: -19.9, y: 0, z: 3.11}
+--- !u!1 &395300487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 395300488}
+  - component: {fileID: 395300489}
+  m_Layer: 0
+  m_Name: 'HandDynamometer '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &395300488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395300487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1290723663}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &395300489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395300487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab89fb0747b9174fa1346ab62be1324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxForce: 0
+  minForce: 0
+  positionCalculationMethod: 1
+  maxOutputVelocity: 1
 --- !u!1001 &401995505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3896,6 +3943,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1042189067}
+  - component: {fileID: 1042189068}
   m_Layer: 0
   m_Name: trainingDevice
   m_TagString: Untagged
@@ -3917,6 +3965,24 @@ Transform:
   m_Father: {fileID: 1290723663}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1042189068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042189066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1576822f7a17ef84498e5b9c0378b29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAbsPosition: 0
+  minAbsPosition: 0
+  currentAbsPosition: 0
+  currentRelativePosition: 0
+  rightControllerAnchor: {fileID: 1772564230}
+  SailingShip: {fileID: 1983296843}
 --- !u!1 &1078436898
 GameObject:
   m_ObjectHideFlags: 0
@@ -4475,6 +4541,7 @@ Transform:
   - {fileID: 1895901905}
   - {fileID: 1042189067}
   - {fileID: 177151459}
+  - {fileID: 395300488}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4490,13 +4557,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317aca6b0b22bdd468701056319e2387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windSpeed: 0
+  windSpeed: 100
   timerText: {fileID: 1697318979}
   numberOfCheckpointsPassed: 0
   duringRace: 0
   viewerObject: {fileID: 813061342}
   SailingShip: {fileID: 1983296843}
   torqueDuringRace: 0
+  _previousTorqueDuringRace: 0
 --- !u!1 &1309862870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7717387b3a35b1a49a831f640422e916, type: 3}
@@ -4953,7 +5021,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412758178}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1576822f7a17ef84498e5b9c0378b29b, type: 3}
   m_Name: 
