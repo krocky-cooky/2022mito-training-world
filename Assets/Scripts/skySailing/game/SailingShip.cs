@@ -12,9 +12,13 @@ namespace skySailing.game
         public Transform pillarTransform;
         public float maxXRotationOfPillar;
         public float minXRotationOfPillar;
+        public float maxYRotationOfPillar;
+        public float minYRotationOfPillar;
 
         [SerializeField]
         private TrainingDevice trainingDevice;
+        [SerializeField]
+        private ForceGauge forceGauge;
         [SerializeField]
         private Master gameMaster;
 
@@ -32,7 +36,7 @@ namespace skySailing.game
         void Update()
         {
             // 柱を回転
-            changePillarRotation(trainingDevice.currentRelativePosition);
+            changePillarRotation(forceGauge.outputPosition, trainingDevice.currentRelativePosition);
 
             //船を動かす
             move(gameMaster.windSpeed);
@@ -41,16 +45,16 @@ namespace skySailing.game
         }
 
         // 柱の角度を変化
-        // x軸周りの角度の相対位置を受け取ると、それに合わせて柱の角度変更
-        // 例えばx軸周りの角度の可動範囲が-30~30で、相対位置で0.3を受け取ったら、-30+60*0.3で-12に帆の角度が変更
-        public void changePillarRotation(float relativeXRotation){
-            float nextAngle = minXRotationOfPillar + (maxXRotationOfPillar - minXRotationOfPillar) * relativeXRotation;
-            float rotationAngle = nextAngle - pillarTransform.eulerAngles.x;
-            if (minXRotationOfPillar < nextAngle & nextAngle < maxXRotationOfPillar){
-                pillarTransform.Rotate(rotationAngle, 0.0f, 0.0f);
-            }
-            Debug.Log("xRotation is "+(pillarTransform.eulerAngles.x).ToString());
-            Debug.Log("next angular is " + (nextAngle).ToString());
+        public void changePillarRotation(float leftNormalizedPosition, float rightNormalizedPosition){
+            // 左側のコントローラー出力位置と右側のコントローラー出力位置の、平均に応じてx軸周りの柱の角度を設定
+            float nextXAngle = minXRotationOfPillar + (maxXRotationOfPillar - minXRotationOfPillar) * (rightNormalizedPosition + leftNormalizedPosition) / 2.0f;
+
+            // 左側のコントローラー出力位置と右側のコントローラー出力位置の、差に応じてy軸周りの柱の角度を設定
+            float nextYAngle = ((maxYRotationOfPillar + minYRotationOfPillar) / 2.0f) + (maxYRotationOfPillar - minYRotationOfPillar) * (rightNormalizedPosition - leftNormalizedPosition) / 2.0f;
+
+            // 回転させる
+            pillarTransform.Rotate(nextXAngle - pillarTransform.eulerAngles.x, nextYAngle - pillarTransform.eulerAngles.y, 0.0f - pillarTransform.eulerAngles.z, Space.World);
+            // pillarTransform.Rotate(0.0f, nextYAngle - pillarTransform.eulerAngles.y, 0.0f);
         }
 
         // 帆の傾きに合わせて船を動かす

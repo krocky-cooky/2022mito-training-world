@@ -28,7 +28,9 @@ public class ForceGauge : MonoBehaviour
 
     // 出力する位置情報を0~1で表す。例えば、0.5が返されたら、最大位置と最小位置の間を意味する
     // 他スクリプトからアクセス可能にするが、inspectorに表示しない
-    [System.NonSerialized] public float outputPosition = 0.0f;
+    // [System.NonSerialized] public float outputPosition = 0.0f;
+    public float outputPosition = 0.0f;
+
 
     // // 力に対する出力速度の比例定数
     // [SerializeField]
@@ -64,12 +66,31 @@ public class ForceGauge : MonoBehaviour
          if (positionCalculationMethod == PositionCalculationMethod.VelocityProportionalToForce) {
             _outputVelocity = CalculateVelocityProportionalToForce();
             outputPosition = outputPosition + _outputVelocity * Time.deltaTime;
-
-            // 出力位置を0.0から1.0の範囲内に収める
-            outputPosition = Mathf.Clamp01(outputPosition);
         }
-        
+
+        // 出力位置を0.0から1.0の範囲内に収める
+        outputPosition = Mathf.Clamp01(outputPosition);
+
         Debug.Log("outputPosition is " + outputPosition.ToString());
+
+
+        // マシンのハンドル等のストロークポジション登録
+        if(Input.GetMouseButtonDown(2))
+        {
+            minForce = _currentForce;
+            maxForce = _currentForce;
+            Debug.Log("Input.GetMouseButtonDown(2)");
+        }
+        if(Input.GetMouseButton(2))
+        {
+            Debug.Log("Input.GetMouseButton(2)");
+            if (minForce > _currentForce){
+                minForce = _currentForce;
+            }
+            if (maxForce < _currentForce){
+                maxForce = _currentForce;
+            }
+        }
     }
 
     float CalculatePositionProportionalToForce(){
