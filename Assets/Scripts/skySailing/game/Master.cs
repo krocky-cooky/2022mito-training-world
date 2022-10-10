@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using util;
 using game;
 using skySailing.game;
+using communication;
 
 namespace skySailing.game
 {
@@ -29,8 +30,9 @@ namespace skySailing.game
         private float torqueDuringRace = 0.0f;
         [SerializeField]
         private ForceGauge forceGauge;
+        [SerializeField]
+        private CommunicationInterface communicationInterface;
 
-        private webSocketClient _socketClient;
         private float time = 0.0f;
         private Vector3  _initShipPosition;
         private Quaternion _initShipRotaion;
@@ -41,7 +43,6 @@ namespace skySailing.game
         // Start is called before the first frame update
         void Start()
         {
-            _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
             _initShipPosition = SailingShip.transform.position;
             _initShipRotaion = SailingShip.transform.rotation;
 
@@ -62,7 +63,7 @@ namespace skySailing.game
 
             writeLog();
 
-            if(_socketClient.isConnected)
+            if(communicationInterface.isConnected)
             {
                 addLog("web socket opened");
             }else{
@@ -122,7 +123,7 @@ namespace skySailing.game
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);
-            _socketClient.sendData(data);
+            communicationInterface.sendData(data);
             Debug.Log("send torque" + torqueDuringRace.ToString());
         }
 
@@ -132,7 +133,7 @@ namespace skySailing.game
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setSpeed(0.0f);
-            _socketClient.sendData(data);
+            communicationInterface.sendData(data);
         }
 
         //初期状態に戻る

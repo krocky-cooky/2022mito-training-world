@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using game;
-
+using communication;
 
 namespace skySailing.game
 {
@@ -24,13 +24,15 @@ namespace skySailing.game
         private GameObject rightControllerAnchor;
         [SerializeField]
         private SailingShip SailingShip;
+        [SerializeField]
+        private CommunicationInterface communicationInterface;
 
-        private webSocketClient _socketClient;
+        // private webSocketClient _socketClient;
 
 
         void Start(){
             // maxAbsPosition = (float)Screen.height;
-            _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
+            // _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
         }
 
         void Update(){
