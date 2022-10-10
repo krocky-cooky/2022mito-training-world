@@ -25,7 +25,7 @@ namespace skySailing.game
         [SerializeField]
         private SailingShip SailingShip;
         [SerializeField]
-        private CommunicationInterface communicationInterface;
+        private MainCommunicationInterface communicationInterface;
 
         // private webSocketClient _socketClient;
 

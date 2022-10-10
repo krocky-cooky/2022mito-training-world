@@ -31,7 +31,7 @@ namespace skySailing.game
         [SerializeField]
         private ForceGauge forceGauge;
         [SerializeField]
-        private CommunicationInterface communicationInterface;
+        private MainCommunicationInterface communicationInterface;
 
         private float time = 0.0f;
         private Vector3  _initShipPosition;

@@ -10,7 +10,7 @@ namespace communication
     {
         private BluetoothCentral bluetoothCentral;
 
-        public bool isconnected = false;
+        public bool isConnected = false;
 
         void Start() 
         {
@@ -26,7 +26,7 @@ namespace communication
         {
             string text = bluetoothCentral.getReceivedText();
             return JsonUtility.FromJson<ReceivingGripDataFormat>(text);
-            
+
         }
     }
 }

@@ -34,7 +34,7 @@ namespace game
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
-        private CommunicationInterface communicationInterface;
+        private MainCommunicationInterface communicationInterface;
 
         private Battle _battle;
         private StickGame _stickGame;
