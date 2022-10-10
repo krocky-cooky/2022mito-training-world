@@ -27,6 +27,8 @@ namespace skySailing.game
         private SailingShip SailingShip;
         [SerializeField]
         private float torqueDuringRace = 0.0f;
+        [SerializeField]
+        private ForceGauge forceGauge;
 
         private webSocketClient _socketClient;
         private float time = 0.0f;
@@ -34,6 +36,7 @@ namespace skySailing.game
         private Quaternion _initShipRotaion;
         public float _previousTorqueDuringRace = 0.0f;
         private string checkPointMessage;
+        private string forceMessage;
 
         // Start is called before the first frame update
         void Start()
@@ -77,7 +80,8 @@ namespace skySailing.game
                 Debug.Log("time is " + time.ToString());
             }
             checkPointMessage = "\nYou passed " + numberOfCheckpointsPassed.ToString() + " check points";
-            timerText.text = time.ToString() + checkPointMessage;
+            forceMessage = "\nleft force=" + forceGauge.currentForce.ToString() + "kg  right force=" + torqueDuringRace.ToString() + "kg";
+            timerText.text = time.ToString() + checkPointMessage + forceMessage;
             
             // レース中のトルク指令
             if (torqueDuringRace != _previousTorqueDuringRace){

@@ -42,7 +42,7 @@ public class ForceGauge : MonoBehaviour
     // private webSocketClient _socketClient;
     
     // 現在の力の大きさ
-    private float _currentForce = 0.0f;
+    [System.NonSerialized] public float currentForce = 0.0f;
 
     // 出力位置の変化速度
     private float _outputVelocity = 0.0f;
@@ -54,7 +54,7 @@ public class ForceGauge : MonoBehaviour
     }
 
     void Update(){
-        _currentForce = Input.mousePosition.x;
+        currentForce = Input.mousePosition.x;
 
         _outputVelocity = CalculateVelocityProportionalToForce();
         outputPosition = outputPosition + _outputVelocity * Time.deltaTime;
@@ -77,28 +77,28 @@ public class ForceGauge : MonoBehaviour
         // マシンのハンドル等のストロークポジション登録
         if(Input.GetMouseButtonDown(2))
         {
-            minForce = _currentForce;
-            maxForce = _currentForce;
+            minForce = currentForce;
+            maxForce = currentForce;
             Debug.Log("Input.GetMouseButtonDown(2)");
         }
         if(Input.GetMouseButton(2))
         {
             Debug.Log("Input.GetMouseButton(2)");
-            if (minForce > _currentForce){
-                minForce = _currentForce;
+            if (minForce > currentForce){
+                minForce = currentForce;
             }
-            if (maxForce < _currentForce){
-                maxForce = _currentForce;
+            if (maxForce < currentForce){
+                maxForce = currentForce;
             }
         }
     }
 
     float CalculatePositionProportionalToForce(){
-        return (_currentForce - minForce) / (maxForce - minForce);
+        return (currentForce - minForce) / (maxForce - minForce);
     }
 
     float CalculateVelocityProportionalToForce(){
         float middleForce = (maxForce - minForce) / 2.0f;
-        return maxOutputVelocity * (_currentForce - middleForce) / (maxForce - middleForce);
+        return maxOutputVelocity * (currentForce - middleForce) / (maxForce - middleForce);
     }
 }
