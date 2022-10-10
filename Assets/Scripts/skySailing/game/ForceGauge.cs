@@ -10,6 +10,7 @@ VelocityProportionalToForceモードは、速度が力と比例するもの。�
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using communication;
 
 public class ForceGauge : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class ForceGauge : MonoBehaviour
     // 出力位置に関する最大速度
     [SerializeField]
     private float maxOutputVelocity = 0.0f;
+    [SerializeField]
+    private GripCommunicationInterface gripCommunicationInterface;
 
     // private webSocketClient _socketClient;
     
@@ -47,6 +50,8 @@ public class ForceGauge : MonoBehaviour
     // 出力位置の変化速度
     private float _outputVelocity = 0.0f;
 
+    private bool ret;
+
     void Start(){
         maxForce = (float)Screen.width;
         minForce = 0.0f;
@@ -55,6 +60,11 @@ public class ForceGauge : MonoBehaviour
 
     void Update(){
         currentForce = Input.mousePosition.x;
+
+        Debug.Log("grip value is " + gripCommunicationInterface.getReceivedData().tension);
+        if (gripCommunicationInterface.isConnected){
+            currentForce = gripCommunicationInterface.getReceivedData().tension;
+        }
 
         _outputVelocity = CalculateVelocityProportionalToForce();
         outputPosition = outputPosition + _outputVelocity * Time.deltaTime;

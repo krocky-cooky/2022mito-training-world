@@ -218,11 +218,11 @@ namespace communication
                 string receivedText = "{}";
                 while(BleApi.PollData(out res, false))
                 {
-                    receivedText = Encoding.ASCII.GetString(res.buf,0,res.size);
+                    receivedText = BitConverter.ToString(res.buf,0,res.size);
                 }
                 if(receivedText != "{}")
                 {
-                    Debug.Log(receivedText);
+                    Debug.Log("ble subscribed message is "+receivedText);
                 }
             }
         }
