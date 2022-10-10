@@ -11,6 +11,11 @@ TagManager:
   - controller
   - OpponentAvatar
   - FrontViewUI
+  - pillar
+  - start
+  - goal
+  - ropeSound
+  - checkPoint
   layers:
   - Default
   - TransparentFX

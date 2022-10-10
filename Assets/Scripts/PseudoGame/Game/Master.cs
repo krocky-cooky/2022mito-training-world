@@ -60,6 +60,7 @@ namespace game
         // Update is called once per frame
         void Update()
         {
+            Debug.Log("update");
             //ワイヤ巻き取り用ボタンイベント
             if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
             {
