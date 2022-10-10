@@ -46,4 +46,15 @@ namespace communication
             spd = speed;
         }
     }
+
+    public class ReceivingGripDataFormat 
+    {
+        public ReceivingGripDataFormat()
+        {
+            tension = -1.0f;
+        }
+        
+        public float tension;
+        
+    }
 }

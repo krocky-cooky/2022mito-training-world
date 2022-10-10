@@ -10,7 +10,7 @@ namespace communication
         bluetooth
     }
     
-    public class CommunicationInterface : MonoBehaviour
+    public class MainCommunicationInterface : MonoBehaviour
     {
         private BluetoothCentral bluetoothCentral;
         private WebSocketClient webSocketClient;

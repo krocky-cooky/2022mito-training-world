@@ -14,7 +14,7 @@ namespace communication
 {
     public class BluetoothCentral : MonoBehaviour
     {
-        private ReceivingDataFormat receivedData;
+        private string receivedText;
         private Master gameMaster;
         private bool isChanged = false;
         private List<float> torqueList = new List<float>();
@@ -223,7 +223,6 @@ namespace communication
                 if(receivedText != "{}")
                 {
                     Debug.Log(receivedText);
-                    receivedData = JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
                 }
             }
         }
@@ -286,7 +285,12 @@ namespace communication
 
         public ReceivingDataFormat getReceivedData()
         {
-            return receivedData;
+            return JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
+        }
+
+        public string getReceivedText()
+        {
+            return receivedText;
         }
 
 
