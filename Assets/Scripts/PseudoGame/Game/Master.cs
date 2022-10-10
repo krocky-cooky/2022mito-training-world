@@ -13,6 +13,7 @@ namespace game
         Idle,
         Register,
         SendTorque,
+        StickGame
     }
 
     public class Master : MonoBehaviour
@@ -36,6 +37,7 @@ namespace game
         private CommunicationInterface communicationInterface;
 
         private Battle _battle;
+        private StickGame _stickGame;
         private Text FrontViewUI;
 
         // Start is called before the first frame update
@@ -43,6 +45,7 @@ namespace game
         {
             
             _battle = GameObject.FindWithTag("controller").GetComponent<Battle>();
+            _stickGame = GameObject.FindWithTag("controller").GetComponent<StickGame>();
             FrontViewUI = GameObject.FindWithTag("FrontViewUI").GetComponent<Text>();
 
             // 正面のUIを初期化
@@ -65,6 +68,23 @@ namespace game
             if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
             {
                 restore();
+            }
+
+            if(OVRInput.GetDown(OVRInput.RawButton.X))
+            {
+                if(state == GameState.Idle)
+                {
+                    _stickGame.GameStart();
+                    state = GameState.StickGame;
+                }
+                
+            }
+            if(OVRInput.GetDown(OVRInput.RawButton.Y))
+            {
+                if(state == GameState.Idle)
+                {
+                    
+                }
             }
 
             //websocketコネクション確立用ボタンイベント

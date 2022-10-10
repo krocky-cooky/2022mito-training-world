@@ -116,12 +116,13 @@ public class PuppetAvatar : MonoBehaviour
                 {
                     // character root plus translation reading from the kinect, plus the offset from the script public variables
                     finalJoint.position = CharacterRootTransform.position + new Vector3(RootPosition.transform.localPosition.x, RootPosition.transform.localPosition.y + OffsetY, RootPosition.transform.localPosition.z - OffsetZ);
+                    Debug.Log(Camera.main.gameObject.transform.position);
                 }
             }
         }
         if(moveToBodyPosition)
         {
-            Vector3 toHeadVector = CharacterHeadTransform.position - PuppetAnimator.GetBoneTransform(MapKinectJoint((JointId)26)).position;
+            Vector3 toHeadVector = Camera.main.gameObject.transform.position - PuppetAnimator.GetBoneTransform(MapKinectJoint((JointId)26)).position;
             Transform pelvisJoint = PuppetAnimator.GetBoneTransform(MapKinectJoint((JointId)0));
             pelvisJoint.position += toHeadVector;
         }

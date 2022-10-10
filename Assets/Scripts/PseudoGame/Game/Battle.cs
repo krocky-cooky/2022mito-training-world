@@ -37,22 +37,7 @@ namespace game
         // Update is called once per frame
         void Update()
         {
-            if(OVRInput.GetDown(OVRInput.RawButton.X))
-            {
-                if(gameMaster.state == GameState.Idle)
-                {
-                    gameMaster.startRegisterMode();
-                }
-                
-            }
-            if(OVRInput.GetDown(OVRInput.RawButton.Y))
-            {
-                if(gameMaster.state == GameState.Idle)
-                {
-                    gameMaster.startSendTorqueMode();
-                    battleStartPosition = rightControllerAnchor.transform.position;
-                }
-            }
+            
 
             //対戦相手のアバターのトレーニングバーの位置を上下させる
             if(opponentTrainingBar != null )//&& gameMaster.state == GameState.SendTorque)

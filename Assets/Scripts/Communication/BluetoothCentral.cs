@@ -58,7 +58,7 @@ namespace communication
         {
 
             gameMaster = transform.parent.gameObject.GetComponent<Master>();
-            Connect();
+            //Connect();
             
             
             
@@ -71,7 +71,7 @@ namespace communication
             
             if(StartScan)
             {
-                StartDeviceScan();
+                Connect();
                 StartScan = false;
             }
             ScanDevice();
@@ -218,11 +218,13 @@ namespace communication
                 string receivedText = "{}";
                 while(BleApi.PollData(out res, false))
                 {
-                    receivedText = Encoding.ASCII.GetString(res.buf,0,res.size);//BitConverter.ToString(res.buf,0,res.size);
+                    receivedText = Encoding.ASCII.GetString(res.buf,0,res.size);
                 }
                 if(receivedText != "{}")
+                {
                     Debug.Log(receivedText);
-                receivedData = JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
+                    receivedData = JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
+                }
             }
         }
 
@@ -276,7 +278,7 @@ namespace communication
 
         public void Connect()
         {
-            
+            StartDeviceScan();
 
         }
 
@@ -288,9 +290,27 @@ namespace communication
         }
 
 
-        public void sendData(SendingDataFormat data) 
+        public void sendData(SendingDataFormat sendingData) 
         {
-           
+            if(isSubscribed)
+            {
+                string dataJson = JsonUtility.ToJson(sendingData);
+                byte[] payload = Encoding.ASCII.GetBytes(dataJson);
+                BleApi.BLEData data = new BleApi.BLEData();
+                data.buf = new byte[512];
+                data.size = (short)payload.Length;
+                data.deviceId = deviceId;
+                data.serviceUuid = serviceId;
+                data.characteristicUuid = characteristicId;
+                for (int i = 0; i < payload.Length; i++)
+                    data.buf[i] = payload[i];
+                // no error code available in non-blocking mode
+                BleApi.SendData(in data, false);
+            }
+            else
+            {
+                Debug.Log("web socket not opened");
+            }
         }
 
         private void checkData(ReceivingDataFormat data)
@@ -303,6 +323,11 @@ namespace communication
             SaveManager.saveTorque(torqueList, timestampList, username);
             torqueList = new List<float>();
             timestampList = new List<int>();
+        }
+
+        public void Write()
+        {
+            
         }
     }
 }
