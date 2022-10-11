@@ -27,6 +27,10 @@ namespace Fishing.Game
         private CommunicationInterface communicationInterface;
         [SerializeField]
         private MasterStateController masterStateController;
+        [SerializeField]
+        private float maxTorque = 0.0f;
+        [SerializeField]
+        private float minTorque = 0.0f;
 
         private float time = 0.0f;
         public float _previoustorqueDuringFishing = 0.0f;

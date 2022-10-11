@@ -14,28 +14,19 @@ namespace Fishing.State
 
     public class BeforeFishing : StateBase
     {
-        // タイムカウント
-        float currentTimeCount;
-
-        // 待機時間
-        static readonly float waitDuration = 2f;
 
         public override void OnEnter()
         {
             Debug.Log("BeforeFishing");
-            currentTimeCount = 0f;
         }
 
         public override void OnExit()
         {
-            // Do Nothing.
         }
 
         public override int StateUpdate()
         {
-            currentTimeCount += Time.deltaTime;
-
-            if (currentTimeCount >= waitDuration)
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(2))
             {
                 return (int)MasterStateController.StateType.DuringFishing_Wait;
             }
