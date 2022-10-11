@@ -28,6 +28,7 @@ namespace Fishing.State
         {
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(2))
             {
+                Debug.Log("move to fishing");
                 return (int)MasterStateController.StateType.DuringFishing_Wait;
             }
 

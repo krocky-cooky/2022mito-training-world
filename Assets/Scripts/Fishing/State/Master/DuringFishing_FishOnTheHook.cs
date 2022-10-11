@@ -12,7 +12,7 @@ using Fishing.StateController;
 namespace Fishing.State
 {
 
-    public class DuringFishing_HoldFish : StateBase
+    public class DuringFishing_FishOnTheHook : StateBase
     {
         // タイムカウント
         float currentTimeCount;
@@ -22,7 +22,7 @@ namespace Fishing.State
 
         public override void OnEnter()
         {
-            Debug.Log("DuringFishing_HoldFish");
+            Debug.Log("DuringFishing_FishOnTheHook");
             currentTimeCount = 0f;
         }
 

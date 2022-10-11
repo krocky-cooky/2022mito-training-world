@@ -16,7 +16,7 @@ namespace Fishing.StateController
         {
             BeforeFishing,
             DuringFishing_Wait,
-            DuringFishing_HoldFish,
+            DuringFishing_FishOnTheHook,
             AfterFishing,
         }
 
@@ -30,8 +30,8 @@ namespace Fishing.StateController
             stateDic[(int)StateType.DuringFishing_Wait] = gameObject.AddComponent<DuringFishing_Wait>();
             stateDic[(int)StateType.DuringFishing_Wait].Initialize((int)StateType.DuringFishing_Wait);
 
-            stateDic[(int)StateType.DuringFishing_HoldFish] = gameObject.AddComponent<DuringFishing_HoldFish>();
-            stateDic[(int)StateType.DuringFishing_HoldFish].Initialize((int)StateType.DuringFishing_HoldFish);
+            stateDic[(int)StateType.DuringFishing_FishOnTheHook] = gameObject.AddComponent<DuringFishing_FishOnTheHook>();
+            stateDic[(int)StateType.DuringFishing_FishOnTheHook].Initialize((int)StateType.DuringFishing_FishOnTheHook);
 
             stateDic[(int)StateType.AfterFishing] = gameObject.AddComponent<AfterFishing>();
             stateDic[(int)StateType.AfterFishing].Initialize((int)StateType.AfterFishing);
