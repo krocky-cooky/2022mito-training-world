@@ -7,6 +7,7 @@ using communication;
 using Fishing.Game;
 using Fishing.State;
 using Fishing.StateController;
+using Fishing.Object;
 
 namespace Fishing.Game
 {
@@ -17,7 +18,23 @@ namespace Fishing.Game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public Text UiText;
+        public TrainingDevice trainingDevice;
 
+        // ハンドルの上げ下げのズレの許容量
+        public float allowableDifference;
+
+        // 魚の逃げにくさの値の変化速度
+        public float changeRateOfEscape;
+
+        // 魚のHPの変化速度
+        public float changeRateOfHP;
+
+        // 魚の暴れ具合の変動周期
+        public float periodOfFishIntensity;
+
+        // 魚を捕らえるときの竿の振り上げの時間と大きさ
+        public float timeOfRaising;
+        public float lengthOfRasing;
 
         [SerializeField]
         private GameObject viewerObject;
@@ -45,6 +62,8 @@ namespace Fishing.Game
         void Update()
         {
             masterStateController.UpdateSequence();
+            Debug.Log("Master State is "+masterStateController.stateDic[masterStateController.CurrentState].GetType());
+
             //ワイヤ巻き取り用ボタンイベント
             if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
             {

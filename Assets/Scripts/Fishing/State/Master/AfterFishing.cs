@@ -18,7 +18,7 @@ namespace Fishing.State
         float currentTimeCount;
 
         // 待機時間
-        static readonly float waitDuration = 2f;
+        static readonly float waitDuration = 5.0f;
 
         public override void OnEnter()
         {

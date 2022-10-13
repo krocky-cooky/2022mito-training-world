@@ -16,7 +16,7 @@ namespace Fishing.State
     {
 
         [SerializeField]
-        private float timeUntilfFishHitAtHalfChance = 10.0f;
+        private float timeUntilfFishHitAtHalfChance = 1.0f;
 
         // タイムカウント
         private float currentTimeCount;

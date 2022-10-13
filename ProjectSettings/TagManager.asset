@@ -16,6 +16,8 @@ TagManager:
   - goal
   - ropeSound
   - checkPoint
+  - fish
+  - master
   layers:
   - Default
   - TransparentFX

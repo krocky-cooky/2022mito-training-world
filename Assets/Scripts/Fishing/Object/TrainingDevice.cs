@@ -4,7 +4,7 @@ using UnityEngine;
 using game;
 using communication;
 
-namespace Fishing.game
+namespace Fishing.Object
 {
     
     public class TrainingDevice : MonoBehaviour
@@ -31,7 +31,7 @@ namespace Fishing.game
 
 
         void Start(){
-            // maxAbsPosition = (float)Screen.height;
+            maxAbsPosition = (float)Screen.height;
             // _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
         }
 

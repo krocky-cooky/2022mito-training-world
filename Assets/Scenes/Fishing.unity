@@ -4150,7 +4150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1042189066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1576822f7a17ef84498e5b9c0378b29b, type: 3}
+  m_Script: {fileID: 11500000, guid: edb1999a8cad1a4459bc33d17303cb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxAbsPosition: 0
@@ -4158,8 +4158,7 @@ MonoBehaviour:
   currentAbsPosition: 0
   currentRelativePosition: 0
   rightControllerAnchor: {fileID: 1772564230}
-  SailingShip: {fileID: 1983296843}
-  communicationInterface: {fileID: 0}
+  communicationInterface: {fileID: 1322611937}
 --- !u!1 &1078436898
 GameObject:
   m_ObjectHideFlags: 0
@@ -4767,7 +4766,7 @@ GameObject:
   - component: {fileID: 1290723664}
   m_Layer: 0
   m_Name: GameMaster
-  m_TagString: Untagged
+  m_TagString: master
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4788,6 +4787,7 @@ Transform:
   - {fileID: 177151459}
   - {fileID: 395300488}
   - {fileID: 1895901905}
+  - {fileID: 1996936797}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4804,6 +4804,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiText: {fileID: 1697318979}
+  trainingDevice: {fileID: 1042189068}
+  allowableDifference: 0.1
+  changeRateOfEscape: 0.2
+  changeRateOfHP: 0.1
+  periodOfFishIntensity: 3
+  timeOfRaising: 0.5
+  lengthOfRasing: 0.5
   viewerObject: {fileID: 813061342}
   torqueDuringFishing: 0
   communicationInterface: {fileID: 1322611937}
@@ -7688,7 +7695,7 @@ MonoBehaviour:
   minXRotationOfPillar: -30
   maxYRotationOfPillar: 45
   minYRotationOfPillar: -45
-  trainingDevice: {fileID: 1042189068}
+  trainingDevice: {fileID: 0}
   forceGauge: {fileID: 395300489}
   gameMaster: {fileID: 0}
 --- !u!65 &1983296844
@@ -7720,6 +7727,55 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1996936796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1996936797}
+  - component: {fileID: 1996936798}
+  m_Layer: 0
+  m_Name: Fish
+  m_TagString: fish
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1996936797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996936796}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5003157, y: 2.0214062, z: 3.5080318}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1290723663}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1996936798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996936796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a95aa6de8d486904b95440a9a42ac9f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  species: 
+  weight: 0
+  HP: 0
+  difficultyOfEscape: 0
+  maxIntensityOfMovements: 0
+  currentIntensityOfMovements: 0
 --- !u!1 &2012035246
 GameObject:
   m_ObjectHideFlags: 0
@@ -8247,8 +8303,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0.116437286, y: 0.5543684, z: 0.07868934, w: -0.8203207}
-  m_LocalPosition: {x: 4.576578, y: -5.9336863, z: 3.406021}
+  m_LocalRotation: {x: -0.015364429, y: 0.9841552, z: 0.10849829, w: 0.13939425}
+  m_LocalPosition: {x: -3.994731, y: -3.8756478, z: 12.156955}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

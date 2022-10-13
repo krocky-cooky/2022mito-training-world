@@ -13,7 +13,7 @@ namespace Fishing.StateController
 {
     public abstract class StateControllerBase : MonoBehaviour
     {
-        protected Dictionary<int, StateBase> stateDic = new Dictionary<int, StateBase>();
+        public Dictionary<int, StateBase> stateDic = new Dictionary<int, StateBase>();
 
         // 現在のステート
         public int CurrentState { protected set; get; }
