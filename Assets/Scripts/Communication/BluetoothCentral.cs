@@ -14,7 +14,7 @@ namespace communication
 {
     public class BluetoothCentral : MonoBehaviour
     {
-        private string receivedText;
+        public string receivedText;
         private Master gameMaster;
         private bool isChanged = false;
         private List<float> torqueList = new List<float>();
@@ -215,12 +215,12 @@ namespace communication
             if(isSubscribed)
             {
                 BleApi.BLEData res = new BleApi.BLEData();
-                string receivedText = "{}";
+                // string receivedText = "{}";
                 while(BleApi.PollData(out res, false))
                 {
-                    receivedText = BitConverter.ToString(res.buf,0,res.size);
+                    receivedText = Encoding.ASCII.GetString(res.buf,0,res.size);
                 }
-                if(receivedText != "{}")
+                if(receivedText != "")
                 {
                     Debug.Log("ble subscribed message is "+receivedText);
                 }
@@ -290,9 +290,9 @@ namespace communication
 
         public string getReceivedText()
         {
+            Debug.Log("getReceivedText is "+receivedText);
             return receivedText;
         }
-
 
         public void sendData(SendingDataFormat sendingData) 
         {

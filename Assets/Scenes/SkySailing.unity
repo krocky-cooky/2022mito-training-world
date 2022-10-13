@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab89fb0747b9174fa1346ab62be1324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForce: 2800
+  maxForce: 10
   minForce: 0
   positionCalculationMethod: 0
   outputPosition: 0
@@ -4517,7 +4517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 839420eaa9ba464419669c8753b3b6a1, type: 3}
       propertyPath: m_Name
-      value: checkPointFrame
+      value: checkPointFrame(1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 839420eaa9ba464419669c8753b3b6a1, type: 3}
       propertyPath: m_TagString
@@ -4781,10 +4781,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5dce2e1569d65a4e88692469d055df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  receivedText: 
   services: []
   isConnected: 0
   registerTorqueMode: 0
-  deviceName: GripDynamometer-ESP32
+  deviceName: TensionMeter
   serviceId: '{0000181d-0000-1000-8000-00805f9b34fb}'
   characteristicId: '{00002a98-0000-1000-8000-00805f9b34fb}'
   StartScan: 1

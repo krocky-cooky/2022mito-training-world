@@ -60,10 +60,11 @@ public class ForceGauge : MonoBehaviour
 
     void Update(){
         currentForce = Input.mousePosition.x;
-
-        Debug.Log("grip value is " + gripCommunicationInterface.getReceivedData().tension);
+        Debug.Log("grip update");
+        
         if (gripCommunicationInterface.isConnected){
-            currentForce = gripCommunicationInterface.getReceivedData().tension;
+            currentForce = gripCommunicationInterface.getReceivedData().force;
+            Debug.Log("grip value is " + gripCommunicationInterface.getReceivedData().force.ToString());
         }
 
         _outputVelocity = CalculateVelocityProportionalToForce();

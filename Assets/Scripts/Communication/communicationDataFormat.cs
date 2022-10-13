@@ -51,10 +51,10 @@ namespace communication
     {
         public ReceivingGripDataFormat()
         {
-            tension = -1.0f;
+            force = -1.0f;
         }
         
-        public float tension;
+        public float force;
         
     }
 }
