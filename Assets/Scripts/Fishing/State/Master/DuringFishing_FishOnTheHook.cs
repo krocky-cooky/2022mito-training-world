@@ -12,7 +12,7 @@ using Fishing.Object;
 namespace Fishing.State
 {
 
-    public class DuringFishing_FishOnTheHook : StateBase
+    public class DuringFishing_FishOnTheHook : MasterStateBase
     {
         // タイムカウント
         float currentTimeCount;
@@ -22,8 +22,6 @@ namespace Fishing.State
 
         // 魚のオブジェクト
         public Fish fish;
-
-        private Master _gameMaster;
 
         // 直前の位置
         private float _previousPosition;
@@ -35,7 +33,6 @@ namespace Fishing.State
         {
             Debug.Log("DuringFishing_FishOnTheHook");
             currentTimeCount = 0f;
-            _gameMaster = GameObject.FindWithTag("master").GetComponent<Master>();
 
             // 魚の初期化
             fish = GameObject.FindWithTag("fish").GetComponent<Fish>();
@@ -56,20 +53,20 @@ namespace Fishing.State
             currentTimeCount += Time.deltaTime;
 
             // 魚のHPは単調減少
-            fish.HP = fish.HP - _gameMaster.changeRateOfHP * Time.deltaTime;
+            fish.HP = fish.HP - masterStateController.changeRateOfHP * Time.deltaTime;
 
             // 魚の暴れる強さ
             // 0と1の間を周期的に変化する
-            fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(Mathf.Sin(currentTimeCount / _gameMaster.periodOfFishIntensity));
-            // fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(((currentTimeCount / _gameMaster.periodOfFishIntensity) - Mathf.Floor(currentTimeCount / _gameMaster.periodOfFishIntensity)) * 2.0f - 1.0f);
+            fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+            // fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(((currentTimeCount / masterStateController.periodOfFishIntensity) - Mathf.Floor(currentTimeCount / masterStateController.periodOfFishIntensity)) * 2.0f - 1.0f);
 
             // 逃げにくさの更新
             // HPがゼロになったら更新しない
             if (fish.HP > 0.0f){
-                if (Mathf.Abs(fish.currentIntensityOfMovements - _gameMaster.trainingDevice.currentRelativePosition) > _gameMaster.allowableDifference){
-                    fish.difficultyOfEscape = fish.difficultyOfEscape - _gameMaster.changeRateOfEscape * Time.deltaTime;
+                if (Mathf.Abs(fish.currentIntensityOfMovements - masterStateController.trainingDevice.currentRelativePosition) > masterStateController.allowableDifference){
+                    fish.difficultyOfEscape = fish.difficultyOfEscape - masterStateController.changeRateOfEscape * Time.deltaTime;
                 } else {
-                    fish.difficultyOfEscape = fish.difficultyOfEscape + _gameMaster.changeRateOfEscape * Time.deltaTime;
+                    fish.difficultyOfEscape = fish.difficultyOfEscape + masterStateController.changeRateOfEscape * Time.deltaTime;
                 }
             }
 
@@ -79,12 +76,12 @@ namespace Fishing.State
             }
 
             // 直前の位置の更新
-            if ((_whenPreviousPosition - currentTimeCount) > _gameMaster.timeOfRaising){
-                _previousPosition = _gameMaster.trainingDevice.currentRelativePosition;
+            if ((_whenPreviousPosition - currentTimeCount) > masterStateController.timeOfRaising){
+                _previousPosition = masterStateController.trainingDevice.currentRelativePosition;
             }
 
             //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            if ((fish.HP < 0.0f) && ((_gameMaster.trainingDevice.currentRelativePosition - _previousPosition) > _gameMaster.lengthOfRasing)){
+            if ((fish.HP < 0.0f) && ((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing)){
                 return (int)MasterStateController.StateType.AfterFishing;
             }
             

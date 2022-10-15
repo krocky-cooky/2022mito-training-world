@@ -12,7 +12,7 @@ using Fishing.StateController;
 namespace Fishing.State
 {
 
-    public class BeforeFishing : StateBase
+    public class BeforeFishing : MasterStateBase
     {
 
         public override void OnEnter()

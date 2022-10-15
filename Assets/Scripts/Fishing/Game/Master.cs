@@ -18,23 +18,23 @@ namespace Fishing.Game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public Text UiText;
-        public TrainingDevice trainingDevice;
+        // public TrainingDevice trainingDevice;
 
-        // ハンドルの上げ下げのズレの許容量
-        public float allowableDifference;
+        // // ハンドルの上げ下げのズレの許容量
+        // public float allowableDifference;
 
-        // 魚の逃げにくさの値の変化速度
-        public float changeRateOfEscape;
+        // // 魚の逃げにくさの値の変化速度
+        // public float changeRateOfEscape;
 
-        // 魚のHPの変化速度
-        public float changeRateOfHP;
+        // // 魚のHPの変化速度
+        // public float changeRateOfHP;
 
-        // 魚の暴れ具合の変動周期
-        public float periodOfFishIntensity;
+        // // 魚の暴れ具合の変動周期
+        // public float periodOfFishIntensity;
 
-        // 魚を捕らえるときの竿の振り上げの時間と大きさ
-        public float timeOfRaising;
-        public float lengthOfRasing;
+        // // 魚を捕らえるときの竿の振り上げの時間と大きさ
+        // public float timeOfRaising;
+        // public float lengthOfRasing;
 
         [SerializeField]
         private GameObject viewerObject;
@@ -44,10 +44,10 @@ namespace Fishing.Game
         private CommunicationInterface communicationInterface;
         [SerializeField]
         private MasterStateController masterStateController;
-        [SerializeField]
-        private float maxTorque = 0.0f;
-        [SerializeField]
-        private float minTorque = 0.0f;
+        // [SerializeField]
+        // private float maxTorque = 0.0f;
+        // [SerializeField]
+        // private float minTorque = 0.0f;
 
         private float time = 0.0f;
         public float _previoustorqueDuringFishing = 0.0f;

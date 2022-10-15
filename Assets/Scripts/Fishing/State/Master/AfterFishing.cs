@@ -12,7 +12,7 @@ using Fishing.StateController;
 namespace Fishing.State
 {
 
-    public class AfterFishing : StateBase
+    public class AfterFishing : MasterStateBase
     {
         // タイムカウント
         float currentTimeCount;

@@ -12,7 +12,7 @@ using Fishing.StateController;
 namespace Fishing.State
 {
 
-    public class DuringFishing_Wait : StateBase
+    public class DuringFishing_Wait : MasterStateBase
     {
 
         [SerializeField]

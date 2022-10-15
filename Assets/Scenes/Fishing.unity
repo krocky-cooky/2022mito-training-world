@@ -4808,13 +4808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiText: {fileID: 1697318979}
-  trainingDevice: {fileID: 1042189068}
-  allowableDifference: 0.1
-  changeRateOfEscape: 0.2
-  changeRateOfHP: 0.1
-  periodOfFishIntensity: 3
-  timeOfRaising: 0.5
-  lengthOfRasing: 0.5
+  trainingDevice: {fileID: 0}
   viewerObject: {fileID: 813061342}
   torqueDuringFishing: 0
   communicationInterface: {fileID: 1322611937}
@@ -7446,9 +7440,9 @@ MonoBehaviour:
   allowableDifference: 0.1
   changeRateOfEscape: 0.2
   changeRateOfHP: 0.1
-  periodOfFishIntensity: 3
-  timeOfRaising: 0.5
-  lengthOfRasing: 0.5
+  periodOfFishIntensity: 12
+  timeOfRaising: 0.3
+  lengthOfRasing: 0.8
 --- !u!1 &1913683940
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,11 +7,31 @@ using communication;
 using Fishing.Game;
 using Fishing.State;
 using Fishing.StateController;
+using Fishing.Object;
 
 namespace Fishing.StateController
 {
     public class MasterStateController : StateControllerBase
     {
+
+        public TrainingDevice trainingDevice;
+
+        // ハンドルの上げ下げのズレの許容量
+        public float allowableDifference;
+
+        // 魚の逃げにくさの値の変化速度
+        public float changeRateOfEscape;
+
+        // 魚のHPの変化速度
+        public float changeRateOfHP;
+
+        // 魚の暴れ具合の変動周期
+        public float periodOfFishIntensity;
+
+        // 魚を捕らえるときの竿の振り上げの時間と大きさ
+        public float timeOfRaising;
+        public float lengthOfRasing;
+
         public enum StateType
         {
             BeforeFishing,
