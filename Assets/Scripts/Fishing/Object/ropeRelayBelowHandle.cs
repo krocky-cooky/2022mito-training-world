@@ -9,10 +9,9 @@ using Fishing.State;
 using Fishing.StateController;
 
 namespace Fishing.Object{
-    public class ropeRelayBelowHandle : MonoBehaviour
+    public class RopeRelayBelowHandle : MonoBehaviour
     {
-        [SerializeField]
-        private Transform centerOfHandle;
+        public Transform centerOfHandle;
 
         public float ropeLength;
 

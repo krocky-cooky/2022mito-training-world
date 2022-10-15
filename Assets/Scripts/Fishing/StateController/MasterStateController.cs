@@ -32,6 +32,25 @@ namespace Fishing.StateController
         public float timeOfRaising;
         public float lengthOfRasing;
 
+        // 魚を捕らえたとき
+        // 短くなった後の釣り糸の長さ
+        public float fishingLineLengthAfterFishing;
+        //釣り糸を短くする時間
+        public float timeShorteningFishingLine;
+        //魚が跳ね上がって静止する位置とカメラの間の距離
+        public float distanseFromFishToCamera;
+        // 魚が跳ね上がっている時間
+        public float timeRasingFish;
+
+        // 水面の位置
+        public Transform waterSurfaceTransform;
+
+        // 釣り糸の先端
+        public RopeRelayBelowHandle ropeRelayBelowHandle;
+
+        // 魚のオブジェクト
+        public Fish fish;
+
         public enum StateType
         {
             BeforeFishing,

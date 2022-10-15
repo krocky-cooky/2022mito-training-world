@@ -17,13 +17,22 @@ namespace Fishing.State
         // タイムカウント
         float currentTimeCount;
 
-        // 待機時間
-        static readonly float waitDuration = 5.0f;
+        // 釣り糸の初期長さ
+        private float _firstLengthOfFishLine;
+
+        // 釣り糸が短くなりきったときの魚の位置
+        private Vector3 _fishFirstPosition;
+
+        // 魚の最終位置
+        private Vector3 _fishEndPosition;
 
         public override void OnEnter()
         {
             Debug.Log("AfterFishing");
             currentTimeCount = 0f;
+
+            _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
+            _fishEndPosition = GameObject.FindWithTag("MainCamera").transform.position + new Vector3(0.0f, 0.0f, -masterStateController.distanseFromFishToCamera);
         }
 
         public override void OnExit()
@@ -35,7 +44,17 @@ namespace Fishing.State
         {
             currentTimeCount += Time.deltaTime;
 
-            if (currentTimeCount >= waitDuration)
+            // 釣り糸と魚を水面の上まであげる
+            // そのあと、魚を目の前まで動かす
+            if ((masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
+            masterStateController.ropeRelayBelowHandle.ropeLength = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
+            masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position;
+            _fishFirstPosition = masterStateController.fish.transform.position;
+            } else if ((masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
+            masterStateController.fish.transform.position = _fishEndPosition + (_fishFirstPosition - _fishEndPosition) * (masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeRasingFish;
+            }
+
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(2))
             {
                 return (int)MasterStateController.StateType.BeforeFishing;
             }

@@ -3525,12 +3525,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833335801}
-  m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: -0.92387956}
-  m_LocalPosition: {x: -1.4299994, y: -0.03155327, z: 4.3391685}
-  m_LocalScale: {x: 0.03, y: 0.20000002, z: 0.030000001}
+  m_LocalRotation: {x: -0, y: 0.92387956, z: 0.38268343, w: 0}
+  m_LocalPosition: {x: 2.82, y: 1.8499999, z: 4.5800004}
+  m_LocalScale: {x: 0.03, y: 0.20000002, z: 0.029999997}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_Father: {fileID: 991469165}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &833335803
 MonoBehaviour:
@@ -3764,6 +3764,11 @@ BoxCollider:
 --- !u!1 &991469164 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100008, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+  m_PrefabInstance: {fileID: 1772564228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &991469165 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
   m_PrefabInstance: {fileID: 1772564228}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &991469170
@@ -4653,6 +4658,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b544816461f324e56a39767fdeb5b114, type: 3}
+--- !u!4 &1210874647 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400006, guid: b544816461f324e56a39767fdeb5b114, type: 3}
+  m_PrefabInstance: {fileID: 1210874646}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1283182081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4808,13 +4818,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiText: {fileID: 1697318979}
-  trainingDevice: {fileID: 0}
   viewerObject: {fileID: 813061342}
   torqueDuringFishing: 0
   communicationInterface: {fileID: 1322611937}
   masterStateController: {fileID: 1895901906}
-  maxTorque: 0
-  minTorque: 0
   _previoustorqueDuringFishing: 0
 --- !u!1 &1309862870 stripped
 GameObject:
@@ -6771,7 +6778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8815517
+      value: 3.11
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7443,6 +7450,13 @@ MonoBehaviour:
   periodOfFishIntensity: 12
   timeOfRaising: 0.3
   lengthOfRasing: 0.8
+  fishingLineLengthAfterFishing: 1
+  timeShorteningFishingLine: 0.5
+  distanseFromFishToCamera: 1
+  timeRasingFish: 0.5
+  waterSurfaceTransform: {fileID: 1210874647}
+  ropeRelayBelowHandle: {fileID: 1973850307}
+  fish: {fileID: 1996936798}
 --- !u!1 &1913683940
 GameObject:
   m_ObjectHideFlags: 0
@@ -7748,14 +7762,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996936796}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -1.5003157, y: 2.010802, z: 3.52806}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 210514326}
   m_Father: {fileID: 0}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &1996936798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8221,15 +8235,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 472372, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5003157
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 472372, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.010802
+      value: -0.010802031
       objectReference: {fileID: 0}
     - target: {fileID: 472372, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.52806
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 472372, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8366,8 +8380,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: -0.025789006, y: 0.9465397, z: 0.07826718, w: 0.31188437}
-  m_LocalPosition: {x: -4.6201453, y: -1.29404, z: 6.145055}
+  m_LocalRotation: {x: 0.07156139, y: 0.9186013, z: 0.19579194, w: -0.3357325}
+  m_LocalPosition: {x: 0.06971145, y: -5.7364154, z: 7.0459023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
