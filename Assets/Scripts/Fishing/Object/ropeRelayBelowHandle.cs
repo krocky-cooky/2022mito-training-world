@@ -13,8 +13,8 @@ namespace Fishing.Object{
     {
         [SerializeField]
         private Transform centerOfHandle;
-        [SerializeField]
-        private float ropeLength;
+
+        public float ropeLength;
 
         // Start is called before the first frame update
         void Start()
