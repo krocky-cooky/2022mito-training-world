@@ -216,7 +216,7 @@ namespace communication
             {
                 BleApi.BLEData res = new BleApi.BLEData();
                 // string receivedText = "{}";
-                while(BleApi.PollData(out res, false))
+                if(BleApi.PollData(out res, false))
                 {
                     receivedText = Encoding.ASCII.GetString(res.buf,0,res.size);
                 }
