@@ -19,7 +19,7 @@ namespace communication
         // Start is called before the first frame update
         private WebSocket _socket; //websocketオブジェクト
         private ReceivingDataFormat receivedData; //websocketで受信したデータを格納
-        private Master gameMaster; //ゲームマスターオブジェクト
+        // private Fishing.Game.Master gameMaster; //ゲームマスターオブジェクト
         private bool isChanged = false; 
         private List<float> torqueList = new List<float>();
         private List<int> timestampList = new List<int>();
@@ -41,7 +41,7 @@ namespace communication
         void Awake()
         {
             _socket = new WebSocket($"ws://{ESP32PrivateIP}/ws");
-            gameMaster = transform.parent.gameObject.GetComponent<Master>();
+            // gameMaster = transform.parent.gameObject.GetComponent<Fishing.Game.Master>();
         }
         
         void Start()
@@ -69,12 +69,12 @@ namespace communication
         {
             if(isConnected)
             {
-                gameMaster.addLog("already connected");
+                // gameMaster.addLog("already connected");
                 return;
             }
             _socket.OnOpen += (sender,e) => 
             {
-                gameMaster.addLog("web socket opened");
+                // gameMaster.addLog("web socket opened");
                 isConnected = true;
             };
 
@@ -97,7 +97,7 @@ namespace communication
             
             _socket.OnClose += (sender, e) =>
             {
-                gameMaster.addLog("web socket closed");
+                // gameMaster.addLog("web socket closed");
                 isConnected = false;
             };
 
@@ -128,12 +128,12 @@ namespace communication
                 }
                 catch (Exception e)
                 {
-                    gameMaster.addLog("web socket not opened");
+                    // gameMaster.addLog("web socket not opened");
                 }
             }
             else
             {
-                gameMaster.addLog("web socket not opened");
+                // gameMaster.addLog("web socket not opened");
             }
         }
 

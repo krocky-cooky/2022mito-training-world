@@ -18,39 +18,20 @@ namespace Fishing.Game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public Text UiText;
-        // public TrainingDevice trainingDevice;
-
-        // // ハンドルの上げ下げのズレの許容量
-        // public float allowableDifference;
-
-        // // 魚の逃げにくさの値の変化速度
-        // public float changeRateOfEscape;
-
-        // // 魚のHPの変化速度
-        // public float changeRateOfHP;
-
-        // // 魚の暴れ具合の変動周期
-        // public float periodOfFishIntensity;
-
-        // // 魚を捕らえるときの竿の振り上げの時間と大きさ
-        // public float timeOfRaising;
-        // public float lengthOfRasing;
+        public float torqueDuringFishing = 0.0f;
 
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
-        private float torqueDuringFishing = 0.0f;
-        [SerializeField]
         private CommunicationInterface communicationInterface;
         [SerializeField]
         private MasterStateController masterStateController;
-        // [SerializeField]
-        // private float maxTorque = 0.0f;
-        // [SerializeField]
-        // private float minTorque = 0.0f;
+        [SerializeField]
+        private float torqueSendingInterval = 0.1f;
 
         private float time = 0.0f;
-        public float _previoustorqueDuringFishing = 0.0f;
+        private float _previoustorqueDuringFishing = 0.0f;
+        private float _previousTorqueSendingTime = 0.0f;
 
         // Start is called before the first frame update
         void Start()
@@ -61,21 +42,16 @@ namespace Fishing.Game
         // Update is called once per frame
         void Update()
         {
+            time += Time.deltaTime;
+
             masterStateController.UpdateSequence();
             Debug.Log("Master State is "+masterStateController.stateDic[masterStateController.CurrentState].GetType());
 
-            //ワイヤ巻き取り用ボタンイベント
-            if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
-            {
-                reelWire(0.75f);
-            }
-            if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
-            {
-                restore();
-            }
+            // //ワイヤ巻き取り用ボタンイベント
+            // reelWire();
 
+            // ログ提示
             writeLog();
-
             if(communicationInterface.isConnected)
             {
                 addLog("web socket opened");
@@ -83,13 +59,20 @@ namespace Fishing.Game
                 addLog("web socket not opened");
             }
             
-            // プレイ中のトルク指令
-            if (torqueDuringFishing != _previoustorqueDuringFishing){
-                float spdLimit = 1.0f;
-                reelWire(torqueDuringFishing, spdLimit);
-                _previoustorqueDuringFishing = torqueDuringFishing;
-            }
+            // // プレイ中のトルク指令
+            // UpdateTorque(torqueDuringFishing);
 
+            // ワイヤ巻き取りまたはプレイ中のトルク指令
+            // ワイヤ巻き取りの操作があればそれを優先し、なければプレイ中のトルク指令を行う
+            if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
+            {
+                UpdateTorque(0.75f);
+            } else if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
+            {
+                restore();
+            } else{
+                UpdateTorque(torqueDuringFishing);
+            }
         }
 
         //VR空間上のログ情報に追加
@@ -116,13 +99,41 @@ namespace Fishing.Game
             viewerObject.GetComponent<Text>().text = writeText;
         }
 
-        //ワイヤを巻き取る
-        private void reelWire(float torque, float speed = 4.0f)
+        // //ワイヤを巻き取る
+        // private void reelWire(float torque, float speed = 4.0f)
+        // {
+        //     SendingDataFormat data = new SendingDataFormat();
+        //     data.setTorque(torque, speed);
+        //     communicationInterface.sendData(data);
+        //     Debug.Log("send torque" + torqueDuringFishing.ToString());
+        // }
+        // private void reelWire(){
+        //     if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
+        //     {
+        //         UpdateTorque(0.75f);
+        //     }
+        //     if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
+        //     {
+        //         restore();
+        //     }
+        // }
+
+        //トルクを更新
+        private void UpdateTorque(float torque, float speed = 4.0f)
         {
+            // 前回とトルクが同じ、または前回の送信時刻から一定時間経過していなければ、トルクを送信しない
+            // if ((torque == _previoustorqueDuringFishing) || ((time - _previousTorqueSendingTime) < torqueSendingInterval)){
+            //     return;
+            // }
+            if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
+                return;
+            }
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);
             communicationInterface.sendData(data);
             Debug.Log("send torque" + torqueDuringFishing.ToString());
+            _previoustorqueDuringFishing = torqueDuringFishing;
+            _previousTorqueSendingTime = time;
         }
 
 

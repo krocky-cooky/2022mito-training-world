@@ -29,18 +29,30 @@ namespace Fishing.State
         // 直前の位置登録の時刻
         private float _whenPreviousPosition;
 
+        // 初期トルク
+        private float _fisrtTorque;
+
+        // 前回のスパイクの時間
+        private float _previousSpikeTime = 0.0f;
+
+        // スパイクの提示時刻
+        private float _spikeEndTime = 0.0f;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
             currentTimeCount = 0f;
 
+            // トルクの指定
+            _fisrtTorque = Random.Range(masterStateController.minTorque, masterStateController.maxTorque);
+
             // 魚の初期化
             fish = GameObject.FindWithTag("fish").GetComponent<Fish>();
-            fish.species = "fish";
-            fish.weight = 3.0f;
-            fish.HP = 1.0f;
-            fish.difficultyOfEscape = 1.0f;
-            fish.maxIntensityOfMovements = 1.0f;
+            fish.weight = _fisrtTorque * masterStateController.fishWeightPerTorque;
+            // fish.species = "Sardine";
+            // fish.HP = 1.0f;
+            // fish.difficultyOfEscape = 1.0f;
+            // fish.maxIntensityOfMovements = 1.0f;
         }
 
         public override void OnExit()
@@ -58,7 +70,41 @@ namespace Fishing.State
             // 魚の暴れる強さ
             // 0と1の間を周期的に変化する
             fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+            // fish.currentIntensityOfMovements = 1.0f;
             // fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(((currentTimeCount / masterStateController.periodOfFishIntensity) - Mathf.Floor(currentTimeCount / masterStateController.periodOfFishIntensity)) * 2.0f - 1.0f);
+
+            // トルク送信
+            // masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque + masterStateController.maxAplitudeOfTorque * fish.currentIntensityOfMovements * Mathf.Sin(currentTimeCount * 2.0f * Mathf.PI / masterStateController.periodOfTorque);
+            // masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque + masterStateController.maxAplitudeOfTorque * fish.currentIntensityOfMovements * ((float)(Mathf.CeilToInt(currentTimeCount/ masterStateController.periodOfTorque) % 2) - 0.5f);
+
+            // if ((currentTimeCount - _previousSpikeTime) > masterStateController.spikeInterval){
+            //     _spikeEndTime = currentTimeCount + masterStateController.spikePeriod;
+            //     _previousSpikeTime = currentTimeCount;
+            // }
+            // if (currentTimeCount < (_spikeEndTime - masterStateController.spikePeriod * 0.5f)){
+            //     masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque + masterStateController.spikeSize;
+            // }else if(currentTimeCount < _spikeEndTime){
+            //     // masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque - masterStateController.spikeSize;
+            //     masterStateController.gameMaster.torqueDuringFishing = 0.0f;
+            // }else{
+            //     masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque;
+            // }
+
+            if ((currentTimeCount - _previousSpikeTime) > masterStateController.spikeInterval){
+                _spikeEndTime = currentTimeCount + masterStateController.firstSpikePeriod + masterStateController.latterSpikePeriod;
+                _previousSpikeTime = currentTimeCount;
+                
+            }
+            if (currentTimeCount < (_spikeEndTime - masterStateController.latterSpikePeriod)){
+                masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque + masterStateController.firstSpikeSize;
+                Debug.Log("fisrt spike");
+            }else if(currentTimeCount < _spikeEndTime){
+                // masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque - masterStateController.spikeSize;
+                masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque + masterStateController.latterSpikeSize;
+                Debug.Log("latter spike");
+            }else{
+                masterStateController.gameMaster.torqueDuringFishing = _fisrtTorque;
+            }
 
             // 逃げにくさの更新
             // HPがゼロになったら更新しない
@@ -70,24 +116,25 @@ namespace Fishing.State
                 }
             }
 
-            // 魚が逃げる
-            if (fish.difficultyOfEscape < 0.0f){
-                return (int)MasterStateController.StateType.DuringFishing_Wait;
-            }
+            // // 魚が逃げる
+            // if (fish.difficultyOfEscape < 0.0f){
+            //     return (int)MasterStateController.StateType.DuringFishing_Wait;
+            // }
 
             // 直前の位置の更新
             if ((_whenPreviousPosition - currentTimeCount) > masterStateController.timeOfRaising){
                 _previousPosition = masterStateController.trainingDevice.currentRelativePosition;
             }
 
-            //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            if ((fish.HP < 0.0f) && ((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing)){
-                return (int)MasterStateController.StateType.AfterFishing;
-            }
+            // //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
+            // if ((fish.HP < 0.0f) && ((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing)){
+            //     return (int)MasterStateController.StateType.AfterFishing;
+            // }
             
 
             return (int)StateType;
         }
+
     }
 
 }

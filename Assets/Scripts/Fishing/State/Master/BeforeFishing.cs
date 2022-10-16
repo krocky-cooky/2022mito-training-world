@@ -26,7 +26,7 @@ namespace Fishing.State
 
         public override int StateUpdate()
         {
-            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(2))
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {
                 Debug.Log("move to fishing");
                 return (int)MasterStateController.StateType.DuringFishing_Wait;

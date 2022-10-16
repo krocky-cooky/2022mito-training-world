@@ -13,7 +13,7 @@ namespace Fishing.StateController
 {
     public class MasterStateController : StateControllerBase
     {
-
+        public Master gameMaster;
         public TrainingDevice trainingDevice;
 
         // ハンドルの上げ下げのズレの許容量
@@ -50,6 +50,26 @@ namespace Fishing.StateController
 
         // 魚のオブジェクト
         public Fish fish;
+
+        // トルクの範囲
+        public float maxTorque;
+        public float minTorque;
+
+        // 単位トルクあたりの魚重量
+        public float fishWeightPerTorque;
+
+        // 魚によるトルクの振動の振幅と周期
+        public float maxAplitudeOfTorque;
+        public float periodOfTorque;
+
+        // トルクのスパイクの周期と大きさ
+        public float spikeInterval;
+
+        // トルクのスパイクの時間
+        public float firstSpikePeriod;
+        public float firstSpikeSize;
+        public float latterSpikePeriod;
+        public float latterSpikeSize;
 
         public enum StateType
         {

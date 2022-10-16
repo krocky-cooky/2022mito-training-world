@@ -4818,11 +4818,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UiText: {fileID: 1697318979}
-  viewerObject: {fileID: 813061342}
   torqueDuringFishing: 0
+  viewerObject: {fileID: 813061342}
   communicationInterface: {fileID: 1322611937}
   masterStateController: {fileID: 1895901906}
-  _previoustorqueDuringFishing: 0
+  torqueSendingInterval: 0.1
 --- !u!1 &1309862870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7717387b3a35b1a49a831f640422e916, type: 3}
@@ -7443,6 +7443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f3d6ef42cc17d4387d390883991088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMaster: {fileID: 1290723664}
   trainingDevice: {fileID: 1042189068}
   allowableDifference: 0.1
   changeRateOfEscape: 0.2
@@ -7457,6 +7458,16 @@ MonoBehaviour:
   waterSurfaceTransform: {fileID: 1210874647}
   ropeRelayBelowHandle: {fileID: 1973850307}
   fish: {fileID: 1996936798}
+  maxTorque: 0.75
+  minTorque: 0.75
+  fishWeightPerTorque: 4
+  maxAplitudeOfTorque: 0.5
+  periodOfTorque: 0.1
+  spikeInterval: 2
+  firstSpikePeriod: 0.12
+  firstSpikeSize: 1
+  latterSpikePeriod: 0.4
+  latterSpikeSize: -0.5
 --- !u!1 &1913683940
 GameObject:
   m_ObjectHideFlags: 0
@@ -7645,7 +7656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45fee31e8861654e9f4adf2732058e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerOfHandle: {fileID: 428420423}
+  centerOfHandle: {fileID: 855910966}
   ropeLength: 10
 --- !u!1 &1983296841
 GameObject:
@@ -7665,7 +7676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1983296842
 Transform:
   m_ObjectHideFlags: 0
@@ -7763,7 +7774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996936796}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5003157, y: 2.010802, z: 3.52806}
+  m_LocalPosition: {x: -1.5003157, y: -4.27, z: 3.52806}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 210514326}
@@ -7782,11 +7793,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95aa6de8d486904b95440a9a42ac9f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  species: 
+  species: Sardine
   weight: 0
-  HP: 0
-  difficultyOfEscape: 0
-  maxIntensityOfMovements: 0
+  HP: 1
+  difficultyOfEscape: 1
+  maxIntensityOfMovements: 1
   currentIntensityOfMovements: 0
 --- !u!1 &2012035246
 GameObject:
@@ -8380,8 +8391,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0.02336449, y: 0.97663724, z: 0.15060218, w: -0.15150206}
-  m_LocalPosition: {x: 0.27320027, y: -3.2223656, z: 7.5295296}
+  m_LocalRotation: {x: -0.105168045, y: 0.49338537, z: 0.06024444, w: 0.86132526}
+  m_LocalPosition: {x: -1.4924988, y: -5.2376537, z: 3.0941262}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
