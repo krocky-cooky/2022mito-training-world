@@ -208,6 +208,10 @@ public class OVRPlayerController : MonoBehaviour
 
 	void Update()
 	{
+		if(OVRInput.GetDown(OVRInput.RawButton.B))
+		{
+			MyJump();
+		}
 		if (!playerControllerEnabled)
 		{
 			if (OVRManager.OVRManagerinitialized)
@@ -519,10 +523,13 @@ public class OVRPlayerController : MonoBehaviour
 			root.rotation = prevRot;
 		}
 
+
+
 		UpdateController();
 		if (TransformUpdated != null)
 		{
 			TransformUpdated(root);
+
 		}
 	}
 
@@ -533,6 +540,14 @@ public class OVRPlayerController : MonoBehaviour
 	{
 		if (!Controller.isGrounded)
 			return false;
+
+		MoveThrottle += new Vector3(0, transform.lossyScale.y * JumpForce, 0);
+
+		return true;
+	}
+
+	public bool MyJump()
+	{
 
 		MoveThrottle += new Vector3(0, transform.lossyScale.y * JumpForce, 0);
 
