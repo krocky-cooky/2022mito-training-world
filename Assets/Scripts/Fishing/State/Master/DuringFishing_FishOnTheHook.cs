@@ -141,7 +141,8 @@ namespace Fishing.State
             }
 
             //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            if ((fish.HP < 0.0f) && ((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing)){
+            if ((fish.HP < 0.0f) && (((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1))){
+                masterStateController.FishGoOnTheWater.Play();
                 return (int)MasterStateController.StateType.AfterFishing;
             }
             

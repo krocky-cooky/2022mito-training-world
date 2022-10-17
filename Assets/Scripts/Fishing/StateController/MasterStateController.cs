@@ -97,6 +97,8 @@ namespace Fishing.StateController
         public AudioSource FishSoundOnTheHook;
         // 魚の体力がなくなった時の魚の音
         public AudioSource FishSoundWithHP0;
+        // 魚が水面に浮かび上がる音
+        public AudioSource FishGoOnTheWater;
 
         public enum StateType
         {
