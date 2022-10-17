@@ -62,8 +62,8 @@ namespace Fishing.StateController
         public float maxAplitudeOfTorque;
         public float periodOfTorque;
 
-        // トルクのスパイクの周期と大きさ
-        public float spikeInterval;
+        // // トルクのスパイクの周期と大きさ
+        // public float spikeInterval;
 
         // トルクのスパイクの時間
         public float firstSpikePeriod;
@@ -71,10 +71,26 @@ namespace Fishing.StateController
         public float latterSpikePeriod;
         public float latterSpikeSize;
 
+        //  釣り中のベーストルク
+        public float baseTorqueDuringFishing = 0.75f;
+
+        // 魚が針を突いているときのパラメータ
+        // 魚が突く時間間隔の最大値と最小値
+        public float maxIntervalOfNibbling;
+        public float minIntervalOfNibbling;
+        // 魚が針を突き始めてからしっかりかかるまでの最大時間と最小時間
+        public float maxTimeOfNibbling;
+        public float minTimeOfNibbling;
+
+        // 魚が半分の確率で引っかかる時
+
+        public float timeUntilFishHitAtHalfChance;
+
         public enum StateType
         {
             BeforeFishing,
             DuringFishing_Wait,
+            DuringFishing_Nibble,
             DuringFishing_FishOnTheHook,
             AfterFishing,
         }
@@ -88,6 +104,9 @@ namespace Fishing.StateController
 
             stateDic[(int)StateType.DuringFishing_Wait] = gameObject.AddComponent<DuringFishing_Wait>();
             stateDic[(int)StateType.DuringFishing_Wait].Initialize((int)StateType.DuringFishing_Wait);
+
+            stateDic[(int)StateType.DuringFishing_Nibble] = gameObject.AddComponent<DuringFishing_Nibble>();
+            stateDic[(int)StateType.DuringFishing_Nibble].Initialize((int)StateType.DuringFishing_Nibble);
 
             stateDic[(int)StateType.DuringFishing_FishOnTheHook] = gameObject.AddComponent<DuringFishing_FishOnTheHook>();
             stateDic[(int)StateType.DuringFishing_FishOnTheHook].Initialize((int)StateType.DuringFishing_FishOnTheHook);

@@ -18,7 +18,7 @@ namespace Fishing.Game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public Text UiText;
-        public float torqueDuringFishing = 0.0f;
+        public float sendingTorque = 0.0f;
 
         [SerializeField]
         private GameObject viewerObject;
@@ -30,7 +30,7 @@ namespace Fishing.Game
         private float torqueSendingInterval = 0.1f;
 
         private float time = 0.0f;
-        private float _previoustorqueDuringFishing = 0.0f;
+        private float _previoussendingTorque = 0.0f;
         private float _previousTorqueSendingTime = 0.0f;
 
         // Start is called before the first frame update
@@ -60,7 +60,7 @@ namespace Fishing.Game
             }
             
             // // プレイ中のトルク指令
-            // UpdateTorque(torqueDuringFishing);
+            // UpdateTorque(sendingTorque);
 
             // ワイヤ巻き取りまたはプレイ中のトルク指令
             // ワイヤ巻き取りの操作があればそれを優先し、なければプレイ中のトルク指令を行う
@@ -71,7 +71,7 @@ namespace Fishing.Game
             {
                 restore();
             } else{
-                UpdateTorque(torqueDuringFishing);
+                UpdateTorque(sendingTorque);
             }
         }
 
@@ -105,7 +105,7 @@ namespace Fishing.Game
         //     SendingDataFormat data = new SendingDataFormat();
         //     data.setTorque(torque, speed);
         //     communicationInterface.sendData(data);
-        //     Debug.Log("send torque" + torqueDuringFishing.ToString());
+        //     Debug.Log("send torque" + sendingTorque.ToString());
         // }
         // private void reelWire(){
         //     if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
@@ -122,7 +122,7 @@ namespace Fishing.Game
         private void UpdateTorque(float torque, float speed = 4.0f)
         {
             // 前回とトルクが同じ、または前回の送信時刻から一定時間経過していなければ、トルクを送信しない
-            // if ((torque == _previoustorqueDuringFishing) || ((time - _previousTorqueSendingTime) < torqueSendingInterval)){
+            // if ((torque == _previoussendingTorque) || ((time - _previousTorqueSendingTime) < torqueSendingInterval)){
             //     return;
             // }
             if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
@@ -131,8 +131,8 @@ namespace Fishing.Game
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);
             communicationInterface.sendData(data);
-            Debug.Log("send torque" + torqueDuringFishing.ToString());
-            _previoustorqueDuringFishing = torqueDuringFishing;
+            Debug.Log("send torque" + sendingTorque.ToString());
+            _previoussendingTorque = sendingTorque;
             _previousTorqueSendingTime = time;
         }
 

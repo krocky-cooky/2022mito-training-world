@@ -26,6 +26,8 @@ namespace Fishing.StateController
         {
             int nextState = (int)stateDic[CurrentState].StateUpdate();
             AutoStateTransitionSequence(nextState);
+
+            Debug.Log("Current state is " + stateDic[CurrentState].GetType());
         }
 
         // ステートの自動遷移

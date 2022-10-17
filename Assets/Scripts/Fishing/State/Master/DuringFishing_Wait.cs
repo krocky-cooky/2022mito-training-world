@@ -15,9 +15,6 @@ namespace Fishing.State
     public class DuringFishing_Wait : MasterStateBase
     {
 
-        [SerializeField]
-        private float timeUntilfFishHitAtHalfChance = 1.0f;
-
         // タイムカウント
         private float currentTimeCount;
         
@@ -31,8 +28,11 @@ namespace Fishing.State
         {
             Debug.Log("DuringFish_Wait");
             currentTimeCount = 0.0f;
-            probabilityOfFishOnTheHook = 1.0f - Mathf.Pow(2.0f, (-1.0f / (timeUntilfFishHitAtHalfChance / interval)));
+            probabilityOfFishOnTheHook = 1.0f - Mathf.Pow(2.0f, (-1.0f / (masterStateController.timeUntilFishHitAtHalfChance / interval)));
             Debug.Log("hit prob is" + probabilityOfFishOnTheHook.ToString());
+
+            // 釣りモード時のトルク指令
+            masterStateController.gameMaster.sendingTorque = masterStateController.baseTorqueDuringFishing;
         }
 
         public override void OnExit()
@@ -47,7 +47,7 @@ namespace Fishing.State
             {
                 currentTimeCount = 0.0f;
                 if (Random.value < probabilityOfFishOnTheHook){
-                    return (int)MasterStateController.StateType.DuringFishing_FishOnTheHook;
+                    return (int)MasterStateController.StateType.DuringFishing_Nibble;
                 }
             }
 
