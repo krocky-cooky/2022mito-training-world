@@ -32,7 +32,7 @@ namespace Fishing.State
             currentTimeCount = 0f;
 
             _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
-            _fishEndPosition = GameObject.FindWithTag("MainCamera").transform.position + new Vector3(0.0f, 0.0f, -masterStateController.distanseFromFishToCamera);
+            _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
         }
 
         public override void OnExit()

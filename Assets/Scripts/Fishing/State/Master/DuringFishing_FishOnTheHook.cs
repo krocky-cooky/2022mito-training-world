@@ -127,10 +127,10 @@ namespace Fishing.State
                 _previousPosition = masterStateController.trainingDevice.currentRelativePosition;
             }
 
-            // //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            // if ((fish.HP < 0.0f) && ((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing)){
-            //     return (int)MasterStateController.StateType.AfterFishing;
-            // }
+            //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
+            if ((fish.HP < 0.0f) && ((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing)){
+                return (int)MasterStateController.StateType.AfterFishing;
+            }
             
 
             return (int)StateType;

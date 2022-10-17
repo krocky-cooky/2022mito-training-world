@@ -6768,6 +6768,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -7401,8 +7405,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859742329}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -1.4299996, y: -5.02, z: 4.13917}
+  m_LocalRotation: {x: -0.06964785, y: 0.7346591, z: 0.07631039, w: 0.6705237}
+  m_LocalPosition: {x: -10.175573, y: -6.7782955, z: 6.897387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7523,12 +7527,12 @@ MonoBehaviour:
   changeRateOfEscape: 0.2
   changeRateOfHP: 0.1
   periodOfFishIntensity: 12
-  timeOfRaising: 0.3
-  lengthOfRasing: 0.8
+  timeOfRaising: 0.5
+  lengthOfRasing: 0.7
   fishingLineLengthAfterFishing: 1
-  timeShorteningFishingLine: 0.5
-  distanseFromFishToCamera: 1
-  timeRasingFish: 0.5
+  timeShorteningFishingLine: 0.25
+  distanseFromFishToCamera: 10
+  timeRasingFish: 0.25
   waterSurfaceTransform: {fileID: 1210874647}
   ropeRelayBelowHandle: {fileID: 1973850307}
   fish: {fileID: 1996936798}
@@ -7853,8 +7857,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996936796}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5003157, y: -4.27, z: 3.52806}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.500316, y: -4.27, z: 3.52806}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 210514326}
   m_Father: {fileID: 0}
@@ -7874,7 +7878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Sardine
   weight: 0
-  HP: 1
+  HP: 0
   difficultyOfEscape: 1
   maxIntensityOfMovements: 1
   currentIntensityOfMovements: 0
@@ -8470,8 +8474,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: -0.105168045, y: 0.49338537, z: 0.06024444, w: 0.86132526}
-  m_LocalPosition: {x: -1.4924988, y: -5.2376537, z: 3.0941262}
+  m_LocalRotation: {x: -0.06964785, y: 0.7346591, z: 0.07631039, w: 0.6705237}
+  m_LocalPosition: {x: -10.175573, y: -6.7782955, z: 6.897387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
