@@ -60,6 +60,7 @@ namespace Fishing.State
             }else if(currentTimeCount < _spikeEndTime){
                 masterStateController.gameMaster.sendingTorque = masterStateController.latterSpikeSize;
                 Debug.Log("latter spike");
+                masterStateController.NibbleSound.Play();
             }else{
                 masterStateController.gameMaster.sendingTorque = masterStateController.baseTorqueDuringFishing;
             }

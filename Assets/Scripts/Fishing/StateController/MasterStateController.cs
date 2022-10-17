@@ -83,8 +83,20 @@ namespace Fishing.StateController
         public float minTimeOfNibbling;
 
         // 魚が半分の確率で引っかかる時
-
         public float timeUntilFishHitAtHalfChance;
+
+        // 正面のオブジェクト
+        public Text frontViewUiText;
+
+        // サウンド
+        // ルアーの着水音
+        public AudioSource LureLandingSound;
+        // 魚が針を突くときの水の音
+        public AudioSource NibbleSound;
+        // 魚が針にかかっている最中の音
+        public AudioSource FishSoundOnTheHook;
+        // 魚の体力がなくなった時の魚の音
+        public AudioSource FishSoundWithHP0;
 
         public enum StateType
         {

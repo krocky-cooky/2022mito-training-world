@@ -7,6 +7,7 @@ using communication;
 using Fishing.Game;
 using Fishing.State;
 using Fishing.StateController;
+using Fishing.Object;
 
 
 namespace Fishing.State
@@ -18,6 +19,8 @@ namespace Fishing.State
         public override void OnEnter()
         {
             Debug.Log("BeforeFishing");
+
+            masterStateController.frontViewUiText.text = "Press X button to start";
         }
 
         public override void OnExit()
@@ -29,6 +32,7 @@ namespace Fishing.State
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {
                 Debug.Log("move to fishing");
+                masterStateController.LureLandingSound.Play();
                 return (int)MasterStateController.StateType.DuringFishing_Wait;
             }
 

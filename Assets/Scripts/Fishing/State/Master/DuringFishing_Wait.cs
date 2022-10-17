@@ -33,6 +33,8 @@ namespace Fishing.State
 
             // 釣りモード時のトルク指令
             masterStateController.gameMaster.sendingTorque = masterStateController.baseTorqueDuringFishing;
+
+            masterStateController.frontViewUiText.text = "During fishing";
         }
 
         public override void OnExit()

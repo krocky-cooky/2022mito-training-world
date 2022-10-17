@@ -38,6 +38,9 @@ namespace Fishing.State
         // スパイクの提示時刻
         private float _spikeEndTime = 0.0f;
 
+        // 魚の水音の切り替えフラグ
+        private bool _fishSoundIsChanged = false;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
@@ -54,11 +57,14 @@ namespace Fishing.State
             // fish.HP = 1.0f;
             // fish.difficultyOfEscape = 1.0f;
             // fish.maxIntensityOfMovements = 1.0f;
+
+            // 音声を再生
+            masterStateController.FishSoundOnTheHook.Play();
         }
 
         public override void OnExit()
         {
-            // Do Nothing.
+            masterStateController.FishSoundWithHP0.Stop();
         }
 
         public override int StateUpdate()
@@ -121,6 +127,13 @@ namespace Fishing.State
             // if (fish.difficultyOfEscape < 0.0f){
             //     return (int)MasterStateController.StateType.DuringFishing_Wait;
             // }
+
+            // 魚の音声の切り替え
+            if (fish.HP < 0.0f && !(_fishSoundIsChanged)){
+                masterStateController.FishSoundOnTheHook.Stop();
+                masterStateController.FishSoundWithHP0.Play();
+                _fishSoundIsChanged = true;
+            }
 
             // 直前の位置の更新
             if ((_whenPreviousPosition - currentTimeCount) > masterStateController.timeOfRaising){
