@@ -83,35 +83,7 @@ namespace Fishing.State
             // トルク送信
             // masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.maxAplitudeOfTorque * fish.currentIntensityOfMovements * Mathf.Sin(currentTimeCount * 2.0f * Mathf.PI / masterStateController.periodOfTorque);
             // masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.maxAplitudeOfTorque * fish.currentIntensityOfMovements * ((float)(Mathf.CeilToInt(currentTimeCount/ masterStateController.periodOfTorque) % 2) - 0.5f);
-
-            // if ((currentTimeCount - _previousSpikeTime) > masterStateController.spikeInterval){
-            //     _spikeEndTime = currentTimeCount + masterStateController.spikePeriod;
-            //     _previousSpikeTime = currentTimeCount;
-            // }
-            // if (currentTimeCount < (_spikeEndTime - masterStateController.spikePeriod * 0.5f)){
-            //     masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.spikeSize;
-            // }else if(currentTimeCount < _spikeEndTime){
-            //     // masterStateController.gameMaster.sendingTorque = _fisrtTorque - masterStateController.spikeSize;
-            //     masterStateController.gameMaster.sendingTorque = 0.0f;
-            // }else{
-            //     masterStateController.gameMaster.sendingTorque = _fisrtTorque;
-            // }
-
-            // if ((currentTimeCount - _previousSpikeTime) > masterStateController.spikeInterval){
-            //     _spikeEndTime = currentTimeCount + masterStateController.firstSpikePeriod + masterStateController.latterSpikePeriod;
-            //     _previousSpikeTime = currentTimeCount;
-                
-            // }
-            // if (currentTimeCount < (_spikeEndTime - masterStateController.latterSpikePeriod)){
-            //     masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.firstSpikeSize;
-            //     Debug.Log("fisrt spike");
-            // }else if(currentTimeCount < _spikeEndTime){
-            //     // masterStateController.gameMaster.sendingTorque = _fisrtTorque - masterStateController.spikeSize;
-            //     masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.latterSpikeSize;
-            //     Debug.Log("latter spike");
-            // }else{
-            //     masterStateController.gameMaster.sendingTorque = _fisrtTorque;
-            // }
+            masterStateController.gameMaster.sendingTorque = Mathf.Max(_fisrtTorque - (1.0f - fish.currentIntensityOfMovements) * masterStateController.torqueReduction, 0.75f);
 
             // 逃げにくさの更新
             // HPがゼロになったら更新しない
@@ -123,10 +95,10 @@ namespace Fishing.State
                 }
             }
 
-            // // 魚が逃げる
-            // if (fish.difficultyOfEscape < 0.0f){
-            //     return (int)MasterStateController.StateType.DuringFishing_Wait;
-            // }
+            // 魚が逃げる
+            if (fish.difficultyOfEscape < 0.0f){
+                return (int)MasterStateController.StateType.DuringFishing_Wait;
+            }
 
             // 魚の音声の切り替え
             if (fish.HP < 0.0f && !(_fishSoundIsChanged)){

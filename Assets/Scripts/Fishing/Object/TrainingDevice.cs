@@ -9,6 +9,14 @@ namespace Fishing.Object
     
     public class TrainingDevice : MonoBehaviour
     {
+        // 入力方法の切り替え
+        public enum InputInterface
+        {
+            Mouse,
+            OculusController,
+        }
+        public InputInterface inputInterface;
+
         // ハンドル等の最大位置と最小位置
         public float maxAbsPosition = 0.0f;
         public float minAbsPosition = 0.0f;
@@ -39,7 +47,14 @@ namespace Fishing.Object
             // currentAbsPosition = Input.mousePosition.y;
             // currentAbsPosition = _socketClient.integrationAngleForSkySailing;
             // currentAbsPosition = rightControllerAnchor.transform.position.y - SailingShip.transform.position.y;
-            currentAbsPosition = rightControllerAnchor.transform.position.y;
+            // currentAbsPosition = rightControllerAnchor.transform.position.y;
+
+            if (inputInterface == InputInterface.Mouse){
+                currentAbsPosition = Input.mousePosition.y;
+            }else{
+                currentAbsPosition = rightControllerAnchor.transform.position.y;
+            }
+
             currentRelativePosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));
             // マシンのハンドル等のストロークポジション登録
             if(OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))

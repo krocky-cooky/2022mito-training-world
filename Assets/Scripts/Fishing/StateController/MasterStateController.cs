@@ -88,6 +88,9 @@ namespace Fishing.StateController
         // 正面のオブジェクト
         public Text frontViewUiText;
 
+        // 魚のトルク変化の下降量
+        public float torqueReduction;
+
         // サウンド
         // ルアーの着水音
         public AudioSource LureLandingSound;
