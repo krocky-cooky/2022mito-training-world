@@ -31,13 +31,15 @@ namespace Fishing.State
             Debug.Log("AfterFishing");
             currentTimeCount = 0f;
 
-            _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
+            // _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
             _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
+
+            masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString() + "kg";
         }
 
         public override void OnExit()
         {
-            // Do Nothing.
+            masterStateController.frontViewUiText.text = "";
         }
 
         public override int StateUpdate()
@@ -47,7 +49,7 @@ namespace Fishing.State
             // 釣り糸と魚を水面の上まであげる
             // そのあと、魚を目の前まで動かす
             if ((masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
-            masterStateController.ropeRelayBelowHandle.ropeLength = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
+            // masterStateController.ropeRelayBelowHandle.ropeLength = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
             masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position;
             _fishFirstPosition = masterStateController.fish.transform.position;
             } else if ((masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){

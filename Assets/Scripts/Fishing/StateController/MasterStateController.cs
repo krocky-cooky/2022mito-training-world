@@ -91,6 +91,18 @@ namespace Fishing.StateController
         // 魚のトルク変化の下降量
         public float torqueReduction;
 
+        // 待機中の魚の動きの大きさと周期と、基準点のロープとの距離
+        public float SizeOfFishMovement;
+        public float PeriodOfFishMovement;
+        public float BaseDistanceOfFishFromRope;
+        public float distanceFromRope;
+        public float SizeOfFishNibble;
+        public float firstPeriodOfFishNibble;
+        public float latterPeriodOfFishNibble;
+
+        // つつきのための時間調整量
+        public float buffurTimeForNibble = -0.5f;
+
         // サウンド
         // ルアーの着水音
         public AudioSource LureLandingSound;
@@ -102,6 +114,9 @@ namespace Fishing.StateController
         public AudioSource FishSoundWithHP0;
         // 魚が水面に浮かび上がる音
         public AudioSource FishGoOnTheWater;
+
+        // ロープの音の最小値
+        public float minRopeSoundVolume;
 
         public enum StateType
         {

@@ -11,9 +11,10 @@ using Fishing.StateController;
 namespace Fishing.Object{
     public class RopeRelayBelowHandle : MonoBehaviour
     {
-        public Transform centerOfHandle;
+    //     public Transform centerOfHandle;
 
-        public float ropeLength;
+    //     public float ropeLength;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -24,7 +25,7 @@ namespace Fishing.Object{
         // Update is called once per frame
         void Update()
         {
-            transform.position = new Vector3(centerOfHandle.position.x, -ropeLength, centerOfHandle.position.z);
+            // transform.position = new Vector3(centerOfHandle.position.x, -ropeLength, centerOfHandle.position.z);
         }
     }
 }

@@ -1328,6 +1328,56 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 481513626}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &499058303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 499058304}
+  - component: {fileID: 499058305}
+  m_Layer: 0
+  m_Name: RopeStateController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &499058304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499058303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1290723663}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &499058305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499058303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ba21778d3169848b280536dd219822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ropeRelayBelowHandleTransform: {fileID: 1973850306}
+  masterStateController: {fileID: 1895901906}
+  fixedPosition: {x: 0, y: 0, z: 0}
+  fixedRotation: {x: 0, y: 0, z: 0, w: 0}
+  centerOfHandle: {fileID: 855910966}
+  ropeLength: 5
+  fish: {fileID: 1996936798}
 --- !u!1 &594591489
 GameObject:
   m_ObjectHideFlags: 0
@@ -3766,6 +3816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 833335802}
   - component: {fileID: 833335803}
+  - component: {fileID: 833335804}
   m_Layer: 0
   m_Name: fishingLine
   m_TagString: Untagged
@@ -3802,6 +3853,19 @@ MonoBehaviour:
   cylinderPrefab: {fileID: 7975462023150494717, guid: ce6f1817247940a40872507234dce8c7, type: 3}
   transformOfBeginPoint: {fileID: 428420423}
   transformOfEndPoint: {fileID: 1973850306}
+--- !u!114 &833335804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833335801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c3766f023691b4c975da8d99339760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ropeStateController: {fileID: 499058305}
 --- !u!1 &855910965
 GameObject:
   m_ObjectHideFlags: 0
@@ -4468,6 +4532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1999a8cad1a4459bc33d17303cb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputInterface: 0
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
@@ -5064,7 +5129,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 729dfc678e2324b4393802a337b4b3a2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5362,6 +5427,7 @@ Transform:
   - {fileID: 395300488}
   - {fileID: 1895901905}
   - {fileID: 998635864}
+  - {fileID: 499058304}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6779,7 +6845,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fa8178bd881ce9343a59e90021b646db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 118f384fe9cb0c94f93249b41fc8ee5a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -8094,8 +8160,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859742329}
-  m_LocalRotation: {x: 0.12086912, y: 0.07347038, z: 0.008969331, w: -0.98990524}
-  m_LocalPosition: {x: 0.7105657, y: 1.9758563, z: -2.954577}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  m_LocalPosition: {x: -1.4299996, y: -5.02, z: 4.13917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8241,18 +8307,27 @@ MonoBehaviour:
   latterSpikePeriod: 0.42
   latterSpikeSize: 0.25
   baseTorqueDuringFishing: 0.75
-  maxIntervalOfNibbling: 3
-  minIntervalOfNibbling: 2
-  maxTimeOfNibbling: 12
-  minTimeOfNibbling: 10
-  timeUntilFishHitAtHalfChance: 3
+  maxIntervalOfNibbling: 2
+  minIntervalOfNibbling: 1
+  maxTimeOfNibbling: 5
+  minTimeOfNibbling: 5
+  timeUntilFishHitAtHalfChance: 2
   frontViewUiText: {fileID: 1697318979}
   torqueReduction: 0.5
+  SizeOfFishMovement: 3
+  PeriodOfFishMovement: 5
+  BaseDistanceOfFishFromRope: 4
+  distanceFromRope: 0
+  SizeOfFishNibble: 2
+  firstPeriodOfFishNibble: 0.22
+  latterPeriodOfFishNibble: 1.2
+  buffurTimeForNibble: -0.5
   LureLandingSound: {fileID: 1161297181}
   NibbleSound: {fileID: 2045138952}
   FishSoundOnTheHook: {fileID: 1681168349}
   FishSoundWithHP0: {fileID: 374337162}
   FishGoOnTheWater: {fileID: 634916855}
+  minRopeSoundVolume: 0.2
 --- !u!222 &1895901907
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8431,7 +8506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973850305}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00007305456}
+  m_LocalPosition: {x: 0, y: -24.607311, z: -164.0488}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 855910966}
@@ -8444,13 +8519,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973850305}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e45fee31e8861654e9f4adf2732058e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerOfHandle: {fileID: 855910966}
-  ropeLength: 5
 --- !u!1 &1983296841
 GameObject:
   m_ObjectHideFlags: 0
@@ -9170,11 +9243,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 472372, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.010802031
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 472372, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 472372, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9311,8 +9384,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0.12086912, y: 0.07347038, z: 0.008969331, w: -0.98990524}
-  m_LocalPosition: {x: 0.7105657, y: 1.9758563, z: -2.954577}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  m_LocalPosition: {x: -1.4299996, y: -5.02, z: 4.13917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

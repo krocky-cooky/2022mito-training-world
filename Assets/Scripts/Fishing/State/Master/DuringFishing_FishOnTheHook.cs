@@ -47,19 +47,24 @@ namespace Fishing.State
             currentTimeCount = 0f;
 
             // トルクの指定
-            _fisrtTorque = Random.Range(masterStateController.minTorque, masterStateController.maxTorque);
+            // _fisrtTorque = Random.Range(masterStateController.minTorque, masterStateController.maxTorque);
+            _fisrtTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
             masterStateController.gameMaster.sendingTorque = _fisrtTorque;
 
-            // 魚の初期化
-            fish = GameObject.FindWithTag("fish").GetComponent<Fish>();
-            fish.weight = _fisrtTorque * masterStateController.fishWeightPerTorque;
-            // fish.species = "Sardine";
-            // fish.HP = 1.0f;
-            // fish.difficultyOfEscape = 1.0f;
-            // fish.maxIntensityOfMovements = 1.0f;
+            // // 魚の初期化
+            // masterStateController.fish = GameObject.FindWithTag("fish").GetComponent<Fish>();
+            // masterStateController.fish.weight = _fisrtTorque * masterStateController.fishWeightPerTorque;
+            // // masterStateController.fish.species = "Sardine";
+            // // masterStateController.fish.HP = 1.0f;
+            // // masterStateController.fish.difficultyOfEscape = 1.0f;
+            // // masterStateController.fish.maxIntensityOfMovements = 1.0f;
 
             // 音声を再生
             masterStateController.FishSoundOnTheHook.Play();
+
+            // 魚をはりに移動
+            masterStateController.distanceFromRope = 0.0f;
+            masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
         }
 
         public override void OnExit()
@@ -72,36 +77,40 @@ namespace Fishing.State
             currentTimeCount += Time.deltaTime;
 
             // 魚のHPは単調減少
-            fish.HP = fish.HP - masterStateController.changeRateOfHP * Time.deltaTime;
+            masterStateController.fish.HP = masterStateController.fish.HP - masterStateController.changeRateOfHP * Time.deltaTime;
 
             // 魚の暴れる強さ
             // 0と1の間を周期的に変化する
-            fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
-            // fish.currentIntensityOfMovements = 1.0f;
-            // fish.currentIntensityOfMovements = fish.maxIntensityOfMovements * Mathf.Abs(((currentTimeCount / masterStateController.periodOfFishIntensity) - Mathf.Floor(currentTimeCount / masterStateController.periodOfFishIntensity)) * 2.0f - 1.0f);
+            masterStateController.fish.currentIntensityOfMovements = masterStateController.fish.maxIntensityOfMovements * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+            // masterStateController.fish.currentIntensityOfMovements = 1.0f;
+            // masterStateController.fish.currentIntensityOfMovements = masterStateController.fish.maxIntensityOfMovements * Mathf.Abs(((currentTimeCount / masterStateController.periodOfFishIntensity) - Mathf.Floor(currentTimeCount / masterStateController.periodOfFishIntensity)) * 2.0f - 1.0f);
+
+            // ロープの音の大きさとピッチを変更
+            masterStateController.FishSoundOnTheHook.volume = masterStateController.minRopeSoundVolume + (1.0f - masterStateController.minRopeSoundVolume) * masterStateController.fish.currentIntensityOfMovements;
+            masterStateController.FishSoundOnTheHook.pitch = masterStateController.FishSoundOnTheHook.volume * 3.0f;
 
             // トルク送信
-            // masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.maxAplitudeOfTorque * fish.currentIntensityOfMovements * Mathf.Sin(currentTimeCount * 2.0f * Mathf.PI / masterStateController.periodOfTorque);
-            // masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.maxAplitudeOfTorque * fish.currentIntensityOfMovements * ((float)(Mathf.CeilToInt(currentTimeCount/ masterStateController.periodOfTorque) % 2) - 0.5f);
-            masterStateController.gameMaster.sendingTorque = Mathf.Max(_fisrtTorque - (1.0f - fish.currentIntensityOfMovements) * masterStateController.torqueReduction, 0.75f);
+            // masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.maxAplitudeOfTorque * masterStateController.fish.currentIntensityOfMovements * Mathf.Sin(currentTimeCount * 2.0f * Mathf.PI / masterStateController.periodOfTorque);
+            // masterStateController.gameMaster.sendingTorque = _fisrtTorque + masterStateController.maxAplitudeOfTorque * masterStateController.fish.currentIntensityOfMovements * ((float)(Mathf.CeilToInt(currentTimeCount/ masterStateController.periodOfTorque) % 2) - 0.5f);
+            masterStateController.gameMaster.sendingTorque = Mathf.Max(_fisrtTorque - (1.0f - masterStateController.fish.currentIntensityOfMovements) * masterStateController.torqueReduction, 0.75f);
 
             // 逃げにくさの更新
             // HPがゼロになったら更新しない
-            if (fish.HP > 0.0f){
-                if (Mathf.Abs(fish.currentIntensityOfMovements - masterStateController.trainingDevice.currentRelativePosition) > masterStateController.allowableDifference){
-                    fish.difficultyOfEscape = fish.difficultyOfEscape - masterStateController.changeRateOfEscape * Time.deltaTime;
+            if (masterStateController.fish.HP > 0.0f){
+                if (Mathf.Abs(masterStateController.fish.currentIntensityOfMovements - masterStateController.trainingDevice.currentRelativePosition) > masterStateController.allowableDifference){
+                    masterStateController.fish.difficultyOfEscape = masterStateController.fish.difficultyOfEscape - masterStateController.changeRateOfEscape * Time.deltaTime;
                 } else {
-                    fish.difficultyOfEscape = fish.difficultyOfEscape + masterStateController.changeRateOfEscape * Time.deltaTime;
+                    masterStateController.fish.difficultyOfEscape = masterStateController.fish.difficultyOfEscape + masterStateController.changeRateOfEscape * Time.deltaTime;
                 }
             }
 
             // 魚が逃げる
-            if (fish.difficultyOfEscape < 0.0f){
+            if (masterStateController.fish.difficultyOfEscape < 0.0f){
                 return (int)MasterStateController.StateType.DuringFishing_Wait;
             }
 
             // 魚の音声の切り替え
-            if (fish.HP < 0.0f && !(_fishSoundIsChanged)){
+            if (masterStateController.fish.HP < 0.0f && !(_fishSoundIsChanged)){
                 masterStateController.FishSoundOnTheHook.Stop();
                 masterStateController.FishSoundWithHP0.Play();
                 _fishSoundIsChanged = true;
@@ -113,7 +122,7 @@ namespace Fishing.State
             }
 
             //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            if ((fish.HP < 0.0f) && (((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1))){
+            if ((masterStateController.fish.HP < 0.0f) && (((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1))){
                 masterStateController.FishGoOnTheWater.Play();
                 return (int)MasterStateController.StateType.AfterFishing;
             }
