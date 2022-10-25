@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-using trainingObjects;
-using util;
-using game;
+using pseudogame.trainingObjects;
+using pseudogame.util;
+using pseudogame.game;
 
 
 using WebSocketSharp;

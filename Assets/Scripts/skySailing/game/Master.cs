@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using util;
-using game;
+using pseudogame.util;
+using pseudogame.game;
 using skySailing.game;
 using communication;
 

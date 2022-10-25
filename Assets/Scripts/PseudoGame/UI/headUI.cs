@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ui
+namespace pseudogame.ui
 {
     public class headUI : MonoBehaviour
     {

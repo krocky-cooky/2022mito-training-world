@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace util
+namespace pseudogame.util
 {
     public class Setup : MonoBehaviour
     {

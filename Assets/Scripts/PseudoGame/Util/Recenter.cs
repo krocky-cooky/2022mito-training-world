@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-namespace util
+namespace pseudogame.util
 {
     public class Recenter : MonoBehaviour
     {

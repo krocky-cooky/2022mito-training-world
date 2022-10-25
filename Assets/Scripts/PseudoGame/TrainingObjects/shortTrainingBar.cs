@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using game;
+using pseudogame.game;
 using communication;
 
-namespace trainingObjects
+namespace pseudogame.trainingObjects
 {
     public class shortTrainingBar : MonoBehaviour
     {

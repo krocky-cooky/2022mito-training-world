@@ -9,7 +9,7 @@ using UnityEngine.XR;
  
 // This is in fact just the Water script from Pro Standard Assets,
 // just with refraction stuff removed.
-namespace mirror
+namespace pseudogame.mirror
 {
     [ExecuteInEditMode] // Make mirror live-update even when not in play mode
     public class MirrorReflection : MonoBehaviour
@@ -19,7 +19,7 @@ namespace mirror
         public float m_ClipPlaneOffset = 0.07f;
         public int m_framesNeededToUpdate = 0;
     
-        public LayerMask m_ReflectLayers = -1;
+        public LayerMask m_ReflectLayers = 1 << 2;//((1 << 11) -1)^(1 << 11);
     
         private Dictionary<Camera, Camera> m_ReflectionCameras = new Dictionary<Camera, Camera>();
     
@@ -232,6 +232,7 @@ namespace mirror
                 GameObject go = new GameObject("Mirror Reflection Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox));
                 reflectionCamera = go.GetComponent<Camera>();
                 reflectionCamera.enabled = false;
+                reflectionCamera.cullingMask = 1 << 5;//((1 << 11) -1)^(1 << 11);
                 reflectionCamera.transform.position = transform.position;
                 reflectionCamera.transform.rotation = transform.rotation;
                 reflectionCamera.gameObject.AddComponent<FlareLayer>();

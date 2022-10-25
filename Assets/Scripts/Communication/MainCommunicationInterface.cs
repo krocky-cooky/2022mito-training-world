@@ -7,7 +7,8 @@ namespace communication
     public enum CommunicationType 
     {
         webSocket,
-        bluetooth
+        bluetooth,
+        serial
     }
     
     public class MainCommunicationInterface : MonoBehaviour

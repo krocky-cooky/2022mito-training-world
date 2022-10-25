@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using util;
+using pseudogame.util;
 using communication;
 
-namespace game
+namespace pseudogame.game
 {
 
     public enum GameState
@@ -60,11 +60,11 @@ namespace game
         // Update is called once per frame
         void Update()
         {
-            Debug.Log("update");
             //ワイヤ巻き取り用ボタンイベント
             if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
             {
                 reelWire();
+
             }
             if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
             {
@@ -117,6 +117,14 @@ namespace game
             StartCoroutine(sendTorqueModeCoroutine());
         }
 
+        public void setTorque(float torque)
+        {
+            SendingDataFormat data = new SendingDataFormat();
+            //data.setSpeed(REEL_SPEED);
+            data.setTorque(torque);
+            communicationInterface.sendData(data);
+        }
+
 
         //VR空間上のログ情報に追加
         public void addLog(string message)
@@ -153,7 +161,7 @@ namespace game
 
 
         //モーターの現状復帰用関数(速度0指令)
-        private void restore()
+        public void restore()
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setSpeed(0.0f);

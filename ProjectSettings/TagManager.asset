@@ -16,6 +16,10 @@ TagManager:
   - goal
   - ropeSound
   - checkPoint
+  - PseudoTrigger
+  - GameEnd
+  - WallCollision
+  - GetPoint
   layers:
   - Default
   - TransparentFX
@@ -25,8 +29,8 @@ TagManager:
   - UI
   - OpponentAvatar
   - Environment
-  - 
-  - 
+  - OnlyInMirror
+  - OnlyInMainCamera
   - 
   - 
   - 

@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 using System;
 using System.Text;
 
-using game;
-using util;
-using trainingObjects;
+using pseudogame.game;
+using pseudogame.util;
+using pseudogame.trainingObjects;
 
 namespace communication
 {
