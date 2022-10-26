@@ -71,6 +71,13 @@ namespace Fishing.State
                 }
             }
 
+            // 釣りの前に戻る
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
+            {
+                return (int)MasterStateController.StateType.BeforeFishing;
+            }
+
+
             return (int)StateType;
         }
     }

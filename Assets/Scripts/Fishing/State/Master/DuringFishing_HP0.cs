@@ -66,7 +66,6 @@ namespace Fishing.State
                 masterStateController.FishGoOnTheWater.Play();
                 return (int)MasterStateController.StateType.AfterFishing;
             }
-            
 
             return (int)StateType;
         }

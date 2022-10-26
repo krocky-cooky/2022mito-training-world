@@ -115,6 +115,12 @@ namespace Fishing.State
             if (masterStateController.fish.HP < 0.0f){
                 return (int)MasterStateController.StateType.DuringFishing_HP0;
             }
+
+            // 釣りの前に戻る
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
+            {
+                return (int)MasterStateController.StateType.BeforeFishing;
+            }
             
 
             return (int)StateType;

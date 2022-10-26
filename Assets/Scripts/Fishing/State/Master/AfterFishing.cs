@@ -56,7 +56,7 @@ namespace Fishing.State
             masterStateController.fish.transform.position = _fishEndPosition + (_fishFirstPosition - _fishEndPosition) * (masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeRasingFish;
             }
 
-            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(2))
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {
                 return (int)MasterStateController.StateType.BeforeFishing;
             }
