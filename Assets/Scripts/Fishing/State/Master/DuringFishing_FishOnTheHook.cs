@@ -69,7 +69,7 @@ namespace Fishing.State
 
         public override void OnExit()
         {
-            masterStateController.FishSoundWithHP0.Stop();
+            masterStateController.FishSoundOnTheHook.Stop();
         }
 
         public override int StateUpdate()
@@ -95,13 +95,10 @@ namespace Fishing.State
             masterStateController.gameMaster.sendingTorque = Mathf.Max(_fisrtTorque - (1.0f - masterStateController.fish.currentIntensityOfMovements) * masterStateController.torqueReduction, 0.75f);
 
             // 逃げにくさの更新
-            // HPがゼロになったら更新しない
-            if (masterStateController.fish.HP > 0.0f){
-                if (Mathf.Abs(masterStateController.fish.currentIntensityOfMovements - masterStateController.trainingDevice.currentRelativePosition) > masterStateController.allowableDifference){
+            if (Mathf.Abs(masterStateController.fish.currentIntensityOfMovements - masterStateController.trainingDevice.currentRelativePosition) > masterStateController.allowableDifference){
                     masterStateController.fish.difficultyOfEscape = masterStateController.fish.difficultyOfEscape - masterStateController.changeRateOfEscape * Time.deltaTime;
                 } else {
                     masterStateController.fish.difficultyOfEscape = masterStateController.fish.difficultyOfEscape + masterStateController.changeRateOfEscape * Time.deltaTime;
-                }
             }
 
             // 魚が逃げる
@@ -109,22 +106,14 @@ namespace Fishing.State
                 return (int)MasterStateController.StateType.DuringFishing_Wait;
             }
 
-            // 魚の音声の切り替え
-            if (masterStateController.fish.HP < 0.0f && !(_fishSoundIsChanged)){
-                masterStateController.FishSoundOnTheHook.Stop();
-                masterStateController.FishSoundWithHP0.Play();
-                _fishSoundIsChanged = true;
-            }
-
             // 直前の位置の更新
             if ((_whenPreviousPosition - currentTimeCount) > masterStateController.timeOfRaising){
                 _previousPosition = masterStateController.trainingDevice.currentRelativePosition;
             }
 
-            //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            if ((masterStateController.fish.HP < 0.0f) && (((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1))){
-                masterStateController.FishGoOnTheWater.Play();
-                return (int)MasterStateController.StateType.AfterFishing;
+            //HPがゼロになったら次に移行
+            if (masterStateController.fish.HP < 0.0f){
+                return (int)MasterStateController.StateType.DuringFishing_HP0;
             }
             
 

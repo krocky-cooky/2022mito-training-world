@@ -124,6 +124,7 @@ namespace Fishing.StateController
             DuringFishing_Wait,
             DuringFishing_Nibble,
             DuringFishing_FishOnTheHook,
+            DuringFishing_HP0,
             AfterFishing,
         }
 
@@ -142,6 +143,9 @@ namespace Fishing.StateController
 
             stateDic[(int)StateType.DuringFishing_FishOnTheHook] = gameObject.AddComponent<DuringFishing_FishOnTheHook>();
             stateDic[(int)StateType.DuringFishing_FishOnTheHook].Initialize((int)StateType.DuringFishing_FishOnTheHook);
+
+            stateDic[(int)StateType.DuringFishing_HP0] = gameObject.AddComponent<DuringFishing_HP0>();
+            stateDic[(int)StateType.DuringFishing_HP0].Initialize((int)StateType.DuringFishing_HP0);
 
             stateDic[(int)StateType.AfterFishing] = gameObject.AddComponent<AfterFishing>();
             stateDic[(int)StateType.AfterFishing].Initialize((int)StateType.AfterFishing);
