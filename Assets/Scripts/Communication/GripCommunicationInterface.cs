@@ -20,13 +20,16 @@ namespace communication
         void Update() 
         {
             isConnected = bluetoothCentral.isConnected;
+            if (bluetoothCentral.getReceivedText() != ""){
+                isConnected = true;
+            }
         }
 
         public ReceivingGripDataFormat getReceivedData()
         {
             string text = bluetoothCentral.getReceivedText();
+            Debug.Log("text in grip comunication is " + text);
             return JsonUtility.FromJson<ReceivingGripDataFormat>(text);
-
         }
     }
 }
