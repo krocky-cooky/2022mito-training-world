@@ -42,6 +42,8 @@ namespace pseudogame.game
         [SerializeField]
         private int _gameOverCollisionCount = 5;
         [SerializeField]
+        private int _wallSpeed = 0.05f;
+        [SerializeField]
         private List<WallHeight> _wallHeight = new List<WallHeight>()
         {
             WallHeight.height30,
@@ -56,7 +58,6 @@ namespace pseudogame.game
         [SerializeField]
         private AudioClip _getPointSound;
 
-        private float _speed = 0.05f;
         private Vector3 _stickStartPosition;
         private bool _gameStart = false;
         private Vector3 _initialWallPosition;
@@ -108,7 +109,7 @@ namespace pseudogame.game
         private void move(GameObject obj)
         {
             Vector3 position = obj.transform.position;
-            position.x += _speed;
+            position.x += _wallSpeed;
             obj.transform.position = position;
         }
 
@@ -187,8 +188,6 @@ namespace pseudogame.game
             _collisionAudioSource.Play();
             _liftCount++;
         }
-
-
         
     }
 }

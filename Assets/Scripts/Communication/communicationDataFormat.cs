@@ -47,6 +47,16 @@ namespace communication
         }
     }
 
+    public class SwitchMotorFormat
+    {
+        public SwitchMotorFormat(int _motor)
+        {
+            motor = _motor;
+        }
+
+        public int motor;
+    }
+
     public class ReceivingGripDataFormat 
     {
         public ReceivingGripDataFormat()

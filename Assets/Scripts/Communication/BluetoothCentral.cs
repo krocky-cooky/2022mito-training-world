@@ -294,11 +294,10 @@ namespace communication
         }
 
 
-        public void sendData(SendingDataFormat sendingData) 
+        public void sendData(string dataJson) 
         {
             if(isSubscribed)
             {
-                string dataJson = JsonUtility.ToJson(sendingData);
                 byte[] payload = Encoding.ASCII.GetBytes(dataJson);
                 BleApi.BLEData data = new BleApi.BLEData();
                 data.buf = new byte[512];

@@ -12,7 +12,7 @@ namespace communication
         [SerializeField]
         private string portName = "COM1";
         [SerializeField]
-        private int baudRate = 9600;
+        private int baudRate = 115200;
 
         private SerialPort _serialPort;
         private Thread _thread;
@@ -26,8 +26,8 @@ namespace communication
         //windowsではCOM1
         //Macでは/dev/tty.usbmodem1421など
 
-        private string _message;
         private bool _isNewMessageReceived = false;
+        private string _message;
 
         void Awake()
         {
@@ -101,12 +101,11 @@ namespace communication
             return receivedData;
         }
 
-        public void sendData(SendingDataFormat data)
+        public void sendData(string data)
         {
-            string datajson = JsonUtility.ToJson(data);
             if(_isRunning)
             {
-                Write(datajson);
+                Write(data);
             }
             else
             {
@@ -116,7 +115,9 @@ namespace communication
 
         public void Write(string message)
         {
+            message += '\n';
             try {
+                Debug.Log(message);
                 _serialPort.Write(message);
             } 
             catch (System.Exception e) 
@@ -132,7 +133,7 @@ namespace communication
 
         private void OnDataReceived(string message)
         {
-            Debug.Log(message);
+            receivedText = _message;
         }
     }
 }

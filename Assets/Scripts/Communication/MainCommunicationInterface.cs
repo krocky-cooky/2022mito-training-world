@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace communication
     {
         private BluetoothCentral bluetoothCentral;
         private WebSocketClient webSocketClient;
+        private SerialHandler serialHandler;
         
         public bool isConnected = false;
 
@@ -28,6 +30,8 @@ namespace communication
         {
             bluetoothCentral = GetComponent<BluetoothCentral>();
             webSocketClient = GetComponent<WebSocketClient>();
+            serialHandler = GetComponent<SerialHandler>();
+            toggleMotor(true);
         }
 
         // Update is called once per frame
@@ -40,6 +44,9 @@ namespace communication
                     break;
                 case CommunicationType.bluetooth:
                     isConnected = bluetoothCentral.isConnected;
+                    break;
+                case CommunicationType.serial:
+                    isConnected = serialHandler.IsOpen();
                     break;
             }
 
@@ -55,6 +62,9 @@ namespace communication
                 case CommunicationType.bluetooth:
                     bluetoothCentral.Connect();
                     break;
+                case CommunicationType.serial:
+                    serialHandler.Open();
+                    break;
             }
         }
 
@@ -68,6 +78,9 @@ namespace communication
                 case CommunicationType.bluetooth:
                     return bluetoothCentral.getReceivedData();
                     break;
+                case CommunicationType.serial:
+                    return serialHandler.getReceivedData();
+                    break;
                 default:
                     return null;
             }       
@@ -75,16 +88,21 @@ namespace communication
 
         public void sendData(SendingDataFormat data)
         {
+            string dataJson = JsonUtility.ToJson(data);
             switch(communicationType)
             {
                 case CommunicationType.webSocket:
-                    webSocketClient.sendData(data);
+                    webSocketClient.sendData(dataJson);
                     break;
                 case CommunicationType.bluetooth:
-                    bluetoothCentral.sendData(data);
+                    bluetoothCentral.sendData(dataJson);
+                    break;
+                case CommunicationType.serial:
+                    serialHandler.sendData(dataJson);
                     break;
                 
-            }     
+            }
+            Debug.Log("send");
         }
 
         public void saveRegisteredTorque(string username)
@@ -111,6 +129,26 @@ namespace communication
                     bluetoothCentral.registerTorqueMode = flag;
                     break;
             }   
+        }
+
+        public void toggleMotor(bool turnOn) 
+        {
+            int turnOnInt = Convert.ToInt32(turnOn);
+            SwitchMotorFormat motor = new SwitchMotorFormat(turnOnInt);
+            string dataJson = JsonUtility.ToJson(motor);
+            switch(communicationType)
+            {
+                case CommunicationType.webSocket:
+                    webSocketClient.sendData(dataJson);
+                    break;
+                case CommunicationType.bluetooth:
+                    bluetoothCentral.sendData(dataJson);
+                    break;
+                case CommunicationType.serial:
+                    serialHandler.sendData(dataJson);
+                    break;
+            }
+
         }
     }
 }
