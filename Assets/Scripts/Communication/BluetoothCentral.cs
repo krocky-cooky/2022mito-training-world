@@ -6,15 +6,15 @@ using UnityEngine.EventSystems;
 using System;
 using System.Text;
 
-using game;
-using util;
-using trainingObjects;
+using pseudogame.game;
+using pseudogame.util;
+using pseudogame.trainingObjects;
 
 namespace communication
 {
     public class BluetoothCentral : MonoBehaviour
     {
-        private ReceivingDataFormat receivedData;
+        public string receivedText;
         private Master gameMaster;
         private bool isChanged = false;
         private List<float> torqueList = new List<float>();
@@ -215,15 +215,14 @@ namespace communication
             if(isSubscribed)
             {
                 BleApi.BLEData res = new BleApi.BLEData();
-                string receivedText = "{}";
-                while(BleApi.PollData(out res, false))
+                // string receivedText = "{}";
+                if(BleApi.PollData(out res, false))
                 {
                     receivedText = Encoding.ASCII.GetString(res.buf,0,res.size);
                 }
-                if(receivedText != "{}")
+                if(receivedText != "")
                 {
-                    Debug.Log(receivedText);
-                    receivedData = JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
+                    Debug.Log("ble subscribed message is "+receivedText);
                 }
             }
         }
@@ -286,15 +285,20 @@ namespace communication
 
         public ReceivingDataFormat getReceivedData()
         {
-            return receivedData;
+            return JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
+        }
+
+        public string getReceivedText()
+        {
+            Debug.Log("getReceivedText is "+receivedText);
+            return receivedText;
         }
 
 
-        public void sendData(SendingDataFormat sendingData) 
+        public void sendData(string dataJson) 
         {
             if(isSubscribed)
             {
-                string dataJson = JsonUtility.ToJson(sendingData);
                 byte[] payload = Encoding.ASCII.GetBytes(dataJson);
                 BleApi.BLEData data = new BleApi.BLEData();
                 data.buf = new byte[512];

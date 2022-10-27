@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace game
+namespace pseudogame.game
 {
     public class OpponentAvatar : MonoBehaviour
     {

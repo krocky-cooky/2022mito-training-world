@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using util;
-using game;
+using pseudogame.util;
+using pseudogame.game;
 using skySailing.game;
 using communication;
 
@@ -31,7 +31,7 @@ namespace skySailing.game
         [SerializeField]
         private ForceGauge forceGauge;
         [SerializeField]
-        private CommunicationInterface communicationInterface;
+        private MainCommunicationInterface communicationInterface;
 
         private float time = 0.0f;
         private Vector3  _initShipPosition;

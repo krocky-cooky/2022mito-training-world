@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-namespace game
+namespace pseudogame.game
 {
     
     public class Battle : MonoBehaviour

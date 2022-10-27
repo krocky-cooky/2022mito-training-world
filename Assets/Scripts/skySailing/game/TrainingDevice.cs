@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using game;
 using communication;
 
 namespace skySailing.game
@@ -25,7 +24,7 @@ namespace skySailing.game
         [SerializeField]
         private SailingShip SailingShip;
         [SerializeField]
-        private CommunicationInterface communicationInterface;
+        private MainCommunicationInterface communicationInterface;
 
         // private webSocketClient _socketClient;
 

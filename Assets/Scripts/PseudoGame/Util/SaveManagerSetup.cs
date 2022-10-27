@@ -5,7 +5,7 @@ using System ;
 using System.IO;
 using System.Linq;
 
-namespace util 
+namespace pseudogame.util 
 {
     public class SaveData 
     {

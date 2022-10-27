@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-using trainingObjects;
-using util;
-using game;
+using pseudogame.trainingObjects;
+using pseudogame.util;
+using pseudogame.game;
 
 
 using WebSocketSharp;
@@ -116,15 +116,14 @@ namespace communication
         }
 
         //データの送信
-        public void sendData(SendingDataFormat data) 
+        public void sendData(string data) 
         {
-            string datajson = JsonUtility.ToJson(data);
             if(isConnected)
             {
                 try
                 {
-                    _socket.Send(datajson);
-                    Debug.Log(datajson);
+                    _socket.Send(data);
+                    Debug.Log(data);
                 }
                 catch (Exception e)
                 {

@@ -1,100 +1,139 @@
-// using UnityEngine;
-// using System.Collections;
-// using System.IO.Ports;
-// using System.Threading;
+using UnityEngine;
+using System.Collections;
+using System.IO.Ports;
+using System.Threading;
 
-// namespace communication
-// {
-//     public class SerialHandler : MonoBehaviour
-//     {
-//         public delegate void SerialDataReceivedEventHandler(string message);
-//         public event SerialDataReceivedEventHandler OnDataReceived;
+namespace communication
+{
+    public class SerialHandler : MonoBehaviour
+    {
+        
 
-//         //ポート名
-//         //例
-//         //Linuxでは/dev/ttyUSB0
-//         //windowsではCOM1
-//         //Macでは/dev/tty.usbmodem1421など
-//         public string portName = "COM1";
-//         public int baudRate    = 9600;
+        [SerializeField]
+        private string portName = "COM1";
+        [SerializeField]
+        private int baudRate = 115200;
 
-//         private SerialPort serialPort_;
-//         private Thread thread_;
-//         private bool isRunning_ = false;
+        private SerialPort _serialPort;
+        private Thread _thread;
+        private bool _isRunning = false;
+        private ReceivingDataFormat receivedData;
+        private string receivedText;
 
-//         private string message_;
-//         private bool isNewMessageReceived_ = false;
+        //ポート名
+        //例
+        //Linuxでは/dev/ttyUSB0
+        //windowsではCOM1
+        //Macでは/dev/tty.usbmodem1421など
 
-//         void Awake()
-//         {
-//             Open();
-//         }
+        private bool _isNewMessageReceived = false;
+        private string _message;
 
-//         void Update()
-//         {
-//             if (isNewMessageReceived_) {
-//                 OnDataReceived(message_);
-//             }
-//             isNewMessageReceived_ = false;
-//         }
+        void Awake()
+        {
+            Open();
+        }
 
-//         void OnDestroy()
-//         {
-//             Close();
-//         }
+        void Update()
+        {
+            if (_isNewMessageReceived) {
+                OnDataReceived(_message);
+            }
+            _isNewMessageReceived = false;
+        }
 
-//         public void Open()
-//         {
-//             serialPort_ = new SerialPort(portName, baudRate, Parity.None, 8, StopBits.One);
-//             //または
-//             //serialPort_ = new SerialPort(portName, baudRate);
-//             serialPort_.Open();
+        void OnDestroy()
+        {
+            Close();
+        }
 
-//             isRunning_ = true;
+        public void Open()
+        {
+            if(_isRunning) 
+            {
+                Debug.Log("serial already open");
+                return;
+            }
+            _serialPort = new SerialPort(portName, baudRate, Parity.None, 8, StopBits.One);
+            //または
+            //_serialPort = new SerialPort(portName, baudRate);
+            _serialPort.Open();
 
-//             thread_ = new Thread(Read);
-//             thread_.Start();
-//         }
+            _isRunning = true;
 
-//         private void Close()
-//         {
-//             isNewMessageReceived_ = false;
-//             isRunning_ = false;
+            _thread = new Thread(Read);
+            _thread.Start();
+        }
 
-//             if (thread_ != null && thread_.IsAlive) {
-//                 thread_.Join();
-//             }
+        private void Close()
+        {
+            _isNewMessageReceived = false;
+            _isRunning = false;
 
-//             if (serialPort_ != null && serialPort_.IsOpen) {
-//                 serialPort_.Close();
-//                 serialPort_.Dispose();
-//             }
-//         }
+            if (_thread != null && _thread.IsAlive) {
+                _thread.Join();
+            }
 
-//         private void Read()
-//         {
-//             while (isRunning_ && serialPort_ != null && serialPort_.IsOpen) {
-//                 try {
-//                     message_ = serialPort_.ReadLine();
-//                     isNewMessageReceived_ = true;
-//                 } catch (System.Exception e) {
-//                     Debug.LogWarning(e.Message);
-//                 }
-//             }
-//         }
+            if (_serialPort != null && _serialPort.IsOpen) {
+                _serialPort.Close();
+                _serialPort.Dispose();
+            }
+        }
 
-//         public void Write(string message)
-//         {
-//             try {
-//                 serialPort_.Write(message);
-//             } catch (System.Exception e) {
-//                 Debug.LogWarning(e.Message);
-//             }
-//         }
+        private void Read()
+        {
+            while (_isRunning && _serialPort != null && _serialPort.IsOpen) {
+                try 
+                {
+                    _message = _serialPort.ReadLine();
+                    _isNewMessageReceived = true;
+                } 
+                catch (System.Exception e) 
+                {
+                    Debug.LogWarning(e.Message);
+                }
+            }
+        }
 
-//         public bool IsOpen()
-//         {
-//             return serialPort_.IsOpen;
-//         }
-//     }
-// }
+        public ReceivingDataFormat getReceivedData()
+        {
+            receivedData = JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
+            return receivedData;
+        }
+
+        public void sendData(string data)
+        {
+            if(_isRunning)
+            {
+                Write(data);
+            }
+            else
+            {
+                Debug.Log("serial port is not opened");
+            }
+        }
+
+        public void Write(string message)
+        {
+            message += '\n';
+            try {
+                Debug.Log(message);
+                _serialPort.Write(message);
+            } 
+            catch (System.Exception e) 
+            {
+                Debug.LogWarning(e.Message);
+            }
+        }
+
+        public bool IsOpen()
+        {
+            return _serialPort.IsOpen;
+        }
+
+        private void OnDataReceived(string message)
+        {
+            receivedText = _message;
+        }
+    }
+}
