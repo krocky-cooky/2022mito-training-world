@@ -21,6 +21,8 @@ namespace Fishing.State
             Debug.Log("BeforeFishing");
 
             masterStateController.frontViewUiText.text = "Press X button to start";
+
+            masterStateController.gameMaster.sendingTorque = 0.0f;
         }
 
         public override void OnExit()

@@ -32,6 +32,9 @@ namespace Fishing.State
         // つつきのための時間カウント
         public float _timeCountForNibble = 100.0f;
 
+        // 魚が突く音を視覚や力覚と同期させるバッファ
+        private float _timeCountForNibbleSound = 100.0f;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_Nibble");
@@ -57,6 +60,7 @@ namespace Fishing.State
                 _previousSpikeTime = currentTimeCount;
                 _spikeInterval = Random.Range(masterStateController.minIntervalOfNibbling, masterStateController.maxIntervalOfNibbling);
                 _timeCountForNibble = masterStateController.buffurTimeForNibble;
+                Invoke("PlayNibbleSound", masterStateController.buffurTimeForNibbleSound);
             }
             if (currentTimeCount < (_spikeEndTime - masterStateController.latterSpikePeriod)){
                 masterStateController.gameMaster.sendingTorque = masterStateController.firstSpikeSize;
@@ -64,10 +68,11 @@ namespace Fishing.State
             }else if(currentTimeCount < _spikeEndTime){
                 masterStateController.gameMaster.sendingTorque = masterStateController.latterSpikeSize;
                 Debug.Log("latter spike");
-                masterStateController.NibbleSound.Play();
+                // masterStateController.NibbleSound.Play();
             }else{
                 masterStateController.gameMaster.sendingTorque = masterStateController.baseTorqueDuringFishing;
             }
+
 
             // 魚が突く様子を視覚表現
             // masterStateController.distanceFromRope = masterStateController.SizeOfFishNibble * Mathf.Abs(Mathf.Cos(currentTimeCount * Mathf.PI / (masterStateController.firstPeriodOfFishNibble + masterStateController.latterPeriodOfFishNibble)));
@@ -99,6 +104,10 @@ namespace Fishing.State
             }
 
             return (int)StateType;
+        }
+
+        public void PlayNibbleSound(){
+            masterStateController.NibbleSound.Play();
         }
 
     }

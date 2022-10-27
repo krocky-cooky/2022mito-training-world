@@ -46,7 +46,7 @@ namespace Fishing.StateController
         public Transform waterSurfaceTransform;
 
         // 釣り糸の先端
-        public RopeRelayBelowHandle ropeRelayBelowHandle;
+        public Transform ropeRelayBelowHandle;
 
         // 魚のオブジェクト
         public Fish fish;
@@ -102,6 +102,10 @@ namespace Fishing.StateController
 
         // つつきのための時間調整量
         public float buffurTimeForNibble = -0.5f;
+
+
+        // 魚が突くときの音を視覚や力覚と同期させるためのバッファ
+        public float buffurTimeForNibbleSound = -0.5f;
 
         // サウンド
         // ルアーの着水音

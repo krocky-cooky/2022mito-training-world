@@ -894,6 +894,7 @@ MonoBehaviour:
   outputPosition: 0
   maxOutputVelocity: 1
   gripCommunicationInterface: {fileID: 0}
+  serialHandler: {fileID: 0}
 --- !u!1001 &401995505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4533,13 +4534,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1999a8cad1a4459bc33d17303cb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputInterface: 0
+  inputInterface: 1
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
   currentRelativePosition: 0
   rightControllerAnchor: {fileID: 1772564230}
-  communicationInterface: {fileID: 0}
+  communicationInterface: {fileID: 1322611939}
 --- !u!1 &1078436898
 GameObject:
   m_ObjectHideFlags: 0
@@ -5496,7 +5497,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49274b14fd4272c4381fa14e9e1bdec9, type: 3}
   m_Name: 
@@ -5518,6 +5519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef9746df6b3b7e4e8eb2394246d6cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRunning: 0
   portName: COM3
   baudRate: 115200
 --- !u!114 &1322611938
@@ -5527,7 +5529,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5dce2e1569d65a4e88692469d055df6, type: 3}
   m_Name: 
@@ -7597,6 +7599,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400008, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -8312,7 +8322,7 @@ MonoBehaviour:
   distanseFromFishToCamera: 10
   timeRasingFish: 0.25
   waterSurfaceTransform: {fileID: 1210874647}
-  ropeRelayBelowHandle: {fileID: 1973850307}
+  ropeRelayBelowHandle: {fileID: 1973850306}
   fish: {fileID: 1996936798}
   maxTorque: 1.5
   minTorque: 1.5
@@ -8326,11 +8336,11 @@ MonoBehaviour:
   baseTorqueDuringFishing: 0.75
   maxIntervalOfNibbling: 2
   minIntervalOfNibbling: 1
-  maxTimeOfNibbling: 5
-  minTimeOfNibbling: 5
+  maxTimeOfNibbling: 15
+  minTimeOfNibbling: 10
   timeUntilFishHitAtHalfChance: 2
   frontViewUiText: {fileID: 1697318979}
-  torqueReduction: 5
+  torqueReduction: 0.5
   SizeOfFishMovement: 3
   PeriodOfFishMovement: 5
   BaseDistanceOfFishFromRope: 4
@@ -8338,7 +8348,8 @@ MonoBehaviour:
   SizeOfFishNibble: 2
   firstPeriodOfFishNibble: 0.22
   latterPeriodOfFishNibble: 1.2
-  buffurTimeForNibble: -0.5
+  buffurTimeForNibble: 0.3
+  buffurTimeForNibbleSound: -0.5
   LureLandingSound: {fileID: 1161297181}
   NibbleSound: {fileID: 2045138952}
   FishSoundOnTheHook: {fileID: 1681168349}
@@ -8678,7 +8689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Sardine
   weight: 0
-  HP: 15
+  HP: 3
   difficultyOfEscape: 100
   maxIntensityOfMovements: 1
   currentIntensityOfMovements: 1
@@ -9401,8 +9412,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0.014022367, y: 0.9839818, z: 0.15324622, w: -0.089993656}
-  m_LocalPosition: {x: 2.2651367, y: -10.538642, z: 12.643586}
+  m_LocalRotation: {x: -0.046481386, y: 0.008990144, z: 0.00041834128, w: 0.99887866}
+  m_LocalPosition: {x: -0.11870769, y: -0.47513133, z: -6.5941644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

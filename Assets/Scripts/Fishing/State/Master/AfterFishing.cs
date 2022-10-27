@@ -35,6 +35,8 @@ namespace Fishing.State
             _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
 
             masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString() + "kg";
+
+            masterStateController.gameMaster.sendingTorque = 0.0f;
         }
 
         public override void OnExit()
