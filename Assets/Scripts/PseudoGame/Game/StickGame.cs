@@ -42,7 +42,7 @@ namespace pseudogame.game
         [SerializeField]
         private int _gameOverCollisionCount = 5;
         [SerializeField]
-        private int _wallSpeed = 0.05f;
+        private float _wallSpeed = 0.05f;
         [SerializeField]
         private List<WallHeight> _wallHeight = new List<WallHeight>()
         {

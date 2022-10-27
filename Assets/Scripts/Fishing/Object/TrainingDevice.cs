@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using game;
+using Fishing.Game;
 using communication;
 
 namespace Fishing.Object
@@ -33,7 +33,7 @@ namespace Fishing.Object
         // [SerializeField]
         // private SailingShip SailingShip;
         [SerializeField]
-        private CommunicationInterface communicationInterface;
+        private MainCommunicationInterface communicationInterface;
 
         // private webSocketClient _socketClient;
 

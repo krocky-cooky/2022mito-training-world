@@ -23,7 +23,7 @@ namespace Fishing.Game
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
-        private CommunicationInterface communicationInterface;
+        private MainCommunicationInterface communicationInterface;
         [SerializeField]
         private MasterStateController masterStateController;
         [SerializeField]
