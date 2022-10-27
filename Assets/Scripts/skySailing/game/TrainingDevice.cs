@@ -35,9 +35,9 @@ namespace skySailing.game
         }
 
         void Update(){
-            currentAbsPosition = Input.mousePosition.y;
+            // currentAbsPosition = Input.mousePosition.y;
             // currentAbsPosition = _socketClient.integrationAngleForSkySailing;
-            // currentAbsPosition = rightControllerAnchor.transform.position.y - SailingShip.transform.position.y;
+            currentAbsPosition = rightControllerAnchor.transform.position.y - SailingShip.transform.position.y;
             currentRelativePosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));
             // マシンのハンドル等のストロークポジション登録
             if(OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))

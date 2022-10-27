@@ -893,6 +893,7 @@ MonoBehaviour:
   positionCalculationMethod: 0
   outputPosition: 0
   maxOutputVelocity: 1
+  gripCommunicationInterface: {fileID: 0}
 --- !u!1001 &401995505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4538,7 +4539,7 @@ MonoBehaviour:
   currentAbsPosition: 0
   currentRelativePosition: 0
   rightControllerAnchor: {fileID: 1772564230}
-  communicationInterface: {fileID: 1322611937}
+  communicationInterface: {fileID: 0}
 --- !u!1 &1078436898
 GameObject:
   m_ObjectHideFlags: 0
@@ -5443,10 +5444,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0ab58b5a71c67e4f8b94b31dbcae400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UiText: {fileID: 0}
+  UiText: {fileID: 1697318979}
   sendingTorque: 0
   viewerObject: {fileID: 813061342}
-  communicationInterface: {fileID: 1322611937}
+  communicationInterface: {fileID: 1322611939}
   masterStateController: {fileID: 1895901906}
   torqueSendingInterval: 0.1
 --- !u!4 &1309862871 stripped
@@ -5466,6 +5467,7 @@ GameObject:
   - component: {fileID: 1322611936}
   - component: {fileID: 1322611938}
   - component: {fileID: 1322611937}
+  - component: {fileID: 1322611939}
   m_Layer: 0
   m_Name: communication
   m_TagString: webSocketClient
@@ -5513,11 +5515,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1322611934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 021dca4c84bbca24882482bf48957f7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ef9746df6b3b7e4e8eb2394246d6cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isConnected: 0
-  communicationType: 0
+  portName: COM3
+  baudRate: 115200
 --- !u!114 &1322611938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5530,6 +5532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5dce2e1569d65a4e88692469d055df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  receivedText: 
   services: []
   isConnected: 0
   registerTorqueMode: 0
@@ -5537,6 +5540,20 @@ MonoBehaviour:
   serviceId: '{0000181d-0000-1000-8000-00805f9b34fb}'
   characteristicId: '{00002a98-0000-1000-8000-00805f9b34fb}'
   StartScan: 1
+--- !u!114 &1322611939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322611934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c567b7ab052214d8e23dd73f4ca16c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isConnected: 0
+  communicationType: 2
 --- !u!1001 &1341096872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8313,7 +8330,7 @@ MonoBehaviour:
   minTimeOfNibbling: 5
   timeUntilFishHitAtHalfChance: 2
   frontViewUiText: {fileID: 1697318979}
-  torqueReduction: 0.5
+  torqueReduction: 5
   SizeOfFishMovement: 3
   PeriodOfFishMovement: 5
   BaseDistanceOfFishFromRope: 4
@@ -8661,7 +8678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Sardine
   weight: 0
-  HP: 30
+  HP: 15
   difficultyOfEscape: 100
   maxIntensityOfMovements: 1
   currentIntensityOfMovements: 1
@@ -9384,8 +9401,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -1.4299996, y: -5.02, z: 4.13917}
+  m_LocalRotation: {x: 0.014022367, y: 0.9839818, z: 0.15324622, w: -0.089993656}
+  m_LocalPosition: {x: 2.2651367, y: -10.538642, z: 12.643586}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

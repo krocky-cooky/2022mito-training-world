@@ -42,6 +42,7 @@ namespace Fishing.Game
         // Update is called once per frame
         void Update()
         {
+
             time += Time.deltaTime;
 
             masterStateController.UpdateSequence();
