@@ -59,7 +59,7 @@ namespace Fishing.State
             // 初期化
             currentTimeCount = 0f;
             _escapeGauge = 0.0f;
-            masterStateController.centerOfRotation = masterStateController.fish.transform.position + new Vector3(0.0f, 0.0f, masterStateController.radius);
+            masterStateController.centerOfRotation = masterStateController.fish.transform.position - new Vector3(0.0f, 0.0f, masterStateController.radius);
             _fishAngle = 0.0f;
             _maxHP = masterStateController.fish.HP;
             _minTorque = _maxTorque - masterStateController.torqueReduction;
@@ -69,6 +69,8 @@ namespace Fishing.State
         public override void OnExit()
         {
             masterStateController.FishSoundOnTheHook.Stop();
+            OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
+            masterStateController.fish.HP = _maxHP;
         }
 
         public override int StateUpdate()
@@ -104,6 +106,9 @@ namespace Fishing.State
             // ピッチは、トルクの1.58乗に比例。これで高音域をシャープにする
             masterStateController.FishSoundOnTheHook.volume = masterStateController.minRopeSoundVolume + (1.0f - masterStateController.minRopeSoundVolume) * _normalizedTorque;
             masterStateController.FishSoundOnTheHook.pitch = masterStateController.minRopePitch + (3.0f - masterStateController.minRopePitch) * (Mathf.Pow(_normalizedTorque, 1.58f));
+
+            // トルクに応じて右のリモコンの振動を生成
+            OVRInput.SetControllerVibration(0.01f, _normalizedTorque, OVRInput.Controller.RTouch);
 
 
             // 魚のHPは、リールのテンションの強さ(=トルク)に応じて減少

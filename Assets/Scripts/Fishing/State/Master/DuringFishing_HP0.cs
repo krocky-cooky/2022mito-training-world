@@ -47,8 +47,8 @@ namespace Fishing.State
             masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
 
             // 初期化
-            _previousPosition = 0.0f;
-            _whenPreviousPosition = 0.0f;
+            _previousPosition = masterStateController.trainingDevice.currentNormalizedPosition;
+            _whenPreviousPosition = masterStateController.timeOfRaising + 1.0f;
         }
 
         public override void OnExit()

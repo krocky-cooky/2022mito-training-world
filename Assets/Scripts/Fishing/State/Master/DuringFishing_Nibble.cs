@@ -65,7 +65,12 @@ namespace Fishing.State
                 _previousSpikeTime = currentTimeCount;
                 _spikeInterval = Random.Range(masterStateController.minIntervalOfNibbling, masterStateController.maxIntervalOfNibbling);
                 _timeCountForNibble = masterStateController.buffurTimeForNibble;
+
+                // 音発生
                 Invoke("PlayNibbleSound", masterStateController.buffurTimeForNibbleSound);
+
+                // 振動発生
+                Invoke("PlayNibbleVibration", masterStateController.buffurTimeForNibbleSound);
             }
             if (currentTimeCount < (_spikeEndTime - masterStateController.latterSpikePeriod)){
                 masterStateController.gameMaster.sendingTorque = masterStateController.firstSpikeSize;
@@ -111,6 +116,15 @@ namespace Fishing.State
 
         public void PlayNibbleSound(){
             masterStateController.NibbleSound.Play();
+        }
+
+        public void PlayNibbleVibration(){
+            OVRInput.SetControllerVibration(0.01f, 0.5f, OVRInput.Controller.RTouch);
+            Invoke("StopNibbleVibration", 0.25f);
+        }
+
+        public void StopNibbleVibration(){
+            OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
         }
 
     }
