@@ -250,6 +250,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 80778454}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &156113084 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9502070, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
+  m_PrefabInstance: {fileID: 2133003399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &156216985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8187,8 +8192,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859742329}
-  m_LocalRotation: {x: 0.000000030908623, y: 0.7071068, z: 0.7071068, w: -0.000000030908623}
-  m_LocalPosition: {x: -1.4299996, y: -5.02, z: 4.13917}
+  m_LocalRotation: {x: -0.008193467, y: 0.98952997, z: 0.062422983, w: 0.12987195}
+  m_LocalPosition: {x: -11.30865, y: -1.4789795, z: 40.302628}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8354,11 +8359,16 @@ MonoBehaviour:
   FishSoundOnTheHook: {fileID: 1681168349}
   FishSoundWithHP0: {fileID: 374337162}
   FishGoOnTheWater: {fileID: 634916855}
-  minRopeSoundVolume: 0.2
+  minRopeSoundVolume: 0.3
+  minRopePitch: 0.6
   radius: 4
-  angularVelocity: 90
+  maxAngularVelocity: 180
+  minAngularVelocity: 30
   initialAngle: 180
   centerOfRotation: {x: 0, y: 0, z: 0}
+  sardineAnimator: {fileID: 156113084}
+  maxSpeedOfFishTwist: 12
+  minSpeedOfFishTwist: 3
 --- !u!222 &1895901907
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8692,8 +8702,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Sardine
   weight: 0
-  HP: 1000
-  easeOfEscape: 0.002
+  HP: 100
+  easeOfEscape: 0.2
   currentIntensityOfMovements: 1
 --- !u!1 &2012035246
 GameObject:
@@ -9315,6 +9325,10 @@ PrefabInstance:
       propertyPath: forwardSpeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11468834, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
+      propertyPath: sardineAnimator
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
 --- !u!1 &2137990787
@@ -9414,8 +9428,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0.000000030908623, y: 0.7071068, z: 0.7071068, w: -0.000000030908623}
-  m_LocalPosition: {x: -1.4299996, y: -5.02, z: 4.13917}
+  m_LocalRotation: {x: -0.008193467, y: 0.98952997, z: 0.062422983, w: 0.12987195}
+  m_LocalPosition: {x: -11.30865, y: -1.4789795, z: 40.302628}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

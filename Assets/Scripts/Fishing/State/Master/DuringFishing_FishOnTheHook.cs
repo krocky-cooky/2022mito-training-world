@@ -21,16 +21,22 @@ namespace Fishing.State
         public Fish fish;
 
 
-        // 初期トルク
-        private float _fisrtTorque;
+        // 最大トルク. これは魚の重量に比例
+        private float _maxTorque;
+        // 最小トルク
+        private float _minTorque;
+
+        // 正規化トルク. 最小なら0.0f, 最大なら1.0f
+        private float _normalizedTorque;
 
         // 魚の逃げるリスクを反映したゲージ
         // リールのテンションが緩いとゲージが減り、テンションが強すぎるとゲージが増える
         // -1になるとリールが緩んで針が取れて魚が逃げ、1になるとリールが切れて魚が逃げる
         private float _escapeGauge;
 
-        // 魚の回転角[rad]
+        // 魚の回転角[rad]と回転速度
         private float _fishAngle;
+        private float _angleVelocity;
 
         // 最大のHP
         private float _maxHP;
@@ -40,8 +46,8 @@ namespace Fishing.State
             Debug.Log("DuringFishing_FishOnTheHook");
 
             // トルクの指定
-            _fisrtTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
-            masterStateController.gameMaster.sendingTorque = _fisrtTorque;
+            _maxTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
+            masterStateController.gameMaster.sendingTorque = _maxTorque;
 
             // 音声を再生
             masterStateController.FishSoundOnTheHook.Play();
@@ -56,6 +62,8 @@ namespace Fishing.State
             masterStateController.centerOfRotation = masterStateController.fish.transform.position + new Vector3(0.0f, 0.0f, masterStateController.radius);
             _fishAngle = 0.0f;
             _maxHP = masterStateController.fish.HP;
+            _minTorque = _maxTorque - masterStateController.torqueReduction;
+            _normalizedTorque = 0.0f;
         }
 
         public override void OnExit()
@@ -67,28 +75,35 @@ namespace Fishing.State
         {
             currentTimeCount += Time.deltaTime;
 
-            // 魚が円軌道で動く
-            // HPに比例
-            masterStateController.fish.transform.Rotate(0.0f, masterStateController.angularVelocity * Time.deltaTime * (masterStateController.fish.HP / _maxHP), 0.0f, Space.World);
-            _fishAngle = (masterStateController.fish.transform.rotation.eulerAngles.y + masterStateController.initialAngle) *  Mathf.PI / 180.0f;
-            // masterStateController.fish.transform.position += (- masterStateController.fish.transform.right) * masterStateController.radius * masterStateController.angularVelocity / 360.0f;
-            // masterStateController.fish.transform.position = new Vector3(Mathf.Sin((masterStateController.transform.rotation.y + masterStateController.initialAngle) / 360.0f), 0.0f, Mathf.Cos((masterStateController.transform.rotation.y + masterStateController.initialAngle) / 360.0f)) * masterStateController.radius * masterStateController.angularVelocity / 360.0f;
-            masterStateController.fish.transform.position = masterStateController.centerOfRotation + (new Vector3(Mathf.Sin(_fishAngle), 0.0f, Mathf.Cos(_fishAngle))) * masterStateController.radius;
-
             // 魚の暴れる強さ
             // 0と1の間を周期的に変化する
-            masterStateController.fish.currentIntensityOfMovements = Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+            // HPが小さくなると、振幅も小さくなる
+            masterStateController.fish.currentIntensityOfMovements = Mathf.Sin((masterStateController.fish.HP / _maxHP) * (Mathf.PI * 0.5f)) * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
 
-            // ロープの音の大きさとピッチを変更
-            masterStateController.FishSoundOnTheHook.volume = masterStateController.minRopeSoundVolume + (1.0f - masterStateController.minRopeSoundVolume) * masterStateController.fish.currentIntensityOfMovements;
-            masterStateController.FishSoundOnTheHook.pitch = masterStateController.FishSoundOnTheHook.volume * 3.0f;
+            // 魚がカラダをひねる強さを変化
+            masterStateController.sardineAnimator.SetFloat("Speed", (masterStateController.maxSpeedOfFishTwist - masterStateController.minSpeedOfFishTwist) * masterStateController.fish.currentIntensityOfMovements + masterStateController.minSpeedOfFishTwist);
+
+            // 魚が円軌道で動く
+            // 魚の暴れる強さと、円軌道上での速さは比例
+            _angleVelocity = masterStateController.minAngularVelocity + (masterStateController.maxAngularVelocity - masterStateController.minAngularVelocity) * masterStateController.fish.currentIntensityOfMovements;
+            masterStateController.fish.transform.Rotate(0.0f, _angleVelocity * Time.deltaTime, 0.0f, Space.World);
+            _fishAngle = (masterStateController.fish.transform.rotation.eulerAngles.y + masterStateController.initialAngle) *  Mathf.PI / 180.0f;
+            masterStateController.fish.transform.position = masterStateController.centerOfRotation + (new Vector3(Mathf.Sin(_fishAngle), 0.0f, Mathf.Cos(_fishAngle))) * masterStateController.radius;
+
 
             // トルク送信
             // 魚の暴れ具合に対してバーの高さが、ぴったりなら中間トルク、高ければトルクが大きくなり、低ければトルクが弱くなる
             // 魚の暴れ具合が、強い時はバーをさげ、弱い時はバーをあげながら、リールのテンションを一定に保つ
             // トルクの最大最小範囲を超えないようにする
-            masterStateController.gameMaster.sendingTorque = _fisrtTorque + (masterStateController.fish.currentIntensityOfMovements + masterStateController.trainingDevice.currentNormalizedPosition - 1.5f) * masterStateController.torqueReduction;
-            masterStateController.gameMaster.sendingTorque = Mathf.Clamp(masterStateController.gameMaster.sendingTorque, _fisrtTorque - masterStateController.torqueReduction, _fisrtTorque);
+            _normalizedTorque = masterStateController.fish.currentIntensityOfMovements + masterStateController.trainingDevice.currentNormalizedPosition - 0.5f;
+            _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
+            masterStateController.gameMaster.sendingTorque = _minTorque + _normalizedTorque * masterStateController.torqueReduction;
+
+            // ロープの音の大きさとピッチを変更
+            // 音はトルクと比例
+            // ピッチは、トルクの1.58乗に比例。これで高音域をシャープにする
+            masterStateController.FishSoundOnTheHook.volume = masterStateController.minRopeSoundVolume + (1.0f - masterStateController.minRopeSoundVolume) * _normalizedTorque;
+            masterStateController.FishSoundOnTheHook.pitch = masterStateController.minRopePitch + (3.0f - masterStateController.minRopePitch) * (Mathf.Pow(_normalizedTorque, 1.58f));
 
 
             // 魚のHPは、リールのテンションの強さ(=トルク)に応じて減少

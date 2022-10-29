@@ -118,12 +118,20 @@ namespace Fishing.StateController
 
         // ロープの音の最小値
         public float minRopeSoundVolume;
+        // ロープのピッチの最小値
+        public float minRopePitch;
 
         // 円軌道のパラメータ 
         public float radius;
-        public float angularVelocity;
+        public float maxAngularVelocity;
+        public float minAngularVelocity;
         public float initialAngle;
         public Vector3 centerOfRotation;
+
+        // 魚の動きのアニメーター
+        public Animator sardineAnimator;
+        public float maxSpeedOfFishTwist;
+        public float minSpeedOfFishTwist;
 
         public enum StateType
         {
