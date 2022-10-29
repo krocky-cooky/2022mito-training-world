@@ -47,6 +47,7 @@ namespace Fishing.StateController
 
         // 魚のオブジェクト
         public Fish fish;
+        public GameObject fishGameObject;
 
         // トルクの範囲
         public float maxTorque;
@@ -129,9 +130,16 @@ namespace Fishing.StateController
         public Vector3 centerOfRotation;
 
         // 魚の動きのアニメーター
-        public Animator sardineAnimator;
+        // public Animator sardineAnimator;
         public float maxSpeedOfFishTwist;
         public float minSpeedOfFishTwist;
+
+        // ロープのステートコントローラ
+        public RopeStateController ropeStateController;
+
+        // 魚が針に引っかかってから、暴れる強さが変化しはじめるまでの時間
+        // それまでは、暴れる強さを一定にして、その時の視聴力覚を覚えてもらう
+        public float timeUntillFishIntensityChange;
 
         public enum StateType
         {

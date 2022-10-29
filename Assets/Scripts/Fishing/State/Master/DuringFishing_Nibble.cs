@@ -35,6 +35,9 @@ namespace Fishing.State
         // 魚が突く音を視覚や力覚と同期させるバッファ
         private float _timeCountForNibbleSound = 100.0f;
 
+        // 魚のGameObjectの配列
+        private GameObject[] fishGameObjects;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_Nibble");
@@ -45,8 +48,8 @@ namespace Fishing.State
             _spikeEndTime = 0.0f;
             _spikeInterval = 0.0f;
             _timeOfNibbling = Random.Range(masterStateController.minTimeOfNibbling, masterStateController.maxTimeOfNibbling);
-             _timeCountForNibble = 100.0f;
-             _timeCountForNibbleSound = 100.0f;
+            _timeCountForNibble = 100.0f;
+            _timeCountForNibbleSound = 100.0f;
         }
 
         public override void OnExit()

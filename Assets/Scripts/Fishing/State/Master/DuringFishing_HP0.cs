@@ -17,14 +17,11 @@ namespace Fishing.State
         // タイムカウント
         float currentTimeCount;
 
-        // 魚のオブジェクト
-        public Fish fish;
-
         // 直前の位置
-        private float _previousPosition;
+        public float _previousPosition;
 
         // 直前の位置登録の時刻
-        private float _whenPreviousPosition;
+        public float _whenPreviousPosition;
 
         // 初期トルク
         // private float _fisrtTorque;
@@ -48,7 +45,7 @@ namespace Fishing.State
 
             // 初期化
             _previousPosition = masterStateController.trainingDevice.currentNormalizedPosition;
-            _whenPreviousPosition = masterStateController.timeOfRaising + 1.0f;
+            _whenPreviousPosition = 0.0f;
         }
 
         public override void OnExit()
@@ -61,8 +58,9 @@ namespace Fishing.State
             currentTimeCount += Time.deltaTime;
 
             // 直前の位置の更新
-            if ((_whenPreviousPosition - currentTimeCount) > masterStateController.timeOfRaising){
+            if ((currentTimeCount - _whenPreviousPosition) > masterStateController.timeOfRaising){
                 _previousPosition = masterStateController.trainingDevice.currentNormalizedPosition;
+                _whenPreviousPosition = currentTimeCount;
             }
 
             //HPがゼロになって、かつ竿を振り上げたら、魚ゲット

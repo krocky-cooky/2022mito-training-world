@@ -80,10 +80,15 @@ namespace Fishing.State
             // 魚の暴れる強さ
             // 0と1の間を周期的に変化する
             // HPが小さくなると、振幅も小さくなる
-            masterStateController.fish.currentIntensityOfMovements = Mathf.Sin((masterStateController.fish.HP / _maxHP) * (Mathf.PI * 0.5f)) * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+            // 最初の数秒間は、暴れる強さを一定にして、その時の視聴力覚を覚えてもらう
+            if (currentTimeCount < masterStateController.timeUntillFishIntensityChange){
+                masterStateController.fish.currentIntensityOfMovements = 1.0f;
+            }else{
+                masterStateController.fish.currentIntensityOfMovements = Mathf.Sin((masterStateController.fish.HP / _maxHP) * (Mathf.PI * 0.5f)) * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+            }
 
             // 魚がカラダをひねる強さを変化
-            masterStateController.sardineAnimator.SetFloat("Speed", (masterStateController.maxSpeedOfFishTwist - masterStateController.minSpeedOfFishTwist) * masterStateController.fish.currentIntensityOfMovements + masterStateController.minSpeedOfFishTwist);
+            masterStateController.fish.twistSpeed = (masterStateController.maxSpeedOfFishTwist - masterStateController.minSpeedOfFishTwist) * masterStateController.fish.currentIntensityOfMovements + masterStateController.minSpeedOfFishTwist;
 
             // 魚が円軌道で動く
             // 魚の暴れる強さと、円軌道上での速さは比例

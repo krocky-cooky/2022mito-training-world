@@ -37,6 +37,13 @@ namespace Fishing.State
             masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString() + "kg";
 
             masterStateController.gameMaster.sendingTorque = 0.0f;
+
+            // 魚の表示を、水中の魚影モードから水上の実体モードに切り替え
+            masterStateController.fish.isFishShadow = false;
+            masterStateController.fish.isFishBody = true;
+
+            // 魚の向きを整える
+            masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
         public override void OnExit()
