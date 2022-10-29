@@ -41,6 +41,9 @@ namespace Fishing.State
         // 最大のHP
         private float _maxHP;
 
+        // トルクのp乗に音やピッチを比例させる
+        private float _p;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
@@ -64,6 +67,8 @@ namespace Fishing.State
             _maxHP = masterStateController.fish.HP;
             _minTorque = _maxTorque - masterStateController.torqueReduction;
             _normalizedTorque = 0.0f;
+            // masterStateController.tensionSlider.SetActive(true);
+            masterStateController.tensionSliderGameObject.SetActive(true);
         }
 
         public override void OnExit()
@@ -107,13 +112,16 @@ namespace Fishing.State
             masterStateController.gameMaster.sendingTorque = _minTorque + _normalizedTorque * masterStateController.torqueReduction;
 
             // ロープの音の大きさとピッチを変更
-            // 音はトルクと比例
-            // ピッチは、トルクの1.58乗に比例。これで高音域をシャープにする
-            masterStateController.FishSoundOnTheHook.volume = masterStateController.minRopeSoundVolume + (1.0f - masterStateController.minRopeSoundVolume) * _normalizedTorque;
-            masterStateController.FishSoundOnTheHook.pitch = masterStateController.minRopePitch + (3.0f - masterStateController.minRopePitch) * (Mathf.Pow(_normalizedTorque, 1.58f));
+            // 音もピッチもトルクのp乗に比例。これで高域をシャープにする
+            _p = 2.32f;
+            masterStateController.FishSoundOnTheHook.volume = masterStateController.minRopeSoundVolume + (1.0f - masterStateController.minRopeSoundVolume) * (Mathf.Pow(_normalizedTorque, _p));
+            masterStateController.FishSoundOnTheHook.pitch = masterStateController.minRopePitch + (3.0f - masterStateController.minRopePitch) * (Mathf.Pow(_normalizedTorque, _p));
 
             // トルクに応じて右のリモコンの振動を生成
             OVRInput.SetControllerVibration(0.01f, _normalizedTorque, OVRInput.Controller.RTouch);
+
+            // トルクに応じてゲージ調整
+            masterStateController.tensionSlider.value = _normalizedTorque;
 
 
             // 魚のHPは、リールのテンションの強さ(=トルク)に応じて減少

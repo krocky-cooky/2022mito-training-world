@@ -137,6 +137,10 @@ namespace Fishing.StateController
         // ロープのステートコントローラ
         public RopeStateController ropeStateController;
 
+        // 張力ゲージ
+        public Slider tensionSlider;
+        public GameObject tensionSliderGameObject;
+
         // 魚が針に引っかかってから、暴れる強さが変化しはじめるまでの時間
         // それまでは、暴れる強さを一定にして、その時の視聴力覚を覚えてもらう
         public float timeUntillFishIntensityChange;

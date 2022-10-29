@@ -72,6 +72,8 @@ namespace Fishing.State
                     fishGameObject.GetComponent<Fish>().isFishBody = false;
                 }
             }
+
+            masterStateController.tensionSliderGameObject.SetActive(false);
         }
 
         public override void OnExit()

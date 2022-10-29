@@ -44,6 +44,8 @@ namespace Fishing.State
 
             // 魚の向きを整える
             masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+            
         }
 
         public override void OnExit()

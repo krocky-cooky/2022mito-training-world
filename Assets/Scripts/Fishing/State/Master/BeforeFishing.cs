@@ -23,6 +23,8 @@ namespace Fishing.State
             masterStateController.frontViewUiText.text = "Press X button to start";
 
             masterStateController.gameMaster.sendingTorque = 0.0f;
+
+            masterStateController.tensionSliderGameObject.SetActive(false);
         }
 
         public override void OnExit()

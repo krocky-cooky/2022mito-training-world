@@ -46,6 +46,7 @@ namespace Fishing.State
             // 初期化
             _previousPosition = masterStateController.trainingDevice.currentNormalizedPosition;
             _whenPreviousPosition = 0.0f;
+            masterStateController.tensionSliderGameObject.SetActive(false);
         }
 
         public override void OnExit()
