@@ -34,7 +34,7 @@ namespace Fishing.State
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {
                 Debug.Log("move to fishing");
-                masterStateController.LureLandingSound.Play();
+                
                 return (int)MasterStateController.StateType.DuringFishing_Wait;
             }
 

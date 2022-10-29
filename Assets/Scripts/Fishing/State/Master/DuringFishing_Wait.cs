@@ -41,13 +41,12 @@ namespace Fishing.State
 
             masterStateController.frontViewUiText.text = "During fishing";
 
+            masterStateController.LureLandingSound.Play();
+
             // 魚の初期化
             masterStateController.fish = GameObject.FindWithTag("fish").GetComponent<Fish>();
             masterStateController.fish.weight = Random.Range(masterStateController.minTorque, masterStateController.maxTorque) * masterStateController.fishWeightPerTorque;
-            // masterStateController.fish.species = "Sardine";
-            // masterStateController.fish.HP = 1.0f;
-            // masterStateController.fish.difficultyOfEscape = 1.0f;
-            // masterStateController.fish.maxIntensityOfMovements = 1.0f;
+            masterStateController.fish.transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
         }
 
         public override void OnExit()

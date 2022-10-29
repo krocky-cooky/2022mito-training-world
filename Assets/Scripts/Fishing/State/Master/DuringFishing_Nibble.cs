@@ -38,10 +38,15 @@ namespace Fishing.State
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_Nibble");
-            currentTimeCount = 0f;
 
+            // 初期化
+            currentTimeCount = 0.0f;
+            _previousSpikeTime = 0.0f;
+            _spikeEndTime = 0.0f;
             _spikeInterval = 0.0f;
             _timeOfNibbling = Random.Range(masterStateController.minTimeOfNibbling, masterStateController.maxTimeOfNibbling);
+             _timeCountForNibble = 100.0f;
+             _timeCountForNibbleSound = 100.0f;
         }
 
         public override void OnExit()
@@ -87,8 +92,6 @@ namespace Fishing.State
                 _timeCountForNibble =100.0f;
             }
             masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
-
-
 
 
             // 針にかかる

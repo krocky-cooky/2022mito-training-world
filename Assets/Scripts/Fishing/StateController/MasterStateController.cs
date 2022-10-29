@@ -22,9 +22,6 @@ namespace Fishing.StateController
         // 魚の逃げにくさの値の変化速度
         public float changeRateOfEscape;
 
-        // 魚のHPの変化速度
-        public float changeRateOfHP;
-
         // 魚の暴れ具合の変動周期
         public float periodOfFishIntensity;
 
@@ -121,6 +118,12 @@ namespace Fishing.StateController
 
         // ロープの音の最小値
         public float minRopeSoundVolume;
+
+        // 円軌道のパラメータ 
+        public float radius;
+        public float angularVelocity;
+        public float initialAngle;
+        public Vector3 centerOfRotation;
 
         public enum StateType
         {

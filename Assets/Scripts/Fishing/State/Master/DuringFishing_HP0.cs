@@ -45,6 +45,10 @@ namespace Fishing.State
             // 魚をはりに移動
             masterStateController.distanceFromRope = 0.0f;
             masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
+
+            // 初期化
+            _previousPosition = 0.0f;
+            _whenPreviousPosition = 0.0f;
         }
 
         public override void OnExit()
@@ -58,11 +62,11 @@ namespace Fishing.State
 
             // 直前の位置の更新
             if ((_whenPreviousPosition - currentTimeCount) > masterStateController.timeOfRaising){
-                _previousPosition = masterStateController.trainingDevice.currentRelativePosition;
+                _previousPosition = masterStateController.trainingDevice.currentNormalizedPosition;
             }
 
             //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            if (((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1)){
+            if (((masterStateController.trainingDevice.currentNormalizedPosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1)){
                 masterStateController.FishGoOnTheWater.Play();
                 return (int)MasterStateController.StateType.AfterFishing;
             }

@@ -14,8 +14,7 @@ namespace Fishing.Object{
         public string species;
         public float weight;
         public float HP;
-        public float difficultyOfEscape;
-        public float maxIntensityOfMovements;
+        public float easeOfEscape;
         public float currentIntensityOfMovements;
 
         // Start is called before the first frame update

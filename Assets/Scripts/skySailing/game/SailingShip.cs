@@ -36,7 +36,7 @@ namespace skySailing.game
         void Update()
         {
             // 柱を回転
-            changePillarRotation(forceGauge.outputPosition, trainingDevice.currentRelativePosition);
+            changePillarRotation(forceGauge.outputPosition, trainingDevice.currentNormalizedPosition);
 
             //船を動かす
             move(gameMaster.windSpeed);
