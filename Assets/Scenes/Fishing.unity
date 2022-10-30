@@ -11793,8 +11793,8 @@ MonoBehaviour:
   ropeRelayBelowHandle: {fileID: 1973850306}
   fish: {fileID: 1996936798}
   fishGameObject: {fileID: 0}
-  maxTorque: 1.5
-  minTorque: 1.5
+  maxTorque: 1.4
+  minTorque: 1.4
   fishWeightPerTorque: 4
   maxAplitudeOfTorque: 0.5
   periodOfTorque: 0.1
