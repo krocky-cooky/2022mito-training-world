@@ -280,8 +280,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30AB\u30B8\u30AD"
-  weight: 0
-  HP: 150
+  weight: 10
+  torque: 1.7
+  HP: 170
   easeOfEscape: 0.202
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -303,7 +304,7 @@ Transform:
   - {fileID: 1721034494}
   - {fileID: 1633547798}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 1
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &136832896
 GameObject:
@@ -903,6 +904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30AB\u30B8\u30AD"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.202
   currentIntensityOfMovements: 1
@@ -1896,6 +1898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30AB\u30B8\u30AD"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.208
   currentIntensityOfMovements: 1
@@ -2501,16 +2504,16 @@ Transform:
   m_LocalPosition: {x: 2.1014824, y: 4.2794228, z: -2.9320574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 916694902}
-  - {fileID: 123731530}
   - {fileID: 2076873853}
-  - {fileID: 1219866631}
-  - {fileID: 566304653}
-  - {fileID: 2140297849}
-  - {fileID: 1000564034}
-  - {fileID: 790348223}
-  - {fileID: 1413317270}
   - {fileID: 1409540250}
+  - {fileID: 2140297849}
+  - {fileID: 1219866631}
+  - {fileID: 916694902}
+  - {fileID: 1413317270}
+  - {fileID: 566304653}
+  - {fileID: 123731530}
+  - {fileID: 790348223}
+  - {fileID: 1000564034}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2544,8 +2547,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30A2\u30F3\u30B3\u30A6"
-  weight: 0
-  HP: 150
+  weight: 6
+  torque: 1.6
+  HP: 160
   easeOfEscape: 0.205
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -2567,7 +2571,7 @@ Transform:
   - {fileID: 752137524}
   - {fileID: 794699090}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &594591489
 GameObject:
@@ -3007,6 +3011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30B9\u30BA\u30AD"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.204
   currentIntensityOfMovements: 1
@@ -3622,6 +3627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30A2\u30F3\u30B3\u30A6"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.205
   currentIntensityOfMovements: 1
@@ -4875,15 +4881,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70f3d85a084cb2e4ca98a56f3803fdeb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70f3d85a084cb2e4ca98a56f3803fdeb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70f3d85a084cb2e4ca98a56f3803fdeb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 70f3d85a084cb2e4ca98a56f3803fdeb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5115,9 +5121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95aa6de8d486904b95440a9a42ac9f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  species: "\u30AB\u30B8\u30AD"
-  weight: 0
-  HP: 150
+  species: "\u30C1\u30E7\u30A6\u30B6\u30E1"
+  weight: 15
+  torque: 1.8
+  HP: 180
   easeOfEscape: 0.208
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -5139,7 +5146,7 @@ Transform:
   - {fileID: 695155972}
   - {fileID: 1905660121}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &791867671
 PrefabInstance:
@@ -6032,8 +6039,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30D6\u30EB\u30FC\u30D0\u30B9"
-  weight: 0
-  HP: 150
+  weight: 2.5
+  torque: 1.4
+  HP: 140
   easeOfEscape: 0.201
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -6055,7 +6063,7 @@ Transform:
   - {fileID: 527583391}
   - {fileID: 2116184790}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &928245011
 GameObject:
@@ -6161,19 +6169,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 845c78f8d4df4ae41b7acfa782fc1daa, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 845c78f8d4df4ae41b7acfa782fc1daa, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 845c78f8d4df4ae41b7acfa782fc1daa, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 845c78f8d4df4ae41b7acfa782fc1daa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.6
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 845c78f8d4df4ae41b7acfa782fc1daa, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6451,8 +6459,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30B5\u30E1"
-  weight: 0
-  HP: 150
+  weight: 20
+  torque: 1.9
+  HP: 190
   easeOfEscape: 0.207
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -6474,7 +6483,7 @@ Transform:
   - {fileID: 1966899003}
   - {fileID: 1465740750}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1001624917
 PrefabInstance:
@@ -6838,7 +6847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1999a8cad1a4459bc33d17303cb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputInterface: 1
+  inputInterface: 0
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
@@ -6946,6 +6955,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30CA\u30F3\u30E8\u30A6\u30CF\u30AE"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.203
   currentIntensityOfMovements: 1
@@ -7112,15 +7122,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a66db963d1cf9444bf637c36f4c1a0b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a66db963d1cf9444bf637c36f4c1a0b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a66db963d1cf9444bf637c36f4c1a0b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0a66db963d1cf9444bf637c36f4c1a0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7814,8 +7824,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30B9\u30BA\u30AD"
-  weight: 0
-  HP: 150
+  weight: 2
+  torque: 1.3
+  HP: 130
   easeOfEscape: 0.204
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -8377,6 +8388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30D1\u30FC\u30EB\u30B0\u30E9\u30DF\u30FC"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.206
   currentIntensityOfMovements: 1
@@ -8602,8 +8614,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30BF\u30A4\u30AC\u30FC\u30D5\u30A3\u30C3\u30B7\u30E5"
-  weight: 0
-  HP: 150
+  weight: 0.7
+  torque: 1.1
+  HP: 110
   easeOfEscape: 0.21
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -8625,7 +8638,7 @@ Transform:
   - {fileID: 858803478}
   - {fileID: 900635036}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 9
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1412758178
 GameObject:
@@ -8673,6 +8686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1576822f7a17ef84498e5b9c0378b29b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputInterface: 0
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
@@ -8806,7 +8820,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30DE\u30F3\u30DC\u30A6"
-  weight: 0
+  weight: 4
+  torque: 1.5
   HP: 150
   easeOfEscape: 0.209
   currentIntensityOfMovements: 1
@@ -8829,7 +8844,7 @@ Transform:
   - {fileID: 475957963}
   - {fileID: 1144690410}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1422130395
 GameObject:
@@ -9159,23 +9174,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b06284a0952ad9148b26600e22157b0d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b06284a0952ad9148b26600e22157b0d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b06284a0952ad9148b26600e22157b0d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b06284a0952ad9148b26600e22157b0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.59
+      value: 1.17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b06284a0952ad9148b26600e22157b0d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.11
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b06284a0952ad9148b26600e22157b0d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9700,15 +9715,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9
+      value: 0.9000001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 0.05000019
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.02
+      value: 0.01999998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9716,7 +9731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalRotation.y
@@ -9724,7 +9739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 747c5e52d79f68049be0e54369cead78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10360,6 +10375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30D6\u30E9\u30C3\u30AF\u30D0\u30B9"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.201
   currentIntensityOfMovements: 1
@@ -10451,6 +10467,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 123731530}
     m_Modifications:
+    - target: {fileID: 112488, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 142564, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 162542, guid: 604c6a2a7f9c3484a86af004a7dcaf6a, type: 3}
       propertyPath: m_Name
       value: shadowOfFish
@@ -11120,6 +11144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30DE\u30F3\u30DC\u30A6"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.209
   currentIntensityOfMovements: 1
@@ -11427,6 +11452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30BF\u30A4\u30AC\u30FC\u30D5\u30A3\u30C3\u30B7\u30E5"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.21
   currentIntensityOfMovements: 1
@@ -11790,19 +11816,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.03
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11814,19 +11840,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11834,7 +11860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7b18db732279b4bb7ac9c2baa539a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -11937,7 +11963,7 @@ MonoBehaviour:
   minIntervalOfNibbling: 1
   maxTimeOfNibbling: 25
   minTimeOfNibbling: 15
-  timeUntilFishHitAtHalfChance: 15
+  timeUntilFishHitAtHalfChance: 7
   frontViewUiText: {fileID: 1697318979}
   torqueReduction: 0.5
   SizeOfFishMovement: 3
@@ -12631,6 +12657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30B5\u30E1"
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.207
   currentIntensityOfMovements: 1
@@ -12686,6 +12713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Sardine
   weight: 0
+  torque: 0
   HP: 50
   easeOfEscape: 0.2
   currentIntensityOfMovements: 1
@@ -13192,8 +13220,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30CA\u30F3\u30E8\u30A6\u30CF\u30AE"
-  weight: 0
-  HP: 150
+  weight: 0.5
+  torque: 1
+  HP: 100
   easeOfEscape: 0.203
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -13215,7 +13244,7 @@ Transform:
   - {fileID: 1678874977}
   - {fileID: 1891125480}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2086782656
 PrefabInstance:
@@ -13553,8 +13582,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: "\u30D1\u30FC\u30EB\u30B0\u30E9\u30DF\u30FC"
-  weight: 0
-  HP: 150
+  weight: 1
+  torque: 1.2
+  HP: 120
   easeOfEscape: 0.206
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -13576,7 +13606,7 @@ Transform:
   - {fileID: 1757311648}
   - {fileID: 769816156}
   m_Father: {fileID: 561670656}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2144403879
 GameObject:
@@ -13646,8 +13676,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: -0.036044866, y: 0.96072495, z: 0.23052838, w: 0.15021661}
-  m_LocalPosition: {x: -2.3788214, y: -2.1682212, z: 7.059272}
+  m_LocalRotation: {x: 0.0014230636, y: 0.99854416, z: 0.041963447, w: -0.03386178}
+  m_LocalPosition: {x: 3.3360806, y: -3.587921, z: 21.486774}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

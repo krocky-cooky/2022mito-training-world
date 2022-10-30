@@ -34,7 +34,7 @@ namespace Fishing.State
             // _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
             _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
 
-            masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString() + "kg";
+            masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString("f2") + "kg";
 
             masterStateController.gameMaster.sendingTorque = 0.0f;
 

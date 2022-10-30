@@ -47,12 +47,16 @@ namespace Fishing.State
         // ロープの色の濃度
         private float _colorIntensity;
 
+        // トルクの減少量
+        private float _torqueDecrease;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
 
             // トルクの指定
-            _maxTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
+            // _maxTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
+            _maxTorque = masterStateController.fish.torque;
             masterStateController.gameMaster.sendingTorque = _maxTorque;
 
             // 音声を再生
@@ -68,7 +72,8 @@ namespace Fishing.State
             masterStateController.centerOfRotation = masterStateController.fish.transform.position - new Vector3(0.0f, 0.0f, masterStateController.radius);
             _fishAngle = 0.0f;
             _maxHP = masterStateController.fish.HP;
-            _minTorque = _maxTorque - masterStateController.torqueReduction;
+            _torqueDecrease = Mathf.Min(masterStateController.torqueReduction, _maxTorque - 0.75f);
+            _minTorque = _maxTorque - _torqueDecrease;
             _normalizedTorque = 0.0f;
             masterStateController.tensionSliderGameObject.SetActive(masterStateController.tensionSliderIsOn);
         }
@@ -111,7 +116,7 @@ namespace Fishing.State
             // トルクの最大最小範囲を超えないようにする
             _normalizedTorque = masterStateController.fish.currentIntensityOfMovements + masterStateController.trainingDevice.currentNormalizedPosition - 0.5f;
             _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
-            masterStateController.gameMaster.sendingTorque = _minTorque + _normalizedTorque * masterStateController.torqueReduction;
+            masterStateController.gameMaster.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
 
             // ロープの音の大きさとピッチを変更
             // 音もピッチもトルクのp乗に比例。これで高域をシャープにする

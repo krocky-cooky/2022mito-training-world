@@ -13,6 +13,7 @@ namespace Fishing.Object{
     {
         public string species;
         public float weight;
+        public float torque;
         public float HP;
         public float easeOfEscape;
         public float currentIntensityOfMovements;

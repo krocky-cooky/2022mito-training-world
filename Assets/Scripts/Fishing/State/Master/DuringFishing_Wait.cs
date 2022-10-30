@@ -58,7 +58,8 @@ namespace Fishing.State
             // masterStateController.fish.SetActive(true);
             masterStateController.fish.isFishShadow = true;
             masterStateController.fish.isFishBody = false;
-            masterStateController.fish.weight = Random.Range(masterStateController.minTorque, masterStateController.maxTorque) * masterStateController.fishWeightPerTorque;
+            // masterStateController.fish.weight = Random.Range(masterStateController.minTorque, masterStateController.maxTorque) * masterStateController.fishWeightPerTorque;
+            masterStateController.fish.weight = masterStateController.fish.weight *  Random.Range(0.9f, 1.1f);
             masterStateController.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             masterStateController.fish.twistSpeed = masterStateController.minSpeedOfFishTwist;
