@@ -16,7 +16,7 @@ namespace skySailing.game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public float windSpeed;
-        public Text timerText;
+        public Text frontViewUI;
         public int numberOfCheckpointsPassed = 0;
 
         // レース中かどうかのフラグ
@@ -41,6 +41,7 @@ namespace skySailing.game
         public float _previousTorqueDuringRace = 0.0f;
         private string checkPointMessage;
         private string forceMessage;
+        private string timerMessage;
 
         // Start is called before the first frame update
         void Start()
@@ -82,9 +83,12 @@ namespace skySailing.game
                 time += Time.deltaTime;
                 Debug.Log("time is " + time.ToString());
             }
-            checkPointMessage = "\nYou passed " + numberOfCheckpointsPassed.ToString() + " check points";
-            forceMessage = "\nleft force=" + forceGauge.currentForce.ToString() + "kg  right force=" + torqueDuringRace.ToString() + "kg";
-            timerText.text = time.ToString() + checkPointMessage + forceMessage;
+
+            // forceMessage = "\nleft force=" + forceGauge.currentForce.ToString() + "kg  right force=" + torqueDuringRace.ToString() + "kg";
+            forceMessage = "Player1 Level: " + (torqueDuringRace * 3.0f).ToString() + "kg" + "\nPlayer2 Level: " + forceGauge.maxForce.ToString() + "kg";
+            timerMessage = "Time: " + time.ToString();
+            checkPointMessage = "Check Points:  " + numberOfCheckpointsPassed.ToString();
+            frontViewUI.text = forceMessage + "\n" + timerMessage + "\n"  + checkPointMessage;
             
             // レース中のトルク指令
             if (torqueDuringRace != _previousTorqueDuringRace){
