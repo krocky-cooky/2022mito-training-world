@@ -4205,7 +4205,7 @@ MonoBehaviour:
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
-  currentRelativePosition: 0
+  currentNormalizedPosition: 0
   rightControllerAnchor: {fileID: 1772564230}
   SailingShip: {fileID: 1983296843}
   communicationInterface: {fileID: 0}
@@ -5306,7 +5306,7 @@ MonoBehaviour:
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
-  currentRelativePosition: 0
+  currentNormalizedPosition: 0
   rightControllerAnchor: {fileID: 1772564230}
   SailingShip: {fileID: 1983296843}
   communicationInterface: {fileID: 0}

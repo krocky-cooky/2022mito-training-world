@@ -17,14 +17,11 @@ namespace Fishing.State
         // タイムカウント
         float currentTimeCount;
 
-        // 魚のオブジェクト
-        public Fish fish;
-
         // 直前の位置
-        private float _previousPosition;
+        public float _previousPosition;
 
         // 直前の位置登録の時刻
-        private float _whenPreviousPosition;
+        public float _whenPreviousPosition;
 
         // 初期トルク
         // private float _fisrtTorque;
@@ -45,6 +42,11 @@ namespace Fishing.State
             // 魚をはりに移動
             masterStateController.distanceFromRope = 0.0f;
             masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
+
+            // 初期化
+            _previousPosition = masterStateController.trainingDevice.currentNormalizedPosition;
+            _whenPreviousPosition = 0.0f;
+            masterStateController.tensionSliderGameObject.SetActive(false);
         }
 
         public override void OnExit()
@@ -57,12 +59,13 @@ namespace Fishing.State
             currentTimeCount += Time.deltaTime;
 
             // 直前の位置の更新
-            if ((_whenPreviousPosition - currentTimeCount) > masterStateController.timeOfRaising){
-                _previousPosition = masterStateController.trainingDevice.currentRelativePosition;
+            if ((currentTimeCount - _whenPreviousPosition) > masterStateController.timeOfRaising){
+                _previousPosition = masterStateController.trainingDevice.currentNormalizedPosition;
+                _whenPreviousPosition = currentTimeCount;
             }
 
             //HPがゼロになって、かつ竿を振り上げたら、魚ゲット
-            if (((masterStateController.trainingDevice.currentRelativePosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1)){
+            if (((masterStateController.trainingDevice.currentNormalizedPosition - _previousPosition) > masterStateController.lengthOfRasing) || Input.GetMouseButtonDown(1)){
                 masterStateController.FishGoOnTheWater.Play();
                 return (int)MasterStateController.StateType.AfterFishing;
             }

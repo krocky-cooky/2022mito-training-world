@@ -28,6 +28,12 @@ namespace Fishing.State
         //　出現確率
         private float probabilityOfFishOnTheHook;
 
+        // 魚のオブジェクトの配列
+        private GameObject[] _fishGameObjects;
+
+        // // 魚のゲームオブジェクト
+        // private GameObject _fishGameObject;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFish_Wait");
@@ -41,13 +47,33 @@ namespace Fishing.State
 
             masterStateController.frontViewUiText.text = "During fishing";
 
+            // ルアーが着水する音
+            masterStateController.LureLandingSound.Play();
+
+
             // 魚の初期化
-            masterStateController.fish = GameObject.FindWithTag("fish").GetComponent<Fish>();
+            _fishGameObjects = GameObject.FindGameObjectsWithTag("fish");
+            masterStateController.fishGameObject = _fishGameObjects[Random.Range(0, _fishGameObjects.Length)];
+            masterStateController.fish = masterStateController.fishGameObject.GetComponent<Fish>();
+            // masterStateController.fish.SetActive(true);
+            masterStateController.fish.isFishShadow = true;
+            masterStateController.fish.isFishBody = false;
             masterStateController.fish.weight = Random.Range(masterStateController.minTorque, masterStateController.maxTorque) * masterStateController.fishWeightPerTorque;
-            // masterStateController.fish.species = "Sardine";
-            // masterStateController.fish.HP = 1.0f;
-            // masterStateController.fish.difficultyOfEscape = 1.0f;
-            // masterStateController.fish.maxIntensityOfMovements = 1.0f;
+            masterStateController.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            masterStateController.fish.twistSpeed = masterStateController.minSpeedOfFishTwist;
+            masterStateController.ropeStateController.fish = masterStateController.fish;
+            Debug.Log("fish name is " + masterStateController.fish.species);
+
+            // 選んだ魚以外はすべて魚影、ボディを非アクティブ化
+            foreach(GameObject fishGameObject in _fishGameObjects){
+                if (fishGameObject != masterStateController.fishGameObject){
+                    fishGameObject.GetComponent<Fish>().isFishShadow = false;
+                    fishGameObject.GetComponent<Fish>().isFishBody = false;
+                }
+            }
+
+            masterStateController.tensionSliderGameObject.SetActive(false);
         }
 
         public override void OnExit()

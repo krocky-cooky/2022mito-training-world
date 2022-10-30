@@ -22,9 +22,6 @@ namespace Fishing.StateController
         // 魚の逃げにくさの値の変化速度
         public float changeRateOfEscape;
 
-        // 魚のHPの変化速度
-        public float changeRateOfHP;
-
         // 魚の暴れ具合の変動周期
         public float periodOfFishIntensity;
 
@@ -46,10 +43,11 @@ namespace Fishing.StateController
         public Transform waterSurfaceTransform;
 
         // 釣り糸の先端
-        public RopeRelayBelowHandle ropeRelayBelowHandle;
+        public Transform ropeRelayBelowHandle;
 
         // 魚のオブジェクト
         public Fish fish;
+        public GameObject fishGameObject;
 
         // トルクの範囲
         public float maxTorque;
@@ -103,6 +101,10 @@ namespace Fishing.StateController
         // つつきのための時間調整量
         public float buffurTimeForNibble = -0.5f;
 
+
+        // 魚が突くときの音を視覚や力覚と同期させるためのバッファ
+        public float buffurTimeForNibbleSound = -0.5f;
+
         // サウンド
         // ルアーの着水音
         public AudioSource LureLandingSound;
@@ -114,9 +116,36 @@ namespace Fishing.StateController
         public AudioSource FishSoundWithHP0;
         // 魚が水面に浮かび上がる音
         public AudioSource FishGoOnTheWater;
+        // 魚釣りに成功した時の効果音
+        public AudioSource FishingSuccess;
 
         // ロープの音の最小値
         public float minRopeSoundVolume;
+        // ロープのピッチの最小値
+        public float minRopePitch;
+
+        // 円軌道のパラメータ 
+        public float radius;
+        public float maxAngularVelocity;
+        public float minAngularVelocity;
+        public float initialAngle;
+        public Vector3 centerOfRotation;
+
+        // 魚の動きのアニメーター
+        // public Animator sardineAnimator;
+        public float maxSpeedOfFishTwist;
+        public float minSpeedOfFishTwist;
+
+        // ロープのステートコントローラ
+        public RopeStateController ropeStateController;
+
+        // 張力ゲージ
+        public Slider tensionSlider;
+        public GameObject tensionSliderGameObject;
+
+        // 魚が針に引っかかってから、暴れる強さが変化しはじめるまでの時間
+        // それまでは、暴れる強さを一定にして、その時の視聴力覚を覚えてもらう
+        public float timeUntillFishIntensityChange;
 
         public enum StateType
         {

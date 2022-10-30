@@ -32,6 +32,8 @@ namespace skySailing.game
         private ForceGauge forceGauge;
         [SerializeField]
         private MainCommunicationInterface communicationInterface;
+        [SerializeField]
+        private float speedLimit;
 
         private float time = 0.0f;
         private Vector3  _initShipPosition;
@@ -55,7 +57,7 @@ namespace skySailing.game
             //ワイヤ巻き取り用ボタンイベント
             if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
             {
-                reelWire(0.75f);
+                reelWire(0.75f, 6.0f);
             }
             if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
             {
@@ -90,8 +92,7 @@ namespace skySailing.game
             
             // レース中のトルク指令
             if (torqueDuringRace != _previousTorqueDuringRace){
-                float spdLimit = 1.0f;
-                reelWire(torqueDuringRace, spdLimit);
+                reelWire(torqueDuringRace, speedLimit);
                 _previousTorqueDuringRace = torqueDuringRace;
                 // Debug.Log("send torque" + torqueDuringRace.ToString());
             }
@@ -123,7 +124,7 @@ namespace skySailing.game
         }
 
         //ワイヤを巻き取る
-        private void reelWire(float torque, float speed = 4.0f)
+        private void reelWire(float torque, float speed)
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);

@@ -32,6 +32,7 @@ namespace Fishing.Game
         private float time = 0.0f;
         private float _previoussendingTorque = 0.0f;
         private float _previousTorqueSendingTime = 0.0f;
+        private bool duringReelingWire = false;
 
         // Start is called before the first frame update
         void Start()
@@ -42,6 +43,7 @@ namespace Fishing.Game
         // Update is called once per frame
         void Update()
         {
+
             time += Time.deltaTime;
 
             masterStateController.UpdateSequence();
@@ -64,13 +66,10 @@ namespace Fishing.Game
 
             // ワイヤ巻き取りまたはプレイ中のトルク指令
             // ワイヤ巻き取りの操作があればそれを優先し、なければプレイ中のトルク指令を行う
-            if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
+            if(OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
             {
                 UpdateTorque(0.75f);
-            } else if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
-            {
-                restore();
-            } else{
+            }else{
                 UpdateTorque(sendingTorque);
             }
         }
@@ -119,7 +118,7 @@ namespace Fishing.Game
         // }
 
         //トルクを更新
-        private void UpdateTorque(float torque, float speed = 4.0f)
+        private void UpdateTorque(float torque, float speed = 10.0f)
         {
             // 前回とトルクが同じ、または前回の送信時刻から一定時間経過していなければ、トルクを送信しない
             // if ((torque == _previoussendingTorque) || ((time - _previousTorqueSendingTime) < torqueSendingInterval)){
@@ -131,7 +130,7 @@ namespace Fishing.Game
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);
             communicationInterface.sendData(data);
-            Debug.Log("send torque" + sendingTorque.ToString());
+            Debug.Log("send torque" + torque.ToString());
             _previoussendingTorque = sendingTorque;
             _previousTorqueSendingTime = time;
         }

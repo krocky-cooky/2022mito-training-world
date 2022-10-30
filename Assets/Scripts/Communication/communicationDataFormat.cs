@@ -67,4 +67,13 @@ namespace communication
         public float force;
         
     }
+
+    public class ForceGaugeDataFormat
+    {
+        public ForceGaugeDataFormat()
+        {
+            force = 1.0f;
+        }
+        public float force;
+    }
 }
