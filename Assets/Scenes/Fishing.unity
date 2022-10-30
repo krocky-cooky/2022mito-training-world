@@ -281,7 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30AB\u30B8\u30AD"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.202
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -932,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2810979053476176515, guid: ff9e77a3a74036745a2313c14c20ad00, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2810979053476176515, guid: ff9e77a3a74036745a2313c14c20ad00, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1011,7 +1011,7 @@ Transform:
   - {fileID: 673145890}
   - {fileID: 1811265142}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &327093990
 PrefabInstance:
@@ -1127,7 +1127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &329804189
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1625,12 +1625,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 404664830}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.010604098, z: -0.020028062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1290723663}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &409581962
 PrefabInstance:
@@ -1937,7 +1937,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.572, y: 1}
   m_AnchoredPosition: {x: -0.000030517578, y: -0.000011920929}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2301,6 +2301,7 @@ MonoBehaviour:
   centerOfHandle: {fileID: 855910966}
   ropeLength: 5
   fish: {fileID: 1996936798}
+  targetRopeColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &527583390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2511,7 +2512,7 @@ Transform:
   - {fileID: 1413317270}
   - {fileID: 1409540250}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &566304651
 GameObject:
@@ -2544,7 +2545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30A2\u30F3\u30B3\u30A6"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.205
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -5116,7 +5117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30AB\u30B8\u30AD"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.208
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -5958,8 +5959,8 @@ RectTransform:
   m_Father: {fileID: 442828021}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.572, y: 0}
+  m_AnchorMax: {x: 0.572, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6032,7 +6033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30D6\u30EB\u30FC\u30D0\u30B9"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.201
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -6097,7 +6098,7 @@ Transform:
   - {fileID: 327093991}
   - {fileID: 1160456438}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &932237228 stripped
 Transform:
@@ -6451,7 +6452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30B5\u30E1"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.207
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -7722,7 +7723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: b544816461f324e56a39767fdeb5b114, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: b544816461f324e56a39767fdeb5b114, type: 3}
       propertyPath: m_LocalScale.x
@@ -7814,7 +7815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30B9\u30BA\u30AD"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.204
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -7979,8 +7980,9 @@ Transform:
   - {fileID: 1895901905}
   - {fileID: 998635864}
   - {fileID: 499058304}
+  - {fileID: 404664833}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1290723664
 MonoBehaviour:
@@ -8601,7 +8603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30BF\u30A4\u30AC\u30FC\u30D5\u30A3\u30C3\u30B7\u30E5"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.21
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -8805,7 +8807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30DE\u30F3\u30DC\u30A6"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.209
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -9374,7 +9376,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2000968381612715057, guid: 1a04b69577602254d84007b818b1c18e, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2000968381612715057, guid: 1a04b69577602254d84007b818b1c18e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10823,7 +10825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11698,7 +11700,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!45 &1859742332
 Skybox:
@@ -11911,8 +11913,8 @@ MonoBehaviour:
   allowableDifference: 0.1
   changeRateOfEscape: 0.2
   periodOfFishIntensity: 12
-  timeOfRaising: 0.6
-  lengthOfRasing: 0.4
+  timeOfRaising: 0.8
+  lengthOfRasing: 0.5
   fishingLineLengthAfterFishing: 1
   timeShorteningFishingLine: 0.25
   distanseFromFishToCamera: 10
@@ -11927,15 +11929,15 @@ MonoBehaviour:
   maxAplitudeOfTorque: 0.5
   periodOfTorque: 0.1
   firstSpikePeriod: 0.22
-  firstSpikeSize: 1.75
+  firstSpikeSize: 1.25
   latterSpikePeriod: 0.42
   latterSpikeSize: 0.25
   baseTorqueDuringFishing: 0.75
   maxIntervalOfNibbling: 2
   minIntervalOfNibbling: 1
-  maxTimeOfNibbling: 15
-  minTimeOfNibbling: 10
-  timeUntilFishHitAtHalfChance: 7
+  maxTimeOfNibbling: 25
+  minTimeOfNibbling: 15
+  timeUntilFishHitAtHalfChance: 15
   frontViewUiText: {fileID: 1697318979}
   torqueReduction: 0.5
   SizeOfFishMovement: 3
@@ -11965,6 +11967,7 @@ MonoBehaviour:
   ropeStateController: {fileID: 499058305}
   tensionSlider: {fileID: 549653290}
   tensionSliderGameObject: {fileID: 329804188}
+  tensionSliderIsOn: 0
   timeUntillFishIntensityChange: 5
 --- !u!222 &1895901907
 CanvasRenderer:
@@ -12473,7 +12476,7 @@ Transform:
   - {fileID: 816198030}
   - {fileID: 999836599}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1983296843
 MonoBehaviour:
@@ -12667,7 +12670,7 @@ Transform:
   - {fileID: 210514326}
   - {fileID: 136832897}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1996936798
 MonoBehaviour:
@@ -13190,7 +13193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30CA\u30F3\u30E8\u30A6\u30CF\u30AE"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.203
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -13407,7 +13410,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2117129728
 MonoBehaviour:
@@ -13551,7 +13554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30D1\u30FC\u30EB\u30B0\u30E9\u30DF\u30FC"
   weight: 0
-  HP: 50
+  HP: 150
   easeOfEscape: 0.206
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -13643,12 +13646,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0.0070513096, y: 0.99100256, z: 0.058039885, w: -0.12039757}
-  m_LocalPosition: {x: 4.799979, y: -5.2552915, z: 8.893622}
+  m_LocalRotation: {x: -0.036044866, y: 0.96072495, z: 0.23052838, w: 0.15021661}
+  m_LocalPosition: {x: -2.3788214, y: -2.1682212, z: 7.059272}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!45 &2144403882
 Skybox:

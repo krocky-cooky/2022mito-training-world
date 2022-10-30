@@ -34,7 +34,7 @@ namespace Fishing.State
             // トルクの指定
             // _fisrtTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
             // masterStateController.gameMaster.sendingTorque = Mathf.Max(_fisrtTorque - masterStateController.torqueReduction, 0.75f);
-            masterStateController.gameMaster.sendingTorque = 0.75f;
+            masterStateController.gameMaster.sendingTorque = 1.0f;
 
             // 音声を再生
             masterStateController.FishSoundWithHP0.Play();

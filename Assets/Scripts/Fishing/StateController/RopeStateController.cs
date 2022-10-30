@@ -33,6 +33,9 @@ namespace Fishing.StateController
         // 魚
         public Fish fish;
 
+        // ロープのカラー
+        public Color targetRopeColor;
+
         public enum StateType
         {
             FollowsHandle,
@@ -55,6 +58,7 @@ namespace Fishing.StateController
 
             CurrentState = initializeStateType;
             stateDic[CurrentState].OnEnter();
+
         }
     }
 }

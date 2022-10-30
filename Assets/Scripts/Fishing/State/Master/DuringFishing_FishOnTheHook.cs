@@ -44,6 +44,9 @@ namespace Fishing.State
         // トルクのp乗に音やピッチを比例させる
         private float _p;
 
+        // ロープの色の濃度
+        private float _colorIntensity;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
@@ -67,8 +70,7 @@ namespace Fishing.State
             _maxHP = masterStateController.fish.HP;
             _minTorque = _maxTorque - masterStateController.torqueReduction;
             _normalizedTorque = 0.0f;
-            // masterStateController.tensionSlider.SetActive(true);
-            masterStateController.tensionSliderGameObject.SetActive(true);
+            masterStateController.tensionSliderGameObject.SetActive(masterStateController.tensionSliderIsOn);
         }
 
         public override void OnExit()
@@ -121,7 +123,17 @@ namespace Fishing.State
             OVRInput.SetControllerVibration(0.01f, _normalizedTorque, OVRInput.Controller.RTouch);
 
             // トルクに応じてゲージ調整
-            masterStateController.tensionSlider.value = _normalizedTorque;
+            if (masterStateController.tensionSliderIsOn){
+                masterStateController.tensionSlider.value = _normalizedTorque;
+            }
+
+            // トルクに応じてリールの色を調整
+            _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
+            if (_normalizedTorque < 0.5f){
+                masterStateController.ropeStateController.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
+            }else{
+                masterStateController.ropeStateController.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
+            }
 
 
             // 魚のHPは、リールのテンションの強さ(=トルク)に応じて減少
