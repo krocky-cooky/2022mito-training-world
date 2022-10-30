@@ -726,6 +726,67 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 47.4, y: 0.91, z: 4.3}
   m_Center: {x: -19.9, y: 0, z: 3.11}
+--- !u!1 &328487948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 328487949}
+  - component: {fileID: 328487951}
+  - component: {fileID: 328487950}
+  m_Layer: 0
+  m_Name: communicationForHandDyamometer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &328487949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328487948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1290723663}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &328487950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328487948}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c567b7ab052214d8e23dd73f4ca16c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isConnected: 0
+  communicationType: 2
+--- !u!114 &328487951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328487948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef9746df6b3b7e4e8eb2394246d6cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRunning: 0
+  portName: COM5
+  baudRate: 115200
 --- !u!1 &359960508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3a7ff9c1189266d40b252bf4a231640d, type: 3}
@@ -788,12 +849,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab89fb0747b9174fa1346ab62be1324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxForce: 10
+  maxForce: 15
   minForce: 0
   positionCalculationMethod: 0
   outputPosition: 0
   maxOutputVelocity: 1
   gripCommunicationInterface: {fileID: 1322611939}
+  serialHandler: {fileID: 328487951}
 --- !u!1001 &401995505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4266,10 +4328,10 @@ MonoBehaviour:
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
-  currentRelativePosition: 0
+  currentNormalizedPosition: 0
   rightControllerAnchor: {fileID: 1772564230}
   SailingShip: {fileID: 1983296843}
-  communicationInterface: {fileID: 0}
+  communicationInterface: {fileID: 1322611937}
 --- !u!1 &1078436898
 GameObject:
   m_ObjectHideFlags: 0
@@ -4829,6 +4891,7 @@ Transform:
   - {fileID: 1042189067}
   - {fileID: 177151459}
   - {fileID: 395300488}
+  - {fileID: 328487949}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4853,6 +4916,7 @@ MonoBehaviour:
   torqueDuringRace: 0
   forceGauge: {fileID: 395300489}
   communicationInterface: {fileID: 1322611937}
+  speedLimit: 10
   _previousTorqueDuringRace: 0
 --- !u!1 &1309862870 stripped
 GameObject:
@@ -4877,6 +4941,7 @@ GameObject:
   - component: {fileID: 1322611938}
   - component: {fileID: 1322611937}
   - component: {fileID: 1322611939}
+  - component: {fileID: 1322611940}
   m_Layer: 0
   m_Name: communication
   m_TagString: webSocketClient
@@ -4905,7 +4970,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49274b14fd4272c4381fa14e9e1bdec9, type: 3}
   m_Name: 
@@ -4936,7 +5001,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5dce2e1569d65a4e88692469d055df6, type: 3}
   m_Name: 
@@ -4956,12 +5021,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29c27a2092cff194181ee0a4b97744cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isConnected: 0
+--- !u!114 &1322611940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322611934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef9746df6b3b7e4e8eb2394246d6cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRunning: 0
+  portName: COM3
+  baudRate: 115200
 --- !u!1001 &1341096872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5367,7 +5447,7 @@ MonoBehaviour:
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
-  currentRelativePosition: 0
+  currentNormalizedPosition: 0
   rightControllerAnchor: {fileID: 1772564230}
   SailingShip: {fileID: 1983296843}
   communicationInterface: {fileID: 0}
@@ -6951,7 +7031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19.97
+      value: -20.4
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z

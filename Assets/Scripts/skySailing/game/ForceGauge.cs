@@ -60,8 +60,8 @@ public class ForceGauge : MonoBehaviour
     }
 
     void Start(){
-        maxForce = (float)Screen.width;
-        minForce = 0.0f;
+        // maxForce = (float)Screen.width;
+        // minForce = 0.0f;
         // _socketClient = GameObject.FindWithTag("webSocketClient").GetComponent<webSocketClient>();
     }
 

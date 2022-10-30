@@ -124,7 +124,7 @@ namespace skySailing.game
         }
 
         //ワイヤを巻き取る
-        private void reelWire(float torque, float speed)
+        private void reelWire(float torque, float speed = 10.0f)
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);
