@@ -4325,6 +4325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1576822f7a17ef84498e5b9c0378b29b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputInterface: 1
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
@@ -5444,6 +5445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1576822f7a17ef84498e5b9c0378b29b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputInterface: 0
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
