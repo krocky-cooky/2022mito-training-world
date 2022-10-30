@@ -6837,7 +6837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1999a8cad1a4459bc33d17303cb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputInterface: 0
+  inputInterface: 1
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
@@ -11911,8 +11911,8 @@ MonoBehaviour:
   allowableDifference: 0.1
   changeRateOfEscape: 0.2
   periodOfFishIntensity: 12
-  timeOfRaising: 0.3
-  lengthOfRasing: 0.7
+  timeOfRaising: 0.6
+  lengthOfRasing: 0.4
   fishingLineLengthAfterFishing: 1
   timeShorteningFishingLine: 0.25
   distanseFromFishToCamera: 10
@@ -11921,8 +11921,8 @@ MonoBehaviour:
   ropeRelayBelowHandle: {fileID: 1973850306}
   fish: {fileID: 1996936798}
   fishGameObject: {fileID: 0}
-  maxTorque: 1.4
-  minTorque: 1.4
+  maxTorque: 1.6
+  minTorque: 1.3
   fishWeightPerTorque: 4
   maxAplitudeOfTorque: 0.5
   periodOfTorque: 0.1
@@ -11933,9 +11933,9 @@ MonoBehaviour:
   baseTorqueDuringFishing: 0.75
   maxIntervalOfNibbling: 2
   minIntervalOfNibbling: 1
-  maxTimeOfNibbling: 5
-  minTimeOfNibbling: 2
-  timeUntilFishHitAtHalfChance: 2
+  maxTimeOfNibbling: 15
+  minTimeOfNibbling: 10
+  timeUntilFishHitAtHalfChance: 7
   frontViewUiText: {fileID: 1697318979}
   torqueReduction: 0.5
   SizeOfFishMovement: 3
