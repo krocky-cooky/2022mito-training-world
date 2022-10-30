@@ -116,6 +116,8 @@ namespace Fishing.StateController
         public AudioSource FishSoundWithHP0;
         // 魚が水面に浮かび上がる音
         public AudioSource FishGoOnTheWater;
+        // 魚釣りに成功した時の効果音
+        public AudioSource FishingSuccess;
 
         // ロープの音の最小値
         public float minRopeSoundVolume;

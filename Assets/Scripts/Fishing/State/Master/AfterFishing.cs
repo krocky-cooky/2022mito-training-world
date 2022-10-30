@@ -45,12 +45,17 @@ namespace Fishing.State
             // 魚の向きを整える
             masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-            
+            // 魚釣りに成功した効果音を鳴らす
+            Invoke("PlayFishingSuccess", masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine);
         }
 
         public override void OnExit()
         {
             masterStateController.frontViewUiText.text = "";
+
+            // 魚の表示しない
+            masterStateController.fish.isFishShadow = false;
+            masterStateController.fish.isFishBody = false;
         }
 
         public override int StateUpdate()
@@ -74,6 +79,11 @@ namespace Fishing.State
 
             return (int)StateType;
         }
+
+        public void PlayFishingSuccess(){
+            masterStateController.FishingSuccess.Play();
+        }
+
     }
 
 }
