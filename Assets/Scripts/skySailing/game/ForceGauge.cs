@@ -41,6 +41,8 @@ public class ForceGauge : MonoBehaviour
     private float maxOutputVelocity = 0.0f;
     [SerializeField]
     private GripCommunicationInterface gripCommunicationInterface;
+    [SerializeField]
+    private SerialHandler serialHandler;
 
     // private webSocketClient _socketClient;
     
@@ -52,6 +54,11 @@ public class ForceGauge : MonoBehaviour
 
     private bool ret;
 
+    public class ForceGaugeDataFormat
+    {
+        public float force;
+    }
+
     void Start(){
         maxForce = (float)Screen.width;
         minForce = 0.0f;
@@ -60,11 +67,10 @@ public class ForceGauge : MonoBehaviour
 
     void Update(){
         currentForce = Input.mousePosition.x;
-        Debug.Log("grip update");
         
-        if (gripCommunicationInterface.isConnected){
-            currentForce = gripCommunicationInterface.getReceivedData().force;
-            Debug.Log("grip value is " + gripCommunicationInterface.getReceivedData().force.ToString());
+        if (serialHandler.isRunning){
+            currentForce = serialHandler.getReceivedDataOfForceGauge().force;
+            Debug.Log("grip value is " + currentForce.ToString());
         }
 
         _outputVelocity = CalculateVelocityProportionalToForce();

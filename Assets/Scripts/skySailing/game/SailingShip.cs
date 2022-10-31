@@ -21,6 +21,13 @@ namespace skySailing.game
         private ForceGauge forceGauge;
         [SerializeField]
         private Master gameMaster;
+        [SerializeField]
+        private AudioSource startSound;
+        [SerializeField]
+        private AudioSource checkPointSound;
+        [SerializeField]
+        private AudioSource goalSound;
+
 
         private Vector3 _moveVector;
         private Transform _initShipTransform;
@@ -36,7 +43,7 @@ namespace skySailing.game
         void Update()
         {
             // 柱を回転
-            changePillarRotation(forceGauge.outputPosition, trainingDevice.currentRelativePosition);
+            changePillarRotation(forceGauge.outputPosition, trainingDevice.currentNormalizedPosition);
 
             //船を動かす
             move(gameMaster.windSpeed);
@@ -65,20 +72,25 @@ namespace skySailing.game
             Debug.Log("_moveVector is " + _moveVector.ToString());
         }
 
+
+        // 枠の通過判定
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.tag == "start"){
                 gameMaster.duringRace = true;
+                startSound.Play();
                 Debug.Log("race start");
             }
             if (other.gameObject.tag == "goal"){
                 gameMaster.duringRace = false;
+                goalSound.Play();
                 Debug.Log("race end");
             }
             if (other.gameObject.tag == "checkPoint"){
                 if ((_time - _previousCheckPointTime) > 0.5){
                     gameMaster.numberOfCheckpointsPassed += 1;
                     _previousCheckPointTime = _time;
+                    checkPointSound.Play();
                     Debug.Log("passing the check point");
                 }
             }

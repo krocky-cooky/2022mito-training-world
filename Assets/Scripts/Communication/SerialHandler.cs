@@ -7,7 +7,7 @@ namespace communication
 {
     public class SerialHandler : MonoBehaviour
     {
-        
+        public bool isRunning = false;
 
         [SerializeField]
         private string portName = "COM1";
@@ -18,7 +18,6 @@ namespace communication
 
         private SerialPort _serialPort;
         private Thread _thread;
-        private bool _isRunning = false;
         private ReceivingDataFormat receivedData;
         private string receivedText;
 
@@ -51,7 +50,7 @@ namespace communication
 
         public void Open()
         {
-            if(_isRunning) 
+            if(isRunning) 
             {
                 Debug.Log("serial already open");
                 return;
@@ -61,7 +60,7 @@ namespace communication
             //_serialPort = new SerialPort(portName, baudRate);
             _serialPort.Open();
 
-            _isRunning = true;
+            isRunning = true;
 
             _thread = new Thread(Read);
             _thread.Start();
@@ -70,7 +69,7 @@ namespace communication
         private void Close()
         {
             _isNewMessageReceived = false;
-            _isRunning = false;
+            isRunning = false;
 
             if (_thread != null && _thread.IsAlive) {
                 _thread.Join();
@@ -84,11 +83,12 @@ namespace communication
 
         private void Read()
         {
-            while (_isRunning && _serialPort != null && _serialPort.IsOpen) {
+            while (isRunning && _serialPort != null && _serialPort.IsOpen) {
                 try 
                 {
                     _message = _serialPort.ReadLine();
                     _isNewMessageReceived = true;
+                    Debug.Log("serial message is " + _message);
                 } 
                 catch (System.Exception e) 
                 {
@@ -97,14 +97,19 @@ namespace communication
             }
         }
 
-        public string getReceivedData()
+        public ForceGaugeDataFormat getReceivedDataOfForceGauge()
+        {
+            return JsonUtility.FromJson<ForceGaugeDataFormat>(receivedText);
+        }
+
+        public ReceivingDataFormat getReceivedData()
         {
             return receivedText;
         }
 
         public void sendData(string data)
         {
-            if(_isRunning)
+            if(isRunning)
             {
                 Write(data);
             }

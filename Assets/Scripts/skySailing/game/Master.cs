@@ -16,7 +16,7 @@ namespace skySailing.game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public float windSpeed;
-        public Text timerText;
+        public Text frontViewUI;
         public int numberOfCheckpointsPassed = 0;
 
         // レース中かどうかのフラグ
@@ -32,6 +32,8 @@ namespace skySailing.game
         private ForceGauge forceGauge;
         [SerializeField]
         private MainCommunicationInterface communicationInterface;
+        [SerializeField]
+        private float speedLimit;
 
         private float time = 0.0f;
         private Vector3  _initShipPosition;
@@ -39,6 +41,7 @@ namespace skySailing.game
         public float _previousTorqueDuringRace = 0.0f;
         private string checkPointMessage;
         private string forceMessage;
+        private string timerMessage;
 
         // Start is called before the first frame update
         void Start()
@@ -54,7 +57,7 @@ namespace skySailing.game
             //ワイヤ巻き取り用ボタンイベント
             if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
             {
-                reelWire(0.75f);
+                reelWire(0.75f, 6.0f);
             }
             if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
             {
@@ -80,14 +83,16 @@ namespace skySailing.game
                 time += Time.deltaTime;
                 Debug.Log("time is " + time.ToString());
             }
-            checkPointMessage = "\nYou passed " + numberOfCheckpointsPassed.ToString() + " check points";
-            forceMessage = "\nleft force=" + forceGauge.currentForce.ToString() + "kg  right force=" + torqueDuringRace.ToString() + "kg";
-            timerText.text = time.ToString() + checkPointMessage + forceMessage;
+
+            // forceMessage = "\nleft force=" + forceGauge.currentForce.ToString() + "kg  right force=" + torqueDuringRace.ToString() + "kg";
+            forceMessage = "Player1 Level: " + (torqueDuringRace * 3.0f).ToString() + "kg" + "\nPlayer2 Level: " + forceGauge.maxForce.ToString() + "kg";
+            timerMessage = "Time: " + time.ToString();
+            checkPointMessage = "Check Points:  " + numberOfCheckpointsPassed.ToString();
+            frontViewUI.text = forceMessage + "\n" + timerMessage + "\n"  + checkPointMessage;
             
             // レース中のトルク指令
             if (torqueDuringRace != _previousTorqueDuringRace){
-                float spdLimit = 1.0f;
-                reelWire(torqueDuringRace, spdLimit);
+                reelWire(torqueDuringRace, speedLimit);
                 _previousTorqueDuringRace = torqueDuringRace;
                 // Debug.Log("send torque" + torqueDuringRace.ToString());
             }
@@ -119,7 +124,7 @@ namespace skySailing.game
         }
 
         //ワイヤを巻き取る
-        private void reelWire(float torque, float speed = 4.0f)
+        private void reelWire(float torque, float speed)
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);
