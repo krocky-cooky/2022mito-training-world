@@ -96,7 +96,7 @@ namespace Fishing.State
             if (currentTimeCount < masterStateController.timeUntillFishIntensityChange){
                 masterStateController.fish.currentIntensityOfMovements = 1.0f;
             }else{
-                masterStateController.fish.currentIntensityOfMovements = Mathf.Sin((masterStateController.fish.HP / _maxHP) * (Mathf.PI * 0.5f)) * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+                masterStateController.fish.currentIntensityOfMovements = Mathf.Pow((masterStateController.fish.HP / _maxHP), 0.3f) * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
             }
 
             // 魚がカラダをひねる強さを変化

@@ -6847,7 +6847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb1999a8cad1a4459bc33d17303cb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputInterface: 0
+  inputInterface: 1
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
@@ -11938,7 +11938,7 @@ MonoBehaviour:
   trainingDevice: {fileID: 1042189068}
   allowableDifference: 0.1
   changeRateOfEscape: 0.2
-  periodOfFishIntensity: 12
+  periodOfFishIntensity: 6
   timeOfRaising: 0.8
   lengthOfRasing: 0.5
   fishingLineLengthAfterFishing: 1
