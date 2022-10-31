@@ -13,6 +13,8 @@ namespace communication
         private string portName = "COM1";
         [SerializeField]
         private int baudRate = 115200;
+        [SerializeField]
+        private string sendingDataField;
 
         private SerialPort _serialPort;
         private Thread _thread;
@@ -95,10 +97,9 @@ namespace communication
             }
         }
 
-        public ReceivingDataFormat getReceivedData()
+        public string getReceivedData()
         {
-            receivedData = JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
-            return receivedData;
+            return receivedText;
         }
 
         public void sendData(string data)
@@ -134,6 +135,12 @@ namespace communication
         private void OnDataReceived(string message)
         {
             receivedText = _message;
+        }
+
+        public void sendFieldText()
+        {
+            Write(sendingDataField);
+            return;
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace pseudogame.game
 {
@@ -42,7 +42,7 @@ namespace pseudogame.game
         [SerializeField]
         private int _gameOverCollisionCount = 5;
         [SerializeField]
-        private int _wallSpeed = 0.05f;
+        private float _wallSpeed = 0.05f;
         [SerializeField]
         private List<WallHeight> _wallHeight = new List<WallHeight>()
         {
@@ -57,12 +57,19 @@ namespace pseudogame.game
         private AudioClip _collisionSound;
         [SerializeField]
         private AudioClip _getPointSound;
+        [SerializeField]
+        private GameObject _dataMonitor;
+        [SerializeField]
+        private Text _restLifeText;
+        [SerializeField]
+        private float _dataMonitorEndY = -0.35f;
 
         private Vector3 _stickStartPosition;
         private bool _gameStart = false;
         private Vector3 _initialWallPosition;
         private Master _gameMaster;
         private AudioSource _collisionAudioSource;
+        private bool _collisionActive = false;
 
         public int _collisionCount = 0;
         public bool _applyCDRatio = false;
@@ -92,7 +99,10 @@ namespace pseudogame.game
             Vector3 posend = new Vector3(objX,0,_wallPosZ);
             endObject.transform.position = posend;
             _collisionAudioSource = GetComponent<AudioSource>();
+            _restLifeText.text = $"残りライフ\n{_gameOverCollisionCount}";
 
+            Vector3 monitorPos = _dataMonitor.transform.position;
+            monitorPos.y = -1.9f;
             
         }
 
@@ -104,6 +114,7 @@ namespace pseudogame.game
                 move(_slidingWalls);
                 
             }
+            
         }
 
         private void move(GameObject obj)
@@ -111,6 +122,13 @@ namespace pseudogame.game
             Vector3 position = obj.transform.position;
             position.x += _wallSpeed;
             obj.transform.position = position;
+            if(_dataMonitor.transform.position.y < _dataMonitorEndY)
+            {
+                Vector3 monitorPos = _dataMonitor.transform.position;
+                monitorPos.y += 0.03f;
+                _dataMonitor.transform.position = monitorPos;
+            }
+            
         }
 
         public void GameStart()
@@ -128,6 +146,7 @@ namespace pseudogame.game
             _collisionCount = 0;
             _liftCount = 0;
             _gameMaster.setTorque(_trainingTorque);
+            _restLifeText.text = $"残りライフ\n{_gameOverCollisionCount - _collisionCount}";
             
             Vector3 wallPosition = _slidingWalls.transform.position;
             _stickStartPosition = _rightController.transform.position;
@@ -154,6 +173,8 @@ namespace pseudogame.game
                     break;
                 }
 
+                
+
     
                 
                 yield return new WaitForSeconds(0.1f);
@@ -171,15 +192,25 @@ namespace pseudogame.game
 
         public void CollisionEnterEvent()
         {
-            _collisionAudioSource.clip = _collisionSound;
-            _collisionAudioSource.Play();
-            OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
+            if(_collisionActive)
+            {
+                _collisionAudioSource.clip = _collisionSound;
+                _collisionAudioSource.Play();
+                OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
+                OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
+                ++_collisionCount;
+                _restLifeText.text = $"残りライフ\n{_gameOverCollisionCount - _collisionCount}";
+            }
+            
         }
 
         public void CollisionExitEvent()
         {
+
             OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.LTouch);
-            ++_collisionCount;
+            OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
+            StartCoroutine(CollisionDeactivateColloutine());
+            
         }
 
         public void GetPoint()
@@ -187,6 +218,13 @@ namespace pseudogame.game
             _collisionAudioSource.clip = _getPointSound;
             _collisionAudioSource.Play();
             _liftCount++;
+        }
+
+        private IEnumerator CollisionDeactivateColloutine()
+        {
+            _collisionActive = false;
+            yield return new WaitForSeconds(0.8f);
+            _collisionActive = true;
         }
         
     }

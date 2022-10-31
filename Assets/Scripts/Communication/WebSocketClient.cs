@@ -18,6 +18,7 @@ namespace communication
     {
         // Start is called before the first frame update
         private WebSocket _socket; //websocketオブジェクト
+        private string receivedText;
         private ReceivingDataFormat receivedData; //websocketで受信したデータを格納
         private Master gameMaster; //ゲームマスターオブジェクト
         private bool isChanged = false; 
@@ -80,7 +81,8 @@ namespace communication
 
             _socket.OnMessage += (s,e) => 
             {
-                receivedData = JsonUtility.FromJson<ReceivingDataFormat>(e.Data);
+                receivedText = e.Data;
+                receivedData = JsonUtility.FromJson<ReceivingDataFormat>(receivedText);
                 checkData(receivedData);
                 isChanged = true;
 
@@ -110,9 +112,9 @@ namespace communication
             _socket = null;
         }
 
-        public ReceivingDataFormat getReceivedData()
+        public string getReceivedData()
         {
-            return receivedData;
+            return receivedText;
         }
 
         //データの送信
