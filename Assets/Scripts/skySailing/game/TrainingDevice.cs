@@ -50,7 +50,7 @@ namespace skySailing.game
             if (inputInterface == InputInterface.Mouse){
                 currentAbsPosition = Input.mousePosition.y;
             }else{
-                currentAbsPosition = rightControllerAnchor.transform.position.y;
+                currentAbsPosition = rightControllerAnchor.transform.position.y - SailingShip.transform.position.y;
             }
 
             currentNormalizedPosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));

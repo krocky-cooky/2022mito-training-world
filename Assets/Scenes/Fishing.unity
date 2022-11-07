@@ -282,7 +282,7 @@ MonoBehaviour:
   species: "\u30AB\u30B8\u30AD"
   weight: 10
   torque: 1.7
-  HP: 170
+  HP: 119
   easeOfEscape: 0.202
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -1007,7 +1007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318121377}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 673145890}
@@ -2549,7 +2549,7 @@ MonoBehaviour:
   species: "\u30A2\u30F3\u30B3\u30A6"
   weight: 6
   torque: 1.6
-  HP: 160
+  HP: 112
   easeOfEscape: 0.205
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -5124,7 +5124,7 @@ MonoBehaviour:
   species: "\u30C1\u30E7\u30A6\u30B6\u30E1"
   weight: 15
   torque: 1.8
-  HP: 180
+  HP: 126
   easeOfEscape: 0.208
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -6041,7 +6041,7 @@ MonoBehaviour:
   species: "\u30D6\u30EB\u30FC\u30D0\u30B9"
   weight: 2.5
   torque: 1.4
-  HP: 140
+  HP: 98
   easeOfEscape: 0.201
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -6461,7 +6461,7 @@ MonoBehaviour:
   species: "\u30B5\u30E1"
   weight: 20
   torque: 1.9
-  HP: 190
+  HP: 133
   easeOfEscape: 0.207
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -7826,7 +7826,7 @@ MonoBehaviour:
   species: "\u30B9\u30BA\u30AD"
   weight: 2
   torque: 1.3
-  HP: 130
+  HP: 91
   easeOfEscape: 0.204
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -8012,7 +8012,7 @@ MonoBehaviour:
   viewerObject: {fileID: 813061342}
   communicationInterface: {fileID: 1322611939}
   masterStateController: {fileID: 1895901906}
-  torqueSendingInterval: 0.01
+  torqueSendingInterval: 0.1
 --- !u!4 &1309862871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7717387b3a35b1a49a831f640422e916, type: 3}
@@ -8616,7 +8616,7 @@ MonoBehaviour:
   species: "\u30BF\u30A4\u30AC\u30FC\u30D5\u30A3\u30C3\u30B7\u30E5"
   weight: 0.7
   torque: 1.1
-  HP: 110
+  HP: 77
   easeOfEscape: 0.21
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -8822,7 +8822,7 @@ MonoBehaviour:
   species: "\u30DE\u30F3\u30DC\u30A6"
   weight: 4
   torque: 1.5
-  HP: 150
+  HP: 105
   easeOfEscape: 0.209
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -11963,7 +11963,7 @@ MonoBehaviour:
   minIntervalOfNibbling: 1
   maxTimeOfNibbling: 25
   minTimeOfNibbling: 15
-  timeUntilFishHitAtHalfChance: 7
+  timeUntilFishHitAtHalfChance: 10
   frontViewUiText: {fileID: 1697318979}
   torqueReduction: 0.5
   SizeOfFishMovement: 3
@@ -13222,7 +13222,7 @@ MonoBehaviour:
   species: "\u30CA\u30F3\u30E8\u30A6\u30CF\u30AE"
   weight: 0.5
   torque: 1
-  HP: 100
+  HP: 70
   easeOfEscape: 0.203
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -13584,7 +13584,7 @@ MonoBehaviour:
   species: "\u30D1\u30FC\u30EB\u30B0\u30E9\u30DF\u30FC"
   weight: 1
   torque: 1.2
-  HP: 120
+  HP: 84
   easeOfEscape: 0.206
   currentIntensityOfMovements: 1
   isFishShadow: 0
@@ -13676,8 +13676,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144403879}
-  m_LocalRotation: {x: 0.0014230636, y: 0.99854416, z: 0.041963447, w: -0.03386178}
-  m_LocalPosition: {x: 3.3360806, y: -3.587921, z: 21.486774}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  m_LocalPosition: {x: -1.4299996, y: -5.02, z: 4.13917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
