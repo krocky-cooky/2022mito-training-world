@@ -23,7 +23,7 @@ namespace communication
             trq = -0.1f;
             spd = -0.1f;
             trqLimit = 6.0f;
-            spdLimit = 20.0f;
+            spdLimit = 6.0f;
         }
 
         private string DEFAULT_TARGET = "trq";

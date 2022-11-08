@@ -13,7 +13,7 @@ using UnityEngine;
 using communication;
 
 
-namespace skySailing.game
+namespace tsunahiki.game
 {
     public class ForceGauge : MonoBehaviour
     {
