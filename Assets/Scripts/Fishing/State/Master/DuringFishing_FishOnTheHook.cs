@@ -127,7 +127,7 @@ namespace Fishing.State
             // トルクに応じて右のリモコンの振動を生成
             OVRInput.SetControllerVibration(0.01f, _normalizedTorque, OVRInput.Controller.RTouch);
 
-            // トルクに応じてゲージ調整
+            // トルクをゲージで表示
             if (masterStateController.tensionSliderIsOn){
                 masterStateController.tensionSlider.value = _normalizedTorque;
             }
