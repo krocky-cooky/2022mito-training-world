@@ -102,7 +102,7 @@ namespace communication
             return JsonUtility.FromJson<ForceGaugeDataFormat>(receivedText);
         }
 
-        public ReceivingDataFormat getReceivedData()
+        public string getReceivedData()
         {
             return receivedText;
         }
