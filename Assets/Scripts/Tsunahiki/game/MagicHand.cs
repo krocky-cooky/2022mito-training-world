@@ -49,8 +49,11 @@ public class MagicHand : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
+        // 正規化チェック
+        normalizedShaftLength = Mathf.Clamp01(normalizedShaftLength);
+
         // グリップの位置を変更
         grip.transform.position = new Vector3(_initGripPosition.x, _initGripPosition.y, _initGripPosition.z + getAbsPosition(maxGripPosition, minGripPosition, normalizedShaftLength));
 
