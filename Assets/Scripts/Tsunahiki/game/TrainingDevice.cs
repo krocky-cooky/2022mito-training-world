@@ -32,10 +32,12 @@ namespace tsunahiki.game
         [SerializeField]
         private MainCommunicationInterface communicationInterface;
 
-        void Start(){
+        void Start()
+        {
         }
 
-        void Update(){
+        void Update()
+        {
             if (inputInterface == InputInterface.Mouse){
                 currentAbsPosition = Input.mousePosition.y;
             }else{
