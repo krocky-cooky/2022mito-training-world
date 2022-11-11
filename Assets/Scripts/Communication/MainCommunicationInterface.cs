@@ -70,20 +70,23 @@ namespace communication
 
         public ReceivingDataFormat getReceivedData()
         {
+            string dataJson;
             switch(communicationType)
             {
                 case CommunicationType.webSocket:
-                    return webSocketClient.getReceivedData();
+                    dataJson = webSocketClient.getReceivedData();
                     break;
                 case CommunicationType.bluetooth:
-                    return bluetoothCentral.getReceivedData();
+                    dataJson = bluetoothCentral.getReceivedText();
                     break;
                 case CommunicationType.serial:
-                    return serialHandler.getReceivedData();
+                    dataJson = serialHandler.getReceivedData();
                     break;
                 default:
                     return null;
-            }       
+            }    
+            ReceivingDataFormat retval = JsonUtility.FromJson<ReceivingDataFormat>(dataJson);
+            return retval;
         }
 
         public void sendData(SendingDataFormat data)
