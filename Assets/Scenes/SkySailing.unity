@@ -4849,7 +4849,7 @@ MonoBehaviour:
   frontViewUI: {fileID: 1697318979}
   numberOfCheckpointsPassed: 0
   duringRace: 0
-  timeIntervalForRemoteCommunication: 0.5
+  timeIntervalForRemoteCommunication: 0.1
   viewerObject: {fileID: 813061342}
   SailingShip: {fileID: 1983296843}
   torqueDuringRace: 0

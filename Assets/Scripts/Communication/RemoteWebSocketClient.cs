@@ -19,6 +19,7 @@ namespace communication
         // Start is called before the first frame update
         private WebSocket _socket; //websocketオブジェクト
         private string receivedText;
+        // private ReceivingRemoteDataFormat receivedData;
         private string receivedMessage; // AWSのWebSocketAPIを介して受信したメッセージを格納
 
         public bool isConnected = false;
@@ -45,7 +46,7 @@ namespace communication
         
         void Start()
         {
-            _socket.Connect();
+            Connect();
         }
 
         // Update is called once per frame
@@ -68,7 +69,7 @@ namespace communication
             _socket.OnMessage += (s,e) => 
             {
                 receivedText = e.Data;
-                receivedMessage = JsonUtility.FromJson<ReceivingRemoteDataFormat>(receivedText).message;
+                // receivedMessage = JsonUtility.FromJson<ReceivingRemoteDataFormat>(receivedText).message;
             };
             
             _socket.OnClose += (sender, e) =>
@@ -87,7 +88,7 @@ namespace communication
 
         public string getReceivedData()
         {
-            return receivedMessage;
+            return receivedText;
         }
 
         //データの送信
@@ -99,7 +100,7 @@ namespace communication
                 {
                     data = "{\"action\": \"sendmessage\", \"message\": \"" + data + "\"}";
                     _socket.Send(data);
-                    Debug.Log(data);
+                    Debug.Log("send data via web socket api is" + data);
                 }
                 catch (Exception e)
                 {

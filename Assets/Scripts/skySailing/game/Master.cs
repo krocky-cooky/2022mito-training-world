@@ -110,10 +110,11 @@ namespace skySailing.game
             }
 
             // remote Web Socket通信
-
+            _timeElapsed += Time.deltaTime;
             if (_timeElapsed > timeIntervalForRemoteCommunication){
                 _timeElapsed = 0.0f;
-                remoteWebSocketClient.sendData(_timeCount.ToString());
+                // remoteWebSocketClient.sendData(_timeCount.ToString());
+                Debug.Log("remote web socket");
                 Debug.Log("message via aws web socket api is " + remoteWebSocketClient.getReceivedData());
             }
         }
