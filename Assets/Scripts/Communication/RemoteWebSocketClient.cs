@@ -37,7 +37,7 @@ namespace communication
 
         void Awake()
         {
-            _socket = new WebSocket("wss://i1n1dxezt4.execute-api.ap-northeast-1.amazonaws.com/production");
+            _socket = new WebSocket(webSocketURL);
 
             // wssから始まるセキュア通信用プロトコルの場合は以下が必要
             var sslProtocolHack = (System.Security.Authentication.SslProtocols)SslProtocolsHack.Tls12;
