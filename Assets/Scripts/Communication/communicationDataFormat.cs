@@ -76,4 +76,11 @@ namespace communication
         }
         public float force;
     }
+
+    // AWSを介したリモートWebSocket通信用のデータフォーマット
+    public class ReceivingRemoteDataFormat
+    {
+        public string action;
+        public string message;
+    }
 }

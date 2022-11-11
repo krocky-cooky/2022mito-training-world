@@ -22,6 +22,9 @@ namespace skySailing.game
         // レース中かどうかのフラグ
         public bool duringRace = false;
 
+        // リモート通信のインターバル
+        public float timeIntervalForRemoteCommunication;
+
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
@@ -34,6 +37,8 @@ namespace skySailing.game
         private MainCommunicationInterface communicationInterface;
         [SerializeField]
         private float speedLimit;
+        [SerializeField]
+        private RemoteWebSocketClient remoteWebSocketClient;
 
         private float time = 0.0f;
         private Vector3  _initShipPosition;
@@ -42,6 +47,11 @@ namespace skySailing.game
         private string checkPointMessage;
         private string forceMessage;
         private string timerMessage;
+
+        // リモート通信を一定間隔で実行
+        private float _timeElapsed = 0.0f;
+
+        private float _timeCount = 0.0f;
 
         // Start is called before the first frame update
         void Start()
@@ -54,6 +64,8 @@ namespace skySailing.game
         // Update is called once per frame
         void Update()
         {
+            _timeCount = Time.deltaTime;
+
             //ワイヤ巻き取り用ボタンイベント
             if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
             {
@@ -97,6 +109,13 @@ namespace skySailing.game
                 // Debug.Log("send torque" + torqueDuringRace.ToString());
             }
 
+            // remote Web Socket通信
+
+            if (_timeElapsed > timeIntervalForRemoteCommunication){
+                _timeElapsed = 0.0f;
+                remoteWebSocketClient.sendData(_timeCount.ToString());
+                Debug.Log("message via aws web socket api is " + remoteWebSocketClient.getReceivedData());
+            }
         }
 
         //VR空間上のログ情報に追加

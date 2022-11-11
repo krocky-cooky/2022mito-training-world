@@ -794,6 +794,7 @@ MonoBehaviour:
   outputPosition: 0
   maxOutputVelocity: 1
   gripCommunicationInterface: {fileID: 1322611939}
+  serialHandler: {fileID: 0}
 --- !u!1001 &401995505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4266,7 +4267,7 @@ MonoBehaviour:
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
-  currentRelativePosition: 0
+  currentNormalizedPosition: 0
   rightControllerAnchor: {fileID: 1772564230}
   SailingShip: {fileID: 1983296843}
   communicationInterface: {fileID: 0}
@@ -4848,11 +4849,14 @@ MonoBehaviour:
   frontViewUI: {fileID: 1697318979}
   numberOfCheckpointsPassed: 0
   duringRace: 0
+  timeIntervalForRemoteCommunication: 0.5
   viewerObject: {fileID: 813061342}
   SailingShip: {fileID: 1983296843}
   torqueDuringRace: 0
   forceGauge: {fileID: 395300489}
   communicationInterface: {fileID: 1322611937}
+  speedLimit: 0
+  remoteWebSocketClient: {fileID: 1322611940}
   _previousTorqueDuringRace: 0
 --- !u!1 &1309862870 stripped
 GameObject:
@@ -4877,6 +4881,7 @@ GameObject:
   - component: {fileID: 1322611938}
   - component: {fileID: 1322611937}
   - component: {fileID: 1322611939}
+  - component: {fileID: 1322611940}
   m_Layer: 0
   m_Name: communication
   m_TagString: webSocketClient
@@ -4905,7 +4910,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49274b14fd4272c4381fa14e9e1bdec9, type: 3}
   m_Name: 
@@ -4922,7 +4927,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67c567b7ab052214d8e23dd73f4ca16c, type: 3}
   m_Name: 
@@ -4936,7 +4941,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5dce2e1569d65a4e88692469d055df6, type: 3}
   m_Name: 
@@ -4956,12 +4961,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322611934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29c27a2092cff194181ee0a4b97744cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isConnected: 0
+--- !u!114 &1322611940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322611934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000b5ee3f9a066e43b52e7734be498bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isConnected: 0
+  webSocketURL: wss://i1n1dxezt4.execute-api.ap-northeast-1.amazonaws.com/production
 --- !u!1001 &1341096872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5367,7 +5386,7 @@ MonoBehaviour:
   maxAbsPosition: 0
   minAbsPosition: 0
   currentAbsPosition: 0
-  currentRelativePosition: 0
+  currentNormalizedPosition: 0
   rightControllerAnchor: {fileID: 1772564230}
   SailingShip: {fileID: 1983296843}
   communicationInterface: {fileID: 0}

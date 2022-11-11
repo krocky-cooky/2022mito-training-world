@@ -9,7 +9,7 @@ namespace communication
     {
         webSocket,
         bluetooth,
-        serial
+        serial,
     }
     
     public class MainCommunicationInterface : MonoBehaviour
@@ -103,7 +103,6 @@ namespace communication
                 case CommunicationType.serial:
                     serialHandler.sendData(dataJson);
                     break;
-                
             }
             Debug.Log("send");
         }
