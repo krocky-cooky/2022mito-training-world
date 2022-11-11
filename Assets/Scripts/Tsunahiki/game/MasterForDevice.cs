@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using pseudogame.util;
-using pseudogame.game;
-using skySailing.game;
+
 using communication;
 
 namespace tsunahiki.game
 {
 
-    public class Master : MonoBehaviour
+
+    public class MasterForDevice : MonoBehaviour
     {   
         const int MAX_LOG_LINES = 10;
 
@@ -21,49 +20,79 @@ namespace tsunahiki.game
         // トルク÷握力計の値
         public float gripStrengthMultiplier;
 
-
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
         private float sendingTorque = 0.0f;
-        [SerializeField]
-        private ForceGauge forceGauge;
         [SerializeField]
         private MainCommunicationInterface communicationInterface;
         [SerializeField]
         private float speedLimit;
         [SerializeField]
         private float torqueSendingInterval = 0.1f;
+        [SerializeField]
+        private RemoteCoordinator _coordinator;
+        [SerializeField]
+        private GameObject _centerCube;
+        [SerializeField]
+        private GameObject _trainingDeviceObject;
+        [SerializeField]
+        private GameObject _opponentHandle;
+    
+        
 
         private float time = 0.0f;
         private float _previoussendingTorque = 0.0f;
         private float _previousTorqueSendingTime = 0.0f;
+        private float _opponentValue;
+        private TrainingDevice _trainingDevice;
+        private Vector3 cubeStartPosition;
+        private Vector3 opponentHandleStartPosition;
 
         // Start is called before the first frame update
         void Start()
         {
-
+            _trainingDevice = _trainingDeviceObject.GetComponent<TrainingDevice>();
+            cubeStartPosition = _centerCube.transform.position;
+            opponentHandleStartPosition = _opponentHandle.transform.position;
         }
 
         // Update is called once per frame
         void Update()
         {
 
+            _opponentValue = _coordinator.getCurrentValue();
+
             // 握力計の値をトルクに代入
-            sendingTorque = forceGauge.currentForce * gripStrengthMultiplier;
+            sendingTorque = _opponentValue * gripStrengthMultiplier;
 
             time += Time.deltaTime;
+            sendingTorque = _coordinator.opponentValue * gripStrengthMultiplier;
 
+            {
+                Vector3 cubePos = cubeStartPosition;
+                float controllerPositionFromCenter = _trainingDevice.currentAbsPosition - (_trainingDevice.maxAbsPosition + _trainingDevice.minAbsPosition)/2;
+                cubePos.z += controllerPositionFromCenter;
+                _centerCube.transform.position = cubePos;
+            }
 
-            // 握力計の値をトルクに代入
-            sendingTorque = forceGauge.currentForce * gripStrengthMultiplier;
+            {
+                float normalizedForceGaugePos = _coordinator.getCurrentValue();
+                Vector3 opponentHandlePos = opponentHandleStartPosition;
+                Debug.Log(normalizedForceGaugePos);
+                opponentHandlePos.z += (normalizedForceGaugePos - 0.5f)*2.0f;
+                _opponentHandle.transform.position = opponentHandlePos;
+            }
+
 
             // ワイヤ巻き取りまたはプレイ中のトルク指令
             // ワイヤ巻き取りの操作があればそれを優先し、なければプレイ中のトルク指令を行う
             if(OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
             {
                 UpdateTorque(0.75f);
-            }else{
+            }
+            else
+            {
                 UpdateTorque(sendingTorque);
             }
 

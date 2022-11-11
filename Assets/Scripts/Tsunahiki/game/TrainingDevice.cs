@@ -5,16 +5,17 @@ using communication;
 
 namespace tsunahiki.game
 {
+    // 入力方法の切り替え
+    public enum InputInterface
+    {
+        Mouse,
+        OculusController,
+    }
     
     public class TrainingDevice : MonoBehaviour
     {
-        // 入力方法の切り替え
-        public enum InputInterface
-        {
-            Mouse,
-            OculusController,
-        }
-        public InputInterface inputInterface;
+        [SerializeField]
+        private InputInterface inputInterface;
 
         // ハンドル等の最大位置と最小位置
         public float maxAbsPosition = 0.0f;
@@ -41,7 +42,7 @@ namespace tsunahiki.game
             if (inputInterface == InputInterface.Mouse){
                 currentAbsPosition = Input.mousePosition.y;
             }else{
-                currentAbsPosition = rightControllerAnchor.transform.position.y;
+                currentAbsPosition = rightControllerAnchor.transform.position.z;
             }
 
             currentNormalizedPosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));
@@ -52,6 +53,7 @@ namespace tsunahiki.game
                 maxAbsPosition = currentAbsPosition;
                 Debug.Log("Input.GetMouseButtonDown(2)");
             }
+            
             if(OVRInput.Get(OVRInput.RawButton.Y) || Input.GetMouseButton(2))
             {
                 Debug.Log("Input.GetMouseButton(2)");
@@ -63,7 +65,5 @@ namespace tsunahiki.game
                 }
             }
         }
-
-       
     }
 }
