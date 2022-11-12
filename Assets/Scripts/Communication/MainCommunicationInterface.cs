@@ -102,9 +102,10 @@ namespace communication
                     break;
                 case CommunicationType.serial:
                     serialHandler.sendData(dataJson);
+                    Debug.Log("send serial data");
                     break;
             }
-            Debug.Log("send");
+            
         }
 
         public void saveRegisteredTorque(string username)

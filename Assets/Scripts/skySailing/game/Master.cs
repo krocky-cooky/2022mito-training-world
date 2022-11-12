@@ -19,6 +19,10 @@ namespace skySailing.game
         public Text frontViewUI;
         public int numberOfCheckpointsPassed = 0;
 
+
+        // トルク÷握力計の値
+        public float gripStrengthMultiplier;
+
         // レース中かどうかのフラグ
         public bool duringRace = false;
 
@@ -101,6 +105,9 @@ namespace skySailing.game
             timerMessage = "Time: " + time.ToString();
             checkPointMessage = "Check Points:  " + numberOfCheckpointsPassed.ToString();
             frontViewUI.text = forceMessage + "\n" + timerMessage + "\n"  + checkPointMessage;
+
+            // 握力計の値をトルクに代入
+            torqueDuringRace = forceGauge.currentForce * gripStrengthMultiplier;
             
             // レース中のトルク指令
             if (torqueDuringRace != _previousTorqueDuringRace){
@@ -144,7 +151,7 @@ namespace skySailing.game
         }
 
         //ワイヤを巻き取る
-        private void reelWire(float torque, float speed)
+        private void reelWire(float torque, float speed = 10.0f)
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque, speed);

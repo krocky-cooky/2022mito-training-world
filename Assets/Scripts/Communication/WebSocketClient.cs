@@ -41,8 +41,9 @@ namespace communication
 
         void Awake()
         {
-            _socket = new WebSocket($"ws://{ESP32PrivateIP}/ws");
+            _socket = new WebSocket($"wss://i1n1dxezt4.execute-api.ap-northeast-1.amazonaws.com/production");
             // gameMaster = transform.parent.gameObject.GetComponent<Fishing.Game.Master>();
+            _socket.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
         }
         
         void Start()

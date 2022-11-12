@@ -44,12 +44,19 @@ namespace Fishing.State
         // トルクのp乗に音やピッチを比例させる
         private float _p;
 
+        // ロープの色の濃度
+        private float _colorIntensity;
+
+        // トルクの減少量
+        private float _torqueDecrease;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
 
             // トルクの指定
-            _maxTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
+            // _maxTorque = masterStateController.fish.weight / masterStateController.fishWeightPerTorque;
+            _maxTorque = masterStateController.fish.torque;
             masterStateController.gameMaster.sendingTorque = _maxTorque;
 
             // 音声を再生
@@ -65,10 +72,10 @@ namespace Fishing.State
             masterStateController.centerOfRotation = masterStateController.fish.transform.position - new Vector3(0.0f, 0.0f, masterStateController.radius);
             _fishAngle = 0.0f;
             _maxHP = masterStateController.fish.HP;
-            _minTorque = _maxTorque - masterStateController.torqueReduction;
+            _torqueDecrease = Mathf.Min(masterStateController.torqueReduction, _maxTorque - 0.75f);
+            _minTorque = _maxTorque - _torqueDecrease;
             _normalizedTorque = 0.0f;
-            // masterStateController.tensionSlider.SetActive(true);
-            masterStateController.tensionSliderGameObject.SetActive(true);
+            masterStateController.tensionSliderGameObject.SetActive(masterStateController.tensionSliderIsOn);
         }
 
         public override void OnExit()
@@ -82,6 +89,10 @@ namespace Fishing.State
         {
             currentTimeCount += Time.deltaTime;
 
+            // トルクを負荷ゲージで表示
+            // トルクの値の約4.0倍が負荷(kg)
+            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+
             // 魚の暴れる強さ
             // 0と1の間を周期的に変化する
             // HPが小さくなると、振幅も小さくなる
@@ -89,7 +100,7 @@ namespace Fishing.State
             if (currentTimeCount < masterStateController.timeUntillFishIntensityChange){
                 masterStateController.fish.currentIntensityOfMovements = 1.0f;
             }else{
-                masterStateController.fish.currentIntensityOfMovements = Mathf.Sin((masterStateController.fish.HP / _maxHP) * (Mathf.PI * 0.5f)) * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
+                masterStateController.fish.currentIntensityOfMovements = Mathf.Pow((masterStateController.fish.HP / _maxHP), 0.3f) * Mathf.Abs(Mathf.Sin(currentTimeCount / masterStateController.periodOfFishIntensity));
             }
 
             // 魚がカラダをひねる強さを変化
@@ -109,7 +120,7 @@ namespace Fishing.State
             // トルクの最大最小範囲を超えないようにする
             _normalizedTorque = masterStateController.fish.currentIntensityOfMovements + masterStateController.trainingDevice.currentNormalizedPosition - 0.5f;
             _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
-            masterStateController.gameMaster.sendingTorque = _minTorque + _normalizedTorque * masterStateController.torqueReduction;
+            masterStateController.gameMaster.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
 
             // ロープの音の大きさとピッチを変更
             // 音もピッチもトルクのp乗に比例。これで高域をシャープにする
@@ -120,8 +131,18 @@ namespace Fishing.State
             // トルクに応じて右のリモコンの振動を生成
             OVRInput.SetControllerVibration(0.01f, _normalizedTorque, OVRInput.Controller.RTouch);
 
-            // トルクに応じてゲージ調整
-            masterStateController.tensionSlider.value = _normalizedTorque;
+            // トルクをゲージで表示
+            if (masterStateController.tensionSliderIsOn){
+                masterStateController.tensionSlider.value = _normalizedTorque;
+            }
+
+            // トルクに応じてリールの色を調整
+            _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
+            if (_normalizedTorque < 0.5f){
+                masterStateController.ropeStateController.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
+            }else{
+                masterStateController.ropeStateController.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
+            }
 
 
             // 魚のHPは、リールのテンションの強さ(=トルク)に応じて減少

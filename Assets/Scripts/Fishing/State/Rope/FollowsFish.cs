@@ -17,17 +17,29 @@ namespace Fishing.State
     public class FollowsFish : RopeStateBase
     {
 
+        // ロープのカラーオブジェクト
+        // ここに上記を代入する
+        private Color ropeColorProperty;
+
         public override void OnEnter()
         {
             Debug.Log("FollowsFish");
+
+            // ropeColorProperty = GameObject.Find("fishLine(Clone)").GetComponent<Renderer>().material.color;
+            // GameObject.Find("fishLine(Clone)").GetComponent<Renderer>().material.color = new Color32(255, 0, 0, 1);
         }
 
         public override void OnExit()
         {
+            GameObject.Find("fishLine(Clone)").GetComponent<Renderer>().material.color = new Color32(255, 255, 255, 1);
         }
 
         public override int StateUpdate()
         {
+            // ropeColorProperty = ropeStateController.targetRopeColor;
+            // ropeColorProperty = Color.red;
+            GameObject.Find("fishLine(Clone)").GetComponent<Renderer>().material.color = ropeStateController.targetRopeColor;
+
             ropeStateController.ropeRelayBelowHandleTransform.position = ropeStateController.fish.transform.position;
             ropeStateController.ropeRelayBelowHandleTransform.rotation = ropeStateController.fish.transform.rotation;
 

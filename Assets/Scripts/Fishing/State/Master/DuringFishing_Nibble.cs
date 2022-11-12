@@ -62,6 +62,10 @@ namespace Fishing.State
             currentTimeCount += Time.deltaTime;
             _timeCountForNibble += Time.deltaTime;
 
+            // トルクを負荷ゲージで表示
+            // トルクの値の約4.0倍が負荷(kg)
+            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+
             // 魚が突く感触をトルクで再現
             if ((currentTimeCount - _previousSpikeTime) > _spikeInterval){
                 _spikeEndTime = currentTimeCount + masterStateController.firstSpikePeriod + masterStateController.latterSpikePeriod;

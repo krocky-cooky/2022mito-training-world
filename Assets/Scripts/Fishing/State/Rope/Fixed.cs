@@ -15,7 +15,6 @@ namespace Fishing.State
 
     public class Fixed : RopeStateBase
     {
-
         public override void OnEnter()
         {
             Debug.Log("Fixed");

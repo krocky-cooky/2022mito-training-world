@@ -23,7 +23,7 @@ namespace communication
             trq = -0.1f;
             spd = -0.1f;
             trqLimit = 6.0f;
-            spdLimit = 20.0f;
+            spdLimit = 6.0f;
         }
 
         private string DEFAULT_TARGET = "trq";
@@ -33,7 +33,7 @@ namespace communication
         public float spdLimit;
         public float trqLimit;
 
-        public void setTorque(float torque, float inputSpdLimit = 20.0f)
+        public void setTorque(float torque, float inputSpdLimit = 10.0f)
         {
             target = "trq";
             trq = torque;

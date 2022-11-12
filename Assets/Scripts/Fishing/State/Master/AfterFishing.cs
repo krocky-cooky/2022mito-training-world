@@ -34,7 +34,7 @@ namespace Fishing.State
             // _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
             _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
 
-            masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString() + "kg";
+            masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString("f2") + "kg";
 
             masterStateController.gameMaster.sendingTorque = 0.0f;
 
@@ -61,6 +61,10 @@ namespace Fishing.State
         public override int StateUpdate()
         {
             currentTimeCount += Time.deltaTime;
+
+            // トルクを負荷ゲージで表示
+            // トルクの値の約4.0倍が負荷(kg)
+            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
 
             // 釣り糸と魚を水面の上まであげる
             // そのあと、魚を目の前まで動かす
