@@ -67,7 +67,6 @@ namespace tsunahiki.game
             sendingTorque = _opponentValue * gripStrengthMultiplier;
 
             time += Time.deltaTime;
-            sendingTorque = _coordinator.opponentValue * gripStrengthMultiplier;
 
             {
                 Vector3 cubePos = cubeStartPosition;
