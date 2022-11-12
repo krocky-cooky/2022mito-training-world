@@ -16,10 +16,6 @@ namespace tsunahiki.game
         public Queue<string> viewerTextQueue = new Queue<string>();
         public Text frontViewUI;
 
-
-        // トルク÷握力計の値
-        public float gripStrengthMultiplier;
-
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
@@ -38,8 +34,18 @@ namespace tsunahiki.game
         private GameObject _trainingDeviceObject;
         [SerializeField]
         private GameObject _opponentHandle;
-    
-        
+
+
+        // 力の調整率のパラメータ
+        // ハンドルを自分のほうに引き寄せている程、調整率が不利になっていくシステム
+        // 力の調整率の基準値
+        [SerializeField]
+        private float _refForceAdjustmentRatio;
+        // 力の調整率の変更幅
+        [SerializeField]
+        private float _adjustmentRatioChangeRange;
+        // 力の調整率
+        private float _forceAdjustmentRatio;
 
         private float time = 0.0f;
         private float _previoussendingTorque = 0.0f;
@@ -63,11 +69,12 @@ namespace tsunahiki.game
 
             _opponentValue = _coordinator.getCurrentValue();
 
-            // 握力計の値をトルクに代入
-            sendingTorque = _opponentValue * gripStrengthMultiplier;
+            // 調整率の計算
+            _forceAdjustmentRatio = UpdateForceAdjustmentRatio(_refForceAdjustmentRatio, _adjustmentRatioChangeRange, _trainingDevice.currentNormalizedPosition);
 
+            // トルクを代入
             time += Time.deltaTime;
-            sendingTorque = _coordinator.opponentValue * gripStrengthMultiplier;
+            sendingTorque = _coordinator.opponentValue * _trainingDevice.maxTorque * _forceAdjustmentRatio;
 
             {
                 Vector3 cubePos = cubeStartPosition;
@@ -147,6 +154,13 @@ namespace tsunahiki.game
             Debug.Log("send torque" + torque.ToString());
             _previoussendingTorque = sendingTorque;
             _previousTorqueSendingTime = time;
+        }
+
+        // 力の調整率を更新
+        // normalizedPositionは、ハンドルの正規化位置。最低位置が0.0、最高位置が1.0
+        // ハンドルが高いほど調整率を上げ、低いほど調整率を下げる
+        private float UpdateForceAdjustmentRatio(float refForceAdjustmentRatio, float adjustmentRatioChangeRange, float normalizedPosition){
+            return refForceAdjustmentRatio + adjustmentRatioChangeRange * (normalizedPosition - 0.5f) * 2.0f;
         }
 
     }

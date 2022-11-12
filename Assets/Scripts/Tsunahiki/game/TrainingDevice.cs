@@ -28,6 +28,9 @@ namespace tsunahiki.game
         // 例えば、ハンドルの最低位置が10cm、最高位置が110cmで、現在地が20cmなら、ストローク全体100cmの中で下から10cmのところにあるので、0.1である
         public float currentNormalizedPosition = 0.0f;
 
+        // トルクの最大値
+        public float maxTorque;
+
         [SerializeField]
         private GameObject rightControllerAnchor;
         [SerializeField]

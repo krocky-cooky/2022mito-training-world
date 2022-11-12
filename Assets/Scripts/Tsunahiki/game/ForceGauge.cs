@@ -35,7 +35,6 @@ namespace tsunahiki.game
         // [System.NonSerialized] public float outputPosition = 0.0f;
         public float outputPosition = 0.0f;
 
-
         // // 力に対する出力速度の比例定数
         // [SerializeField]
         // private float proportionalityConstantOfVelocityToForce = 0.0f;
