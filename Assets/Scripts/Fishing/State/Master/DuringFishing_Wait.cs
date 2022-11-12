@@ -86,6 +86,10 @@ namespace Fishing.State
             currentTimeCount += Time.deltaTime;
             _timeSinceLastCalculatingProbability += Time.deltaTime;
 
+            // トルクを負荷ゲージで表示
+            // トルクの値の約4.0倍が負荷(kg)
+            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+
             // 魚を単振動で動かす
             masterStateController.distanceFromRope = masterStateController.BaseDistanceOfFishFromRope + masterStateController.SizeOfFishMovement * Mathf.Sin(currentTimeCount * Mathf.PI / masterStateController.PeriodOfFishMovement);
             masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);

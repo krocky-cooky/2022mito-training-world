@@ -89,6 +89,10 @@ namespace Fishing.State
         {
             currentTimeCount += Time.deltaTime;
 
+            // トルクを負荷ゲージで表示
+            // トルクの値の約4.0倍が負荷(kg)
+            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+
             // 魚の暴れる強さ
             // 0と1の間を周期的に変化する
             // HPが小さくなると、振幅も小さくなる

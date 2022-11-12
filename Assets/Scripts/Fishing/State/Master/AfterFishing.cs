@@ -62,6 +62,10 @@ namespace Fishing.State
         {
             currentTimeCount += Time.deltaTime;
 
+            // トルクを負荷ゲージで表示
+            // トルクの値の約4.0倍が負荷(kg)
+            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+
             // 釣り糸と魚を水面の上まであげる
             // そのあと、魚を目の前まで動かす
             if ((masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
