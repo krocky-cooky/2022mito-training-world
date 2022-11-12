@@ -38,6 +38,8 @@ namespace tsunahiki.game
         private GameObject _trainingDeviceObject;
         [SerializeField]
         private GameObject _opponentHandle;
+        [SerializeField]
+        private float _opponentMotionAmplitude = 0.5f;
     
         
 
@@ -61,7 +63,8 @@ namespace tsunahiki.game
         void Update()
         {
 
-            _opponentValue = _coordinator.getCurrentValue();
+            _opponentValue = _coordinator.getOpponentValue();
+            Debug.Log($"hoge:{_opponentValue}");
 
             // 握力計の値をトルクに代入
             sendingTorque = _opponentValue * gripStrengthMultiplier;
@@ -69,19 +72,22 @@ namespace tsunahiki.game
             time += Time.deltaTime;
 
             {
+                //cubeの位置をコントローラの位置に合わせて動かす
                 Vector3 cubePos = cubeStartPosition;
                 float controllerPositionFromCenter = _trainingDevice.currentAbsPosition - (_trainingDevice.maxAbsPosition + _trainingDevice.minAbsPosition)/2;
                 cubePos.z += controllerPositionFromCenter;
                 _centerCube.transform.position = cubePos;
-            }
 
-            {
+                //対戦相手側を自身のコントローラ＋握力系の動きに合わせて動かす
                 float normalizedForceGaugePos = _coordinator.getOpponentValue();
-                Debug.Log(normalizedForceGaugePos);
                 Vector3 opponentHandlePos = opponentHandleStartPosition;
-                opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*2.0f;
+                Debug.Log(normalizedForceGaugePos);
+                opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*_opponentMotionAmplitude;
+                opponentHandlePos.z += controllerPositionFromCenter;
+
                 _opponentHandle.transform.position = opponentHandlePos;
             }
+
 
 
             // ワイヤ巻き取りまたはプレイ中のトルク指令

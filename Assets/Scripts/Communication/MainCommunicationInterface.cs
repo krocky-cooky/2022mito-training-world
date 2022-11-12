@@ -102,7 +102,6 @@ namespace communication
                     break;
                 case CommunicationType.serial:
                     serialHandler.sendData(dataJson);
-                    Debug.Log("send serial data");
                     break;
             }
             
