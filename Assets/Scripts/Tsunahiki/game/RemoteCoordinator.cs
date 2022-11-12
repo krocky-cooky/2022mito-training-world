@@ -21,13 +21,12 @@ namespace tsunahiki.game
         [SerializeField]
         private TrainingDevice _trainingDevice;
         [SerializeField]
-        private GameObject grip;
+        private ForceGauge _forceGauge;
 
         //互いに送りあうデータ(正規化したfloat値)
         //握力系 -> 筋トレデバイス　currentForce
         //筋トレデバイス -> 握力系　持ち手のポジション
         private float _currentValue = 0.0f;
-        private ForceGauge _forceGauge;
         private bool _coordinating = true;
 
 
@@ -36,7 +35,6 @@ namespace tsunahiki.game
 
         void Start()
         {
-            _forceGauge = grip.GetComponent<ForceGauge>();
         }
 
         void Update()

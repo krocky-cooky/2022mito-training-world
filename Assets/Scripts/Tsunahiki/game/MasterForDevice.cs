@@ -77,10 +77,10 @@ namespace tsunahiki.game
             }
 
             {
-                float normalizedForceGaugePos = _coordinator.getCurrentValue();
-                Vector3 opponentHandlePos = opponentHandleStartPosition;
+                float normalizedForceGaugePos = _coordinator.getOpponentValue();
                 Debug.Log(normalizedForceGaugePos);
-                opponentHandlePos.z += (normalizedForceGaugePos - 0.5f)*2.0f;
+                Vector3 opponentHandlePos = opponentHandleStartPosition;
+                opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*2.0f;
                 _opponentHandle.transform.position = opponentHandlePos;
             }
 
