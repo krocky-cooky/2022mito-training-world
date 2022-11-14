@@ -53,10 +53,10 @@ namespace tsunahiki.game
         private float _refForceAdjustmentRatio;
         // 対戦中の力の調整率の変更幅
         [SerializeField]
-        private float _adjustmentRatioChangeRangeDuringBattle;
+        private float _maxChangeOfAjustment;
         // 対戦ごとの力の調整率の変更幅
         [SerializeField]
-        private float _adjustmentRatioChangeRangePerBattle;
+        private float _adjustmentChangeDuringBattle;
         // 力の調整率
         private float _forceAdjustmentRatio;
         // 勝利回数
@@ -85,7 +85,7 @@ namespace tsunahiki.game
             _opponentValue = _coordinator.getCurrentValue();
 
             // 調整率の計算
-            _forceAdjustmentRatio = UpdateForceAdjustmentRatio(_refForceAdjustmentRatio, _adjustmentRatioChangeRangeDuringBattle, _trainingDevice.currentNormalizedPosition, _numberOfWins);
+            _forceAdjustmentRatio = UpdateForceAdjustmentRatio(_refForceAdjustmentRatio, _maxChangeOfAjustment, _trainingDevice.currentNormalizedPosition, _numberOfWins);
 
             // トルクを代入
             time += Time.deltaTime;
@@ -179,7 +179,9 @@ namespace tsunahiki.game
         // ハンドルが高いほど調整率を上げ、低いほど調整率を下げる
         // 勝っている回数が多いほど、不利にしていく
         private float UpdateForceAdjustmentRatio(float refForceAdjustmentRatio, float adjustmentRatioChangeRange, float normalizedPosition, float numberOfWins){
-            return refForceAdjustmentRatio + adjustmentRatioChangeRange * (normalizedPosition - 0.5f) * 2.0f + _adjustmentRatioChangeRangePerBattle * numberOfWins;
+            float forceAdjustmentRatio;
+            forceAdjustmentRatio = refForceAdjustmentRatio + adjustmentRatioChangeRange * (normalizedPosition - 0.5f) * 2.0f + _adjustmentChangeDuringBattle * numberOfWins;
+            return forceAdjustmentRatio;
         }
 
         // ゲートを所定の位置にセット

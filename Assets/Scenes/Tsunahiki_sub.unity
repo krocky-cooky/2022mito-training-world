@@ -24981,6 +24981,18 @@ PrefabInstance:
       propertyPath: _opponentHandle
       value: 
       objectReference: {fileID: 5607557277277885192}
+    - target: {fileID: 9028842144377197052, guid: 0b5cbfb509a86564d808e88c0c2ce8dc, type: 3}
+      propertyPath: _maxChangeOfAjustment
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028842144377197052, guid: 0b5cbfb509a86564d808e88c0c2ce8dc, type: 3}
+      propertyPath: _refForceAdjustmentRatio
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028842144377197052, guid: 0b5cbfb509a86564d808e88c0c2ce8dc, type: 3}
+      propertyPath: _adjustmentChangeDuringBattle
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 9028842144409207881, guid: 0b5cbfb509a86564d808e88c0c2ce8dc, type: 3}
       propertyPath: _opponentCoordinator
       value: 
