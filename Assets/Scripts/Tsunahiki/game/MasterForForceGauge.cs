@@ -39,7 +39,7 @@ namespace tsunahiki.game
             {
                 float normalizedDevicePos = _coordinator.getOpponentValue();
                 Vector3 cubePos = cubeStartPosition;
-                cubePos.z += (normalizedDevicePos - 0.5f)*0.1f;
+                cubePos.z += (normalizedDevicePos - 0.5f)*0.5f;
                 _centerCube.transform.position = cubePos;
             }
             

@@ -98,6 +98,8 @@ namespace communication
             {
                 try
                 {
+                    data = data.Replace("\"","\\\"");
+                    data = "{\"action\": \"sendmessage\", \"message\":\""  + data + "\"}";
                     _socket.Send(data);
                     Debug.Log("send data via web socket api is" + data);
                 }
