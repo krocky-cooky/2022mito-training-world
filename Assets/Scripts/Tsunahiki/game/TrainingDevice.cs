@@ -67,6 +67,11 @@ namespace tsunahiki.game
                     maxAbsPosition = currentAbsPosition;
                 }
             }
+
+
+
+            // 位置を範囲内に収める
+            currentAbsPosition = Mathf.Clamp(currentAbsPosition, minAbsPosition, maxAbsPosition);
         }
     }
 }

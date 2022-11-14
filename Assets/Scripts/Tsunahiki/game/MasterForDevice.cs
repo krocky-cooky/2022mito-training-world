@@ -35,17 +35,32 @@ namespace tsunahiki.game
         [SerializeField]
         private GameObject _opponentHandle;
 
+        // 勝利位置を表すゲート
+        [SerializeField]
+        private Transform _VictoriousGate;
+        // 敗北位置を表すゲート
+        [SerializeField]
+        private Transform _DefeatedGate;
+        // ゲートの位置のオフセット
+        [SerializeField]
+        private float _OffsetForGate;
 
         // 力の調整率のパラメータ
         // ハンドルを自分のほうに引き寄せている程、調整率が不利になっていくシステム
-        // 力の調整率の基準値
+        // また、勝利するほど、調整率が不利になっていく
+        // 対戦中の力の調整率の基準値
         [SerializeField]
         private float _refForceAdjustmentRatio;
-        // 力の調整率の変更幅
+        // 対戦中の力の調整率の変更幅
         [SerializeField]
-        private float _adjustmentRatioChangeRange;
+        private float _adjustmentRatioChangeRangeDuringBattle;
+        // 対戦ごとの力の調整率の変更幅
+        [SerializeField]
+        private float _adjustmentRatioChangeRangePerBattle;
         // 力の調整率
         private float _forceAdjustmentRatio;
+        // 勝利回数
+        private float _numberOfWins;
 
         private float time = 0.0f;
         private float _previoussendingTorque = 0.0f;
@@ -70,11 +85,14 @@ namespace tsunahiki.game
             _opponentValue = _coordinator.getCurrentValue();
 
             // 調整率の計算
-            _forceAdjustmentRatio = UpdateForceAdjustmentRatio(_refForceAdjustmentRatio, _adjustmentRatioChangeRange, _trainingDevice.currentNormalizedPosition);
+            _forceAdjustmentRatio = UpdateForceAdjustmentRatio(_refForceAdjustmentRatio, _adjustmentRatioChangeRangeDuringBattle, _trainingDevice.currentNormalizedPosition, _numberOfWins);
 
             // トルクを代入
             time += Time.deltaTime;
             sendingTorque = _coordinator.opponentValue * _trainingDevice.maxTorque * _forceAdjustmentRatio;
+
+            // ゲートの位置をセット
+            SetGatePosition();
 
             {
                 Vector3 cubePos = cubeStartPosition;
@@ -159,8 +177,16 @@ namespace tsunahiki.game
         // 力の調整率を更新
         // normalizedPositionは、ハンドルの正規化位置。最低位置が0.0、最高位置が1.0
         // ハンドルが高いほど調整率を上げ、低いほど調整率を下げる
-        private float UpdateForceAdjustmentRatio(float refForceAdjustmentRatio, float adjustmentRatioChangeRange, float normalizedPosition){
-            return refForceAdjustmentRatio + adjustmentRatioChangeRange * (normalizedPosition - 0.5f) * 2.0f;
+        // 勝っている回数が多いほど、不利にしていく
+        private float UpdateForceAdjustmentRatio(float refForceAdjustmentRatio, float adjustmentRatioChangeRange, float normalizedPosition, float numberOfWins){
+            return refForceAdjustmentRatio + adjustmentRatioChangeRange * (normalizedPosition - 0.5f) * 2.0f + _adjustmentRatioChangeRangePerBattle * numberOfWins;
+        }
+
+        // ゲートを所定の位置にセット
+        private void SetGatePosition(){
+            float distanceFromCubeStartPos = Mathf.Abs((_trainingDevice.maxAbsPosition - _trainingDevice.minAbsPosition) / 2.0f);
+            _VictoriousGate.position = new Vector3(cubeStartPosition.x, cubeStartPosition.y, cubeStartPosition.z + distanceFromCubeStartPos + _OffsetForGate);
+            _DefeatedGate.position = new Vector3(cubeStartPosition.x, cubeStartPosition.y, cubeStartPosition.z - distanceFromCubeStartPos - _OffsetForGate);
         }
 
     }
