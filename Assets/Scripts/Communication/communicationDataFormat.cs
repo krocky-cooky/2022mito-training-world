@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace communication
 {
+
+    public enum TrainingDeviceType 
+    {
+        TrainingDevice,
+        ForceGauge,
+    }
+
     public class ReceivingDataFormat
     {
         public string target;
@@ -17,6 +24,7 @@ namespace communication
 
     public class SendingDataFormat
     {
+        
         public SendingDataFormat()
         {
             target = "trq";
@@ -88,4 +96,27 @@ namespace communication
     //     public string action;
     //     public string message;
     // }
+
+
+
+    //リモート綱引き用データ交換フォーマット
+    public class RemoteTsunahikiDataFormat
+    {
+        public RemoteTsunahikiDataFormat () 
+        {
+            normalizedData = 0.0f;
+            deviceInterface = (int)TrainingDeviceType.TrainingDevice;
+            stateId = 0;
+            superiority = (int)TrainingDeviceType.TrainingDevice;
+        }
+        public float normalizedData;
+
+        //enum DeviceTypeを利用する ex) (int)DeviceType.TrainingDevice
+        public int deviceInterface;
+
+        public int stateId;
+
+        //enum DeviceTypeを利用する ex) (int)DeviceType.TrainingDevice
+        public int superiority;
+    }
 }

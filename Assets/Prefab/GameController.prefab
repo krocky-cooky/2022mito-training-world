@@ -153,6 +153,7 @@ MonoBehaviour:
   _centerCube: {fileID: 0}
   _trainingDeviceObject: {fileID: 9028842143063325606}
   _opponentHandle: {fileID: 0}
+  _opponentMotionAmplitude: 0.5
 --- !u!1 &9028842144409207922
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +163,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9028842144409207923}
-  - component: {fileID: 9028842144409207884}
   - component: {fileID: 9028842144409207886}
   - component: {fileID: 9028842144409207885}
   - component: {fileID: 9028842144409207887}
@@ -189,23 +189,6 @@ Transform:
   m_Father: {fileID: 9028842144377197027}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9028842144409207884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9028842144409207922}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49274b14fd4272c4381fa14e9e1bdec9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isConnected: 0
-  ESP32PrivateIP: 192.168.128.192
-  viwer: {fileID: 0}
-  weight: {fileID: 0}
-  registerTorqueMode: 0
 --- !u!114 &9028842144409207886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +251,7 @@ MonoBehaviour:
   isRunning: 0
   portName: COM3
   baudRate: 115200
+  sendingDataField: 
 --- !u!114 &9028842144409207881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,4 +267,4 @@ MonoBehaviour:
   _opponentCoordinator: {fileID: 0}
   _deviceType: 0
   _trainingDevice: {fileID: 9028842143063325600}
-  grip: {fileID: 0}
+  _forceGauge: {fileID: 0}

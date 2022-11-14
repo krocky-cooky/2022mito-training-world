@@ -81,7 +81,6 @@ namespace tsunahiki.game
                 //対戦相手側を自身のコントローラ＋握力系の動きに合わせて動かす
                 float normalizedForceGaugePos = _coordinator.getOpponentValue();
                 Vector3 opponentHandlePos = opponentHandleStartPosition;
-                Debug.Log(normalizedForceGaugePos);
                 opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*_opponentMotionAmplitude;
                 opponentHandlePos.z += controllerPositionFromCenter;
 
