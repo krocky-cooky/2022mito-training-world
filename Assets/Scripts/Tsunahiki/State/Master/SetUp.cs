@@ -21,7 +21,7 @@ namespace tsunahiki.state
         public override void OnEnter()
         {
             Debug.Log("Set Up");
-            masterForForceGauge.frontViewUI.text = "Set Up";
+            masterForForceGauge.frontViewUI.text = "Set Up\n最大握力を設定してください";
         }
 
         public override void OnExit()
