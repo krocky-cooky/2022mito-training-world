@@ -41319,6 +41319,7 @@ MonoBehaviour:
   maxForce: 15
   minForce: 0
   positionCalculationMethod: 0
+  inputInterface: 0
   outputPosition: 0
   maxOutputVelocity: 0
   gripCommunicationInterface: {fileID: 0}
@@ -46190,9 +46191,9 @@ MonoBehaviour:
   moveParameter: 0.5
   time: 0
   masterStateController: {fileID: 1040434246}
+  coordinator: {fileID: 5607557277670804043}
   gripStrengthMultiplier: 0
   viewerObject: {fileID: 0}
-  _coordinator: {fileID: 5607557277670804043}
   _centerCube: {fileID: 5607557276751624386}
 --- !u!4 &5607557278455588006
 Transform:

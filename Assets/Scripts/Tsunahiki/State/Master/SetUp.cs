@@ -30,6 +30,11 @@ namespace tsunahiki.state
 
         public override int StateUpdate()
         {
+            // 勝敗をリセット
+            masterForForceGauge.victoryCounts = 0;
+            masterForForceGauge.defeatCounts = 0;
+            masterForForceGauge.defeatCounts = 0;
+
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {   
                 isGoingToBattle = !isGoingToBattle;
@@ -39,10 +44,12 @@ namespace tsunahiki.state
             {   
                 masterForForceGauge.frontViewUI.text = "Going To Battle...";
 
-                if ((int)masterForForceGauge.coordinator.getOpponentData().stateId == (int)TsunahikiStateType.GetReady)
+                if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready)
                 {   
-                    return (int)MasterStateController.StateType.GetReady;
-                }               
+                    return (int)MasterStateController.StateType.Ready;
+                }
+            }else{
+                masterForForceGauge.frontViewUI.text = "Set Up\n最大握力を設定してください";
             }
 
 

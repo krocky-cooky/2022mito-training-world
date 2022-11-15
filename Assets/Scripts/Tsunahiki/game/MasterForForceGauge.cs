@@ -20,7 +20,6 @@ namespace tsunahiki.game
 
         public float time = 0.0f;
         public MasterStateController masterStateController;
-        public RemoteCoordinator coordinator;
 
         // トルク÷握力計の値
         public float gripStrengthMultiplier;
@@ -29,6 +28,24 @@ namespace tsunahiki.game
         private GameObject viewerObject;
         [SerializeField]
         private GameObject _centerCube;
+        [SerializeField]
+        public RemoteCoordinator _coordinator;
+
+        // 対戦相手のデータ
+        [System.NonSerialized]
+        public RemoteTsunahikiDataFormat opponentData;
+
+        // 勝敗の回数
+        [System.NonSerialized]
+        public int victoryCounts = 0;
+        [System.NonSerialized]
+        public int defeatCounts = 0;
+        [System.NonSerialized]
+        public int drawCounts = 0;
+
+        [System.NonSerialized]
+        public int myDeviceId = (int)TrainingDeviceType.ForceGauge;
+
 
         private Vector3 cubeStartPosition;
 
@@ -38,7 +55,7 @@ namespace tsunahiki.game
         void Start()
         {
             cubeStartPosition = _centerCube.transform.position;
-            masterStateController.Initialize((int)MasterStateController.StateType.SetUp);
+            masterStateController.Initialize((int)MasterStateController.StateType.Fight);
         }
 
         // Update is called once per frame
@@ -48,9 +65,12 @@ namespace tsunahiki.game
 
             masterStateController.UpdateSequence();
             Debug.Log("Master State is "+masterStateController.stateDic[masterStateController.CurrentState].GetType());
+
+            opponentData = _coordinator.getOpponentData();
+            Debug.Log("stateId is " + ((int)opponentData.stateId).ToString());
            
             {
-                float normalizedDevicePos = coordinator.getOpponentValue();
+                float normalizedDevicePos = _coordinator.getOpponentValue();
                 Vector3 cubePos = cubeStartPosition;
                 cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
                 _centerCube.transform.position = cubePos;

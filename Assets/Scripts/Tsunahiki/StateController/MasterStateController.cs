@@ -17,8 +17,8 @@ namespace tsunahiki.stateController
         public enum StateType
         {
             SetUp,
-            GetReady,
-            Battle,
+            Ready,
+            Fight,
             GameSet,
         }
 
@@ -29,11 +29,11 @@ namespace tsunahiki.stateController
             stateDic[(int)StateType.SetUp] = gameObject.AddComponent<SetUp>();
             stateDic[(int)StateType.SetUp].Initialize((int)StateType.SetUp);
 
-            stateDic[(int)StateType.GetReady] = gameObject.AddComponent<GetReady>();
-            stateDic[(int)StateType.GetReady].Initialize((int)StateType.GetReady);
+            stateDic[(int)StateType.Ready] = gameObject.AddComponent<Ready>();
+            stateDic[(int)StateType.Ready].Initialize((int)StateType.Ready);
 
-            stateDic[(int)StateType.Battle] = gameObject.AddComponent<Battle>();
-            stateDic[(int)StateType.Battle].Initialize((int)StateType.Battle);
+            stateDic[(int)StateType.Fight] = gameObject.AddComponent<Fight>();
+            stateDic[(int)StateType.Fight].Initialize((int)StateType.Fight);
 
             stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
             stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);

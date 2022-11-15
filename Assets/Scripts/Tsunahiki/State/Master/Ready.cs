@@ -13,12 +13,13 @@ using tsunahiki.stateController;
 namespace tsunahiki.state
 {
 
-    public class GetReady : MasterStateBase
+    public class Ready : MasterStateBase
     {
 
         public override void OnEnter()
         {
-            Debug.Log("Set Up");
+            Debug.Log("Ready");
+            masterForForceGauge.frontViewUI.text = "Ready...\n" + "Victory Count: " + masterForForceGauge.victoryCounts.ToString() + "\nDefeat Count: " + masterForForceGauge.defeatCounts.ToString() + "\nDraw Count: " + masterForForceGauge.drawCounts.ToString();
         }
 
         public override void OnExit()
@@ -28,9 +29,9 @@ namespace tsunahiki.state
         public override int StateUpdate()
         {
 
-            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
+            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight)
             {   
-                return (int)MasterStateController.StateType.GetReady;
+                return (int)MasterStateController.StateType.Fight;
             }
 
             return (int)StateType;
