@@ -50,7 +50,7 @@ namespace tsunahiki.state
                     return (int)MasterStateController.StateType.Ready;
                 }
             }else{
-                masterForForceGauge.frontViewUI.text = "Set Up\n最大握力を設定してください";
+                masterForForceGauge.frontViewUI.text = "Set Up\nSet Maximum Force";
             }
 
 
