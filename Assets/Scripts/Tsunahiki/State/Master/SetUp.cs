@@ -26,6 +26,7 @@ namespace tsunahiki.state
 
         public override void OnExit()
         {
+            isGoingToBattle = false;
         }
 
         public override int StateUpdate()
