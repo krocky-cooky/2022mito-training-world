@@ -6,10 +6,18 @@ using UnityEngine;
 namespace communication
 {
 
-    public enum TrainingDeviceType 
+    public enum  TrainingDeviceType
     {
         TrainingDevice,
         ForceGauge,
+    }
+
+    public enum  TsunahikiStateType
+    {
+        SetUp,
+        GetReady,
+        Battle,
+        GameSet,
     }
 
     public class ReceivingDataFormat

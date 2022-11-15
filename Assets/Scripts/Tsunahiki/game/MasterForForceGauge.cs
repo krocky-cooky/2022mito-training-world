@@ -19,7 +19,8 @@ namespace tsunahiki.game
         public float moveParameter;
 
         public float time = 0.0f;
-
+        public MasterStateController masterStateController;
+        public RemoteCoordinator coordinator;
 
         // トルク÷握力計の値
         public float gripStrengthMultiplier;
@@ -27,13 +28,12 @@ namespace tsunahiki.game
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
-        private RemoteCoordinator _coordinator;
-        [SerializeField]
         private GameObject _centerCube;
-        [SerializeField]
-        private MasterStateController masterStateController;
 
         private Vector3 cubeStartPosition;
+
+
+
         // Start is called before the first frame update
         void Start()
         {
@@ -50,7 +50,7 @@ namespace tsunahiki.game
             Debug.Log("Master State is "+masterStateController.stateDic[masterStateController.CurrentState].GetType());
            
             {
-                float normalizedDevicePos = _coordinator.getOpponentValue();
+                float normalizedDevicePos = coordinator.getOpponentValue();
                 Vector3 cubePos = cubeStartPosition;
                 cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
                 _centerCube.transform.position = cubePos;

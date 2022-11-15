@@ -44375,6 +44375,7 @@ MonoBehaviour:
   _trainingDevice: {fileID: 0}
   _forceGauge: {fileID: 5607557276487021727}
   _sendPeriod: 0.1
+  masterForForceGauge: {fileID: 5607557278429839117}
 --- !u!114 &5607557277670804044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46168,7 +46169,7 @@ GameObject:
   - component: {fileID: 5607557278429839117}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: master
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46185,14 +46186,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849ff7eba3c0d924e8b9835a917898d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontViewUI: {fileID: 0}
+  frontViewUI: {fileID: 5607557278322307674}
   moveParameter: 0.5
   time: 0
+  masterStateController: {fileID: 1040434246}
   gripStrengthMultiplier: 0
   viewerObject: {fileID: 0}
   _coordinator: {fileID: 5607557277670804043}
   _centerCube: {fileID: 5607557276751624386}
-  masterStateController: {fileID: 1040434246}
 --- !u!4 &5607557278455588006
 Transform:
   m_ObjectHideFlags: 0
@@ -58061,6 +58062,7 @@ MonoBehaviour:
   _trainingDevice: {fileID: 9028842144331850636}
   _forceGauge: {fileID: 0}
   _sendPeriod: 0
+  masterForForceGauge: {fileID: 0}
 --- !u!1 &9028842143007476174
 GameObject:
   m_ObjectHideFlags: 0

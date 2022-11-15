@@ -20,7 +20,7 @@ namespace tsunahiki.state
         public override void Initialize(int stateType)
         {
             StateType = stateType;
-            masterForForceGauge = GetComponent<MasterForForceGauge>();
+            masterForForceGauge = GameObject.FindWithTag("master").GetComponent<MasterForForceGauge>();
         }
     }
 }

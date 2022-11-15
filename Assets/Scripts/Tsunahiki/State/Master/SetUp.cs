@@ -16,9 +16,12 @@ namespace tsunahiki.state
     public class SetUp : MasterStateBase
     {
 
+        private bool isGoingToBattle = false;
+
         public override void OnEnter()
         {
             Debug.Log("Set Up");
+            masterForForceGauge.frontViewUI.text = "Set Up";
         }
 
         public override void OnExit()
@@ -27,11 +30,21 @@ namespace tsunahiki.state
 
         public override int StateUpdate()
         {
-
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {   
-                return (int)MasterStateController.StateType.GetReady;
+                isGoingToBattle = !isGoingToBattle;
+            }     
+
+            if (isGoingToBattle)
+            {   
+                masterForForceGauge.frontViewUI.text = "Going To Battle...";
+
+                if ((int)masterForForceGauge.coordinator.getOpponentData().stateId == (int)TsunahikiStateType.GetReady)
+                {   
+                    return (int)MasterStateController.StateType.GetReady;
+                }               
             }
+
 
             return (int)StateType;
         }
