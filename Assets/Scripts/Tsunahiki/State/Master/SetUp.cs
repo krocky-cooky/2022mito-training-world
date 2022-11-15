@@ -39,7 +39,7 @@ namespace tsunahiki.state
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {   
                 isGoingToBattle = !isGoingToBattle;
-            }     
+            }
 
             if (isGoingToBattle)
             {   
