@@ -18,7 +18,8 @@ namespace tsunahiki.game
         private TrainingDevice _trainingDevice;
         [SerializeField]
         private ForceGauge _forceGauge;
-        
+        [SerializeField]
+        private float _sendPeriod;
 
         //互いに送りあうデータ(正規化したfloat値)
         //握力系 -> 筋トレデバイス　currentForce
@@ -29,6 +30,8 @@ namespace tsunahiki.game
 
         private RemoteWebSocketClient _websocketClient;
 
+        private float _timeCount;
+
 
         void Start()
         {
@@ -37,24 +40,28 @@ namespace tsunahiki.game
 
         void Update()
         {
-            if(_coordinating)
-            {
-                if(_deviceType == TrainingDeviceType.TrainingDevice) 
+            _timeCount += Time.deltaTime;
+            if (_timeCount > _sendPeriod){
+                _timeCount = 0.0f;
+                if(_coordinating)
                 {
-                    _currentValue = getValueFromTrainingDevice();
-                    RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
-                    data.normalizedData = _currentValue;
-                    string text = JsonUtility.ToJson(data);
-                    _websocketClient.sendData(text);
+                    if(_deviceType == TrainingDeviceType.TrainingDevice) 
+                    {
+                        _currentValue = getValueFromTrainingDevice();
+                        RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
+                        data.normalizedData = _currentValue;
+                        string text = JsonUtility.ToJson(data);
+                        _websocketClient.sendData(text);
 
-                }
-                else if(_deviceType == TrainingDeviceType.ForceGauge) 
-                {
-                    _currentValue = getValueFromForceGauge();
-                    RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
-                    data.normalizedData = _currentValue;
-                    string text = JsonUtility.ToJson(data);
-                    _websocketClient.sendData(text);
+                    }
+                    else if(_deviceType == TrainingDeviceType.ForceGauge) 
+                    {
+                        _currentValue = getValueFromForceGauge();
+                        RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
+                        data.normalizedData = _currentValue;
+                        string text = JsonUtility.ToJson(data);
+                        _websocketClient.sendData(text);
+                    }
                 }
             }
         }
