@@ -43,7 +43,7 @@ namespace tsunahiki.state
 
             if (isGoingToBattle)
             {   
-                masterForForceGauge.frontViewUI.text = "Going To Battle...";
+                masterForForceGauge.frontViewUI.text = "Going To Fight...";
 
                 if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready)
                 {   
