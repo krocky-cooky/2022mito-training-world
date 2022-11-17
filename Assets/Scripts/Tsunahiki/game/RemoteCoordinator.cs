@@ -18,7 +18,10 @@ namespace tsunahiki.game
         private TrainingDevice _trainingDevice;
         [SerializeField]
         private ForceGauge _forceGauge;
-        
+        [SerializeField]
+        private float _sendPeriod;
+        [SerializeField]
+        private MasterForForceGauge masterForForceGauge;
 
         //互いに送りあうデータ(正規化したfloat値)
         //握力系 -> 筋トレデバイス　currentForce
@@ -30,6 +33,8 @@ namespace tsunahiki.game
         private float prev = 0.0f;
 
         private RemoteWebSocketClient _websocketClient;
+
+        private float _timeCount;
 
 
         void Start()
@@ -97,6 +102,13 @@ namespace tsunahiki.game
             _opponentValue = data.normalizedData;
             //_opponentValue = _opponentCoordinator.getCurrentValue();
             return _opponentValue;
+        }
+
+        public RemoteTsunahikiDataFormat getOpponentData(){
+            string receivedText = _websocketClient.getReceivedData();
+            RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
+            Debug.Log("receivedText is " + receivedText);
+            return data;  
         }
 
         public float getCurrentValue()
