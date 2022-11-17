@@ -79,7 +79,7 @@ namespace tsunahiki.game
                 _centerCube.transform.position = cubePos;
 
                 //対戦相手側を自身のコントローラ＋握力系の動きに合わせて動かす
-                float normalizedForceGaugePos = _coordinator.getOpponentValue();
+                float normalizedForceGaugePos = _opponentValue;
                 Vector3 opponentHandlePos = opponentHandleStartPosition;
                 opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*_opponentMotionAmplitude;
                 opponentHandlePos.z += controllerPositionFromCenter;

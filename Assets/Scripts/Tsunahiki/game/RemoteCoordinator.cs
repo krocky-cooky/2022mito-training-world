@@ -26,6 +26,8 @@ namespace tsunahiki.game
         private float _currentValue = 0.0f;
         private float _opponentValue = 0.0f;
         private bool _coordinating = true;
+        private float time = 0.0f;
+        private float prev = 0.0f;
 
         private RemoteWebSocketClient _websocketClient;
 
@@ -39,13 +41,16 @@ namespace tsunahiki.game
         {
             if(_coordinating)
             {
+
+                
+                string text = "";
                 if(_deviceType == TrainingDeviceType.TrainingDevice) 
                 {
                     _currentValue = getValueFromTrainingDevice();
                     RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
                     data.normalizedData = _currentValue;
-                    string text = JsonUtility.ToJson(data);
-                    _websocketClient.sendData(text);
+                    text = JsonUtility.ToJson(data);
+                    
 
                 }
                 else if(_deviceType == TrainingDeviceType.ForceGauge) 
@@ -53,9 +58,16 @@ namespace tsunahiki.game
                     _currentValue = getValueFromForceGauge();
                     RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
                     data.normalizedData = _currentValue;
-                    string text = JsonUtility.ToJson(data);
-                    _websocketClient.sendData(text);
+                    text = JsonUtility.ToJson(data);
+                    
                 }
+
+                if(time - prev > 0.1f)
+                {
+                    _websocketClient.sendData(text);
+                    prev = time;
+                }
+                time += Time.deltaTime;
             }
         }
 
@@ -68,6 +80,7 @@ namespace tsunahiki.game
         private float getValueFromTrainingDevice()
         {
             float retval = _trainingDevice.currentNormalizedPosition;
+            Debug.Log(retval);
             return retval;
         }
 
