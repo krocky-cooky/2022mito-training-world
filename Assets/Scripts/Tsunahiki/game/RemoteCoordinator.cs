@@ -71,6 +71,7 @@ namespace tsunahiki.game
                     _currentValue = getValueFromForceGauge();
                     RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
                     data.normalizedData = _currentValue;
+                    data.stateId = masterForForceGauge.masterStateController.CurrentState;
                     data.positionX = _leftController.position.x;
                     data.positionY = _leftController.position.y;
                     data.positionZ = _leftController.position.z;
