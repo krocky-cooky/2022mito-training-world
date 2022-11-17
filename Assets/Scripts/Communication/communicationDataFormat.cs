@@ -119,6 +119,13 @@ namespace communication
             superiority = (int)TrainingDeviceType.TrainingDevice;
             latestWinner = (int)TrainingDeviceType.Nothing;
             timeCount = 0.0f;
+
+            positionX=0.0f;
+            positionY=0.0f;
+            positionZ=0.0f;
+            rotationX=0.0f;
+            rotationY=0.0f;
+            rotationZ=0.0f;
         }
         public float normalizedData;
 
@@ -134,5 +141,13 @@ namespace communication
         public int latestWinner;
 
         public float timeCount;
+
+        // デバイスに装着されたリモコンの位置・回転
+        public float positionX;
+        public float positionY;
+        public float positionZ;
+        public float rotationX;
+        public float rotationY;
+        public float rotationZ;
     }
 }

@@ -22,6 +22,10 @@ namespace tsunahiki.game
         private float _sendPeriod;
         [SerializeField]
         private MasterForForceGauge masterForForceGauge;
+        [SerializeField]
+        private Transform _rightController;
+        [SerializeField]
+        private Transform _leftController;
 
         //互いに送りあうデータ(正規化したfloat値)
         //握力系 -> 筋トレデバイス　currentForce
@@ -54,17 +58,26 @@ namespace tsunahiki.game
                     _currentValue = getValueFromTrainingDevice();
                     RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
                     data.normalizedData = _currentValue;
+                    data.positionX = _rightController.position.x;
+                    data.positionY = _rightController.position.y;
+                    data.positionZ = _rightController.position.z;
+                    data.rotationX = _rightController.eulerAngles.x;
+                    data.rotationY = _rightController.eulerAngles.y;
+                    data.rotationZ = _rightController.eulerAngles.z;
                     text = JsonUtility.ToJson(data);
-                    
-
                 }
                 else if(_deviceType == TrainingDeviceType.ForceGauge) 
                 {
                     _currentValue = getValueFromForceGauge();
                     RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
                     data.normalizedData = _currentValue;
+                    data.positionX = _leftController.position.x;
+                    data.positionY = _leftController.position.y;
+                    data.positionZ = _leftController.position.z;
+                    data.rotationX = _leftController.eulerAngles.x;
+                    data.rotationY = _leftController.eulerAngles.y;
+                    data.rotationZ = _leftController.eulerAngles.z;
                     text = JsonUtility.ToJson(data);
-                    
                 }
 
                 if(time - prev > 0.1f)

@@ -37,7 +37,7 @@ namespace tsunahiki.game
 
         // 相手からの通信内容の手動入力するかどうかの切り替え
         [SerializeField]
-        private bool opponentDataIsInputedManually;
+        private bool opponentDataIsInputedManually = false;
 
 
         // トルク÷握力計の値

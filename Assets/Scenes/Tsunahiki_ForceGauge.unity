@@ -44620,6 +44620,8 @@ MonoBehaviour:
   _forceGauge: {fileID: 5607557276487021727}
   _sendPeriod: 0.1
   masterForForceGauge: {fileID: 5607557278429839117}
+  _rightController: {fileID: 5610897218608971863}
+  _leftController: {fileID: 5610617572050497049}
 --- !u!114 &5607557277670804044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58314,6 +58316,8 @@ MonoBehaviour:
   _forceGauge: {fileID: 0}
   _sendPeriod: 0
   masterForForceGauge: {fileID: 0}
+  _rightController: {fileID: 0}
+  _leftController: {fileID: 0}
 --- !u!1 &9028842143007476174
 GameObject:
   m_ObjectHideFlags: 0
