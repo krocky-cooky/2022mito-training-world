@@ -71,8 +71,9 @@ namespace communication
                 if(!e.Data.Contains("server error"))
                 {
                     receivedText = e.Data;
-                    Debug.Log(e.Data);
+                    
                 }
+                Debug.Log(e.Data);
                 // receivedMessage = JsonUtility.FromJson<ReceivingRemoteDataFormat>(receivedText).message;
             };
             
