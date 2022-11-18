@@ -5,23 +5,21 @@ using UnityEngine.UI;
 using util;
 using communication;
 using tsunahiki.game;
-using tsunahiki.state;
-using tsunahiki.stateController;
+using tsunahiki.trainingDevice.state;
 
 
-namespace tsunahiki.stateController
+namespace tsunahiki.trainingDevice.stateController 
 {
     public abstract class StateControllerBase : MonoBehaviour
     {
         public Dictionary<int, StateBase> stateDic = new Dictionary<int, StateBase>();
 
-        // 現在のステート
-        public int CurrentState { protected set; get; }
+        public int CurrentState { protected set; get;}
 
-        // 初期化処理
         public abstract void Initialize(int initializeStateType);
 
-        // 更新処理
+
+
         public void UpdateSequence()
         {
             int nextState = (int)stateDic[CurrentState].StateUpdate();
@@ -30,7 +28,7 @@ namespace tsunahiki.stateController
             Debug.Log("Current state is " + stateDic[CurrentState].GetType());
         }
 
-        // ステートの自動遷移
+
         protected void AutoStateTransitionSequence(int nextState)
         {
             if (CurrentState == nextState)
@@ -42,5 +40,6 @@ namespace tsunahiki.stateController
             CurrentState = nextState;
             stateDic[CurrentState].OnEnter();
         }
+
     }
 }

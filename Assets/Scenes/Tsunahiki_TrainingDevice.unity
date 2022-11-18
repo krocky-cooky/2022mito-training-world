@@ -41220,6 +41220,7 @@ MonoBehaviour:
   maxForce: 15
   minForce: 0
   positionCalculationMethod: 0
+  inputInterface: 0
   outputPosition: 0
   maxOutputVelocity: 0
   gripCommunicationInterface: {fileID: 0}
@@ -44289,6 +44290,8 @@ MonoBehaviour:
   _deviceType: 1
   _trainingDevice: {fileID: 0}
   _forceGauge: {fileID: 5607557276487021727}
+  _sendPeriod: 0
+  masterForForceGauge: {fileID: 0}
 --- !u!114 &5607557277670804044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46197,10 +46200,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frontViewUI: {fileID: 0}
+  moveParameter: 0
+  time: 0
+  masterStateController: {fileID: 0}
+  manualNormalizedData: 0
+  manualDeviceInterface: 1
+  manualStateId: 0
+  manualSuperiority: 1
+  manualLatestWinner: 2
+  manualTimeCount: 0
+  opponentDataIsInputedManually: 0
   gripStrengthMultiplier: 0
   viewerObject: {fileID: 0}
-  _coordinator: {fileID: 5607557277670804043}
   _centerCube: {fileID: 5607557276751624386}
+  _coordinator: {fileID: 5607557277670804043}
 --- !u!4 &5607557278455588006
 Transform:
   m_ObjectHideFlags: 0
@@ -58066,6 +58079,8 @@ MonoBehaviour:
   _deviceType: 0
   _trainingDevice: {fileID: 9028842144331850636}
   _forceGauge: {fileID: 0}
+  _sendPeriod: 0.1
+  masterForForceGauge: {fileID: 0}
 --- !u!1 &9028842143007476174
 GameObject:
   m_ObjectHideFlags: 0
@@ -58121,7 +58136,7 @@ MonoBehaviour:
   torqueSendingInterval: 0.1
   _coordinator: {fileID: 9028842142976580709}
   _centerCube: {fileID: 5607557277342200710}
-  _trainingDeviceObject: {fileID: 9028842144331850634}
+  _trainingDevice: {fileID: 0}
   _opponentHandle: {fileID: 5607557277277885192}
   _opponentMotionAmplitude: 0.5
 --- !u!1 &9028842144120993122

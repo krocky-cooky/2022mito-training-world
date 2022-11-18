@@ -5,11 +5,10 @@ using UnityEngine.UI;
 using util;
 using communication;
 using tsunahiki.game;
-using tsunahiki.state;
-using tsunahiki.stateController;
+using tsunahiki.trainingDevice.state;
 
 
-namespace tsunahiki.stateController
+namespace tsunahiki.trainingDevice.stateController
 {
     public class MasterStateController : StateControllerBase
     {
@@ -29,14 +28,14 @@ namespace tsunahiki.stateController
             stateDic[(int)StateType.SetUp] = gameObject.AddComponent<SetUp>();
             stateDic[(int)StateType.SetUp].Initialize((int)StateType.SetUp);
 
-            stateDic[(int)StateType.Ready] = gameObject.AddComponent<Ready>();
-            stateDic[(int)StateType.Ready].Initialize((int)StateType.Ready);
+            // stateDic[(int)StateType.Ready] = gameObject.AddComponent<Ready>();
+            // stateDic[(int)StateType.Ready].Initialize((int)StateType.Ready);
 
             stateDic[(int)StateType.Fight] = gameObject.AddComponent<Fight>();
             stateDic[(int)StateType.Fight].Initialize((int)StateType.Fight);
 
-            stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
-            stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);
+            // stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
+            // stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);
 
             CurrentState = initializeStateType;
             stateDic[CurrentState].OnEnter();

@@ -23,6 +23,9 @@ namespace tsunahiki.game
         [SerializeField]
         private MasterForForceGauge masterForForceGauge;
 
+        [System.NonSerialized]
+        public RemoteTsunahikiDataFormat communicationData;
+
         //互いに送りあうデータ(正規化したfloat値)
         //握力系 -> 筋トレデバイス　currentForce
         //筋トレデバイス -> 握力系　持ち手のポジション
@@ -38,6 +41,7 @@ namespace tsunahiki.game
         void Start()
         {
             _websocketClient = GetComponent<RemoteWebSocketClient>();
+            communicationData = new RemoteTsunahikiDataFormat();
         }
 
         void Update()
@@ -50,22 +54,19 @@ namespace tsunahiki.game
                     if(_deviceType == TrainingDeviceType.TrainingDevice) 
                     {
                         _currentValue = getValueFromTrainingDevice();
-                        RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
-                        data.normalizedData = _currentValue;
-                        string text = JsonUtility.ToJson(data);
-                        _websocketClient.sendData(text);
-
+                        communicationData.normalizedData = _currentValue;
                     }
                     else if(_deviceType == TrainingDeviceType.ForceGauge) 
                     {
                         _currentValue = getValueFromForceGauge();
-                        RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
-                        data.normalizedData = _currentValue;
-                        data.deviceInterface = (int)_deviceType;
-                        data.stateId = (int)masterForForceGauge.masterStateController.CurrentState;
-                        string text = JsonUtility.ToJson(data);
-                        _websocketClient.sendData(text);
+                        communicationData.normalizedData = _currentValue;
+                        communicationData.deviceInterface = (int)_deviceType;
+                        communicationData.stateId = (int)masterForForceGauge.masterStateController.CurrentState;
+                        
                     }
+
+                    string text = JsonUtility.ToJson(communicationData);
+                    _websocketClient.sendData(text);
                 }
             }
         }
@@ -97,7 +98,8 @@ namespace tsunahiki.game
             return _opponentValue;
         }
 
-        public RemoteTsunahikiDataFormat getOpponentData(){
+        public RemoteTsunahikiDataFormat getOpponentData()
+        {
             string receivedText = _websocketClient.getReceivedData();
             RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
             Debug.Log("receivedText is " + receivedText);
