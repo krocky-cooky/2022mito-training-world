@@ -25,6 +25,7 @@ namespace tsunahiki.game
         public GameObject centerFlare;
 
         public Beam myBeam;
+        public Beam opponentBeam;
 
         // デバッグ用で、直接相手のデータを手動入力する
         [SerializeField]

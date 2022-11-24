@@ -22,6 +22,7 @@ namespace tsunahiki.state
             masterForForceGauge.frontViewUI.text = "Fight !!";
             
             masterForForceGauge.myBeam.isFired = true;
+            masterForForceGauge.opponentBeam.isFired = true;
         }
 
         public override void OnExit()

@@ -67,6 +67,7 @@ namespace tsunahiki.state
                 // 非アクティブ化
                 masterForForceGauge.centerFlare.SetActive(false);
                 masterForForceGauge.myBeam.isFired = false;
+                masterForForceGauge.opponentBeam.isFired = false;
 
                 // 初期位置に戻す
                 masterForForceGauge.centerFlare.transform.position = _initPosition;
