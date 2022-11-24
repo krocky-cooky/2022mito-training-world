@@ -36,6 +36,8 @@ namespace tsunahiki.state
             }
 
             masterForForceGauge.frontViewUI.text = _resultMessage + "\nPress X Button to go to Set Up Mode";
+
+            masterForForceGauge.centerFlare.SetActive(false);
         }
 
         public override void OnExit()

@@ -20,6 +20,7 @@ namespace tsunahiki.state
         {
             Debug.Log("Fight");
             masterForForceGauge.frontViewUI.text = "Fight !!";
+            masterForForceGauge.centerFlare.SetActive(true);
         }
 
         public override void OnExit()

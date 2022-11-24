@@ -21,6 +21,9 @@ namespace tsunahiki.game
         public float time = 0.0f;
         public MasterStateController masterStateController;
 
+        // 中央のフレア
+        public GameObject centerFlare;
+
         // デバッグ用で、直接相手のデータを手動入力する
         [SerializeField]
         private float manualNormalizedData = 0.0f;
@@ -45,8 +48,6 @@ namespace tsunahiki.game
 
         [SerializeField]
         private GameObject viewerObject;
-        [SerializeField]
-        private GameObject _centerCube;
         [SerializeField]
         public RemoteCoordinator _coordinator;
 
@@ -73,7 +74,7 @@ namespace tsunahiki.game
         // Start is called before the first frame update
         void Start()
         {
-            cubeStartPosition = _centerCube.transform.position;
+            cubeStartPosition = centerFlare.transform.position;
             masterStateController.Initialize((int)MasterStateController.StateType.SetUp);
         }
 
@@ -101,7 +102,7 @@ namespace tsunahiki.game
                 float normalizedDevicePos = _coordinator.getOpponentValue();
                 Vector3 cubePos = cubeStartPosition;
                 cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
-                _centerCube.transform.position = cubePos;
+                centerFlare.transform.position = cubePos;
                 Debug.Log("normalizedDevicePos is " + normalizedDevicePos.ToString());
             }
             
