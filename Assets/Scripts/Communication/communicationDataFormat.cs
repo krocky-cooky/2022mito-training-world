@@ -18,6 +18,7 @@ namespace communication
         SetUp,
         Ready,
         Fight,
+        EndOfFight,
         GameSet,
     }
 

@@ -20,7 +20,8 @@ namespace tsunahiki.state
         {
             Debug.Log("Fight");
             masterForForceGauge.frontViewUI.text = "Fight !!";
-            masterForForceGauge.centerFlare.SetActive(true);
+            
+            masterForForceGauge.myBeam.isFired = true;
         }
 
         public override void OnExit()
@@ -30,6 +31,8 @@ namespace tsunahiki.state
         public override int StateUpdate()
         {
 
+            masterForForceGauge.centerFlare.SetActive(masterForForceGauge.myBeam.reachCenter);
+
             if ((int)masterForForceGauge.opponentData.superiority == masterForForceGauge.myDeviceId){
                 superiorityMessage = "Advantageous";
             }else{
@@ -38,16 +41,10 @@ namespace tsunahiki.state
 
             masterForForceGauge.frontViewUI.text = "Fight !!\n" + "Time " + masterForForceGauge.opponentData.timeCount.ToString() + "\n" + superiorityMessage;
 
-            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready)
+            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.EndOfFight)
             {   
                 updateResult();
-                return (int)MasterStateController.StateType.Ready;
-            }    
-
-            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.GameSet)
-            {   
-                updateResult();
-                return (int)MasterStateController.StateType.GameSet;
+                return (int)MasterStateController.StateType.EndOfFight;
             }      
 
             return (int)StateType;

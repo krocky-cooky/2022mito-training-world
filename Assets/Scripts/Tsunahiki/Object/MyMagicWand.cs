@@ -30,15 +30,15 @@ public class MyMagicWand : MonoBehaviour
     void Update()
     {
 
-        _myBeam.normalizedScale = _myForceGauge.outputPosition;
+        // _myBeam.normalizedScale = _myForceGauge.outputPosition;
 
-        // fight状態のときのみビーム発射
-        if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight){
-            _myBeam.isFired = true;
-            _myBeam.endPoint = _centerBeam.position;
-        }else{
-            _myBeam.isFired = false;
-        }
+        // // fight状態のときのみビーム発射
+        // if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight){
+        //     _myBeam.isFired = true;
+        //     _myBeam.endPoint = _centerBeam.position;
+        // }else{
+        //     _myBeam.isFired = false;
+        // }
 
     }
 }

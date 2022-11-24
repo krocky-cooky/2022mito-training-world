@@ -20,6 +20,12 @@ public class Beam : MonoBehaviour
     // ビームが発射状態かどうかのフラグ
     public bool isFired = false;
 
+    // フレアまたはビームの衝撃音を発生させるフラグ
+    public bool playShockSound = false;
+
+    // ビームが中央のフレアに達しているかどうかを示すフラグ
+    public bool reachCenter = false;
+
     [SerializeField]
     private float _minScale;
     [SerializeField]
@@ -29,10 +35,32 @@ public class Beam : MonoBehaviour
     [SerializeField]
     private float _maxSoundVolume;
 
+    // フレア(火球)の音
+    [SerializeField]
+    private AudioSource _flareSound;
+
+    // ビーム発射の音
+    [SerializeField]
+    private AudioSource _fireSound;
+
+    // 衝撃音
+    [SerializeField]
+    private AudioSource _shockSound;
+
+    // ビームの発射開始から終点までの到達時間
+    [SerializeField]
+    private float _timeToEndPoint;
+
+    [SerializeField]
+    private Transform _centerFlare;
+
     private VolumetricLineBehavior _volumetricLineBehavior;
-    private AudioSource _effectSound;
     private float _scale;
     private float _initScale;
+    private float _timeCount = 0.0f;
+
+    // ビームの発射音を一回鳴らすためのフラグ
+    private bool _fireSoundIsPlayed = false;
 
     // 終点のローカル座標
     private new Vector3 _localEndPoint;
@@ -41,7 +69,6 @@ public class Beam : MonoBehaviour
     void Start()
     {
         _volumetricLineBehavior = this.gameObject.GetComponent<VolumetricLineBehavior>();
-        _effectSound = this.gameObject.GetComponent<AudioSource>();
         _initScale = transform.localScale.y;
     }
 
@@ -55,13 +82,35 @@ public class Beam : MonoBehaviour
         transform.localScale = new Vector3(_scale, _initScale, _scale);
 
         // 音量にスケールを反映
-        _effectSound.volume = _minSoundVolume + (_maxSoundVolume - _minSoundVolume) * normalizedScale;
+        _flareSound.volume = _minSoundVolume + (_maxSoundVolume - _minSoundVolume) * normalizedScale;
         
         // 発射状態なら終点のローカル変換を代入し、非発射状態なら球形にする
+        // 発射直後は、始点から終点まで連続的に進む
         if(isFired){
+            _timeCount += Time.deltaTime;
+            endPoint = _centerFlare.position;
             _localEndPoint = transform.InverseTransformPoint(endPoint);
+            _localEndPoint = _localEndPoint * Mathf.Clamp01(_timeCount / _timeToEndPoint);
+            reachCenter = (_timeCount > _timeToEndPoint);
         }else{
+            _timeCount = 0.0f;
             _localEndPoint = new Vector3(0.0f, 0.01f, 0.0f);
+            reachCenter = false;
+        }
+
+        // ビームの発射音を再生
+        if(isFired & !(_fireSoundIsPlayed)){
+            _fireSound.Play();
+            _fireSoundIsPlayed = true;
+        }
+        if(!isFired){
+            _fireSoundIsPlayed = false;
+        }
+
+        // ビームの衝撃音を再生
+        if (playShockSound){
+            _shockSound.Play();
+            playShockSound = false;
         }
 
         // レーザーの終点を反映
