@@ -19,6 +19,8 @@ public class OpponentAvatar : MonoBehaviour
         FightFace1,
         FightFace2,
         FightFace3,
+        DefeatedFace,
+        WinningFace,
     }
     public OpponentFace opponentFace;
 
