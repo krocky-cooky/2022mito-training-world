@@ -5,11 +5,11 @@ using UnityEngine.UI;
 using util;
 using communication;
 using tsunahiki.game;
-using tsunahiki.state;
-using tsunahiki.stateController;
+using tsunahiki.forceGauge.state;
+using tsunahiki.forceGauge.stateController;
 
 
-namespace tsunahiki.stateController
+namespace tsunahiki.forceGauge.stateController
 {
     public class MasterStateController : StateControllerBase
     {

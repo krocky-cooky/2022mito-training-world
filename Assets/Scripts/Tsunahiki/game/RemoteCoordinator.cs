@@ -27,6 +27,9 @@ namespace tsunahiki.game
         [SerializeField]
         private Transform _leftController;
 
+        [System.NonSerialized]
+        public RemoteTsunahikiDataFormat communicationData;
+
         //互いに送りあうデータ(正規化したfloat値)
         //握力系 -> 筋トレデバイス　currentForce
         //筋トレデバイス -> 握力系　持ち手のポジション
@@ -44,6 +47,7 @@ namespace tsunahiki.game
         void Start()
         {
             _websocketClient = GetComponent<RemoteWebSocketClient>();
+            communicationData = new RemoteTsunahikiDataFormat();
         }
 
         void Update()
@@ -113,16 +117,19 @@ namespace tsunahiki.game
         {
             string receivedText = _websocketClient.getReceivedData();
             RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
-            _opponentValue = data.normalizedData;
+            if (data is null) _opponentValue = 0.0f;
+            else _opponentValue = data.normalizedData;
             //_opponentValue = _opponentCoordinator.getCurrentValue();
             return _opponentValue;
         }
 
-        public RemoteTsunahikiDataFormat getOpponentData(){
+        public RemoteTsunahikiDataFormat getOpponentData()
+        {
             string receivedText = _websocketClient.getReceivedData();
             RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
             Debug.Log("receivedText is " + receivedText);
-            return data;  
+            if(data is null) return new RemoteTsunahikiDataFormat();
+            else return data;  
         }
 
         public float getCurrentValue()

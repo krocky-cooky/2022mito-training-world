@@ -68,6 +68,8 @@ namespace communication
 
             _socket.OnMessage += (s,e) => 
             {
+                Debug.Log(e.Data);
+
                 if(!e.Data.Contains("server error"))
                 {
                     receivedText = e.Data;

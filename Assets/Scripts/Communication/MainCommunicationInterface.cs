@@ -11,6 +11,7 @@ namespace communication
         bluetooth,
         serial,
     }
+
     
     public class MainCommunicationInterface : MonoBehaviour
     {
@@ -83,10 +84,11 @@ namespace communication
                     dataJson = serialHandler.getReceivedData();
                     break;
                 default:
-                    return null;
+                    return new ReceivingDataFormat();
             }    
             ReceivingDataFormat retval = JsonUtility.FromJson<ReceivingDataFormat>(dataJson);
-            return retval;
+            if(retval is null) return new ReceivingDataFormat();
+            else return retval;
         }
 
         public void sendData(SendingDataFormat data)
