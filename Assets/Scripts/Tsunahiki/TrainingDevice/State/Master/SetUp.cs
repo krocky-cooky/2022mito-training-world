@@ -16,6 +16,9 @@ namespace tsunahiki.trainingDevice.state
         public override void OnEnter() 
         {
             restore();
+            Debug.Log("set up start");
+            stateController.master.addLog("SetUp");
+
         }
 
         public override void OnExit() 
@@ -25,25 +28,27 @@ namespace tsunahiki.trainingDevice.state
 
         public override int StateUpdate()
         {
-            if(!maxTorqueRegistered){
+            if(!stateController.maxTorqueRegistered)
+            {
                 //最大トルクの記録
-                ReceivingDataFormat data = communicationInterface.getReceivedData();
-                maxTorque = Mathf.Max(maxTorque,data.trq);
+                ReceivingDataFormat data = stateController.communicationInterface.getReceivedData();
+                Debug.Log(data);
+                stateController.maxTorque = Mathf.Max(stateController.maxTorque,data.trq);
             }
 
 
-            if(OVRInput.GetDown(buttonAllotment.Ready))
+            if(OVRInput.GetDown(stateController.buttonAllotment.Ready))
             {
-                if(maxTorqueRegistered)
+                if(stateController.maxTorqueRegistered)
                 {   
                     int nextState = (int)MasterStateController.StateType.Ready;
-                    coordinator.communicationData.stateId = nextState;
+                    stateController.coordinator.communicationData.stateId = nextState;
                     return nextState;
                 }
             }
-            else if(OVRInput.GetDown(buttonAllotment.TorqueRegistered))
+            else if(OVRInput.GetDown(stateController.buttonAllotment.TorqueRegistered))
             {
-                fixMaxTorque(!maxTorqueRegistered,true);
+                fixMaxTorque(!stateController.maxTorqueRegistered,true);
 
             }
 
@@ -54,9 +59,9 @@ namespace tsunahiki.trainingDevice.state
         //トルクを決定するもしくはリセットして変更を再開する
         private void fixMaxTorque(bool fix,bool reset)
         {
-            maxTorqueRegistered = fix;
+            stateController.maxTorqueRegistered = fix;
 
-            if(reset)maxTorque = 0.0f;
+            if(reset)stateController.maxTorque = 0.0f;
         }
         
     }

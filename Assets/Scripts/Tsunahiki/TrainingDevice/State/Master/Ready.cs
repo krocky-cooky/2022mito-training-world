@@ -18,7 +18,9 @@ namespace tsunahiki.trainingDevice.state
 
         public override void OnEnter() 
         {
-            restore();   
+            restore();  
+            stateController.master.addLog("Ready");
+
         }
 
         public override void OnExit() 
@@ -28,7 +30,7 @@ namespace tsunahiki.trainingDevice.state
 
         public override int StateUpdate()
         {
-            RemoteTsunahikiDataFormat opponentData = coordinator.getOpponentData();
+            RemoteTsunahikiDataFormat opponentData = stateController.coordinator.getOpponentData();
             if(opponentData.stateId == (int)MasterStateController.StateType.Ready)
             {
                 StartCoroutine(DecideSuperiorityCoroutine());
@@ -38,7 +40,7 @@ namespace tsunahiki.trainingDevice.state
             if(_gameStart)
             {
                 int nextState = (int)MasterStateController.StateType.Fight;
-                coordinator.communicationData.stateId = nextState;
+                stateController.coordinator.communicationData.stateId = nextState;
                 return nextState;
             }
             
@@ -65,7 +67,7 @@ namespace tsunahiki.trainingDevice.state
         {
             //ルーレットみたいな描写入れたいからコルーチンにしてます
             //現状はただ乱数でどっちか優勢か決めるだけ
-            master.decideSuperiority();
+            stateController.master.decideSuperiority();
             StartCoroutine(GameStartCountdownCoroutine());
             yield break;
         }

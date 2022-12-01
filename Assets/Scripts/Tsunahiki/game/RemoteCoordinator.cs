@@ -93,7 +93,8 @@ namespace tsunahiki.game
         {
             string receivedText = _websocketClient.getReceivedData();
             RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
-            _opponentValue = data.normalizedData;
+            if (data is null) _opponentValue = 0.0f;
+            else _opponentValue = data.normalizedData;
             //_opponentValue = _opponentCoordinator.getCurrentValue();
             return _opponentValue;
         }
@@ -103,7 +104,8 @@ namespace tsunahiki.game
             string receivedText = _websocketClient.getReceivedData();
             RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
             Debug.Log("receivedText is " + receivedText);
-            return data;  
+            if(data is null) return new RemoteTsunahikiDataFormat();
+            else return data;  
         }
 
         public float getCurrentValue()

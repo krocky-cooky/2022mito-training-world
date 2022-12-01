@@ -19,8 +19,9 @@ namespace tsunahiki.trainingDevice.state
         public override void OnEnter() 
         {
             Debug.Log("Fight");
-            _cubeStartPosition = centerCube.transform.position;
-            _opponentHandleStartPosition = opponentHandle.transform.position;
+            stateController.master.addLog("Fight");
+            _cubeStartPosition = stateController.centerCube.transform.position;
+            _opponentHandleStartPosition = stateController.opponentHandle.transform.position;
         }
 
 
@@ -35,24 +36,24 @@ namespace tsunahiki.trainingDevice.state
             {
                 //cubeの位置をコントローラの位置に合わせて動かす
                 Vector3 cubePos = _cubeStartPosition;
-                float controllerPositionFromCenter = trainingDevice.currentAbsPosition - (trainingDevice.maxAbsPosition + trainingDevice.minAbsPosition)/2;
+                float controllerPositionFromCenter = stateController.trainingDevice.currentAbsPosition - (stateController.trainingDevice.maxAbsPosition + stateController.trainingDevice.minAbsPosition)/2;
                 cubePos.z += controllerPositionFromCenter;
-                centerCube.transform.position = cubePos;
+                stateController.centerCube.transform.position = cubePos;
 
                 //対戦相手側を自身のコントローラ＋握力系の動きに合わせて動かす
-                float normalizedForceGaugePos = coordinator.getOpponentValue();
+                float normalizedForceGaugePos = stateController.coordinator.getOpponentValue();
                 Vector3 opponentHandlePos = _opponentHandleStartPosition;
-                opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*opponentMotionAmplitude;
+                opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*stateController.opponentMotionAmplitude;
                 opponentHandlePos.z += controllerPositionFromCenter;
-                opponentHandle.transform.position = opponentHandlePos;
+                stateController.opponentHandle.transform.position = opponentHandlePos;
             }
 
             {
                 //握力系トルクの反映
-                float opponentValue = coordinator.getOpponentValue();
-                float sendingTorque = opponentValue * master.gripStrengthMultiplier;
+                float opponentValue = stateController.coordinator.getOpponentValue();
+                float sendingTorque = opponentValue * stateController.master.gripStrengthMultiplier;
                 _fromLastTorqueUpdated += Time.deltaTime;
-                if(_fromLastTorqueUpdated > torqueSendingInterval)
+                if(_fromLastTorqueUpdated > stateController.torqueSendingInterval)
                 {
                     UpdateTorque(sendingTorque);
                     _fromLastTorqueUpdated = 0.0f;
@@ -63,16 +64,16 @@ namespace tsunahiki.trainingDevice.state
                 //勝敗がついたとき
                 if(false)
                 {
-                    if(master.updateResult())
+                    if(stateController.master.updateResult())
                     {
                         int nextState = (int)MasterStateController.StateType.GameSet;
-                        coordinator.communicationData.stateId = nextState;
+                        stateController.coordinator.communicationData.stateId = nextState;
                         return nextState;
                     }
                     else
                     {
-                        int nextState = (int)MasterStateController.StateType.Ready;
-                        coordinator.communicationData.stateId = nextState;
+                        int nextState = (int)MasterStateController.StateType.EndOfFight;
+                        stateController.coordinator.communicationData.stateId = nextState;
                         return nextState;
                     }
                 }
@@ -86,7 +87,7 @@ namespace tsunahiki.trainingDevice.state
         {
             SendingDataFormat data = new SendingDataFormat();
             data.setTorque(torque,speed);
-            communicationInterface.sendData(data);
+            stateController.communicationInterface.sendData(data);
 
             Debug.Log($"Torque {torque} has sent to Training Device");
         }
