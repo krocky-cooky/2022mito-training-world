@@ -8,9 +8,8 @@ using tsunahiki.state;
 using tsunahiki.stateController;
 using VolumetricLines;
 
-public class Beam : MonoBehaviour
+public class BeamController : MonoBehaviour
 {
-
     // 0~1で正規化されたビームのスケール
     public float normalizedScale;
 
@@ -54,7 +53,7 @@ public class Beam : MonoBehaviour
     [SerializeField]
     private Transform _centerFlare;
 
-    private VolumetricLineBehavior _volumetricLineBehavior;
+    private CreateBeamLine _volumetricLineBehavior;
     private float _scale;
     private float _initScale;
     private float _timeCount = 0.0f;
@@ -68,7 +67,7 @@ public class Beam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _volumetricLineBehavior = this.gameObject.GetComponent<VolumetricLineBehavior>();
+        _volumetricLineBehavior = this.gameObject.GetComponent<CreateBeamLine>();
         _initScale = transform.localScale.y;
     }
 
@@ -76,10 +75,9 @@ public class Beam : MonoBehaviour
     void Update()
     {
         // スケールを反映
-        // ただし長さ方向であるy方向は変えない
         normalizedScale = Mathf.Clamp01(normalizedScale);
         _scale = _minScale + (_maxScale - _minScale) * normalizedScale;
-        transform.localScale = new Vector3(_scale, _initScale, _scale);
+        _volumetricLineBehavior.m_lineWidth = _scale;
 
         // 音量にスケールを反映
         _flareSound.volume = _minSoundVolume + (_maxSoundVolume - _minSoundVolume) * normalizedScale;
@@ -94,7 +92,7 @@ public class Beam : MonoBehaviour
             reachCenter = (_timeCount > _timeToEndPoint);
         }else{
             _timeCount = 0.0f;
-            _localEndPoint = new Vector3(0.0f, 0.01f, 0.0f);
+            _localEndPoint = new Vector3(0.0f, 0.0001f, 0.0f);
             reachCenter = false;
         }
 

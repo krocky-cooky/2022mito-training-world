@@ -107,6 +107,12 @@ namespace tsunahiki.game
 
 
             // マシンのハンドル等のストロークポジション登録
+            if(Input.GetMouseButtonDown(2))
+            {
+                minForce = currentForce;
+                maxForce = currentForce;
+                Debug.Log("Input.GetMouseButtonDown(2)");
+            }
             if(Input.GetMouseButton(2))
             {
                 Debug.Log("Input.GetMouseButton(2)");

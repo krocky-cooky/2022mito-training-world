@@ -59,7 +59,7 @@ namespace tsunahiki.state
             }else if ((masterForForceGauge.time - _initTime) < (masterForForceGauge.flareMovingTime + 1.0f)){
                 // 衝撃音をならす
                 if(!_playedShockSound){
-                    masterForForceGauge.centerFlare.GetComponent<Beam>().playShockSound = true;
+                    masterForForceGauge.centerFlare.GetComponent<BeamController>().playShockSound = true;
                     _playedShockSound = true;
                     Debug.Log("played shock sound");
                 }

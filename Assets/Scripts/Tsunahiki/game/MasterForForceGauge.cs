@@ -24,8 +24,8 @@ namespace tsunahiki.game
         // 中央のフレア
         public GameObject centerFlare;
 
-        public Beam myBeam;
-        public Beam opponentBeam;
+        public BeamController myBeam;
+        public BeamController opponentBeam;
 
         // デバッグ用で、直接相手のデータを手動入力する
         [SerializeField]
