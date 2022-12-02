@@ -41,19 +41,20 @@ namespace tsunahiki.state
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {   
                 isGoingToBattle = !isGoingToBattle;
+                return (int)MasterStateController.StateType.Fight; //temp
             }
 
-            if (isGoingToBattle)
-            {   
-                masterForForceGauge.frontViewUI.text = "Going To Fight...";
+            // if (isGoingToBattle)
+            // {   
+            //     masterForForceGauge.frontViewUI.text = "Going To Fight...";
 
-                if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready)
-                {   
-                    return (int)MasterStateController.StateType.Ready;
-                }
-            }else{
-                masterForForceGauge.frontViewUI.text = "Set Up\nSet Maximum Force";
-            }
+            //     if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready)
+            //     {   
+            //         return (int)MasterStateController.StateType.Ready;
+            //     }
+            // }else{
+            //     masterForForceGauge.frontViewUI.text = "Set Up\nSet Maximum Force";
+            // }
 
 
             return (int)StateType;

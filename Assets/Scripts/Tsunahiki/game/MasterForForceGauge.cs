@@ -114,12 +114,11 @@ namespace tsunahiki.game
             
             // 自分のビームの強度に、握力計の正規化値を代入
             myBeam.normalizedScale = _myForceGauge.outputPosition;
-            Debug.Log("_myForceGauge.outputPosition" + _myForceGauge.outputPosition.ToString());
-            Debug.Log("myBeam.normalizedScale" + myBeam.normalizedScale.ToString());
            
             {
                 // 通信をしてないときはここでエラーが出てUpdate()処理が止まる
-                float normalizedDevicePos = _coordinator.getOpponentValue();
+                // float normalizedDevicePos = _coordinator.getOpponentValue();
+                float normalizedDevicePos = opponentData.normalizedData;
                 Vector3 cubePos = cubeStartPosition;
                 cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
                 centerFlare.transform.position = cubePos;
@@ -131,7 +130,7 @@ namespace tsunahiki.game
 
         // 相手のデータの手動入力
         void manuallyInputOpponentData(){
-            opponentData.normalizedData = manualNormalizedData;
+            opponentData.normalizedData = Mathf.Clamp01(manualNormalizedData);
             opponentData.deviceInterface = (int)manualDeviceInterface;
             opponentData.stateId = (int)manualStateId;
             opponentData.superiority = (int)manualSuperiority;

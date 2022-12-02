@@ -32,6 +32,16 @@ namespace tsunahiki.state
         public override int StateUpdate()
         {
 
+            //temp
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
+            {   
+                masterForForceGauge.centerFlare.SetActive(false);
+                masterForForceGauge.myBeam.isFired = false;
+                masterForForceGauge.opponentBeam.isFired = false;
+
+                return (int)MasterStateController.StateType.SetUp; //temp
+            }
+
             masterForForceGauge.centerFlare.SetActive(masterForForceGauge.myBeam.reachCenter);
 
             if ((int)masterForForceGauge.opponentData.superiority == masterForForceGauge.myDeviceId){
@@ -49,6 +59,9 @@ namespace tsunahiki.state
             }      
 
             return (int)StateType;
+
+
+
         }
 
         // 勝敗結果を更新
