@@ -33,6 +33,9 @@ public class OpponentHand : MonoBehaviour
     private Vector3 _initPosition;
     private Vector3 _initEulerAngle;  
 
+    //頭の並進運動を一定倍に増幅する際の倍率
+    [SerializeField]
+    private float _movementScalingFactor;
 
 
     // Start is called before the first frame update
@@ -53,8 +56,8 @@ public class OpponentHand : MonoBehaviour
         UpdateCurrentControllerTransform();
 
         // 手の位置を更新
-        transform.position = _initPosition + (_currentPositionOfController - _initPositionOfController);
-        transform.eulerAngles = _initEulerAngle + (_currentEulerAngleOfController - _initEulerAngleOfController);
+        // transform.position = _initPosition + (_currentPositionOfController - _initPositionOfController) * _movementScalingFactor;
+        // transform.eulerAngles = _initEulerAngle + (_currentEulerAngleOfController - _initEulerAngleOfController) * _movementScalingFactor;
 
         // 相手がready stateになったら初期位置を更新しなおす
         if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready){

@@ -2741,14 +2741,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263816686}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8311bfb8c649dda4a9440114c0dfe99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _masterForForceGauge: {fileID: 0}
   _reflectsMyController: 1
-  _rightController: {fileID: 0}
+  _rightController: {fileID: 5610897218608971863}
+  _movementScalingFactor: 0
 --- !u!1 &265249412
 GameObject:
   m_ObjectHideFlags: 0
@@ -27986,31 +27987,31 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 543450653623199043}
+    m_TransformParent: {fileID: 3361962858216286103}
     m_Modifications:
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.3076942
+      value: 1.033234
       objectReference: {fileID: 0}
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.6666669
+      value: 0.67988044
       objectReference: {fileID: 0}
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.307694
+      value: 0.6932597
       objectReference: {fileID: 0}
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.65
+      value: -1.62
       objectReference: {fileID: 0}
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: -0.55
       objectReference: {fileID: 0}
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -28864,7 +28865,6 @@ Transform:
   m_Children:
   - {fileID: 3361962858216286103}
   - {fileID: 642091276}
-  - {fileID: 2132791660}
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30264,7 +30264,8 @@ MonoBehaviour:
   _opponentAvatarHead: {fileID: 642091276}
   _opponentAvatarBody: {fileID: 3361962858216286103}
   _opponentAvatarFace: {fileID: 8540762849929881654}
-  _lengthOfNeck: -1.3
+  _lengthOfNeck: -1.5
+  _movementScalingFactor: 5
 --- !u!1 &922821739333672601
 GameObject:
   m_ObjectHideFlags: 0
@@ -35505,7 +35506,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: -3, z: 0}
   m_LocalScale: {x: 2.5, y: 3.5, z: 2}
-  m_Children: []
+  m_Children:
+  - {fileID: 2132791660}
   m_Father: {fileID: 543450653623199043}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

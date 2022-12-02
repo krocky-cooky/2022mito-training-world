@@ -32,15 +32,15 @@ namespace tsunahiki.state
         public override int StateUpdate()
         {
 
-            //temp
-            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
-            {   
-                masterForForceGauge.centerFlare.SetActive(false);
-                masterForForceGauge.myBeam.isFired = false;
-                masterForForceGauge.opponentBeam.isFired = false;
+            // //temp
+            // if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
+            // {   
+            //     masterForForceGauge.centerFlare.SetActive(false);
+            //     masterForForceGauge.myBeam.isFired = false;
+            //     masterForForceGauge.opponentBeam.isFired = false;
 
-                return (int)MasterStateController.StateType.SetUp; //temp
-            }
+            //     return (int)MasterStateController.StateType.SetUp; //temp
+            // }
 
             masterForForceGauge.centerFlare.SetActive(masterForForceGauge.myBeam.reachCenter);
 

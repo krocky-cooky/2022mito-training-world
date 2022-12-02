@@ -43,6 +43,10 @@ public class OpponentAvatar : MonoBehaviour
     [SerializeField]
     private float _lengthOfNeck;
 
+    //頭の並進運動を一定倍に増幅する際の倍率
+    [SerializeField]
+    private float _movementScalingFactor;
+
     // 相手のHMDの初期位置
     private Vector3 _initPositionOfHMD;
     private Vector3 _initEulerAngleOfHMD;
@@ -73,14 +77,9 @@ public class OpponentAvatar : MonoBehaviour
         UpdateCurrentHMDTransform();
 
         // 頭の位置を更新
-        _opponentAvatarHead.position = _initHeadPosition + (_currentPositionOfHMD - _initPositionOfHMD);
+        _opponentAvatarHead.position = _initHeadPosition + (_currentPositionOfHMD - _initPositionOfHMD) * _movementScalingFactor;
         _opponentAvatarHead.eulerAngles = _initHeadEulerAngle + (_currentEulerAngleOfHMD - _initEulerAngleOfHMD);
 
-        // 相手がready stateになったら初期位置を更新しなおす
-        if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready){
-            _initPositionOfHMD = _currentPositionOfHMD;
-            _initEulerAngleOfHMD = _currentEulerAngleOfHMD;
-        }
 
         // 胴体の位置を更新
         _opponentAvatarBody.position = new Vector3(_opponentAvatarHead.position.x, _opponentAvatarHead.position.y + _lengthOfNeck, _opponentAvatarHead.position.z);
@@ -88,6 +87,13 @@ public class OpponentAvatar : MonoBehaviour
 
         // 表情の更新
         _opponentAvatarFace.GetComponent<MeshRenderer>().material = faceMaterial[(int)opponentFace];
+
+        
+        // 相手がready stateになったら初期位置を更新しなおす
+        if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready){
+            _initPositionOfHMD = _currentPositionOfHMD;
+            _initEulerAngleOfHMD = _currentEulerAngleOfHMD;
+        }
 
     }
 
