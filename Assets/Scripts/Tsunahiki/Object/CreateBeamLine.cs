@@ -52,4 +52,9 @@ public class CreateBeamLine : MonoBehaviour
 		volLineStrip.UpdateLineVertices(lineVertices);
 
 	}
+
+	// ゲームオブジェクトが非アクティブ化したとき、ビームも非表示化する
+    void OnDisable(){
+        volLineStrip.LineWidth = 0.0f;
+    }
 }
