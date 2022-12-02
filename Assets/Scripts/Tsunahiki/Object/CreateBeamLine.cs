@@ -19,7 +19,6 @@ public class CreateBeamLine : MonoBehaviour
     void Start(){
         // Create an empty game object
 		go = new GameObject();
-		go.transform.parent = transform;
 
 		// Add the MeshFilter component, VolumetricLineStripBehavior requires it
 		go.AddComponent<MeshFilter>();
