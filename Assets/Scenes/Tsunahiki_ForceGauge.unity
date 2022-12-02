@@ -21810,8 +21810,8 @@ MonoBehaviour:
   isFired: 0
   playShockSound: 0
   reachCenter: 0
-  _minScale: 3
-  _maxScale: 20
+  _minScale: 0.7
+  _maxScale: 4
   _minSoundVolume: 0.1
   _maxSoundVolume: 0.7
   _flareSound: {fileID: 1016615838}
@@ -43802,7 +43802,7 @@ MonoBehaviour:
   maxForce: 15
   minForce: 0
   positionCalculationMethod: 0
-  inputInterface: 0
+  inputInterface: 1
   outputPosition: 0
   maxOutputVelocity: 0
   gripCommunicationInterface: {fileID: 0}
@@ -47786,7 +47786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5607557278148755773
 Transform:
   m_ObjectHideFlags: 0
