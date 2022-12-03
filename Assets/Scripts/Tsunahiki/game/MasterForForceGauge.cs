@@ -25,7 +25,10 @@ namespace tsunahiki.game
         public GameObject centerFlare;
 
         public BeamController myBeam;
-        public BeamController opponentBeam;
+
+        public OpponentPlayer OpponentPlayer;
+
+        public Vector3 cubeStartPosition;
 
         // デバッグ用で、直接相手のデータを手動入力する
         [SerializeField]
@@ -80,15 +83,12 @@ namespace tsunahiki.game
         public int myDeviceId = (int)TrainingDeviceType.ForceGauge;
 
 
-        private Vector3 cubeStartPosition;
-
-
-
         // Start is called before the first frame update
         void Start()
         {
-            cubeStartPosition = centerFlare.transform.position;
+            
             masterStateController.Initialize((int)MasterStateController.StateType.SetUp);
+            cubeStartPosition = centerFlare.transform.position;
         }
 
         // Update is called once per frame
@@ -118,11 +118,11 @@ namespace tsunahiki.game
             {
                 // 通信をしてないときはここでエラーが出てUpdate()処理が止まる
                 // float normalizedDevicePos = _coordinator.getOpponentValue();
-                float normalizedDevicePos = opponentData.normalizedData;
-                Vector3 cubePos = cubeStartPosition;
-                cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
-                centerFlare.transform.position = cubePos;
-                Debug.Log("normalizedDevicePos is " + normalizedDevicePos.ToString());
+                // float normalizedDevicePos = opponentData.normalizedData;
+                // Vector3 cubePos = cubeStartPosition;
+                // cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
+                // centerFlare.transform.position = cubePos;
+                // Debug.Log("normalizedDevicePos is " + normalizedDevicePos.ToString());
             }
 
 

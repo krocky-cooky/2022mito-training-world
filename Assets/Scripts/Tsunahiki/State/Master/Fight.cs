@@ -16,13 +16,24 @@ namespace tsunahiki.state
     {
         private string superiorityMessage;
 
+        private BeamController _centerFlareController;
+
         public override void OnEnter()
         {
             Debug.Log("Fight");
-            masterForForceGauge.frontViewUI.text = "Fight !!";
+
+            if ((int)masterForForceGauge.opponentData.superiority == masterForForceGauge.myDeviceId){
+                superiorityMessage = "Advantageous";
+            }else{
+                superiorityMessage = "DisAdvantageous";
+            }
+
+            masterForForceGauge.frontViewUI.text = "Fight !!\n" + "Time " + masterForForceGauge.opponentData.timeCount.ToString() + "\n" + superiorityMessage;
             
             masterForForceGauge.myBeam.isFired = true;
-            masterForForceGauge.opponentBeam.isFired = true;
+            masterForForceGauge.OpponentPlayer.beamController.isFired = true;
+
+            _centerFlareController = masterForForceGauge.centerFlare.GetComponent<BeamController>();
         }
 
         public override void OnExit()
@@ -42,15 +53,19 @@ namespace tsunahiki.state
             //     return (int)MasterStateController.StateType.SetUp; //temp
             // }
 
+            // 自分と相手のビーム出力の合計値と、中央のフレアの強さを相関
+            _centerFlareController.normalizedScale = Mathf.Clamp01((masterForForceGauge.myBeam.normalizedScale + masterForForceGauge.OpponentPlayer.beamController.normalizedScale) / 2.0f);
+
             masterForForceGauge.centerFlare.SetActive(masterForForceGauge.myBeam.reachCenter);
 
-            if ((int)masterForForceGauge.opponentData.superiority == masterForForceGauge.myDeviceId){
-                superiorityMessage = "Advantageous";
-            }else{
-                superiorityMessage = "DisAdvantageous";
-            }
-
-            masterForForceGauge.frontViewUI.text = "Fight !!\n" + "Time " + masterForForceGauge.opponentData.timeCount.ToString() + "\n" + superiorityMessage;
+            // centerFlareの移動
+            // 通信をしてないときはここでエラーが出てUpdate()処理が止まる
+            // float normalizedDevicePos = _coordinator.getOpponentValue();
+            float normalizedDevicePos = masterForForceGauge.opponentData.normalizedData;
+            Vector3 cubePos = masterForForceGauge.cubeStartPosition;
+            cubePos.z += (normalizedDevicePos - 0.5f) * masterForForceGauge.moveParameter;
+            masterForForceGauge.centerFlare.transform.position = cubePos;
+            Debug.Log("normalizedDevicePos is " + normalizedDevicePos.ToString());
 
             if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.EndOfFight)
             {   
@@ -59,7 +74,6 @@ namespace tsunahiki.state
             }      
 
             return (int)StateType;
-
 
 
         }

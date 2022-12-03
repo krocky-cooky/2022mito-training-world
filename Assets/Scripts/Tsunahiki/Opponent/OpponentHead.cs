@@ -7,7 +7,7 @@ using tsunahiki.game;
 using tsunahiki.state;
 using tsunahiki.stateController;
 
-public class OpponentAvatar : MonoBehaviour
+public class OpponentHead : MonoBehaviour
 {
     // 表情のマテリアル
     public Material[] faceMaterial = new Material[4];
@@ -34,12 +34,12 @@ public class OpponentAvatar : MonoBehaviour
 
     [SerializeField]
     private Transform _HMD;
+    // [SerializeField]
+    // private Transform _opponentAvatarHead;
+    // [SerializeField]
+    // private Transform _opponentAvatarBody;
     [SerializeField]
-    private Transform _opponentAvatarHead;
-    [SerializeField]
-    private Transform _opponentAvatarBody;
-    [SerializeField]
-    private GameObject _opponentAvatarFace;
+    private GameObject _face;
     [SerializeField]
     private float _lengthOfNeck;
 
@@ -67,8 +67,8 @@ public class OpponentAvatar : MonoBehaviour
         _initPositionOfHMD = _currentPositionOfHMD;
         _initEulerAngleOfHMD = _currentEulerAngleOfHMD;
 
-        _initHeadPosition = _opponentAvatarHead.position;
-        _initHeadEulerAngle = _opponentAvatarHead.eulerAngles;   
+        _initHeadPosition = this.transform.position;
+        _initHeadEulerAngle = this.transform.eulerAngles;   
     }
 
     // Update is called once per frame
@@ -77,23 +77,23 @@ public class OpponentAvatar : MonoBehaviour
         UpdateCurrentHMDTransform();
 
         // 頭の位置を更新
-        _opponentAvatarHead.position = _initHeadPosition + (_currentPositionOfHMD - _initPositionOfHMD) * _movementScalingFactor;
-        _opponentAvatarHead.eulerAngles = _initHeadEulerAngle + (_currentEulerAngleOfHMD - _initEulerAngleOfHMD);
+        this.transform.position = _initHeadPosition + (_currentPositionOfHMD - _initPositionOfHMD) * _movementScalingFactor;
+        this.transform.eulerAngles = _initHeadEulerAngle + (_currentEulerAngleOfHMD - _initEulerAngleOfHMD);
 
 
         // 胴体の位置を更新
-        _opponentAvatarBody.position = new Vector3(_opponentAvatarHead.position.x, _opponentAvatarHead.position.y + _lengthOfNeck, _opponentAvatarHead.position.z);
-        _opponentAvatarBody.eulerAngles = new Vector3(0.0f, _opponentAvatarHead.eulerAngles.y, 0.0f);
+        // _opponentAvatarBody.position = new Vector3(this.transform.position.x, this.transform.position.y + _lengthOfNeck, this.transform.position.z);
+        // _opponentAvatarBody.eulerAngles = new Vector3(0.0f, this.transform.eulerAngles.y, 0.0f);
 
         // 表情の更新
-        _opponentAvatarFace.GetComponent<MeshRenderer>().material = faceMaterial[(int)opponentFace];
+        _face.GetComponent<MeshRenderer>().material = faceMaterial[(int)opponentFace];
 
         
         // 相手がready stateになったら初期位置を更新しなおす
-        if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready){
-            _initPositionOfHMD = _currentPositionOfHMD;
-            _initEulerAngleOfHMD = _currentEulerAngleOfHMD;
-        }
+        // if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Ready){
+        //     _initPositionOfHMD = _currentPositionOfHMD;
+        //     _initEulerAngleOfHMD = _currentEulerAngleOfHMD;
+        // }
 
     }
 
@@ -107,5 +107,10 @@ public class OpponentAvatar : MonoBehaviour
             // _currentPositionOfHMD = new Vector3(_masterForForceGauge.opponentData.positionXOfHMD, _masterForForceGauge.opponentData.positionYOfHMD, _masterForForceGauge.opponentData.positionZOfHMD);
             // _initEulerAngleOfHMD = new Vector3(_masterForForceGauge.opponentData.rotationXOfHMD, _masterForForceGauge.opponentData.rotationYOfHMD, _masterForForceGauge.opponentData.rotationZOfHMD);
         }
+    }
+
+    public void SetInitTransform(){
+        _initPositionOfHMD = _currentPositionOfHMD;
+        _initEulerAngleOfHMD = _currentEulerAngleOfHMD;
     }
 }

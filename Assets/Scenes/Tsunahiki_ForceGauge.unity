@@ -2746,10 +2746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8311bfb8c649dda4a9440114c0dfe99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _masterForForceGauge: {fileID: 0}
-  _reflectsMyController: 1
-  _rightController: {fileID: 5610897218608971863}
-  _movementScalingFactor: 0
 --- !u!1 &265249412
 GameObject:
   m_ObjectHideFlags: 0
@@ -8619,6 +8615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 642091276}
+  - component: {fileID: 642091277}
   m_Layer: 0
   m_Name: head
   m_TagString: Untagged
@@ -8643,6 +8640,32 @@ Transform:
   m_Father: {fileID: 543450653623199043}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &642091277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642091275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bfd2c1a5bf8a15449fa065823340a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faceMaterial:
+  - {fileID: 2100000, guid: 031e595f946804f4492fe88fc4062bdd, type: 2}
+  - {fileID: 2100000, guid: 4f42dd4767a06094dbae8a867511f76d, type: 2}
+  - {fileID: 2100000, guid: 47523d0359d84f047ac3b9ce286603d5, type: 2}
+  - {fileID: 2100000, guid: c2e43275290ab8a4399f47a99f49d051, type: 2}
+  - {fileID: 2100000, guid: e3412acf1bfb12f4382b8d43c7fa0b05, type: 2}
+  - {fileID: 2100000, guid: 17de4ee6feb57084da85b69659fda6ea, type: 2}
+  opponentFace: 0
+  _masterForForceGauge: {fileID: 5607557278429839117}
+  _reflectsHMD: 1
+  _HMD: {fileID: 5607557278531358609}
+  _face: {fileID: 8540762849929881654}
+  _lengthOfNeck: -1.5
+  _movementScalingFactor: 5
 --- !u!1001 &649960738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21811,8 +21834,8 @@ MonoBehaviour:
   isFired: 0
   playShockSound: 0
   reachCenter: 0
-  _minScale: 0.7
-  _maxScale: 4
+  _minScale: 2
+  _maxScale: 15
   _minSoundVolume: 0.1
   _maxSoundVolume: 0.7
   _flareSound: {fileID: 1016615838}
@@ -30230,15 +30253,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450653623199043}
-  - component: {fileID: 919132149097594874}
+  - component: {fileID: 919132149097594875}
   m_Layer: 0
-  m_Name: manAvatar
+  m_Name: OpponentPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &919132149097594874
+--- !u!114 &919132149097594875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30247,25 +30270,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 919132149097594873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bfd2c1a5bf8a15449fa065823340a7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2351ae2b5341a3944b98b7e23b403d59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faceMaterial:
-  - {fileID: 2100000, guid: 031e595f946804f4492fe88fc4062bdd, type: 2}
-  - {fileID: 2100000, guid: 4f42dd4767a06094dbae8a867511f76d, type: 2}
-  - {fileID: 2100000, guid: 47523d0359d84f047ac3b9ce286603d5, type: 2}
-  - {fileID: 2100000, guid: c2e43275290ab8a4399f47a99f49d051, type: 2}
-  - {fileID: 2100000, guid: e3412acf1bfb12f4382b8d43c7fa0b05, type: 2}
-  - {fileID: 2100000, guid: 17de4ee6feb57084da85b69659fda6ea, type: 2}
-  opponentFace: 2
+  head: {fileID: 642091277}
+  body: {fileID: 4404148687097981291}
+  beamController: {fileID: 1662716702}
+  normalizedPower: 0
+  _myBeam: {fileID: 384092772}
+  _centerFlare: {fileID: 542238495}
+  _firstThresholdForChangingFace: 0.5
+  _secondThresholdForChangingFace: 0.8
+  _maxVelocityOfCenterFlare: 1
   _masterForForceGauge: {fileID: 5607557278429839117}
-  _reflectsHMD: 1
-  _HMD: {fileID: 5607557278531358609}
-  _opponentAvatarHead: {fileID: 642091276}
-  _opponentAvatarBody: {fileID: 3361962858216286103}
-  _opponentAvatarFace: {fileID: 8540762849929881654}
-  _lengthOfNeck: -1.5
-  _movementScalingFactor: 5
 --- !u!1 &922821739333672601
 GameObject:
   m_ObjectHideFlags: 0
@@ -37000,6 +37017,7 @@ GameObject:
   - component: {fileID: 3361962858216286103}
   - component: {fileID: 4306142438142279502}
   - component: {fileID: 8449996119410259988}
+  - component: {fileID: 4404148687097981291}
   m_Layer: 0
   m_Name: body
   m_TagString: Untagged
@@ -37007,6 +37025,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4404148687097981291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404148687097981290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e493c9ec5eaa34a84f641be2eb9cc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _opponentAvatarHead: {fileID: 642091276}
+  _lengthOfNeck: 1.5
 --- !u!1 &4406534093261240642
 GameObject:
   m_ObjectHideFlags: 0
@@ -43804,7 +43836,7 @@ MonoBehaviour:
   maxForce: 15
   minForce: 0
   positionCalculationMethod: 0
-  inputInterface: 1
+  inputInterface: 0
   outputPosition: 0
   maxOutputVelocity: 0
   gripCommunicationInterface: {fileID: 0}
@@ -48680,8 +48712,9 @@ MonoBehaviour:
   masterStateController: {fileID: 1040434246}
   centerFlare: {fileID: 542238496}
   myBeam: {fileID: 384092772}
-  opponentBeam: {fileID: 1662716702}
-  manualNormalizedData: 0
+  OpponentPlayer: {fileID: 919132149097594875}
+  cubeStartPosition: {x: 0, y: 0, z: 0}
+  manualNormalizedData: 0.5
   manualDeviceInterface: 1
   manualStateId: 0
   manualSuperiority: 1

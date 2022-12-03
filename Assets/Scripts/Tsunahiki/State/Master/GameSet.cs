@@ -35,7 +35,7 @@ namespace tsunahiki.state
                 _resultMessage = "Draw";
             }
 
-            masterForForceGauge.frontViewUI.text = _resultMessage + "\nPress X Button to go to Set Up Mode";
+            masterForForceGauge.frontViewUI.text = _resultMessage + "\nPress A Button to go to Set Up Mode";
 
             masterForForceGauge.centerFlare.SetActive(false);
         }
@@ -47,7 +47,7 @@ namespace tsunahiki.state
         public override int StateUpdate()
         {
 
-            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
+            if (OVRInput.GetDown(OVRInput.RawButton.A) || OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {   
                 return (int)MasterStateController.StateType.SetUp;
             }

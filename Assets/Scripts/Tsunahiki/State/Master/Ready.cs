@@ -29,6 +29,7 @@ namespace tsunahiki.state
 
         public override int StateUpdate()
         {
+            masterForForceGauge.OpponentPlayer.head.SetInitTransform();
 
             if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight)
             {   

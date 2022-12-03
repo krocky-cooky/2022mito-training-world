@@ -21,7 +21,7 @@ namespace tsunahiki.state
         public override void OnEnter()
         {
             Debug.Log("Set Up");
-            masterForForceGauge.frontViewUI.text = "Set Up\n最大握力を設定してください";
+            masterForForceGauge.frontViewUI.text = "Set Up\nSet your force";
 
             masterForForceGauge.centerFlare.SetActive(false);
         }
@@ -38,7 +38,7 @@ namespace tsunahiki.state
             masterForForceGauge.defeatCounts = 0;
             masterForForceGauge.defeatCounts = 0;
 
-            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || OVRInput.GetDown(OVRInput.RawButton.A) || Input.GetMouseButtonDown(1))
             {   
                 isGoingToBattle = !isGoingToBattle;
                 // return (int)MasterStateController.StateType.Fight; //temp

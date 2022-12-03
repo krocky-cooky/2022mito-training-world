@@ -111,13 +111,13 @@ namespace tsunahiki.game
 
 
             // マシンのハンドル等のストロークポジション登録
-            if(OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))
+            if(OVRInput.GetDown(OVRInput.RawButton.B) || OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))
             {
                 minForce = currentForce;
                 maxForce = currentForce;
                 Debug.Log("Input.GetMouseButtonDown(2)");
             }
-            if(OVRInput.Get(OVRInput.RawButton.Y) || Input.GetMouseButton(2))
+            if(OVRInput.Get(OVRInput.RawButton.B) || OVRInput.Get(OVRInput.RawButton.Y) || Input.GetMouseButton(2))
             {
                 Debug.Log("Input.GetMouseButton(2)");
                 if (minForce > currentForce){

@@ -15,7 +15,7 @@ namespace tsunahiki.state
     public class EndOfFight : MasterStateBase
     {
 
-        private Vector3 _flareDestinaion;
+        public Vector3 _flareDestinaion;
         private Vector3 _initPosition;
         private float _initTime;
 
@@ -48,15 +48,20 @@ namespace tsunahiki.state
         public override void OnExit()
         {
             _playedShockSound = false;
+
+            // 初期位置に戻す
+            masterForForceGauge.centerFlare.transform.position = _initPosition;
+            masterForForceGauge.centerFlare.SetActive(false);
         }
 
         public override int StateUpdate()
         {
             // 初期位置とEndPointの間を指定時間をかけて移動
-            // 衝突して1秒待ち、音が鳴り終わったら、非アクティブ化および表情変更
+            // 衝突して2秒待ち、音が鳴り終わったら、非アクティブ化
             if ((masterForForceGauge.time - _initTime) < masterForForceGauge.flareMovingTime){
                 masterForForceGauge.centerFlare.transform.position = _initPosition + (_flareDestinaion - _initPosition) * (masterForForceGauge.time - _initTime) / masterForForceGauge.flareMovingTime;
-            }else if ((masterForForceGauge.time - _initTime) < (masterForForceGauge.flareMovingTime + 1.0f)){
+                Debug.Log("center flare position is "+masterForForceGauge.centerFlare.transform.position.z.ToString());
+            }else if ((masterForForceGauge.time - _initTime) < (masterForForceGauge.flareMovingTime + 2.0f)){
                 // 衝撃音をならす
                 if(!_playedShockSound){
                     masterForForceGauge.centerFlare.GetComponent<BeamController>().playShockSound = true;
@@ -64,13 +69,10 @@ namespace tsunahiki.state
                     Debug.Log("played shock sound");
                 }
             }else{
-                // 非アクティブ化
-                masterForForceGauge.centerFlare.SetActive(false);
+                // ビームとフレアの非表示
+                masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
                 masterForForceGauge.myBeam.isFired = false;
-                masterForForceGauge.opponentBeam.isFired = false;
-
-                // 初期位置に戻す
-                masterForForceGauge.centerFlare.transform.position = _initPosition;
+                masterForForceGauge.OpponentPlayer.beamController.isFired = false;
             }
 
 
