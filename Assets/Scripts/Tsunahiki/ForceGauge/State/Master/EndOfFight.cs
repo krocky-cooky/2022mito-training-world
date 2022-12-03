@@ -51,6 +51,11 @@ namespace tsunahiki.forceGauge.state
 
             // 初期位置に戻す
             masterForForceGauge.centerFlare.transform.position = _initPosition;
+
+            // ビームとフレアを非表示・非アクティブ化
+            masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
+            masterForForceGauge.myBeam.isFired = false;
+            masterForForceGauge.OpponentPlayer.beamController.isFired = false;
             masterForForceGauge.centerFlare.SetActive(false);
         }
 
