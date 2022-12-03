@@ -121,12 +121,12 @@ namespace communication
             latestWinner = (int)TrainingDeviceType.Nothing;
             timeCount = 0.0f;
 
-            positionX=0.0f;
-            positionY=0.0f;
-            positionZ=0.0f;
-            rotationX=0.0f;
-            rotationY=0.0f;
-            rotationZ=0.0f;
+            positionX = 0.0f;
+            positionY = 0.0f;
+            positionZ = 0.0f;
+            rotationX = 0.0f;
+            rotationY = 0.0f;
+            rotationZ = 0.0f;
         }
         public float normalizedData;
 
