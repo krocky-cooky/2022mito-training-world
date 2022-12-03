@@ -23,7 +23,7 @@ namespace tsunahiki.forceGauge.state
             Debug.Log("Set Up");
             masterForForceGauge.frontViewUI.text = "Set Up\nSet your force";
 
-            masterForForceGauge.centerFlare.SetActive(false);
+            masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
         }
 
         public override void OnExit()

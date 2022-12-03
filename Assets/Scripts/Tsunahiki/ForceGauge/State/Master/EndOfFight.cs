@@ -56,7 +56,6 @@ namespace tsunahiki.forceGauge.state
             masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
             masterForForceGauge.myBeam.isFired = false;
             masterForForceGauge.OpponentPlayer.beamController.isFired = false;
-            masterForForceGauge.centerFlare.SetActive(false);
         }
 
         public override int StateUpdate()

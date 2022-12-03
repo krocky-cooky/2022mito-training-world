@@ -20,7 +20,7 @@ namespace tsunahiki.forceGauge.state
         {
             Debug.Log("Ready");
             masterForForceGauge.frontViewUI.text = "Ready...\n" + "Victory Count: " + masterForForceGauge.victoryCounts.ToString() + "\nDefeat Count: " + masterForForceGauge.defeatCounts.ToString() + "\nDraw Count: " + masterForForceGauge.drawCounts.ToString();
-            masterForForceGauge.centerFlare.SetActive(false);
+            masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
         }
 
         public override void OnExit()

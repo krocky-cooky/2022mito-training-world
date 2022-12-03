@@ -56,7 +56,8 @@ namespace tsunahiki.forceGauge.state
             // 自分と相手のビーム出力の合計値と、中央のフレアの強さを相関
             _centerFlareController.normalizedScale = Mathf.Clamp01((masterForForceGauge.myBeam.normalizedScale + masterForForceGauge.OpponentPlayer.beamController.normalizedScale) / 2.0f);
 
-            masterForForceGauge.centerFlare.SetActive(masterForForceGauge.myBeam.reachCenter);
+            // masterForForceGauge.centerFlare.SetActive(masterForForceGauge.myBeam.reachCenter);
+            masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = masterForForceGauge.myBeam.reachCenter;
 
             // centerFlareの移動
             // 通信をしてないときはここでエラーが出てUpdate()処理が止まる
