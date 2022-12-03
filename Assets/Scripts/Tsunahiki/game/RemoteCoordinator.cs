@@ -127,6 +127,7 @@ namespace tsunahiki.game
         public RemoteTsunahikiDataFormat getOpponentData()
         {
             string receivedText = _websocketClient.getReceivedData();
+            RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
             Debug.Log("receivedText is " + receivedText);
             if(data is null) return new RemoteTsunahikiDataFormat();
             else return data;  
