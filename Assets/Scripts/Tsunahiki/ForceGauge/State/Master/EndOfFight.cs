@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using util;
 using communication;
 using tsunahiki.game;
-using tsunahiki.state;
-using tsunahiki.stateController;
+using tsunahiki.forceGauge.state;
+using tsunahiki.forceGauge.stateController;
 
 
 
-namespace tsunahiki.state
+namespace tsunahiki.forceGauge.state
 {
     public class EndOfFight : MasterStateBase
     {

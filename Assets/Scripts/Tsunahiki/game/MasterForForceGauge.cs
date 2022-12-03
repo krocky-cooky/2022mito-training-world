@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using communication;
 using tsunahiki.game;
-using tsunahiki.state;
-using tsunahiki.stateController;
+using tsunahiki.forceGauge.state;
+using tsunahiki.forceGauge.stateController;
+using tsunahiki.forceGauge;
+
 
 namespace tsunahiki.game
 {

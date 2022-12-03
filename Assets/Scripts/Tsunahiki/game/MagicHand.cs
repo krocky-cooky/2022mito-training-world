@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using tsunahiki.game;
-using tsunahiki.state;
-using tsunahiki.stateController;
+using tsunahiki.forceGauge.state;
+using tsunahiki.forceGauge.stateController;
 
 
 
