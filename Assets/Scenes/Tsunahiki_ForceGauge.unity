@@ -1365,6 +1365,12 @@ MonoBehaviour:
   _lengthOfNeck: -1.5
   _movementScalingFactor: 5
   _maxScaleOfHMDPosition: 15
+  _initPositionOfHMD: {x: 0, y: 0, z: 0}
+  _initEulerAngleOfHMD: {x: 0, y: 0, z: 0}
+  _currentPositionOfHMD: {x: 0, y: 0, z: 0}
+  _currentEulerAngleOfHMD: {x: 0, y: 0, z: 0}
+  _initHeadPosition: {x: 0, y: 0, z: 0}
+  _initHeadEulerAngle: {x: 0, y: 0, z: 0}
 --- !u!43 &911366671
 Mesh:
   m_ObjectHideFlags: 0
@@ -12681,6 +12687,7 @@ MonoBehaviour:
   _forceGauge: {fileID: 5607557276487021727}
   _sendPeriod: 0.1
   masterForForceGauge: {fileID: 5607557278429839117}
+  masterForDevice: {fileID: 0}
   _HMD: {fileID: 5607557278531358609}
 --- !u!114 &5607557277670804044
 MonoBehaviour:
