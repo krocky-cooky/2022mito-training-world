@@ -23,9 +23,9 @@ namespace tsunahiki.game
         [SerializeField]
         private MasterForForceGauge masterForForceGauge;
         [SerializeField]
-        private Transform _rightController;
+        private MasterForDevice masterForDevice;
         [SerializeField]
-        private Transform _leftController;
+        private Transform _HMD;
 
         [System.NonSerialized]
         public RemoteTsunahikiDataFormat communicationData;
@@ -60,31 +60,29 @@ namespace tsunahiki.game
                 if(_deviceType == TrainingDeviceType.TrainingDevice) 
                 {
                     _currentValue = getValueFromTrainingDevice();
-                    RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
-                    data.normalizedData = _currentValue;
-                    data.positionX = _rightController.position.x;
-                    data.positionY = _rightController.position.y;
-                    data.positionZ = _rightController.position.z;
-                    data.rotationX = _rightController.eulerAngles.x;
-                    data.rotationY = _rightController.eulerAngles.y;
-                    data.rotationZ = _rightController.eulerAngles.z;
-                    text = JsonUtility.ToJson(data);
+                    communicationData.normalizedData = _currentValue;
+                    communicationData.positionX = _HMD.position.x;
+                    communicationData.positionY = _HMD.position.y;
+                    communicationData.positionZ = _HMD.position.z;
+                    communicationData.rotationX = _HMD.eulerAngles.x;
+                    communicationData.rotationY = _HMD.eulerAngles.y;
+                    communicationData.rotationZ = _HMD.eulerAngles.z;
+                    text = JsonUtility.ToJson(communicationData);
                 }
                 else if(_deviceType == TrainingDeviceType.ForceGauge) 
                 {
                     _currentValue = getValueFromForceGauge();
-                    RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
-                    data.normalizedData = _currentValue;
-                    data.stateId = masterForForceGauge.masterStateController.CurrentState;
-                    data.positionX = _leftController.position.x;
-                    data.positionY = _leftController.position.y;
-                    data.positionZ = _leftController.position.z;
-                    data.rotationX = _leftController.eulerAngles.x;
-                    data.rotationY = _leftController.eulerAngles.y;
-                    data.rotationZ = _leftController.eulerAngles.z;
-                    text = JsonUtility.ToJson(data);
+                    communicationData.normalizedData = _currentValue;
+                    communicationData.stateId = masterForForceGauge.masterStateController.CurrentState;
+                    communicationData.positionX = _HMD.position.x;
+                    communicationData.positionY = _HMD.position.y;
+                    communicationData.positionZ = _HMD.position.z;
+                    communicationData.rotationX = _HMD.eulerAngles.x;
+                    communicationData.rotationY = _HMD.eulerAngles.y;
+                    communicationData.rotationZ = _HMD.eulerAngles.z;
+                    text = JsonUtility.ToJson(communicationData);
                 }
-
+                Debug.Log("hoge"+text);
                 if(time - prev > 0.1f)
                 {
                     _websocketClient.sendData(text);
