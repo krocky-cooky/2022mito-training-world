@@ -107,8 +107,8 @@ namespace tsunahiki.forceGauge
                 _currentPositionOfHMD = _HMD.position;
                 _currentEulerAngleOfHMD = _HMD.eulerAngles;
             }else{
-                // _currentPositionOfHMD = new Vector3(_masterForForceGauge.opponentData.positionXOfHMD, _masterForForceGauge.opponentData.positionYOfHMD, _masterForForceGauge.opponentData.positionZOfHMD);
-                // _initEulerAngleOfHMD = new Vector3(_masterForForceGauge.opponentData.rotationXOfHMD, _masterForForceGauge.opponentData.rotationYOfHMD, _masterForForceGauge.opponentData.rotationZOfHMD);
+                _currentPositionOfHMD = new Vector3(_masterForForceGauge.opponentData.positionX, _masterForForceGauge.opponentData.positionY, _masterForForceGauge.opponentData.positionZ);
+                _initEulerAngleOfHMD = new Vector3(_masterForForceGauge.opponentData.rotationX, _masterForForceGauge.opponentData.rotationY, _masterForForceGauge.opponentData.rotationZ);
             }
         }
 

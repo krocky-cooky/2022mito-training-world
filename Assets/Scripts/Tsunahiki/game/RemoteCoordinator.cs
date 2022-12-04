@@ -23,9 +23,7 @@ namespace tsunahiki.game
         [SerializeField]
         private MasterForForceGauge masterForForceGauge;
         [SerializeField]
-        private Transform _rightController;
-        [SerializeField]
-        private Transform _leftController;
+        private Transform _HMD;
 
         [System.NonSerialized]
         public RemoteTsunahikiDataFormat communicationData;
@@ -62,12 +60,12 @@ namespace tsunahiki.game
                     _currentValue = getValueFromTrainingDevice();
                     RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
                     data.normalizedData = _currentValue;
-                    data.positionX = _rightController.position.x;
-                    data.positionY = _rightController.position.y;
-                    data.positionZ = _rightController.position.z;
-                    data.rotationX = _rightController.eulerAngles.x;
-                    data.rotationY = _rightController.eulerAngles.y;
-                    data.rotationZ = _rightController.eulerAngles.z;
+                    data.positionX = _HMD.position.x;
+                    data.positionY = _HMD.position.y;
+                    data.positionZ = _HMD.position.z;
+                    data.rotationX = _HMD.eulerAngles.x;
+                    data.rotationY = _HMD.eulerAngles.y;
+                    data.rotationZ = _HMD.eulerAngles.z;
                     text = JsonUtility.ToJson(data);
                 }
                 else if(_deviceType == TrainingDeviceType.ForceGauge) 
@@ -76,12 +74,12 @@ namespace tsunahiki.game
                     RemoteTsunahikiDataFormat data = new RemoteTsunahikiDataFormat();
                     data.normalizedData = _currentValue;
                     data.stateId = masterForForceGauge.masterStateController.CurrentState;
-                    data.positionX = _leftController.position.x;
-                    data.positionY = _leftController.position.y;
-                    data.positionZ = _leftController.position.z;
-                    data.rotationX = _leftController.eulerAngles.x;
-                    data.rotationY = _leftController.eulerAngles.y;
-                    data.rotationZ = _leftController.eulerAngles.z;
+                    data.positionX = _HMD.position.x;
+                    data.positionY = _HMD.position.y;
+                    data.positionZ = _HMD.position.z;
+                    data.rotationX = _HMD.eulerAngles.x;
+                    data.rotationY = _HMD.eulerAngles.y;
+                    data.rotationZ = _HMD.eulerAngles.z;
                     text = JsonUtility.ToJson(data);
                 }
 
