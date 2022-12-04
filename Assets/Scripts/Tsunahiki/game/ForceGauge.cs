@@ -30,10 +30,11 @@ namespace tsunahiki.game
         }
         public PositionCalculationMethod positionCalculationMethod;
 
-        // 入力方法の切り替え
+        // 値の入力方法の切り替え
         public enum InputInterface
         {
-            Mouse,
+            Mouse, 
+            Stick,
             HandDyameter,
         }
         public InputInterface inputInterface;
@@ -81,6 +82,9 @@ namespace tsunahiki.game
             if (inputInterface == InputInterface.Mouse){
                 currentForce = Input.mousePosition.x;
             }
+            if (inputInterface == InputInterface.Stick){
+                currentForce = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[1];
+            }
             if (inputInterface == InputInterface.HandDyameter){
                 if (serialHandler.isRunning){
                     currentForce = serialHandler.getReceivedDataOfForceGauge().force;
@@ -107,7 +111,13 @@ namespace tsunahiki.game
 
 
             // マシンのハンドル等のストロークポジション登録
-            if(Input.GetMouseButton(2))
+            if(OVRInput.GetDown(OVRInput.RawButton.B) || OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))
+            {
+                minForce = currentForce;
+                maxForce = currentForce;
+                Debug.Log("Input.GetMouseButtonDown(2)");
+            }
+            if(OVRInput.Get(OVRInput.RawButton.B) || OVRInput.Get(OVRInput.RawButton.Y) || Input.GetMouseButton(2))
             {
                 Debug.Log("Input.GetMouseButton(2)");
                 if (minForce > currentForce){

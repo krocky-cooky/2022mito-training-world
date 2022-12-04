@@ -19,6 +19,7 @@ namespace tsunahiki.forceGauge.stateController
             SetUp,
             Ready,
             Fight,
+            EndOfFight,
             GameSet,
         }
 
@@ -34,6 +35,9 @@ namespace tsunahiki.forceGauge.stateController
 
             stateDic[(int)StateType.Fight] = gameObject.AddComponent<Fight>();
             stateDic[(int)StateType.Fight].Initialize((int)StateType.Fight);
+
+            stateDic[(int)StateType.EndOfFight] = gameObject.AddComponent<EndOfFight>();
+            stateDic[(int)StateType.EndOfFight].Initialize((int)StateType.EndOfFight);
 
             stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
             stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);

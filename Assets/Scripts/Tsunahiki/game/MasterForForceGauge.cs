@@ -6,6 +6,8 @@ using communication;
 using tsunahiki.game;
 using tsunahiki.forceGauge.state;
 using tsunahiki.forceGauge.stateController;
+using tsunahiki.forceGauge;
+
 
 namespace tsunahiki.game
 {
@@ -20,6 +22,15 @@ namespace tsunahiki.game
 
         public float time = 0.0f;
         public MasterStateController masterStateController;
+
+        // 中央のフレア
+        public GameObject centerFlare;
+
+        public BeamController myBeam;
+
+        public OpponentPlayer OpponentPlayer;
+
+        public Vector3 cubeStartPosition;
 
         // デバッグ用で、直接相手のデータを手動入力する
         [SerializeField]
@@ -46,9 +57,17 @@ namespace tsunahiki.game
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
-        private GameObject _centerCube;
-        [SerializeField]
         public RemoteCoordinator _coordinator;
+        [SerializeField]
+        public ForceGauge _myForceGauge;
+
+
+        // 自他の位置
+        public Transform myTransform;
+        public Transform opponentTransform;
+
+        // 決着時のフレアの移動時間
+        public float flareMovingTime;
 
         // 対戦相手のデータ
         [System.NonSerialized]
@@ -66,15 +85,12 @@ namespace tsunahiki.game
         public int myDeviceId = (int)TrainingDeviceType.ForceGauge;
 
 
-        private Vector3 cubeStartPosition;
-
-
-
         // Start is called before the first frame update
         void Start()
         {
-            cubeStartPosition = _centerCube.transform.position;
+            
             masterStateController.Initialize((int)MasterStateController.StateType.SetUp);
+            cubeStartPosition = centerFlare.transform.position;
         }
 
         // Update is called once per frame
@@ -96,21 +112,27 @@ namespace tsunahiki.game
             }else{
                 opponentData = _coordinator.getOpponentData();
             }
+
+            
+            // 自分のビームの強度に、握力計の正規化値を代入
+            myBeam.normalizedScale = _myForceGauge.outputPosition;
            
             {
-                float normalizedDevicePos = _coordinator.getOpponentValue();
-                Vector3 cubePos = cubeStartPosition;
-                cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
-                _centerCube.transform.position = cubePos;
-                Debug.Log("normalizedDevicePos is " + normalizedDevicePos.ToString());
+                // 通信をしてないときはここでエラーが出てUpdate()処理が止まる
+                // float normalizedDevicePos = _coordinator.getOpponentValue();
+                // float normalizedDevicePos = opponentData.normalizedData;
+                // Vector3 cubePos = cubeStartPosition;
+                // cubePos.z += (normalizedDevicePos - 0.5f)*moveParameter;
+                // centerFlare.transform.position = cubePos;
+                // Debug.Log("normalizedDevicePos is " + normalizedDevicePos.ToString());
             }
-            
+
 
         }
 
         // 相手のデータの手動入力
         void manuallyInputOpponentData(){
-            opponentData.normalizedData = manualNormalizedData;
+            opponentData.normalizedData = Mathf.Clamp01(manualNormalizedData);
             opponentData.deviceInterface = (int)manualDeviceInterface;
             opponentData.stateId = (int)manualStateId;
             opponentData.superiority = (int)manualSuperiority;

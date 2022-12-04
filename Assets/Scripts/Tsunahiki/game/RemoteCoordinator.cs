@@ -116,6 +116,7 @@ namespace tsunahiki.game
         public float getOpponentValue() 
         {
             string receivedText = _websocketClient.getReceivedData();
+            Debug.Log("receivedText is " + receivedText);
             RemoteTsunahikiDataFormat data = JsonUtility.FromJson<RemoteTsunahikiDataFormat>(receivedText);
             if (data is null) _opponentValue = 0.0f;
             else _opponentValue = data.normalizedData;
