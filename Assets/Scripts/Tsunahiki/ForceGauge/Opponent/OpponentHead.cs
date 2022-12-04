@@ -50,6 +50,11 @@ namespace tsunahiki.forceGauge
         [SerializeField]
         private float _movementScalingFactor;
 
+        // 位置と回転をリセットする際の閾値
+        // 一定の距離以上動いたら、まったく別の場所に移動したとみなして、位置を回転を初期化する
+        [SerializeField]
+        private float _maxScaleOfHMDPosition;
+
         // 相手のHMDの初期位置
         private Vector3 _initPositionOfHMD;
         private Vector3 _initEulerAngleOfHMD;
@@ -78,6 +83,10 @@ namespace tsunahiki.forceGauge
         void Update()
         {
             UpdateCurrentHMDTransform();
+
+            if (_currentPositionOfHMD.magnitude > _maxScaleOfHMDPosition){
+                SetInitTransform();
+            }
 
             // 頭の位置を更新
             this.transform.position = _initHeadPosition + (_currentPositionOfHMD - _initPositionOfHMD) * _movementScalingFactor;
