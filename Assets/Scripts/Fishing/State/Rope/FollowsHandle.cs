@@ -27,11 +27,19 @@ namespace Fishing.State
 
         public override int StateUpdate()
         {
-            ropeStateController.ropeRelayBelowHandleTransform.position = new Vector3(ropeStateController.centerOfHandle.position.x, -ropeStateController.ropeLength, ropeStateController.centerOfHandle.position.z);
+            // ropeStateController.ropeRelayBelowHandleTransform.position = new Vector3(ropeStateController.centerOfHandle.position.x, -ropeStateController.ropeLength, ropeStateController.centerOfHandle.position.z);
+
+            // if ((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
+            //     ropeStateController.fixedPosition = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.position;
+            //     ropeStateController.fixedRotation = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.rotation;
+            //     return (int)RopeStateController.StateType.Fixed;
+            // }
+
+            ropeStateController.ropeRelayBelowHandleTransform.position = new Vector3(ropeStateController.centerOfHandle.position.x, ropeStateController.centerOfHandle.position.y - ropeStateController.ropeLength, ropeStateController.centerOfHandle.position.z);
 
             if ((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
                 ropeStateController.fixedPosition = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.position;
-                ropeStateController.fixedRotation = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.rotation;
+                // ropeStateController.fixedRotation = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.rotation;
                 return (int)RopeStateController.StateType.Fixed;
             }
 
