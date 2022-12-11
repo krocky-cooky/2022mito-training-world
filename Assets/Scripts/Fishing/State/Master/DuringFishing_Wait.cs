@@ -63,7 +63,7 @@ namespace Fishing.State
             masterStateController.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             masterStateController.fish.twistSpeed = masterStateController.minSpeedOfFishTwist;
-            masterStateController.ropeStateController.fish = masterStateController.fish;
+            masterStateController.rope.fish = masterStateController.fish;
             Debug.Log("fish name is " + masterStateController.fish.species);
 
             // 選んだ魚以外はすべて魚影、ボディを非アクティブ化

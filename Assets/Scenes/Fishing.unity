@@ -330,7 +330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37982687}
   m_LocalRotation: {x: 0.04795999, y: 0.029960835, z: 0.0014392344, w: -0.9983988}
-  m_LocalPosition: {x: -3.9264562, y: -6.2502956, z: -13.415087}
+  m_LocalPosition: {x: -5.872221, y: -4.3999047, z: -11.617714}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2438,15 +2438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76ba21778d3169848b280536dd219822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ropeRelayBelowHandleTransform: {fileID: 1973850306}
-  masterStateController: {fileID: 1895901906}
-  fixedPosition: {x: 0, y: 0, z: 0}
-  fixedRotation: {x: 0, y: 0, z: 0, w: 0}
-  centerOfHandle: {fileID: 428420423}
-  ropeLengthDuringFishing: 5
-  ropeLengthWhenNotFishing: 0.5
-  fish: {fileID: 0}
-  targetRopeColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &510481364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4354,7 +4345,7 @@ GameObject:
   - component: {fileID: 833335804}
   m_Layer: 0
   m_Name: fishingLine
-  m_TagString: Untagged
+  m_TagString: fishingLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4401,6 +4392,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ropeStateController: {fileID: 499058305}
+  ropeRelayBelowHandleTransform: {fileID: 1973850306}
+  masterStateController: {fileID: 1895901906}
+  fixedPosition: {x: 0, y: 0, z: 0}
+  fixedRotation: {x: 0, y: 0, z: 0, w: 0}
+  centerOfHandle: {fileID: 428420423}
+  ropeLengthDuringFishing: 5
+  ropeLengthWhenNotFishing: 0.5
+  fish: {fileID: 0}
+  targetRopeColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &855910965
 GameObject:
   m_ObjectHideFlags: 0
@@ -8973,7 +8973,7 @@ MonoBehaviour:
   centerOfRotation: {x: 0, y: 0, z: 0}
   maxSpeedOfFishTwist: 12
   minSpeedOfFishTwist: 3
-  ropeStateController: {fileID: 499058305}
+  rope: {fileID: 833335804}
   tensionSlider: {fileID: 358153955}
   tensionSliderGameObject: {fileID: 329804188}
   tensionSliderIsOn: 0
@@ -9168,7 +9168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910895848}
   m_LocalRotation: {x: 0.04795999, y: 0.029960835, z: 0.0014392344, w: -0.9983988}
-  m_LocalPosition: {x: -3.9264562, y: -6.2502956, z: -13.415087}
+  m_LocalPosition: {x: -5.872221, y: -4.3999047, z: -11.617714}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

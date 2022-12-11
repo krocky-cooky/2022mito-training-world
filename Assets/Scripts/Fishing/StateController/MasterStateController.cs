@@ -137,7 +137,7 @@ namespace Fishing.StateController
         public float minSpeedOfFishTwist;
 
         // ロープのステートコントローラ
-        public RopeStateController ropeStateController;
+        public FishingLine rope;
 
         // 張力ゲージ
         public Slider tensionSlider;

@@ -18,8 +18,8 @@ namespace Fishing.State
         public override void OnEnter()
         {
             Debug.Log("Fixed");
-            ropeStateController.fixedPosition = new Vector3(ropeStateController.centerOfHandle.position.x,ropeStateController.centerOfHandle.position.y - ropeStateController.ropeLengthDuringFishing, ropeStateController.centerOfHandle.position.z);
-            ropeStateController.fixedRotation = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.rotation;
+            rope.fixedPosition = new Vector3(rope.centerOfHandle.position.x,rope.centerOfHandle.position.y - rope.ropeLengthDuringFishing, rope.centerOfHandle.position.z);
+            rope.fixedRotation = rope.masterStateController.ropeRelayBelowHandle.transform.rotation;
         }
 
         public override void OnExit()
@@ -29,14 +29,14 @@ namespace Fishing.State
 
         public override int StateUpdate()
         {
-            ropeStateController.ropeRelayBelowHandleTransform.position = ropeStateController.fixedPosition;
-            ropeStateController.ropeRelayBelowHandleTransform.rotation = ropeStateController.fixedRotation;
+            rope.ropeRelayBelowHandleTransform.position = rope.fixedPosition;
+            rope.ropeRelayBelowHandleTransform.rotation = rope.fixedRotation;
 
-            if ((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishOnTheHook){
+            if ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishOnTheHook){
                 return (int)RopeStateController.StateType.FollowsFish;
             }
 
-            if ((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing){
+            if ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing){
                 return (int)RopeStateController.StateType.FollowsFish;
             }
 

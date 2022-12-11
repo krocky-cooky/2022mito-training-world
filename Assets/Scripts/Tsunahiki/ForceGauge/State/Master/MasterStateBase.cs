@@ -13,7 +13,6 @@ namespace tsunahiki.forceGauge.state
 {
     public abstract class MasterStateBase : StateBase
     {
-        // ステートコントローラー
         protected MasterForForceGauge masterForForceGauge;
 
         // 初期化処理
