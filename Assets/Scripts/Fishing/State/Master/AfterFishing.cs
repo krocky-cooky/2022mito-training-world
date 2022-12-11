@@ -47,6 +47,9 @@ namespace Fishing.State
 
             // 魚釣りに成功した効果音を鳴らす
             Invoke("PlayFishingSuccess", masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine);
+
+            // 水しぶき
+            masterStateController.fish.splash.SetActive(true);
         }
 
         public override void OnExit()
@@ -68,12 +71,15 @@ namespace Fishing.State
 
             // 釣り糸と魚を水面の上まであげる
             // そのあと、魚を目の前まで動かす
+            // 水しぶきも伴う
             if ((masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
-            // masterStateController.ropeRelayBelowHandle.ropeLengthDuringFishing = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
-            masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position;
-            _fishFirstPosition = masterStateController.fish.transform.position;
+                // masterStateController.ropeRelayBelowHandle.ropeLengthDuringFishing = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
+                // masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position;
+                _fishFirstPosition = masterStateController.fish.transform.position;
             } else if ((masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
-            masterStateController.fish.transform.position = _fishEndPosition + (_fishFirstPosition - _fishEndPosition) * (masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeRasingFish;
+                masterStateController.fish.transform.position = _fishEndPosition + (_fishFirstPosition - _fishEndPosition) * (masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeRasingFish;
+            }else{
+                masterStateController.fish.splash.SetActive(false);
             }
 
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))

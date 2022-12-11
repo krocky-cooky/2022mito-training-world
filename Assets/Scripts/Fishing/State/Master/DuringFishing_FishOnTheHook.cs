@@ -76,6 +76,9 @@ namespace Fishing.State
             _minTorque = _maxTorque - _torqueDecrease;
             _normalizedTorque = 0.0f;
             masterStateController.tensionSliderGameObject.SetActive(masterStateController.tensionSliderIsOn);
+
+            // 水しぶき
+            masterStateController.fish.splash.SetActive(true);
         }
 
         public override void OnExit()
@@ -83,6 +86,8 @@ namespace Fishing.State
             masterStateController.FishSoundOnTheHook.Stop();
             OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
             masterStateController.fish.HP = _maxHP;
+
+            masterStateController.fish.splash.SetActive(false);
         }
 
         public override int StateUpdate()
