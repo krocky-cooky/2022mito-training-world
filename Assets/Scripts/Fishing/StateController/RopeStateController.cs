@@ -27,8 +27,10 @@ namespace Fishing.StateController
         // ハンドルの位置
         public Transform centerOfHandle;
 
-        // ロープの長さ
-        public float ropeLength;
+        // 釣り中のロープの長さ
+        public float ropeLengthDuringFishing;
+        // 釣り中以外のロープの長さ
+        public float ropeLengthWhenNotFishing;
 
         // 魚
         public Fish fish;

@@ -329,8 +329,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37982687}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1506041, z: -19.979973}
+  m_LocalRotation: {x: 0.04795999, y: 0.029960835, z: 0.0014392344, w: -0.9983988}
+  m_LocalPosition: {x: -3.9264562, y: -6.2502956, z: -13.415087}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2443,7 +2443,8 @@ MonoBehaviour:
   fixedPosition: {x: 0, y: 0, z: 0}
   fixedRotation: {x: 0, y: 0, z: 0, w: 0}
   centerOfHandle: {fileID: 428420423}
-  ropeLength: 0.5
+  ropeLengthDuringFishing: 5
+  ropeLengthWhenNotFishing: 0.5
   fish: {fileID: 0}
   targetRopeColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &510481364
@@ -9166,8 +9167,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910895848}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1506041, z: -19.979973}
+  m_LocalRotation: {x: 0.04795999, y: 0.029960835, z: 0.0014392344, w: -0.9983988}
+  m_LocalPosition: {x: -3.9264562, y: -6.2502956, z: -13.415087}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

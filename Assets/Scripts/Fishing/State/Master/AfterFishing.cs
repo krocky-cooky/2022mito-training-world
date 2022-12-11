@@ -69,7 +69,7 @@ namespace Fishing.State
             // 釣り糸と魚を水面の上まであげる
             // そのあと、魚を目の前まで動かす
             if ((masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
-            // masterStateController.ropeRelayBelowHandle.ropeLength = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
+            // masterStateController.ropeRelayBelowHandle.ropeLengthDuringFishing = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
             masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position;
             _fishFirstPosition = masterStateController.fish.transform.position;
             } else if ((masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
