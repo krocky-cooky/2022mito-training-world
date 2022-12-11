@@ -25,6 +25,7 @@ TagManager:
   - fishBody
   - fishShadow
   - fishingLine
+  - water
   layers:
   - Default
   - TransparentFX

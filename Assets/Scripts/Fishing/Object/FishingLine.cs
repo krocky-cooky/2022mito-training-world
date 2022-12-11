@@ -39,6 +39,12 @@ public class FishingLine : MonoBehaviour
     // ロープのカラー
     public Color targetRopeColor;
 
+    // ルアーの落下時間
+    public float lureDropTime;
+
+    // タイムカウント
+    public float time;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +54,7 @@ public class FishingLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time += Time.deltaTime;
         ropeStateController.UpdateSequence();
         Debug.Log("Rope State is "+ropeStateController.stateDic[ropeStateController.CurrentState].GetType());
     }

@@ -48,7 +48,7 @@ namespace Fishing.State
             masterStateController.frontViewUiText.text = "During fishing";
 
             // ルアーが着水する音
-            masterStateController.LureLandingSound.Play();
+            // masterStateController.LureLandingSound.Play();
 
 
             // 魚の初期化
