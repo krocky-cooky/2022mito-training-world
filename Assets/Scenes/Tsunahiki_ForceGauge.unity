@@ -1406,6 +1406,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -2.744
       objectReference: {fileID: 0}
+    - target: {fileID: 685466941605052660, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1358830711837051758, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1529,6 +1533,10 @@ PrefabInstance:
     - target: {fileID: 1842071177237893588, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_Name
       value: MyHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 1842071177237893588, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2452967318431467474, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1834,6 +1842,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 22.8
       objectReference: {fileID: 0}
+    - target: {fileID: 8427526094788022714, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8521529974837048564, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.86
@@ -1896,6 +1908,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
+--- !u!1 &892800821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 685466941605052660, guid: 595349503fcc8654db8ffa1fbe1de82f, type: 3}
+  m_PrefabInstance: {fileID: 763567652}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &911366671
 Mesh:
   m_ObjectHideFlags: 0
@@ -2257,6 +2274,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8311bfb8c649dda4a9440114c0dfe99c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1291869645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291869641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b7556d1ece98549af1c30c96547068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skin: {fileID: 892800821}
+  _timeToHideHands: 1
+  _miniHandMovement: 0.00001
 --- !u!1001 &1380944956
 PrefabInstance:
   m_ObjectHideFlags: 0
