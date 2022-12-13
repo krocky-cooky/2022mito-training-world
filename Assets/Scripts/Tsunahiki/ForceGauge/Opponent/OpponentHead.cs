@@ -50,34 +50,43 @@ namespace tsunahiki.forceGauge
         [SerializeField]
         private float _movementScalingFactor;
 
+        // 位置と回転をリセットする際の閾値
+        // 一定の距離以上動いたら、まったく別の場所に移動したとみなして、位置を回転を初期化する
+        [SerializeField]
+        private float _maxScaleOfHMDPosition;
+
         // 相手のHMDの初期位置
-        private Vector3 _initPositionOfHMD;
-        private Vector3 _initEulerAngleOfHMD;
+        public Vector3 _initPositionOfHMD;
+        public Vector3 _initEulerAngleOfHMD;
 
         // 相手のHMDの現在位置
-        private Vector3 _currentPositionOfHMD;
-        private Vector3 _currentEulerAngleOfHMD;
+        public Vector3 _currentPositionOfHMD;
+        public Vector3 _currentEulerAngleOfHMD;
 
         // 相手のアバターの頭の表示位置の初期位置
-        private Vector3 _initHeadPosition;
-        private Vector3 _initHeadEulerAngle;
+        public Vector3 _initHeadPosition;
+        public Vector3 _initHeadEulerAngle;
 
         // Start is called before the first frame update
         void Start()
         {
+            _initHeadPosition = this.transform.position;
+            _initHeadEulerAngle = this.transform.eulerAngles; 
+
             UpdateCurrentHMDTransform();
 
             _initPositionOfHMD = _currentPositionOfHMD;
-            _initEulerAngleOfHMD = _currentEulerAngleOfHMD;
-
-            _initHeadPosition = this.transform.position;
-            _initHeadEulerAngle = this.transform.eulerAngles;   
+            _initEulerAngleOfHMD = _currentEulerAngleOfHMD;  
         }
 
         // Update is called once per frame
         void Update()
         {
             UpdateCurrentHMDTransform();
+
+            if (_currentPositionOfHMD.magnitude > _maxScaleOfHMDPosition){
+                SetInitTransform();
+            }
 
             // 頭の位置を更新
             this.transform.position = _initHeadPosition + (_currentPositionOfHMD - _initPositionOfHMD) * _movementScalingFactor;
@@ -107,8 +116,8 @@ namespace tsunahiki.forceGauge
                 _currentPositionOfHMD = _HMD.position;
                 _currentEulerAngleOfHMD = _HMD.eulerAngles;
             }else{
-                // _currentPositionOfHMD = new Vector3(_masterForForceGauge.opponentData.positionXOfHMD, _masterForForceGauge.opponentData.positionYOfHMD, _masterForForceGauge.opponentData.positionZOfHMD);
-                // _initEulerAngleOfHMD = new Vector3(_masterForForceGauge.opponentData.rotationXOfHMD, _masterForForceGauge.opponentData.rotationYOfHMD, _masterForForceGauge.opponentData.rotationZOfHMD);
+                _currentPositionOfHMD = new Vector3(_masterForForceGauge.opponentData.positionX, _masterForForceGauge.opponentData.positionY, _masterForForceGauge.opponentData.positionZ);
+                _currentEulerAngleOfHMD = new Vector3(_masterForForceGauge.opponentData.rotationX, _masterForForceGauge.opponentData.rotationY, _masterForForceGauge.opponentData.rotationZ);
             }
         }
 

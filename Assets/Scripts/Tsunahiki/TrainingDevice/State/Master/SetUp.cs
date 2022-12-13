@@ -43,6 +43,7 @@ namespace tsunahiki.trainingDevice.state
                 {   
                     int nextState = (int)MasterStateController.StateType.Ready;
                     stateController.coordinator.communicationData.stateId = nextState;
+                    Debug.Log(stateController.coordinator.communicationData.stateId);
                     return nextState;
                 }
             }
