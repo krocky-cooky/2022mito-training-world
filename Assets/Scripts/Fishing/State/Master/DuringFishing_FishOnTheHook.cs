@@ -163,10 +163,14 @@ namespace Fishing.State
                 return (int)MasterStateController.StateType.DuringFishing_Wait;
             }
 
-            //HPがゼロになったら次に移行
-            if (masterStateController.fish.HP < 0.0f){
-                return (int)MasterStateController.StateType.DuringFishing_HP0;
-            }
+            // //HPがゼロになったら次に移行
+            // if (masterStateController.fish.HP < 0.0f){
+            //     return (int)MasterStateController.StateType.DuringFishing_HP0;
+            // }
+            // 魚を最高高さまで引き揚げたらAdfterFishingに移行
+            if (masterStateController.trainingDevice.currentNormalizedPosition >= 0.99){
+                return (int)MasterStateController.StateType.AfterFishing;
+            }      
 
             // 釣りの前に戻る
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
