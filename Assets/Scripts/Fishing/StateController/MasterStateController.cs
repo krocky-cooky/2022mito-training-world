@@ -148,6 +148,9 @@ namespace Fishing.StateController
         // それまでは、暴れる強さを一定にして、その時の視聴力覚を覚えてもらう
         public float timeUntillFishIntensityChange;
 
+        // プレイヤーのヘッドの位置
+        public GameObject HMD;
+
         public enum StateType
         {
             BeforeFishing,

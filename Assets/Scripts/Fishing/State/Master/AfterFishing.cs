@@ -32,7 +32,8 @@ namespace Fishing.State
             currentTimeCount = 0f;
 
             // _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
-            _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
+            // _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
+            _fishEndPosition = new Vector3(masterStateController.ropeRelayBelowHandle.transform.position.x, masterStateController.HMD.transform.position.y, masterStateController.ropeRelayBelowHandle.transform.position.z - 1.0f);
 
             masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString("f2") + "kg";
 

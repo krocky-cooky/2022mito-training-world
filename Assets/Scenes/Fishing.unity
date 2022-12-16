@@ -577,8 +577,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104299488}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1166,6 +1166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 194801521}
   - component: {fileID: 194801520}
+  - component: {fileID: 194801522}
   m_Layer: 0
   m_Name: Water4Advanced (6)ReflectionSceneCamera
   m_TagString: Untagged
@@ -1223,13 +1224,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194801519}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &194801522
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194801519}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1 &209093243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,8 +2077,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386503895}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3789,8 +3799,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712023181}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6179,8 +6189,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102330083}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6769,6 +6779,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: b544816461f324e56a39767fdeb5b114, type: 3}
   m_PrefabInstance: {fileID: 1210874646}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1218186336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100012, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+  m_PrefabInstance: {fileID: 1772564228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1219866629
 GameObject:
   m_ObjectHideFlags: 0
@@ -7138,6 +7153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1352551648}
   - component: {fileID: 1352551647}
+  - component: {fileID: 1352551649}
   m_Layer: 0
   m_Name: Water4Advanced (3)ReflectionSceneCamera
   m_TagString: Untagged
@@ -7195,13 +7211,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352551646}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &1352551649
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352551646}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1 &1363467281
 GameObject:
   m_ObjectHideFlags: 0
@@ -7425,7 +7450,7 @@ Transform:
   m_GameObject: {fileID: 1413317268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.601798, y: -8.549423, z: 6.4601173}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 475957963}
   - {fileID: 1144690410}
@@ -8643,6 +8668,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -9798,6 +9827,7 @@ MonoBehaviour:
   tensionSliderGameObject: {fileID: 329804188}
   tensionSliderIsOn: 0
   timeUntillFishIntensityChange: 5
+  HMD: {fileID: 1218186336}
 --- !u!222 &1895901907
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9930,6 +9960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1910895850}
   - component: {fileID: 1910895849}
+  - component: {fileID: 1910895851}
   m_Layer: 0
   m_Name: Water4AdvancedReflectionSceneCamera
   m_TagString: Untagged
@@ -9987,13 +10018,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910895848}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &1910895851
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910895848}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1001 &1917919386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10251,6 +10291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1969150421}
   - component: {fileID: 1969150420}
+  - component: {fileID: 1969150422}
   m_Layer: 0
   m_Name: Water4Advanced (1)ReflectionSceneCamera
   m_TagString: Untagged
@@ -10308,13 +10349,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969150419}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &1969150422
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969150419}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1 &1973850305
 GameObject:
   m_ObjectHideFlags: 0
@@ -10363,6 +10413,90 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!1 &1994127607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1994127610}
+  - component: {fileID: 1994127609}
+  - component: {fileID: 1994127608}
+  m_Layer: 0
+  m_Name: Water4Advanced (8)ReflectionPreview Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!45 &1994127608
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994127607}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
+--- !u!20 &1994127609
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994127607}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_projectionMatrixMode: 0
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967279
+  m_RenderingPath: 1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1994127610
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994127607}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 39
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1995177926
 GameObject:
   m_ObjectHideFlags: 0
@@ -10807,8 +10941,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069405547}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10881,6 +11015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2080455132}
   - component: {fileID: 2080455131}
+  - component: {fileID: 2080455133}
   m_Layer: 0
   m_Name: Water4Advanced (5)ReflectionSceneCamera
   m_TagString: Untagged
@@ -10938,13 +11073,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2080455130}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -1.4799999, z: 4.13917}
+  m_LocalRotation: {x: 0.018729111, y: 0.98127574, z: 0.13328096, w: -0.13778031}
+  m_LocalPosition: {x: 5.319857, y: -11.592309, z: 31.015795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &2080455133
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080455130}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1001 &2085448491
 PrefabInstance:
   m_ObjectHideFlags: 0
