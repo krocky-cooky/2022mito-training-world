@@ -29,6 +29,14 @@ namespace Fishing.Game
         [SerializeField]
         private float torqueSendingInterval = 0.1f;
 
+        // 自分が持っているハンドルの位置
+        [SerializeField]
+        private Transform myHandle;
+
+        // ハンドル位置を合わせる先
+        [SerializeField]
+        private Transform targetHandle;
+
         private float time = 0.0f;
         private float _previoussendingTorque = 0.0f;
         private float _previousTorqueSendingTime = 0.0f;
@@ -72,6 +80,13 @@ namespace Fishing.Game
             }else{
                 UpdateTorque(sendingTorque);
             }
+
+            // // ハンドルホルダーにハンドルを置いて中指ボタンを押したら、それに合わせてプレイヤーの位置をリセット
+            // if(OVRInput.GetDown(OVRInput.RawButton.LHandTrigger))
+            // {
+            //     ResetPlayerTransform();
+            // }
+            
         }
 
         //VR空間上のログ情報に追加
@@ -143,6 +158,15 @@ namespace Fishing.Game
             data.setSpeed(0.0f);
             communicationInterface.sendData(data);
         }
+
+        // // ハンドルホルダーにハンドルを置いて中指ボタンを押したら、それに合わせてプレイヤーの位置をリセット
+        // void ResetPlayerTransform(){
+        //     Transform player;
+        //     player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        //     player.position += (targetHandle.position - myHandle.position);
+        //     // player.eulerAngles += (targetHandle.eulerAngles - myHandle.eulerAngles);
+        //     player.eulerAngles += new Vector3(0.0f, (targetHandle.eulerAngles - myHandle.eulerAngles).y, 0.0f);
+        // }
         
     }
 }
