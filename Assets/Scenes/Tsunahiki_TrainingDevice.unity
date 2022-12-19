@@ -31514,7 +31514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5799666728961930856, guid: 870e411a3226e7c4a90ad467b7816117, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6075033396147744375, guid: 870e411a3226e7c4a90ad467b7816117, type: 3}
       propertyPath: m_RootOrder
@@ -34800,21 +34800,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c719389e78ac0d4f93995d5afc8a2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtTarget: {fileID: 5607557278538723394}
-  bodyTarget: {fileID: 5607557277759719687}
-  leftHandTarget: {fileID: 5607557278531441407}
-  rightHandTarget: {fileID: 5607557278531437201}
-  leftFootTarget: {fileID: 5607557277213648957}
-  rightFootTarget: {fileID: 5607557277589530123}
-  lookAtWeight: 1
-  leftHandPosWeight: 1
-  leftHandRotWeight: 0.5
-  rightHandPosWeight: 1
-  rightHandRotWeight: 0.5
-  leftFootPosWeight: 1
-  leftFootRotWeight: 1
-  rightFootPosWeight: 1
-  rightFootRotWeight: 1
 --- !u!114 &5495894310325659722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35026,10 +35011,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fa5da7d47cba84d9a8bd7c5c4c4043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyeTransform: {fileID: 5607557278531358609}
-  headTransform: {fileID: 5610803041841763128}
-  neckTransform: {fileID: 5610661146034184404}
-  switchAxisXZ: 1
 --- !u!114 &5496055200603437142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39502,13 +39483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad4f46a9ea232c4d93e5392cd1dfad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyTarget: {fileID: 0}
-  handTarget: {fileID: 0}
-  groundOffset: 0.1
-  followSpeed: 2.5
-  offsetX: 0
-  offsetZ: -0.3
-  inputName: Grip L
 --- !u!4 &5607557277213648957
 Transform:
   m_ObjectHideFlags: 0
@@ -40692,13 +40666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad4f46a9ea232c4d93e5392cd1dfad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyTarget: {fileID: 0}
-  handTarget: {fileID: 0}
-  groundOffset: 0.1
-  followSpeed: 2.5
-  offsetX: 0
-  offsetZ: -0.3
-  inputName: Grip L
 --- !u!4 &5607557277589530123
 Transform:
   m_ObjectHideFlags: 0
@@ -41134,16 +41101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efabd189b0cc8ec40a43cd266bc024d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyeTransform: {fileID: 0}
-  leftHandTarget: {fileID: 0}
-  rightHandTarget: {fileID: 0}
-  leftFootTarget: {fileID: 0}
-  rightFootTarget: {fileID: 0}
-  pivotTransform: {fileID: 0}
-  offsetY: 0.5
-  offsetZ: 0
-  maxTorsionAngle: 45
-  armLength: 0.4
 --- !u!4 &5607557277759719687
 Transform:
   m_ObjectHideFlags: 0
