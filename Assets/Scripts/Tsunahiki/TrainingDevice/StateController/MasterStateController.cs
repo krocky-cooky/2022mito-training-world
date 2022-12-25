@@ -19,8 +19,12 @@ namespace tsunahiki.trainingDevice.stateController
             public OVRInput.RawButton Ready;
             public OVRInput.RawButton TorqueRegistered;
         }
+
+
         
         //all
+        public bool testMode = false; //テストモードではステートの移行に対戦相手の状況を加味しない
+
         public MasterForDevice master;
         
         public MainCommunicationInterface communicationInterface;

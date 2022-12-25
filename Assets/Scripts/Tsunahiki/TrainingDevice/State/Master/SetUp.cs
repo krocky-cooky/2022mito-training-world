@@ -32,7 +32,6 @@ namespace tsunahiki.trainingDevice.state
             {
                 //最大トルクの記録
                 ReceivingDataFormat data = stateController.communicationInterface.getReceivedData();
-                Debug.Log(data);
                 stateController.maxTorque = Mathf.Max(stateController.maxTorque,data.trq);
             }
 
