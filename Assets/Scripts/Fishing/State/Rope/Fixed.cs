@@ -22,7 +22,7 @@ namespace Fishing.State
         {
             Debug.Log("Fixed");
             rope.fixedPosition = new Vector3(rope.centerOfHandle.position.x,rope.centerOfHandle.position.y - rope.ropeLengthDuringFishing, rope.centerOfHandle.position.z);
-            rope.fixedRotation = rope.masterStateController.ropeRelayBelowHandle.transform.rotation;
+            rope.fixedRotation = rope.master.ropeRelayBelowHandle.transform.rotation;
 
             _initTime = rope.time;
             _initPosition = rope.ropeRelayBelowHandleTransform.position;
@@ -45,11 +45,11 @@ namespace Fishing.State
             }
 
 
-            if ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishOnTheHook){
+            if ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishOnTheHook){
                 return (int)RopeStateController.StateType.FollowsFish;
             }
 
-            if ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing){
+            if ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing){
                 return (int)RopeStateController.StateType.FollowsFish;
             }
 
