@@ -102,6 +102,8 @@ namespace Fishing.State
 
         public override int StateUpdate()
         {
+            master.basePointForSwimmingAround = master.ropeRelayBelowHandle.position;
+
             currentTimeCount += Time.deltaTime;
             _timeSinceLastCalculatingProbability += Time.deltaTime;
 

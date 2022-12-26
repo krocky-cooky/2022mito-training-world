@@ -198,6 +198,9 @@ namespace Fishing.Game
         // 釣り上げ予定ではなく、周囲を泳いでいる魚
         public List<Fish> swimmingAroundFishes;
 
+        // 回遊の基準点
+        public Vector3 basePointForSwimmingAround;
+
         // 出現する魚の数
         public int numberOfApearanceFishes = 4;
 
@@ -240,12 +243,15 @@ namespace Fishing.Game
                 UpdateTorque(sendingTorque);
             }
 
-            // // ハンドルホルダーにハンドルを置いて中指ボタンを押したら、それに合わせてプレイヤーの位置をリセット
-            // if(OVRInput.GetDown(OVRInput.RawButton.LHandTrigger))
-            // {
-            //     ResetPlayerTransform();
-            // }
-            
+            // 回遊用の魚を動かす
+            if(swimmingAroundFishes.Count > 0){
+                float _count = 0.0f;
+                foreach(Fish _swimmingAroundFish in swimmingAroundFishes)
+                {
+                    MoveFishOnEllipse(_swimmingAroundFish, time, 6.0f, 1.0f, 0.5f, - 40.0f * _count, Mathf.PI * 0.5f * _count);
+                    _count += 1.0f;
+                }
+            }
         }
 
         //VR空間上のログ情報に追加
@@ -318,14 +324,20 @@ namespace Fishing.Game
             communicationInterface.sendData(data);
         }
 
-        // // ハンドルホルダーにハンドルを置いて中指ボタンを押したら、それに合わせてプレイヤーの位置をリセット
-        // void ResetPlayerTransform(){
-        //     Transform player;
-        //     player = GameObject.FindWithTag("Player").GetComponent<Transform>();
-        //     player.position += (targetHandle.position - myHandle.position);
-        //     // player.eulerAngles += (targetHandle.eulerAngles - myHandle.eulerAngles);
-        //     player.eulerAngles += new Vector3(0.0f, (targetHandle.eulerAngles - myHandle.eulerAngles).y, 0.0f);
-        // }
-        
+        // 魚を楕円軌道で動かす
+        // fish:魚のオブジェクト, period:周期,  longDiameterOfSwimmingTrack:長径, shortDiameterOfSwimmingTrack:短径, angleAroundNeedle:楕円中心位置の、針に対する偏角, initPhase:初期位相
+        public void MoveFishOnEllipse(Fish fish, float time, float period, float longDiameterOfSwimmingTrack, float shortDiameterOfSwimmingTrack, float angleAroundNeedle, float initPhase)
+        {
+            // 位相
+            float _phase;
+            _phase = 2.0f * Mathf.PI * time / period + initPhase;
+
+            // 針回りに回転させる前の位置と回転
+            fish.transform.position = basePointForSwimmingAround + new Vector3(longDiameterOfSwimmingTrack * Mathf.Sin(_phase), 0.0f, shortDiameterOfSwimmingTrack * Mathf.Cos(_phase)) +  new Vector3(- longDiameterOfSwimmingTrack, 0.0f, - shortDiameterOfSwimmingTrack);
+            fish.transform.rotation = Quaternion.Euler(0.0f, _phase * Mathf.Rad2Deg - 180.0f, 0.0f);
+
+            // 針回りに回転
+            fish.transform.RotateAround(basePointForSwimmingAround, Vector3.up, angleAroundNeedle);
+        }
     }
 }
