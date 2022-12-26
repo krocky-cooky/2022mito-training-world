@@ -619,6 +619,7 @@ MonoBehaviour:
   HP: 119
   easeOfEscape: 0.202
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -29611,6 +29612,7 @@ MonoBehaviour:
   HP: 126
   easeOfEscape: 0.208
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -30623,6 +30625,7 @@ MonoBehaviour:
   HP: 98
   easeOfEscape: 0.201
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -31065,6 +31068,7 @@ MonoBehaviour:
   HP: 133
   easeOfEscape: 0.207
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -32418,6 +32422,7 @@ MonoBehaviour:
   HP: 91
   easeOfEscape: 0.204
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -37610,6 +37615,8 @@ MonoBehaviour:
   sendingTorque: 0
   masterStateController: {fileID: 1895901906}
   fishUpPosition: {fileID: 244489748}
+  minUserPower: 0
+  maxUserPower: 0
   viewerObject: {fileID: 813061342}
   communicationInterface: {fileID: 1322611939}
   torqueSendingInterval: 0.1
@@ -47761,6 +47768,7 @@ MonoBehaviour:
   HP: 77
   easeOfEscape: 0.21
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -47819,6 +47827,7 @@ MonoBehaviour:
   HP: 105
   easeOfEscape: 0.209
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -85974,8 +85983,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910895848}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -14.305652, y: -0.266438, z: 4.0994177}
+  m_LocalRotation: {x: 0.00060449715, y: 0.9979702, z: 0.06295545, w: -0.0095825605}
+  m_LocalPosition: {x: -9.206347, y: -2.1097462, z: 4.16568}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -92025,6 +92034,7 @@ MonoBehaviour:
   HP: 70
   easeOfEscape: 0.203
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0
@@ -92820,6 +92830,7 @@ MonoBehaviour:
   HP: 84
   easeOfEscape: 0.206
   currentIntensityOfMovements: 1
+  scale: 1
   isFishShadow: 0
   isFishBody: 0
   twistSpeed: 0

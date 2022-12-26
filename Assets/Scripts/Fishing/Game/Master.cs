@@ -24,6 +24,10 @@ namespace Fishing.Game
         // 魚が釣り上がる位置
         public Transform fishUpPosition;
 
+        // ユーザーの筋力
+        public float minUserPower;
+        public float maxUserPower;
+
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]

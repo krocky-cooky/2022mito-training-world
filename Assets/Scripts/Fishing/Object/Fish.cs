@@ -18,6 +18,9 @@ namespace Fishing.Object{
         public float easeOfEscape;
         public float currentIntensityOfMovements;
 
+        // 魚のサイズ
+        public float scale;
+
         // 魚影およびボディのアクティブ化のフラグ
         public bool isFishShadow = false;
         public bool isFishBody = false;
@@ -79,6 +82,8 @@ namespace Fishing.Object{
             _shadowObject.GetComponent<Animator>().SetFloat("Speed", twistSpeed);
 
             splash.normalizedSplashVolume = currentIntensityOfMovements;
+            
+            transform.localScale = new Vector3(scale, scale, scale);
         }
     }
 }
