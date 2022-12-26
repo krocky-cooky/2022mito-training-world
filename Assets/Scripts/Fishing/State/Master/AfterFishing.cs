@@ -45,7 +45,8 @@ namespace Fishing.State
             master.fish.isFishBody = true;
 
             // 魚の向きを整える
-            master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            // master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            master.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
             // 魚釣りに成功した効果音を鳴らす
             Invoke("PlayFishingSuccess", master.timeRasingFish + master.timeShorteningFishingLine);

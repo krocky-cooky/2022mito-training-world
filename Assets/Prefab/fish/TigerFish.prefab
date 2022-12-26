@@ -24,8 +24,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2177996821029986448}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.886891, y: -0.48552966, z: 2.4319758}
+  m_LocalRotation: {x: 0, y: -0.7448259, z: 0, w: 0.66725886}
+  m_LocalPosition: {x: -7.335373, y: -1.45, z: 3.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2177996821448144937}
@@ -51,11 +51,11 @@ MonoBehaviour:
   torque: 1.1
   HP: 75.32848
   easeOfEscape: 0.21
-  currentIntensityOfMovements: NaN
+  currentIntensityOfMovements: 0.09850901
   scale: 1
   isFishShadow: 1
   isFishBody: 0
-  twistSpeed: NaN
+  twistSpeed: 3
   _shadowObject: {fileID: 2177996821039840930}
   _bodyObject: {fileID: 0}
   splash: {fileID: 2177996821039840932}

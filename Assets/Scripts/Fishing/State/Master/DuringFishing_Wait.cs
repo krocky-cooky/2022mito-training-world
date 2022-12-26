@@ -50,6 +50,7 @@ namespace Fishing.State
             // ルアーが着水する音
             // master.LureLandingSound.Play();
 
+
             // // 魚の初期化
             // _fishGameObjects = GameObject.FindGameObjectsWithTag("fish");
             // master.fishGameObject = _fishGameObjects[Random.Range(0, _fishGameObjects.Length)];
@@ -58,12 +59,12 @@ namespace Fishing.State
             // master.fish.isFishShadow = true;
             // master.fish.isFishBody = false;
             // // master.fish.weight = Random.Range(master.minTorque, master.maxTorque) * master.fishWeightPerTorque;
-            // master.fish.weight = master.fish.weight *  Random.Range(0.9f, 1.1f);
-            // master.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            // master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            // // master.fish.weight = master.fish.weight *  Random.Range(0.9f, 1.1f);
+            // // master.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            // // master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             // master.fish.twistSpeed = master.minSpeedOfFishTwist;
             // master.rope.fish = master.fish;
-            // Debug.Log("fish name is " + master.fish.species);
+            // // Debug.Log("fish name is " + master.fish.species);
 
             // // 選んだ魚以外はすべて魚影、ボディを非アクティブ化
             // foreach(GameObject fishGameObject in _fishGameObjects){
@@ -83,12 +84,12 @@ namespace Fishing.State
             }
 
 
-            // 自分の最小筋力の±10%以内の重量の魚を取得
-            // 釣り上げ予定の魚
+            // // 自分の最小筋力の±10%以内の重量の魚を取得
+            // // 釣り上げ予定の魚
             master.fishToBeCaught = GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
             master.fish = master.fishToBeCaught;
             master.rope.fish = master.fish;
-            // 泳ぎ回る予定の魚
+            // // 泳ぎ回る予定の魚
             master.swimmingAroundFishes = GetFishesOfSpecifiedWeight(master.fishSpecies, master.numberOfApearanceFishes - 1, master.minUserPower, master.maxUserPower);
 
 
@@ -111,6 +112,7 @@ namespace Fishing.State
             // 魚を単振動で動かす
             master.distanceFromRope = master.BaseDistanceOfFishFromRope + master.SizeOfFishMovement * Mathf.Sin(currentTimeCount * Mathf.PI / master.PeriodOfFishMovement);
             master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
+            Debug.Log("master.fish.transform.position is " + master.fish.transform.position.ToString());
             
             if (_timeSinceLastCalculatingProbability >= interval)
             {
@@ -137,18 +139,20 @@ namespace Fishing.State
             // 指定した匹数だけ繰り返す
             while (_appearingFishes.Count < _numberOfFishes){
                 // 魚をランダムに取得
-                Fish _candidateFish;
-                _candidateFish = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
+                Fish _candidateFishPrefab;
+                _candidateFishPrefab = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
 
                 // 魚の釣り上げ時の負荷(トルク)が指定範囲内なら追加
-                if ((_candidateFish.torque > _minTorque) & (_candidateFish.torque < _maxTorque)){
-                    GameObject.Instantiate (_candidateFish, transform.position, transform.rotation);
-                    _appearingFishes.Add(_candidateFish);
+                if ((_candidateFishPrefab.torque > _minTorque) & (_candidateFishPrefab.torque < _maxTorque)){
+                    Fish _candidateFishInstance;
+                    _candidateFishInstance = GameObject.Instantiate(_candidateFishPrefab, transform.position, transform.rotation);
+                    _appearingFishes.Add(_candidateFishInstance);
 
                     // 魚の初期化
-                    _candidateFish.isFishShadow = true;
-                    _candidateFish.isFishBody = false;
-                    _candidateFish.twistSpeed = master.minSpeedOfFishTwist;
+                    _candidateFishInstance.isFishShadow = true;
+                    _candidateFishInstance.isFishBody = false;
+                    _candidateFishInstance.twistSpeed = master.minSpeedOfFishTwist;
+                    _candidateFishInstance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
             }
 
