@@ -39,42 +39,42 @@ namespace Fishing.State
             Debug.Log("DuringFish_Wait");
             currentTimeCount = 0.0f;
             _timeSinceLastCalculatingProbability = 0.0f;
-            probabilityOfFishOnTheHook = 1.0f - Mathf.Pow(2.0f, (-1.0f / (masterStateController.timeUntilFishHitAtHalfChance / interval)));
+            probabilityOfFishOnTheHook = 1.0f - Mathf.Pow(2.0f, (-1.0f / (master.timeUntilFishHitAtHalfChance / interval)));
             Debug.Log("hit prob is" + probabilityOfFishOnTheHook.ToString());
 
             // 釣りモード時のトルク指令
-            masterStateController.gameMaster.sendingTorque = masterStateController.baseTorqueDuringFishing;
+            master.sendingTorque = master.baseTorqueDuringFishing;
 
-            masterStateController.frontViewUiText.text = "During fishing";
+            master.frontViewUiText.text = "During fishing";
 
             // ルアーが着水する音
-            // masterStateController.LureLandingSound.Play();
+            // master.LureLandingSound.Play();
 
 
             // 魚の初期化
             _fishGameObjects = GameObject.FindGameObjectsWithTag("fish");
-            masterStateController.fishGameObject = _fishGameObjects[Random.Range(0, _fishGameObjects.Length)];
-            masterStateController.fish = masterStateController.fishGameObject.GetComponent<Fish>();
-            // masterStateController.fish.SetActive(true);
-            masterStateController.fish.isFishShadow = true;
-            masterStateController.fish.isFishBody = false;
-            // masterStateController.fish.weight = Random.Range(masterStateController.minTorque, masterStateController.maxTorque) * masterStateController.fishWeightPerTorque;
-            masterStateController.fish.weight = masterStateController.fish.weight *  Random.Range(0.9f, 1.1f);
-            masterStateController.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            masterStateController.fish.twistSpeed = masterStateController.minSpeedOfFishTwist;
-            masterStateController.rope.fish = masterStateController.fish;
-            Debug.Log("fish name is " + masterStateController.fish.species);
+            master.fishGameObject = _fishGameObjects[Random.Range(0, _fishGameObjects.Length)];
+            master.fish = master.fishGameObject.GetComponent<Fish>();
+            // master.fish.SetActive(true);
+            master.fish.isFishShadow = true;
+            master.fish.isFishBody = false;
+            // master.fish.weight = Random.Range(master.minTorque, master.maxTorque) * master.fishWeightPerTorque;
+            master.fish.weight = master.fish.weight *  Random.Range(0.9f, 1.1f);
+            master.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            master.fish.twistSpeed = master.minSpeedOfFishTwist;
+            master.rope.fish = master.fish;
+            Debug.Log("fish name is " + master.fish.species);
 
             // 選んだ魚以外はすべて魚影、ボディを非アクティブ化
             foreach(GameObject fishGameObject in _fishGameObjects){
-                if (fishGameObject != masterStateController.fishGameObject){
+                if (fishGameObject != master.fishGameObject){
                     fishGameObject.GetComponent<Fish>().isFishShadow = false;
                     fishGameObject.GetComponent<Fish>().isFishBody = false;
                 }
             }
 
-            masterStateController.tensionSliderGameObject.SetActive(false);
+            master.tensionSliderGameObject.SetActive(false);
         }
 
         public override void OnExit()
@@ -88,11 +88,11 @@ namespace Fishing.State
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+            master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 魚を単振動で動かす
-            masterStateController.distanceFromRope = masterStateController.BaseDistanceOfFishFromRope + masterStateController.SizeOfFishMovement * Mathf.Sin(currentTimeCount * Mathf.PI / masterStateController.PeriodOfFishMovement);
-            masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
+            master.distanceFromRope = master.BaseDistanceOfFishFromRope + master.SizeOfFishMovement * Mathf.Sin(currentTimeCount * Mathf.PI / master.PeriodOfFishMovement);
+            master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
             
             if (_timeSinceLastCalculatingProbability >= interval)
             {

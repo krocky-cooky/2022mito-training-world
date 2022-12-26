@@ -15,14 +15,14 @@ namespace Fishing.State
     {
         // ステートコントローラー
         // protected MasterStateController masterStateController;
-        protected Master masterStateController;
+        protected Master master;
 
         // 初期化処理
         public override void Initialize(int stateType)
         {
             StateType = stateType;
             // masterStateController = GetComponent<MasterStateController>();
-            masterStateController = GameObject.FindWithTag("master").GetComponent<Master>();
+            master = GameObject.FindWithTag("master").GetComponent<Master>();
         }
     }
 }

@@ -21,6 +21,9 @@ namespace Fishing.Game
         public float sendingTorque = 0.0f;
         public MasterStateController masterStateController;
 
+        // 魚が釣り上がる位置
+        public Transform fishUpPosition;
+
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]

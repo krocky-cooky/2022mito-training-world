@@ -31,35 +31,36 @@ namespace Fishing.State
             Debug.Log("AfterFishing");
             currentTimeCount = 0f;
 
-            // _firstLengthOfFishLine = Mathf.Abs(masterStateController.waterSurfaceTransform.position.y - masterStateController.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
-            // _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -masterStateController.distanseFromFishToCamera);
-            _fishEndPosition = new Vector3(masterStateController.ropeRelayBelowHandle.transform.position.x, masterStateController.HMD.transform.position.y, masterStateController.ropeRelayBelowHandle.transform.position.z - 1.0f);
+            // _firstLengthOfFishLine = Mathf.Abs(master.waterSurfaceTransform.position.y - master.ropeRelayBelowHandle.centerOfHandle.position.y) + 2.0f;
+            // _fishEndPosition = GameObject.FindWithTag("Player").transform.position + new Vector3(-4.0f, 3.0f, -master.distanseFromFishToCamera);
+            // _fishEndPosition = new Vector3(master.ropeRelayBelowHandle.transform.position.x, master.HMD.transform.position.y, master.ropeRelayBelowHandle.transform.position.z - 1.0f);
+            _fishEndPosition = master.fishUpPosition.position;
 
-            masterStateController.frontViewUiText.text = masterStateController.fish.species + " " + masterStateController.fish.weight.ToString("f2") + "kg";
+            master.frontViewUiText.text = master.fish.species + " " + master.fish.weight.ToString("f2") + "kg";
 
-            masterStateController.gameMaster.sendingTorque = 0.0f;
+            master.sendingTorque = 0.0f;
 
             // 魚の表示を、水中の魚影モードから水上の実体モードに切り替え
-            masterStateController.fish.isFishShadow = false;
-            masterStateController.fish.isFishBody = true;
+            master.fish.isFishShadow = false;
+            master.fish.isFishBody = true;
 
             // 魚の向きを整える
-            masterStateController.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
             // 魚釣りに成功した効果音を鳴らす
-            Invoke("PlayFishingSuccess", masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine);
+            Invoke("PlayFishingSuccess", master.timeRasingFish + master.timeShorteningFishingLine);
 
             // 水しぶき
-            masterStateController.fish.splash.SetActive(true);
+            master.fish.splash.SetActive(true);
         }
 
         public override void OnExit()
         {
-            masterStateController.frontViewUiText.text = "";
+            master.frontViewUiText.text = "";
 
             // 魚の表示しない
-            masterStateController.fish.isFishShadow = false;
-            masterStateController.fish.isFishBody = false;
+            master.fish.isFishShadow = false;
+            master.fish.isFishBody = false;
         }
 
         public override int StateUpdate()
@@ -68,19 +69,19 @@ namespace Fishing.State
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+            master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 釣り糸と魚を水面の上まであげる
             // そのあと、魚を目の前まで動かす
             // 水しぶきも伴う
-            if ((masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
-                // masterStateController.ropeRelayBelowHandle.ropeLengthDuringFishing = masterStateController.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - masterStateController.fishingLineLengthAfterFishing) * (masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeShorteningFishingLine;
-                // masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position;
-                _fishFirstPosition = masterStateController.fish.transform.position;
-            } else if ((masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) > 0.0f){
-                masterStateController.fish.transform.position = _fishEndPosition + (_fishFirstPosition - _fishEndPosition) * (masterStateController.timeRasingFish + masterStateController.timeShorteningFishingLine - currentTimeCount) / masterStateController.timeRasingFish;
+            if ((master.timeShorteningFishingLine - currentTimeCount) > 0.0f){
+                // master.ropeRelayBelowHandle.ropeLengthDuringFishing = master.fishingLineLengthAfterFishing + (_firstLengthOfFishLine - master.fishingLineLengthAfterFishing) * (master.timeShorteningFishingLine - currentTimeCount) / master.timeShorteningFishingLine;
+                // master.fish.transform.position = master.ropeRelayBelowHandle.transform.position;
+                _fishFirstPosition = master.fish.transform.position;
+            } else if ((master.timeRasingFish + master.timeShorteningFishingLine - currentTimeCount) > 0.0f){
+                master.fish.transform.position = _fishEndPosition + (_fishFirstPosition - _fishEndPosition) * (master.timeRasingFish + master.timeShorteningFishingLine - currentTimeCount) / master.timeRasingFish;
             }else{
-                masterStateController.fish.splash.SetActive(false);
+                master.fish.splash.SetActive(false);
             }
 
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
@@ -92,7 +93,7 @@ namespace Fishing.State
         }
 
         public void PlayFishingSuccess(){
-            masterStateController.FishingSuccess.Play();
+            master.FishingSuccess.Play();
         }
 
     }
