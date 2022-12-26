@@ -50,29 +50,47 @@ namespace Fishing.State
             // ルアーが着水する音
             // master.LureLandingSound.Play();
 
+            // // 魚の初期化
+            // _fishGameObjects = GameObject.FindGameObjectsWithTag("fish");
+            // master.fishGameObject = _fishGameObjects[Random.Range(0, _fishGameObjects.Length)];
+            // master.fish = master.fishGameObject.GetComponent<Fish>();
+            // // master.fish.SetActive(true);
+            // master.fish.isFishShadow = true;
+            // master.fish.isFishBody = false;
+            // // master.fish.weight = Random.Range(master.minTorque, master.maxTorque) * master.fishWeightPerTorque;
+            // master.fish.weight = master.fish.weight *  Random.Range(0.9f, 1.1f);
+            // master.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            // master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            // master.fish.twistSpeed = master.minSpeedOfFishTwist;
+            // master.rope.fish = master.fish;
+            // Debug.Log("fish name is " + master.fish.species);
 
-            // 魚の初期化
+            // // 選んだ魚以外はすべて魚影、ボディを非アクティブ化
+            // foreach(GameObject fishGameObject in _fishGameObjects){
+            //     if (fishGameObject != master.fishGameObject){
+            //         fishGameObject.GetComponent<Fish>().isFishShadow = false;
+            //         fishGameObject.GetComponent<Fish>().isFishBody = false;
+            //     }
+            // }
+
+            // すでにある魚のインスタンスをすべて削除
             _fishGameObjects = GameObject.FindGameObjectsWithTag("fish");
-            master.fishGameObject = _fishGameObjects[Random.Range(0, _fishGameObjects.Length)];
-            master.fish = master.fishGameObject.GetComponent<Fish>();
-            // master.fish.SetActive(true);
-            master.fish.isFishShadow = true;
-            master.fish.isFishBody = false;
-            // master.fish.weight = Random.Range(master.minTorque, master.maxTorque) * master.fishWeightPerTorque;
-            master.fish.weight = master.fish.weight *  Random.Range(0.9f, 1.1f);
-            master.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            master.fish.twistSpeed = master.minSpeedOfFishTwist;
-            master.rope.fish = master.fish;
-            Debug.Log("fish name is " + master.fish.species);
-
-            // 選んだ魚以外はすべて魚影、ボディを非アクティブ化
-            foreach(GameObject fishGameObject in _fishGameObjects){
-                if (fishGameObject != master.fishGameObject){
-                    fishGameObject.GetComponent<Fish>().isFishShadow = false;
-                    fishGameObject.GetComponent<Fish>().isFishBody = false;
+            if(_fishGameObjects.Length > 0){
+                foreach(GameObject _fishGameObject in _fishGameObjects)
+                {
+                    Destroy(_fishGameObject);
                 }
             }
+
+
+            // 自分の最小筋力の±10%以内の重量の魚を取得
+            // 釣り上げ予定の魚
+            master.fishToBeCaught = GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
+            master.fish = master.fishToBeCaught;
+            master.rope.fish = master.fish;
+            // 泳ぎ回る予定の魚
+            master.swimmingAroundFishes = GetFishesOfSpecifiedWeight(master.fishSpecies, master.numberOfApearanceFishes - 1, master.minUserPower, master.maxUserPower);
+
 
             master.tensionSliderGameObject.SetActive(false);
         }
@@ -110,6 +128,31 @@ namespace Fishing.State
 
 
             return (int)StateType;
+        }
+
+        // 指定の重量の魚を、指定の匹数だけ出現させて返す
+        public List<Fish> GetFishesOfSpecifiedWeight(List<GameObject> _fishSpecies,int _numberOfFishes, float _minTorque, float _maxTorque){
+            List<Fish> _appearingFishes = new List<Fish>();
+
+            // 指定した匹数だけ繰り返す
+            while (_appearingFishes.Count < _numberOfFishes){
+                // 魚をランダムに取得
+                Fish _candidateFish;
+                _candidateFish = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
+
+                // 魚の釣り上げ時の負荷(トルク)が指定範囲内なら追加
+                if ((_candidateFish.torque > _minTorque) & (_candidateFish.torque < _maxTorque)){
+                    GameObject.Instantiate (_candidateFish, transform.position, transform.rotation);
+                    _appearingFishes.Add(_candidateFish);
+
+                    // 魚の初期化
+                    _candidateFish.isFishShadow = true;
+                    _candidateFish.isFishBody = false;
+                    _candidateFish.twistSpeed = master.minSpeedOfFishTwist;
+                }
+            }
+
+            return _appearingFishes;
         }
     }
 

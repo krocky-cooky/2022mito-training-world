@@ -41,6 +41,9 @@ namespace Fishing.Object{
         // 水しぶき
         public Splash splash;
 
+        // transformオブジェクト
+        // public Transform transform;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -84,6 +87,9 @@ namespace Fishing.Object{
             splash.normalizedSplashVolume = currentIntensityOfMovements;
             
             transform.localScale = new Vector3(scale, scale, scale);
+
+            // gameObject.transform.position = transform.position;
+            // gameMaster.transform.position = transform.rotation;
         }
     }
 }

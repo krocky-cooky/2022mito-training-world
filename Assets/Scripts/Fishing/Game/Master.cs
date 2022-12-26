@@ -28,12 +28,17 @@ namespace Fishing.Game
         public float minUserPower;
         public float maxUserPower;
 
+        //　出現しうる魚のPrefabのリスト
+        public List<GameObject> fishSpecies;
+
+
         [SerializeField]
         private GameObject viewerObject;
         [SerializeField]
         private MainCommunicationInterface communicationInterface;
         [SerializeField]
         private float torqueSendingInterval = 0.1f;
+
 
         // 自分が持っているハンドルの位置
         [SerializeField]
@@ -186,6 +191,15 @@ namespace Fishing.Game
 
         // プレイヤーのヘッドの位置
         public GameObject HMD;
+
+        // 釣り上げ予定の魚
+        public Fish fishToBeCaught;
+
+        // 釣り上げ予定ではなく、周囲を泳いでいる魚
+        public List<Fish> swimmingAroundFishes;
+
+        // 出現する魚の数
+        public int numberOfApearanceFishes = 4;
 
         // Start is called before the first frame update
         void Start()
