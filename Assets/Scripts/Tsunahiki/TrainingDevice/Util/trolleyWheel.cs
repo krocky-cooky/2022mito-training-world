@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace tsunahiki.trainingDevice.util 
 {
-    public class trolleyWheel : MonoBehaviour 
+    public class TrolleyWheel : MonoBehaviour 
     {
         
     }

@@ -21,7 +21,6 @@ namespace tsunahiki.trainingDevice.state
         {
             stateController = GetComponent<MasterStateController>();
             StateType = stateType;
-
         }
 
         //速度ゼロ指令
@@ -32,6 +31,12 @@ namespace tsunahiki.trainingDevice.state
             stateController.communicationInterface.sendData(data);
         }
 
-
+        //ワイヤ巻取り
+        protected void reelWire()
+        {
+            SendingDataFormat data = new SendingDataFormat();
+            data.setSpeed(2.0f);
+            stateController.communicationInterface.sendData(data);
+        }
     }
 }

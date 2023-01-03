@@ -18,6 +18,7 @@ namespace tsunahiki.trainingDevice.stateController
         {
             public OVRInput.RawButton Ready;
             public OVRInput.RawButton TorqueRegistered;
+            public OVRInput.RawButton ReelWire;
         }
 
 
@@ -37,6 +38,8 @@ namespace tsunahiki.trainingDevice.stateController
         
         public float torqueSendingInterval = 0.2f; //トルク送信の間隔
 
+        public GameObject opponentAvatar;
+
 
 
         //SetUp State
@@ -53,6 +56,8 @@ namespace tsunahiki.trainingDevice.stateController
         public GameObject opponentHandle; //対戦相手のハンドル
         
         public float opponentMotionAmplitude = 0.5f; //対戦相手の手の動きの振幅
+
+
 
         
         

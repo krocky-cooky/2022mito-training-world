@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace tsunahiki.trainingDevice.util 
 {
-    public class windManager : MonoBehaviour 
+    public class WindManager : MonoBehaviour 
     {
+        [SerializeField]
+        private GameObject windObject;
+        
+
         
     }
 }

@@ -21,10 +21,20 @@ namespace tsunahiki.game
 
         [SerializeField]
         private GameObject viewerObject;
+        [SerializeField]
+        private GameObject favorableWind;
+        [SerializeField]
+        private GameObject adverseWind;
 
+        [HideInInspector]
         public Queue<string> viewerTextQueue = new Queue<string>();
+        [HideInInspector]
         public TrainingDeviceType currentWinner = TrainingDeviceType.TrainingDevice;
-        public TrainingDeviceType superiority;
+        [HideInInspector]
+        public TrainingDeviceType superiority; //各対戦ごとに付与される優勢劣勢
+        [HideInInspector]
+        public TrainingDeviceType fightCondition; //対戦中の勝敗状況; どちらが勝ちそうな状況か
+        [HideInInspector]
         public MasterStateController masterStateController;
         
 
@@ -41,6 +51,7 @@ namespace tsunahiki.game
         void Start()
         {
             masterStateController.Initialize((int)MasterStateController.StateType.SetUp);
+            resetWind();
         }
 
         // Update is called once per frame
@@ -93,6 +104,38 @@ namespace tsunahiki.game
             }
             print(writeText);
             viewerObject.GetComponent<Text>().text = writeText;
+        }
+
+        //対戦相手が負けそうな状況におけるアバターの動き
+        public void setLosingAvatarExpression()
+        {
+
+        }
+
+        //対戦相手が勝ちそうな状況におけるアバターの動き
+        public void setWinningAvatarExpression()
+        {
+
+        }
+
+        //追い風
+        public void setFavorableWind()
+        {
+            favorableWind.SetActive(true);
+            adverseWind.SetActive(false);
+        }
+
+        //向かい風
+        public void setAdverseWind()
+        {
+            adverseWind.SetActive(true);
+            favorableWind.SetActive(false);
+        }
+
+        public void resetWind()
+        {
+            favorableWind.SetActive(false);
+            adverseWind.SetActive(false);
         }
 
 

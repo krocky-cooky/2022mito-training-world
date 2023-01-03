@@ -51,6 +51,14 @@ namespace tsunahiki.trainingDevice.state
                 fixMaxTorque(!stateController.maxTorqueRegistered,true);
 
             }
+            else if(OVRInput.GetDown(stateController.buttonAllotment.ReelWire))
+            {
+                reelWire();
+            }
+            else if(OVRInput.GetUp(stateController.buttonAllotment.ReelWire))
+            {
+                restore();
+            }
 
             
             return (int)StateType;

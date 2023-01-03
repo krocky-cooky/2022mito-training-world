@@ -10,7 +10,7 @@ namespace communication
     {
         TrainingDevice,
         ForceGauge,
-        Nothing,
+        Nothing
     }
 
     public enum  TsunahikiStateType
