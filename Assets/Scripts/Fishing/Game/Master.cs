@@ -159,6 +159,10 @@ namespace Fishing.Game
         public AudioSource FishGoOnTheWater;
         // 魚釣りに成功した時の効果音
         public AudioSource FishingSuccess;
+        // 魚が逃げるときの効果音
+        public AudioSource FishGetAway;
+        // リールが切れるときの効果音
+        public AudioSource FishingLineBreaks;     
 
         // ロープの音の最小値
         public float minRopeSoundVolume;
@@ -210,6 +214,14 @@ namespace Fishing.Game
         // 左コントローラにあるUI
         public Text UIByLeftController;
         
+        // 魚が針から逃げるまでのタイムリミット
+        public float timeLimitToEscape;
+
+        // リールが切れるまでの速度制限
+        public float normalizedSpeedLimitToBreakFishingLine;
+
+        // ルアーのゲームオブジェクト
+        public GameObject lure;
 
         // Start is called before the first frame update
         void Start()

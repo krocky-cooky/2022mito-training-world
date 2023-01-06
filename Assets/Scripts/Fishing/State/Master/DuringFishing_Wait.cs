@@ -85,13 +85,16 @@ namespace Fishing.State
             master.MoveFishOnEllipse(master.fish, currentTimeCount, 10.0f, 1.0f, 0.5f, -90.0f, 0.0f);
 
             // 針にかかる予定の魚が針のほうを向いたら、次のステートに移行
-            Vector3 _directionToLure;
-            float _angleOfLurePositionAndFishDirection;
-            _directionToLure = master.ropeRelayBelowHandle.position - master.fish.transform.position;
-            _angleOfLurePositionAndFishDirection = Vector3.Angle(_directionToLure, - master.fish.transform.right);
-            Debug.Log("_angleOfLurePositionAndFishDirection" + _angleOfLurePositionAndFishDirection.ToString());
-            if (Mathf.Abs(_angleOfLurePositionAndFishDirection) < 2.0f){
-                return (int)MasterStateController.StateType.DuringFishing_Nibble;
+            {
+                Vector3 _directionToLure;
+                float _angleOfLurePositionAndFishDirection;
+                _directionToLure = master.ropeRelayBelowHandle.position - master.fish.transform.position;
+                _angleOfLurePositionAndFishDirection = Vector3.Angle(_directionToLure, - master.fish.transform.right);
+                Debug.Log("_angleOfLurePositionAndFishDirection" + _angleOfLurePositionAndFishDirection.ToString());
+                
+                if (Mathf.Abs(_angleOfLurePositionAndFishDirection) < 2.0f){
+                    return (int)MasterStateController.StateType.DuringFishing_Nibble;
+                }
             }
 
             // 釣りの前に戻る

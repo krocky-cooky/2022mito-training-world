@@ -46,10 +46,10 @@ namespace Fishing.State
             if (((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.AfterFishing) || ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing)){
                 return (int)RopeStateController.StateType.FollowsHandle;
             }
-            if ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
+            if (((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait) || ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_GetAway) || ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishingLineBreaks)){
                 return (int)RopeStateController.StateType.Fixed;
             }
-            
+
             return (int)StateType;
         }
     }

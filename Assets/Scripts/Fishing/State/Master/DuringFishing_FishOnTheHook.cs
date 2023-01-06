@@ -50,6 +50,9 @@ namespace Fishing.State
         // トルクの減少量
         private float _torqueDecrease;
 
+        // 速度超過時間
+        private float _excessSpeedTime;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
@@ -93,7 +96,7 @@ namespace Fishing.State
         public override int StateUpdate()
         {
             _currentTimeCount += Time.deltaTime;
-
+            
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
             master.tensionSlider.value = master.sendingTorque * 4.0f;
@@ -145,23 +148,21 @@ namespace Fishing.State
             }
 
 
-            // 魚のHPは、リールのテンションの強さ(=トルク)に応じて減少
-            master.fish.HP -= master.sendingTorque * Time.deltaTime;
-
-            // 逃げるゲージの更新
-            // リールのテンションが緩いとゲージが減り、テンションが強すぎるとゲージが増える
-            _escapeGauge += (master.fish.currentIntensityOfMovements + master.trainingDevice.currentNormalizedPosition - 1.0f) * master.fish.easeOfEscape * Time.deltaTime;
-            Debug.Log("_escapeGauge is " + _escapeGauge.ToString());
-
-            // 魚が逃げる
-            if (Mathf.Abs(_escapeGauge) > 1.0f){
-                return (int)MasterStateController.StateType.DuringFishing_Wait;
+            // 魚が針から逃げる
+            if (_currentTimeCount > master.timeLimitToEscape){
+                return (int)MasterStateController.StateType.DuringFishing_GetAway;
             }
 
-            // //HPがゼロになったら次に移行
-            // if (master.fish.HP < 0.0f){
-            //     return (int)MasterStateController.StateType.DuringFishing_HP0;
-            // }
+            // リールが切れる
+            if (master.trainingDevice.currentNormalizedVelocity > master.normalizedSpeedLimitToBreakFishingLine){
+                _excessSpeedTime += Time.deltaTime;
+            }else{
+                _excessSpeedTime = 0.0f;
+            }
+            if (_excessSpeedTime > 0.1f){
+                return (int)MasterStateController.StateType.DuringFishing_FishingLineBreaks;
+            }
+
             // 魚を最高高さまで引き揚げたらAdfterFishingに移行
             if (master.trainingDevice.currentNormalizedPosition >= 0.99){
                 return (int)MasterStateController.StateType.AfterFishing;

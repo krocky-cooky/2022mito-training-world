@@ -50,7 +50,7 @@ namespace Fishing.State
             }
 
             if ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing){
-                return (int)RopeStateController.StateType.FollowsFish;
+                return (int)RopeStateController.StateType.FollowsHandle;
             }
 
 
