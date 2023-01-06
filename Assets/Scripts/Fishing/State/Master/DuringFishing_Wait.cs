@@ -117,7 +117,7 @@ namespace Fishing.State
             // Debug.Log("master.fish.transform.position is " + master.fish.transform.position.ToString());
             
             // 釣り上げ予定の魚を動かす
-            master.MoveFishOnEllipse(master.fish, currentTimeCount, 10.0f, 1.0f, 0.5f, 0.0f, 0.0f);
+            master.MoveFishOnEllipse(master.fish, currentTimeCount, 10.0f, 1.0f, 0.5f, -90.0f, 0.0f);
             
 
             // // ランダムに突きモードに移行

@@ -114,8 +114,8 @@ namespace Fishing.State
             // 魚が円軌道で動く
             // 魚の暴れる強さと、円軌道上での速さは比例
             _angleVelocity = master.minAngularVelocity + (master.maxAngularVelocity - master.minAngularVelocity) * master.fish.currentIntensityOfMovements;
-            master.fish.transform.Rotate(0.0f, _angleVelocity * Time.deltaTime, 0.0f, Space.World);
-            _fishAngle = (master.fish.transform.rotation.eulerAngles.y + master.initialAngle) *  Mathf.PI / 180.0f;
+            master.fish.transform.Rotate(0.0f, - _angleVelocity * Time.deltaTime, 0.0f, Space.World);
+            _fishAngle = (master.fish.transform.rotation.eulerAngles.y + master.initialAngle) *  Mathf.PI / 180.0f + Mathf.PI;
             master.fish.transform.position = master.centerOfRotation + (new Vector3(Mathf.Sin(_fishAngle), 0.0f, Mathf.Cos(_fishAngle))) * master.radius;
 
 

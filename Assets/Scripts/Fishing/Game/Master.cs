@@ -249,7 +249,7 @@ namespace Fishing.Game
                 foreach(Fish _swimmingAroundFish in swimmingAroundFishes)
                 {
                     _count += 1.0f;
-                    MoveFishOnEllipse(_swimmingAroundFish, time, 9.0f + 3.0f * _count, 1.0f, 0.5f, - 60.0f * _count, Mathf.PI * 0.4f * _count);
+                    MoveFishOnEllipse(_swimmingAroundFish, time, 9.0f + 3.0f * _count, 1.0f, 0.5f, - 60.0f * (_count - 1.0f), Mathf.PI * 0.4f * _count);
                 }
             }
         }
