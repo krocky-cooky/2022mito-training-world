@@ -98,19 +98,14 @@ namespace Fishing.State
 
 
             // 魚が突く様子を視覚表現
-            // master.distanceFromRope = master.SizeOfFishNibble * Mathf.Abs(Mathf.Cos(currentTimeCount * Mathf.PI / (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble)));
-            // master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
             if ((_timeCountForNibble > 0.0f) && (_timeCountForNibble < master.firstPeriodOfFishNibble)){
-                // master.distanceFromRope = master.SizeOfFishNibble * (1.0f - (_timeCountForNibble / master.firstPeriodOfFishNibble));
                 _normalizedDistanceBetweenFishAndLure = (1.0f - (_timeCountForNibble / master.firstPeriodOfFishNibble));
             }else if((_timeCountForNibble > 0.0f) && (_timeCountForNibble < (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble))){
-                // master.distanceFromRope = master.SizeOfFishNibble * ((_timeCountForNibble - master.firstPeriodOfFishNibble) / master.latterPeriodOfFishNibble);
                 _normalizedDistanceBetweenFishAndLure = ((_timeCountForNibble - master.firstPeriodOfFishNibble) / master.latterPeriodOfFishNibble);
             }
             if (_timeCountForNibble > (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble)){
                 _timeCountForNibble =100.0f;
             }
-            // master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
             master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + _normalizedDistanceBetweenFishAndLure * _directionVectorOfNibble;
 
 

@@ -31,9 +31,6 @@ namespace Fishing.State
         // 魚のオブジェクトの配列
         private GameObject[] _fishGameObjects;
 
-        // // 魚のゲームオブジェクト
-        // private GameObject _fishGameObject;
-
         public override void OnEnter()
         {
             Debug.Log("DuringFish_Wait");
@@ -46,33 +43,6 @@ namespace Fishing.State
             master.sendingTorque = master.baseTorqueDuringFishing;
 
             master.frontViewUiText.text = "During fishing";
-
-            // ルアーが着水する音
-            // master.LureLandingSound.Play();
-
-
-            // // 魚の初期化
-            // _fishGameObjects = GameObject.FindGameObjectsWithTag("fish");
-            // master.fishGameObject = _fishGameObjects[Random.Range(0, _fishGameObjects.Length)];
-            // master.fish = master.fishGameObject.GetComponent<Fish>();
-            // // master.fish.SetActive(true);
-            // master.fish.isFishShadow = true;
-            // master.fish.isFishBody = false;
-            // // master.fish.weight = Random.Range(master.minTorque, master.maxTorque) * master.fishWeightPerTorque;
-            // // master.fish.weight = master.fish.weight *  Random.Range(0.9f, 1.1f);
-            // // master.fish.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            // // master.fishGameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            // master.fish.twistSpeed = master.minSpeedOfFishTwist;
-            // master.rope.fish = master.fish;
-            // // Debug.Log("fish name is " + master.fish.species);
-
-            // // 選んだ魚以外はすべて魚影、ボディを非アクティブ化
-            // foreach(GameObject fishGameObject in _fishGameObjects){
-            //     if (fishGameObject != master.fishGameObject){
-            //         fishGameObject.GetComponent<Fish>().isFishShadow = false;
-            //         fishGameObject.GetComponent<Fish>().isFishBody = false;
-            //     }
-            // }
 
             // すでにある魚のインスタンスをすべて削除
             _fishGameObjects = GameObject.FindGameObjectsWithTag("fish");
@@ -110,24 +80,9 @@ namespace Fishing.State
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
             master.tensionSlider.value = master.sendingTorque * 4.0f;
-
-            // // 魚を単振動で動かす
-            // master.distanceFromRope = master.BaseDistanceOfFishFromRope + master.SizeOfFishMovement * Mathf.Sin(currentTimeCount * Mathf.PI / master.PeriodOfFishMovement);
-            // master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
-            // Debug.Log("master.fish.transform.position is " + master.fish.transform.position.ToString());
             
             // 釣り上げ予定の魚を動かす
             master.MoveFishOnEllipse(master.fish, currentTimeCount, 10.0f, 1.0f, 0.5f, -90.0f, 0.0f);
-            
-
-            // // ランダムに突きモードに移行
-            // if (_timeSinceLastCalculatingProbability >= interval)
-            // {
-            //     _timeSinceLastCalculatingProbability = 0.0f;
-            //     if (Random.value < probabilityOfFishOnTheHook){
-            //         return (int)MasterStateController.StateType.DuringFishing_Nibble;
-            //     }
-            // }
 
             // 針にかかる予定の魚が針のほうを向いたら、次のステートに移行
             Vector3 _directionToLure;

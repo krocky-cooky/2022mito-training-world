@@ -291,32 +291,9 @@ namespace Fishing.Game
             viewerObject.GetComponent<Text>().text = writeText;
         }
 
-        // //ワイヤを巻き取る
-        // private void reelWire(float torque, float speed = 4.0f)
-        // {
-        //     SendingDataFormat data = new SendingDataFormat();
-        //     data.setTorque(torque, speed);
-        //     communicationInterface.sendData(data);
-        //     Debug.Log("send torque" + sendingTorque.ToString());
-        // }
-        // private void reelWire(){
-        //     if(OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
-        //     {
-        //         UpdateTorque(0.75f);
-        //     }
-        //     if(OVRInput.GetUp(OVRInput.RawButton.LIndexTrigger))
-        //     {
-        //         restore();
-        //     }
-        // }
-
         //トルクを更新
         private void UpdateTorque(float torque, float speed = 10.0f)
         {
-            // 前回とトルクが同じ、または前回の送信時刻から一定時間経過していなければ、トルクを送信しない
-            // if ((torque == _previoussendingTorque) || ((time - _previousTorqueSendingTime) < torqueSendingInterval)){
-            //     return;
-            // }
             if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
                 return;
             }
