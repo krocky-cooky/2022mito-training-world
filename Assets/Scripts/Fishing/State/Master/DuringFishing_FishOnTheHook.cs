@@ -15,7 +15,7 @@ namespace Fishing.State
     public class DuringFishing_FishOnTheHook : MasterStateBase
     {
         // タイムカウント
-        float currentTimeCount;
+        private float _currentTimeCount;
 
         // 魚のオブジェクト
         public Fish fish;
@@ -67,7 +67,7 @@ namespace Fishing.State
             master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
 
             // 初期化
-            currentTimeCount = 0f;
+            _currentTimeCount = 0f;
             _escapeGauge = 0.0f;
             master.centerOfRotation = master.fish.transform.position - new Vector3(0.0f, 0.0f, master.radius);
             _fishAngle = 0.0f;
@@ -92,21 +92,16 @@ namespace Fishing.State
 
         public override int StateUpdate()
         {
-            currentTimeCount += Time.deltaTime;
+            _currentTimeCount += Time.deltaTime;
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
             master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 魚の暴れる強さ
-            // 0と1の間を周期的に変化する
-            // HPが小さくなると、振幅も小さくなる
-            // 最初の数秒間は、暴れる強さを一定にして、その時の視聴力覚を覚えてもらう
-            if (currentTimeCount < master.timeUntillFishIntensityChange){
-                master.fish.currentIntensityOfMovements = 1.0f;
-            }else{
-                master.fish.currentIntensityOfMovements = Mathf.Pow((master.fish.HP / _maxHP), 0.3f) * Mathf.Abs(Mathf.Sin(currentTimeCount / master.periodOfFishIntensity));
-            }
+            // 引きあげるほど強くなる
+            master.fish.currentIntensityOfMovements = master.trainingDevice.currentNormalizedPosition;
+
 
             // 魚がカラダをひねる強さを変化
             master.fish.twistSpeed = (master.maxSpeedOfFishTwist - master.minSpeedOfFishTwist) * master.fish.currentIntensityOfMovements + master.minSpeedOfFishTwist;
