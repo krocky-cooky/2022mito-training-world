@@ -62,6 +62,8 @@ namespace Fishing.State
             // // 泳ぎ回る予定の魚
             master.swimmingAroundFishes = GetFishesOfSpecifiedWeight(master.fishSpecies, master.numberOfApearanceFishes - 1, master.minUserPower, master.maxUserPower);
 
+            // ルアーが着水するまで魚を非表示
+            Invoke("SetActiveOfAllFishes", master.rope.lureDropTime);
 
             master.tensionSliderGameObject.SetActive(false);
         }
@@ -124,8 +126,9 @@ namespace Fishing.State
                     _appearingFishes.Add(_candidateFishInstance);
 
                     // 魚の初期化
-                    _candidateFishInstance.isFishShadow = true;
+                    _candidateFishInstance.isFishShadow = false;
                     _candidateFishInstance.isFishBody = false;
+                    _candidateFishInstance.splash.SetActive(false);
                     _candidateFishInstance.twistSpeed = master.minSpeedOfFishTwist;
                     _candidateFishInstance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
@@ -133,6 +136,27 @@ namespace Fishing.State
 
             return _appearingFishes;
         }
+
+        // すべての魚を表示
+        public void SetActiveOfAllFishes(){
+            // 釣り上げ予定の魚の表示
+            master.fish.isFishShadow = true;
+            master.fish.isFishBody = false;
+            master.fish.splash.SetActive(false);
+
+            // 回遊用の魚の表示
+            if(master.swimmingAroundFishes.Count > 0){
+                foreach(Fish _swimmingAroundFish in master.swimmingAroundFishes)
+                {
+                    _swimmingAroundFish.isFishShadow = true;
+                    _swimmingAroundFish.isFishBody = false;
+                    _swimmingAroundFish.splash.SetActive(false);
+                }
+            }
+        }
+
     }
+
+
 
 }
