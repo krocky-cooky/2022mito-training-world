@@ -35,6 +35,13 @@ namespace Fishing.State
         // 魚が突く音を視覚や力覚と同期させるバッファ
         private float _timeCountForNibbleSound = 100.0f;
 
+        // 針を突く魚の振動の方向ベクトル
+        // (魚の位置ベクトル) = (ルアーの位置ベクトル) + (針を突く魚の振動の方向ベクトル)
+        private Vector3 _directionVectorOfNibble;
+
+        // 針と魚の間の正規化距離
+        private float _normalizedDistanceBetweenFishAndLure;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_Nibble");
@@ -47,6 +54,8 @@ namespace Fishing.State
             _timeOfNibbling = Random.Range(master.minTimeOfNibbling, master.maxTimeOfNibbling);
             _timeCountForNibble = 100.0f;
             _timeCountForNibbleSound = 100.0f;
+
+            _directionVectorOfNibble = master.fish.transform.position - master.ropeRelayBelowHandle.transform.position;
         }
 
         public override void OnExit()
@@ -91,16 +100,18 @@ namespace Fishing.State
             // 魚が突く様子を視覚表現
             // master.distanceFromRope = master.SizeOfFishNibble * Mathf.Abs(Mathf.Cos(currentTimeCount * Mathf.PI / (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble)));
             // master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
-
             if ((_timeCountForNibble > 0.0f) && (_timeCountForNibble < master.firstPeriodOfFishNibble)){
-                master.distanceFromRope = master.SizeOfFishNibble * (1.0f - (_timeCountForNibble / master.firstPeriodOfFishNibble));
+                // master.distanceFromRope = master.SizeOfFishNibble * (1.0f - (_timeCountForNibble / master.firstPeriodOfFishNibble));
+                _normalizedDistanceBetweenFishAndLure = (1.0f - (_timeCountForNibble / master.firstPeriodOfFishNibble));
             }else if((_timeCountForNibble > 0.0f) && (_timeCountForNibble < (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble))){
-                master.distanceFromRope = master.SizeOfFishNibble * ((_timeCountForNibble - master.firstPeriodOfFishNibble) / master.latterPeriodOfFishNibble);
+                // master.distanceFromRope = master.SizeOfFishNibble * ((_timeCountForNibble - master.firstPeriodOfFishNibble) / master.latterPeriodOfFishNibble);
+                _normalizedDistanceBetweenFishAndLure = ((_timeCountForNibble - master.firstPeriodOfFishNibble) / master.latterPeriodOfFishNibble);
             }
             if (_timeCountForNibble > (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble)){
                 _timeCountForNibble =100.0f;
             }
-            master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
+            // master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
+            master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + _normalizedDistanceBetweenFishAndLure * _directionVectorOfNibble;
 
 
             // 針にかかる

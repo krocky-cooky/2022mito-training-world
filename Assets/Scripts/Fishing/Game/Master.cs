@@ -248,8 +248,8 @@ namespace Fishing.Game
                 float _count = 0.0f;
                 foreach(Fish _swimmingAroundFish in swimmingAroundFishes)
                 {
-                    MoveFishOnEllipse(_swimmingAroundFish, time, 6.0f, 1.0f, 0.5f, - 40.0f * _count, Mathf.PI * 0.5f * _count);
                     _count += 1.0f;
+                    MoveFishOnEllipse(_swimmingAroundFish, time, 9.0f + 3.0f * _count, 1.0f, 0.5f, - 60.0f * _count, Mathf.PI * 0.4f * _count);
                 }
             }
         }
@@ -330,11 +330,11 @@ namespace Fishing.Game
         {
             // 位相
             float _phase;
-            _phase = 2.0f * Mathf.PI * time / period + initPhase;
+            _phase = - 2.0f * Mathf.PI * time / period + initPhase;
 
             // 針回りに回転させる前の位置と回転
             fish.transform.position = basePointForSwimmingAround + new Vector3(longDiameterOfSwimmingTrack * Mathf.Sin(_phase), 0.0f, shortDiameterOfSwimmingTrack * Mathf.Cos(_phase)) +  new Vector3(- longDiameterOfSwimmingTrack, 0.0f, - shortDiameterOfSwimmingTrack);
-            fish.transform.rotation = Quaternion.Euler(0.0f, _phase * Mathf.Rad2Deg - 180.0f, 0.0f);
+            fish.transform.rotation = Quaternion.Euler(0.0f, _phase * Mathf.Rad2Deg, 0.0f);
 
             // 針回りに回転
             fish.transform.RotateAround(basePointForSwimmingAround, Vector3.up, angleAroundNeedle);

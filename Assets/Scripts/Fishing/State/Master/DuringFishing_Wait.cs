@@ -111,17 +111,32 @@ namespace Fishing.State
             // トルクの値の約4.0倍が負荷(kg)
             master.tensionSlider.value = master.sendingTorque * 4.0f;
 
-            // 魚を単振動で動かす
-            master.distanceFromRope = master.BaseDistanceOfFishFromRope + master.SizeOfFishMovement * Mathf.Sin(currentTimeCount * Mathf.PI / master.PeriodOfFishMovement);
-            master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
-            Debug.Log("master.fish.transform.position is " + master.fish.transform.position.ToString());
+            // // 魚を単振動で動かす
+            // master.distanceFromRope = master.BaseDistanceOfFishFromRope + master.SizeOfFishMovement * Mathf.Sin(currentTimeCount * Mathf.PI / master.PeriodOfFishMovement);
+            // master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
+            // Debug.Log("master.fish.transform.position is " + master.fish.transform.position.ToString());
             
-            if (_timeSinceLastCalculatingProbability >= interval)
-            {
-                _timeSinceLastCalculatingProbability = 0.0f;
-                if (Random.value < probabilityOfFishOnTheHook){
-                    return (int)MasterStateController.StateType.DuringFishing_Nibble;
-                }
+            // 釣り上げ予定の魚を動かす
+            master.MoveFishOnEllipse(master.fish, currentTimeCount, 10.0f, 1.0f, 0.5f, 0.0f, 0.0f);
+            
+
+            // // ランダムに突きモードに移行
+            // if (_timeSinceLastCalculatingProbability >= interval)
+            // {
+            //     _timeSinceLastCalculatingProbability = 0.0f;
+            //     if (Random.value < probabilityOfFishOnTheHook){
+            //         return (int)MasterStateController.StateType.DuringFishing_Nibble;
+            //     }
+            // }
+
+            // 針にかかる予定の魚が針のほうを向いたら、次のステートに移行
+            Vector3 _directionToLure;
+            float _angleOfLurePositionAndFishDirection;
+            _directionToLure = master.ropeRelayBelowHandle.position - master.fish.transform.position;
+            _angleOfLurePositionAndFishDirection = Vector3.Angle(_directionToLure, - master.fish.transform.right);
+            Debug.Log("_angleOfLurePositionAndFishDirection" + _angleOfLurePositionAndFishDirection.ToString());
+            if (Mathf.Abs(_angleOfLurePositionAndFishDirection) < 2.0f){
+                return (int)MasterStateController.StateType.DuringFishing_Nibble;
             }
 
             // 釣りの前に戻る
