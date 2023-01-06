@@ -223,6 +223,9 @@ namespace Fishing.Game
         // ルアーのゲームオブジェクト
         public GameObject lure;
 
+        // ファイト回数(=釣った回数＆逃げられた回数)
+        public int fightingCount = 0;
+
         // Start is called before the first frame update
         void Start()
         {

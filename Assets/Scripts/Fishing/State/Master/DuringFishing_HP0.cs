@@ -47,6 +47,9 @@ namespace Fishing.State
             _previousPosition = master.trainingDevice.currentNormalizedPosition;
             _whenPreviousPosition = 0.0f;
             master.tensionSliderGameObject.SetActive(false);
+
+            // ファイト回数を追加
+            master.fightingCount += 1;
         }
 
         public override void OnExit()

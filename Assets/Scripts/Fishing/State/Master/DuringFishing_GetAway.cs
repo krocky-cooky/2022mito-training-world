@@ -29,6 +29,9 @@ namespace Fishing.State
 
             master.FishGetAway.Play();
 
+            // ファイト回数を追加
+            master.fightingCount += 1;
+
         }
 
         public override void OnExit()

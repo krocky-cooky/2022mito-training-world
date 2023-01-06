@@ -20,6 +20,7 @@ namespace Fishing.StateController
             DuringFishing_Wait,
             DuringFishing_Nibble,
             DuringFishing_FishOnTheHook,
+            DuringFishing_Calibration,
             DuringFishing_HP0,
             DuringFishing_GetAway,
             DuringFishing_FishingLineBreaks,
@@ -41,6 +42,9 @@ namespace Fishing.StateController
 
             stateDic[(int)StateType.DuringFishing_FishOnTheHook] = gameObject.AddComponent<DuringFishing_FishOnTheHook>();
             stateDic[(int)StateType.DuringFishing_FishOnTheHook].Initialize((int)StateType.DuringFishing_FishOnTheHook);
+
+            stateDic[(int)StateType.DuringFishing_Calibration] = gameObject.AddComponent<DuringFishing_Calibration>();
+            stateDic[(int)StateType.DuringFishing_Calibration].Initialize((int)StateType.DuringFishing_Calibration);
 
             stateDic[(int)StateType.DuringFishing_HP0] = gameObject.AddComponent<DuringFishing_HP0>();
             stateDic[(int)StateType.DuringFishing_HP0].Initialize((int)StateType.DuringFishing_HP0);
