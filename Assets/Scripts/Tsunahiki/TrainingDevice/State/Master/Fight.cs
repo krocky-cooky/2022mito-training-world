@@ -6,6 +6,7 @@ using util;
 using communication;
 using tsunahiki.game;
 using tsunahiki.trainingDevice.stateController;
+using TRAVE;
 
 
 namespace tsunahiki.trainingDevice.state 
@@ -15,6 +16,7 @@ namespace tsunahiki.trainingDevice.state
         private Vector3 _cubeStartPosition;
         private Vector3 _opponentHandleStartPosition;
         private float _fromLastTorqueUpdated = 0.0f;
+        private TRAVEDevice _device = TRAVEDevice.GetDevice();
 
         public override void OnEnter() 
         {
@@ -123,11 +125,10 @@ namespace tsunahiki.trainingDevice.state
             return (int)StateType;
         }
 
-        private void UpdateTorque(float torque,float speed = 10.0f)
+        private void UpdateTorque(float torque,float speedLimit = 10.0f)
         {
-            SendingDataFormat data = new SendingDataFormat();
-            data.setTorque(torque,speed);
-            stateController.communicationInterface.sendData(data);
+            _device.SetTorqueMode(torque,speedLimit);
+            _device.Apply();
 
             Debug.Log($"Torque {torque} has sent to Training Device");
         }
