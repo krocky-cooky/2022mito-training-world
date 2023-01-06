@@ -204,6 +204,13 @@ namespace Fishing.Game
         // 出現する魚の数
         public int numberOfApearanceFishes = 4;
 
+        // 釣果のリスト
+        public List<string> fishingRecord = new List<string>();
+
+        // 左コントローラにあるUI
+        public Text UIByLeftController;
+        
+
         // Start is called before the first frame update
         void Start()
         {
@@ -251,6 +258,12 @@ namespace Fishing.Game
                     _count += 1.0f;
                     MoveFishOnEllipse(_swimmingAroundFish, time, 9.0f + 3.0f * _count, 1.0f, 0.5f, - 60.0f * (_count - 1.0f), Mathf.PI * 0.4f * _count);
                 }
+            }
+
+            // 釣果を表示
+            UIByLeftController.text = "本日の釣果\n";
+            foreach(string oneRecored in fishingRecord) {
+                UIByLeftController.text += oneRecored + "\n";
             }
         }
 

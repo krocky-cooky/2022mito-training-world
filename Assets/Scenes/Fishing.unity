@@ -3967,6 +3967,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4334377011328397941, guid: d8b1066800e19f34c801dc7d69686f8b, type: 3}
   m_PrefabInstance: {fileID: 4334377011087316227}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &926939753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3562453356403743608, guid: 52c80cc29f7fd504b9373e716b7fb5ab, type: 3}
+  m_PrefabInstance: {fileID: 1283182081}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &932237228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400012, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
@@ -5598,6 +5609,14 @@ PrefabInstance:
       value: "x:\u91E3\u308A\u306E\u958B\u59CB/\u7D42\u4E86\ny: \u53EF\u52D5\u57DF\u306E\u8A18\u9332\n\u4EBA\u5DEE\u3057\u6307:
         \u9577\u3055\u8ABF\u6574\n\u4E2D\u6307:\u30DE\u30B7\u30F3\u306E\u4F4D\u7F6E\u767B\u9332"
       objectReference: {fileID: 0}
+    - target: {fileID: 3562453356403743608, guid: 52c80cc29f7fd504b9373e716b7fb5ab, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562453356403743610, guid: 52c80cc29f7fd504b9373e716b7fb5ab, type: 3}
+      propertyPath: m_Name
+      value: UIByLeftController
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52c80cc29f7fd504b9373e716b7fb5ab, type: 3}
 --- !u!1 &1285872340
@@ -5850,6 +5869,8 @@ MonoBehaviour:
   swimmingAroundFishes: []
   basePointForSwimmingAround: {x: 0, y: 0, z: 0}
   numberOfApearanceFishes: 4
+  fishingRecord: []
+  UIByLeftController: {fileID: 926939753}
 --- !u!1 &1322611934
 GameObject:
   m_ObjectHideFlags: 0

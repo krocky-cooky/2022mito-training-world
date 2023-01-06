@@ -53,6 +53,9 @@ namespace Fishing.State
 
             // 水しぶき
             master.fish.splash.SetActive(true);
+
+            // レコードに追加
+            master.fishingRecord.Add(master.fish.species + "  "  +  master.fish.weight.ToString() + "kg");
         }
 
         public override void OnExit()
