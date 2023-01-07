@@ -142,12 +142,12 @@ namespace Fishing.State
             }
 
             // トルクに応じてリールの色を調整
-            _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
-            if (_normalizedTorque < 0.5f){
-                master.rope.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
-            }else{
-                master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
-            }
+            // _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
+            // if (_normalizedTorque < 0.5f){
+            //     master.rope.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
+            // }else{
+            //     master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
+            // }
 
 
             // 魚が針から逃げる
