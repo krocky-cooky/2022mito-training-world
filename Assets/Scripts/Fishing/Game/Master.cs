@@ -8,12 +8,15 @@ using Fishing.Game;
 using Fishing.State;
 using Fishing.StateController;
 using Fishing.Object;
+using TRAVE;
 
 namespace Fishing.Game
 {
 
     public class Master : MonoBehaviour
     {   
+        TRAVEDevice device = TRAVEDevice.GetDevice();
+
         const int MAX_LOG_LINES = 10;
 
         public Queue<string> viewerTextQueue = new Queue<string>();
@@ -230,6 +233,12 @@ namespace Fishing.Game
         void Start()
         {
             masterStateController.Initialize((int)MasterStateController.StateType.BeforeFishing);
+
+            //Make connection with TRAVE device if connection hasn't been made.
+            if(!device.isConnected)
+            {
+                device.ReConnectToDevice();
+            }
         }
 
         // Update is called once per frame
@@ -312,21 +321,27 @@ namespace Fishing.Game
             if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
                 return;
             }
-            SendingDataFormat data = new SendingDataFormat();
-            data.setTorque(torque, speed);
-            communicationInterface.sendData(data);
+            // SendingDataFormat data = new SendingDataFormat();
+            // data.setTorque(torque, speed);
+            // communicationInterface.sendData(data);
+            device.SetTorqueMode(torque);
+            device.Apply();
+
             Debug.Log("send torque" + torque.ToString());
             _previoussendingTorque = sendingTorque;
             _previousTorqueSendingTime = time;
+            
         }
 
 
         //モーターの現状復帰用関数(速度0指令)
         private void restore()
         {
-            SendingDataFormat data = new SendingDataFormat();
-            data.setSpeed(0.0f);
-            communicationInterface.sendData(data);
+            // SendingDataFormat data = new SendingDataFormat();
+            // data.setSpeed(0.0f);
+            // communicationInterface.sendData(data);
+            device.SetSpeedMode(0.0f);
+            device.Apply();
         }
 
         // 魚を楕円軌道で動かす
