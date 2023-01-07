@@ -39,7 +39,7 @@ namespace tsunahiki.game
         
 
         // トルク÷握力計の値
-        public float gripStrengthMultiplier = 0.5f;
+        public float gripStrengthMultiplier = 4.0f;
 
         
     
