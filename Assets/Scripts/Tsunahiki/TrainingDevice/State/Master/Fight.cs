@@ -94,10 +94,12 @@ namespace tsunahiki.trainingDevice.state
                 //握力系トルクの反映
                 float opponentValue = stateController.coordinator.getOpponentValue();
                 float sendingTorque = opponentValue * stateController.master.gripStrengthMultiplier;
+                _device.SetTorqueMode(sendingTorque);
                 _fromLastTorqueUpdated += Time.deltaTime;
                 if(_fromLastTorqueUpdated > stateController.torqueSendingInterval)
                 {
-                    UpdateTorque(sendingTorque);
+                    _device.Apply();
+                    Debug.Log($"Torque {sendingTorque} has sent to Training Device");
                     _fromLastTorqueUpdated = 0.0f;
                 }
             }
@@ -125,13 +127,7 @@ namespace tsunahiki.trainingDevice.state
             return (int)StateType;
         }
 
-        private void UpdateTorque(float torque,float speedLimit = 10.0f)
-        {
-            _device.SetTorqueMode(torque,speedLimit);
-            _device.Apply();
-
-            Debug.Log($"Torque {torque} has sent to Training Device");
-        }
+        
         
     }
 }

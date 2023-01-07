@@ -11,6 +11,8 @@ namespace TRAVE
         private CommunicationBase _communicationBase;
         private TRAVESendingFormat _currentMotorState = new TRAVESendingFormat();
         private TRAVESendingFormat _dataToSend = new TRAVESendingFormat();
+        private string _motorCommandPrefix = "m";
+        private string _converterCommandPrefix = "p";
 
         private TRAVELogger _logger = TRAVELogger.GetInstance;
 
@@ -85,6 +87,17 @@ namespace TRAVE
 
         }
 
+
+        internal void _masterMethod_OnApplicationQuit()
+        {
+            _communicationBase.OnApplicationQuit();
+        }
+
+        public bool ReConnectToDevice()
+        {
+            _communicationBase.Connect();
+            return _communicationBase.isConnected;
+        }
         
 
         public void SetTorqueMode(float torque, float spdLimit = 10.0f)
@@ -100,6 +113,35 @@ namespace TRAVE
             _dataToSend.target = "spd";
             _dataToSend.spd = speed;
             _dataToSend.trqLimit = trqLimit;
+        }
+
+        public bool TurnOnMotor()
+        {
+            string command = _motorCommandPrefix + "1";
+            return _communicationBase.SendString(command);
+        }
+
+        public bool TurnOffMotor()
+        {
+            string command = _motorCommandPrefix + "0";
+            return _communicationBase.SendString(command);
+        }
+
+        public bool TurnOnConverter()
+        {
+            string command = _converterCommandPrefix + "1";
+            return _communicationBase.SendString(command);
+        }
+
+        public bool TurnOffConverter()
+        {
+            string command = _converterCommandPrefix + "0";
+            return _communicationBase.SendString(command);
+        }
+
+        public bool SendString(string command)
+        {
+            return _communicationBase.SendString(command);
         }
 
 
@@ -119,14 +161,23 @@ namespace TRAVE
         public TRAVEReceivingFormat GetReceivedData()
         {
             string receivedString = _communicationBase.GetReceivedString();
-            TRAVEReceivingFormat retval = JsonUtility.FromJson<TRAVEReceivingFormat>(receivedString);
-            
-            if(retval == null) 
+            _logger.writeLog(receivedString);
+            try
             {
+                TRAVEReceivingFormat retval = JsonUtility.FromJson<TRAVEReceivingFormat>(receivedString);
+                if(retval == null)
+                {
+                    return new TRAVEReceivingFormat();
+                }
+                return retval;
+            }
+            catch(System.Exception e)
+            {
+                string message = e.Message;
+                _logger.writeLog(receivedString, TRAVELogger.LogLevel.Warn);
                 return new TRAVEReceivingFormat();
             }
-
-            return retval;
         }
+
     }
 }

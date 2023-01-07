@@ -65,9 +65,19 @@ namespace TRAVE_unity
             return false;
         }
 
+        public override bool SendString(string command)
+        {
+            return false;
+        }
+
         public override void AllocateParams(SettingParams settingParams)
         {
 
+        }
+
+        public override void OnApplicationQuit()
+        {
+            
         }
 
     }
