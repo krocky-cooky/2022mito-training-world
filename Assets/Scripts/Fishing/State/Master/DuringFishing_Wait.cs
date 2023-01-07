@@ -112,9 +112,12 @@ namespace Fishing.State
         // 指定の重量の魚を、指定の匹数だけ出現させて返す
         public List<Fish> GetFishesOfSpecifiedWeight(List<GameObject> _fishSpecies,int _numberOfFishes, float _minTorque, float _maxTorque){
             List<Fish> _appearingFishes = new List<Fish>();
+            int tryCount = 0;
 
             // 指定した匹数だけ繰り返す
-            while (_appearingFishes.Count < _numberOfFishes){
+            while (_appearingFishes.Count < _numberOfFishes & tryCount < 10000){
+                tryCount += 1;
+
                 // 魚をランダムに取得
                 Fish _candidateFishPrefab;
                 _candidateFishPrefab = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
