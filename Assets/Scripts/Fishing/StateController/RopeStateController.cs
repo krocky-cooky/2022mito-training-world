@@ -14,27 +14,29 @@ namespace Fishing.StateController
     public class RopeStateController : StateControllerBase
     {
 
-        // 釣り糸の先端
-        public Transform ropeRelayBelowHandleTransform;
+        // // 釣り糸の先端
+        // public Transform ropeRelayBelowHandleTransform;
 
-        // マスターのコントローラー
-        public MasterStateController masterStateController;
+        // // マスターのコントローラー
+        // public MasterStateController masterStateController;
 
-        // ロープの固定位置
-        public Vector3 fixedPosition;
-        public Quaternion fixedRotation;
+        // // ロープの固定位置
+        // public Vector3 fixedPosition;
+        // public Quaternion fixedRotation;
 
-        // ハンドルの位置
-        public Transform centerOfHandle;
+        // // ハンドルの位置
+        // public Transform centerOfHandle;
 
-        // ロープの長さ
-        public float ropeLength;
+        // // 釣り中のロープの長さ
+        // public float ropeLengthDuringFishing;
+        // // 釣り中以外のロープの長さ
+        // public float ropeLengthWhenNotFishing;
 
-        // 魚
-        public Fish fish;
+        // // 魚
+        // public Fish fish;
 
-        // ロープのカラー
-        public Color targetRopeColor;
+        // // ロープのカラー
+        // public Color targetRopeColor;
 
         public enum StateType
         {

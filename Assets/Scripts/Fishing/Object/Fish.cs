@@ -35,6 +35,9 @@ namespace Fishing.Object{
         // 魚のボディのオブジェクト
         public GameObject _bodyObject;
 
+        // 水しぶき
+        public Splash splash;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -64,6 +67,8 @@ namespace Fishing.Object{
                 }
             }
 
+            splash.SetActive(false);
+
         }
 
         // Update is called once per frame
@@ -72,6 +77,8 @@ namespace Fishing.Object{
             _shadowObject.SetActive(isFishShadow);
             _bodyObject.SetActive(isFishBody);
             _shadowObject.GetComponent<Animator>().SetFloat("Speed", twistSpeed);
+
+            splash.normalizedSplashVolume = currentIntensityOfMovements;
         }
     }
 }

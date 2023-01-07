@@ -27,11 +27,10 @@ namespace Fishing.State
 
         public override int StateUpdate()
         {
-            ropeStateController.ropeRelayBelowHandleTransform.position = new Vector3(ropeStateController.centerOfHandle.position.x, -ropeStateController.ropeLength, ropeStateController.centerOfHandle.position.z);
-
-            if ((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
-                ropeStateController.fixedPosition = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.position;
-                ropeStateController.fixedRotation = ropeStateController.masterStateController.ropeRelayBelowHandle.transform.rotation;
+            rope.ropeRelayBelowHandleTransform.position = new Vector3(rope.centerOfHandle.position.x,rope.centerOfHandle.position.y - rope.ropeLengthWhenNotFishing, rope.centerOfHandle.position.z);
+            rope.ropeRelayBelowHandleTransform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+            
+            if ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
                 return (int)RopeStateController.StateType.Fixed;
             }
 

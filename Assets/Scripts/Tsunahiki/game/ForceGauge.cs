@@ -30,6 +30,15 @@ namespace tsunahiki.game
         }
         public PositionCalculationMethod positionCalculationMethod;
 
+        // 値の入力方法の切り替え
+        public enum InputInterface
+        {
+            Mouse, 
+            Stick,
+            HandDyameter,
+        }
+        public InputInterface inputInterface;
+
         // 出力する位置情報を0~1で表す。例えば、0.5が返されたら、最大位置と最小位置の間を意味する
         // 他スクリプトからアクセス可能にするが、inspectorに表示しない
         // [System.NonSerialized] public float outputPosition = 0.0f;
@@ -69,13 +78,20 @@ namespace tsunahiki.game
         }
 
         void Update(){
-            currentForce = Input.mousePosition.x;
             
-            if (serialHandler.isRunning){
-                currentForce = serialHandler.getReceivedDataOfForceGauge().force;
-                Debug.Log("grip value is " + currentForce.ToString());
+            if (inputInterface == InputInterface.Mouse){
+                currentForce = Input.mousePosition.x;
             }
-
+            if (inputInterface == InputInterface.Stick){
+                currentForce = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[1];
+            }
+            if (inputInterface == InputInterface.HandDyameter){
+                if (serialHandler.isRunning){
+                    currentForce = serialHandler.getReceivedDataOfForceGauge().force;
+                    Debug.Log("grip value is " + currentForce.ToString());
+                }
+            }
+            
             _outputVelocity = CalculateVelocityProportionalToForce();
             outputPosition = outputPosition + _outputVelocity * Time.deltaTime;
 
@@ -95,13 +111,13 @@ namespace tsunahiki.game
 
 
             // マシンのハンドル等のストロークポジション登録
-            if(Input.GetMouseButtonDown(2))
+            if(OVRInput.GetDown(OVRInput.RawButton.B) || OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))
             {
                 minForce = currentForce;
                 maxForce = currentForce;
                 Debug.Log("Input.GetMouseButtonDown(2)");
             }
-            if(Input.GetMouseButton(2))
+            if(OVRInput.Get(OVRInput.RawButton.B) || OVRInput.Get(OVRInput.RawButton.Y) || Input.GetMouseButton(2))
             {
                 Debug.Log("Input.GetMouseButton(2)");
                 if (minForce > currentForce){
@@ -109,6 +125,10 @@ namespace tsunahiki.game
                 }
                 if (maxForce < currentForce){
                     maxForce = currentForce;
+                }
+
+                if(inputInterface == InputInterface.HandDyameter){
+                    minForce = 0.0f;
                 }
             }
         }

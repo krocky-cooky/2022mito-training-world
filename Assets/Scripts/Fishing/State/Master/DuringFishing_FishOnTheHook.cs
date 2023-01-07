@@ -76,6 +76,9 @@ namespace Fishing.State
             _minTorque = _maxTorque - _torqueDecrease;
             _normalizedTorque = 0.0f;
             masterStateController.tensionSliderGameObject.SetActive(masterStateController.tensionSliderIsOn);
+
+            // 水しぶき
+            masterStateController.fish.splash.SetActive(true);
         }
 
         public override void OnExit()
@@ -83,6 +86,8 @@ namespace Fishing.State
             masterStateController.FishSoundOnTheHook.Stop();
             OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
             masterStateController.fish.HP = _maxHP;
+
+            masterStateController.fish.splash.SetActive(false);
         }
 
         public override int StateUpdate()
@@ -139,9 +144,9 @@ namespace Fishing.State
             // トルクに応じてリールの色を調整
             _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
             if (_normalizedTorque < 0.5f){
-                masterStateController.ropeStateController.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
+                masterStateController.rope.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
             }else{
-                masterStateController.ropeStateController.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
+                masterStateController.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
             }
 
 

@@ -36,17 +36,17 @@ namespace Fishing.State
 
         public override int StateUpdate()
         {
-            // ropeColorProperty = ropeStateController.targetRopeColor;
+            // ropeColorProperty = rope.targetRopeColor;
             // ropeColorProperty = Color.red;
-            GameObject.Find("fishLine(Clone)").GetComponent<Renderer>().material.color = ropeStateController.targetRopeColor;
+            GameObject.Find("fishLine(Clone)").GetComponent<Renderer>().material.color = rope.targetRopeColor;
 
-            ropeStateController.ropeRelayBelowHandleTransform.position = ropeStateController.fish.transform.position;
-            ropeStateController.ropeRelayBelowHandleTransform.rotation = ropeStateController.fish.transform.rotation;
+            rope.ropeRelayBelowHandleTransform.position = rope.fish.transform.position;
+            rope.ropeRelayBelowHandleTransform.rotation = rope.fish.transform.rotation;
 
-            if (((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.AfterFishing) || ((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing)){
+            if (((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.AfterFishing) || ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing)){
                 return (int)RopeStateController.StateType.FollowsHandle;
             }
-            if ((int)ropeStateController.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
+            if ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
                 return (int)RopeStateController.StateType.Fixed;
             }
             

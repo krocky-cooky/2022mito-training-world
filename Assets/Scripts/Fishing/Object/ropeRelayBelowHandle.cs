@@ -13,7 +13,7 @@ namespace Fishing.Object{
     {
     //     public Transform centerOfHandle;
 
-    //     public float ropeLength;
+    //     public float ropeLengthDuringFishing;
         
 
         // Start is called before the first frame update
@@ -25,7 +25,7 @@ namespace Fishing.Object{
         // Update is called once per frame
         void Update()
         {
-            // transform.position = new Vector3(centerOfHandle.position.x, -ropeLength, centerOfHandle.position.z);
+            // transform.position = new Vector3(centerOfHandle.position.x, -ropeLengthDuringFishing, centerOfHandle.position.z);
         }
     }
 }

@@ -13,14 +13,13 @@ namespace Fishing.State
 {
     public abstract class RopeStateBase : StateBase
     {
-        // ステートコントローラー
-        protected RopeStateController ropeStateController;
+        protected FishingLine rope;
 
         // 初期化処理
         public override void Initialize(int stateType)
         {
             StateType = stateType;
-            ropeStateController = GetComponent<RopeStateController>();
+            rope = GameObject.FindWithTag("fishingLine").GetComponent<FishingLine>();
         }
     }
 }
