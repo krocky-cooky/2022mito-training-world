@@ -25,7 +25,7 @@ namespace Fishing.State
             Debug.Log("DuringFishing_FishingLineBreaks");
 
             // 現在の魚の速度を、逃げる際も引きつぐ
-            _fishSpeed = Mathf.Lerp(master.minAngularVelocity, master.maxAngularVelocity, master.fish.currentIntensityOfMovements) * Mathf.Deg2Rad * master.radius;
+            _fishSpeed = Mathf.Lerp(master.minAngularVelocity, master.maxAngularVelocity, master.fish.currentIntensityOfMovements) * Mathf.Deg2Rad * master.radius * 2.0f;
 
             master.FishingLineBreaks.Play();
 
@@ -33,6 +33,9 @@ namespace Fishing.State
 
             // ファイト回数を追加
             master.fightingCount += 1;
+
+            // 負荷を小さくする
+            master.sendingTorque = Mathf.Max(master.sendingTorque - 1.0f, master.baseTorqueDuringFishing);
         }
 
         public override void OnExit()
@@ -51,7 +54,7 @@ namespace Fishing.State
             }
 
             // 釣りの前に戻る
-            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1) || (_currentTimeCount > 5.0f))
+            if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1) || (_currentTimeCount > 7.0f))
             {
                 return (int)MasterStateController.StateType.BeforeFishing;
             }

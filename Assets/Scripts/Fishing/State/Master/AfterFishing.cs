@@ -35,7 +35,7 @@ namespace Fishing.State
 
             master.frontViewUiText.text = master.fish.species + " " + master.fish.weight.ToString("f2") + "kg";
 
-            master.sendingTorque = 0.0f;
+            master.sendingTorque = master.baseTorqueDuringFishing;
 
             // 魚の表示を、水中の魚影モードから水上の実体モードに切り替え
             master.fish.isFishShadow = false;

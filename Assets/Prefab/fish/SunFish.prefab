@@ -9939,7 +9939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30DE\u30F3\u30DC\u30A6"
   weight: 4
-  torque: 1.5
+  torque: 2.25
   HP: 105
   easeOfEscape: 0.209
   currentIntensityOfMovements: 1

@@ -356,7 +356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51579332}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -430,7 +430,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98835246}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -504,7 +504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114588194}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3558,7 +3558,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807918061}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4252,7 +4252,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953908211}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4963,7 +4963,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102272189}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5891,7 +5891,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285872340}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5991,8 +5991,8 @@ MonoBehaviour:
   sendingTorque: 0
   masterStateController: {fileID: 1895901906}
   fishUpPosition: {fileID: 244489748}
-  minUserPower: 1.5
-  maxUserPower: 2
+  minUserPower: 2
+  maxUserPower: 2.5
   fishSpecies:
   - {fileID: 8944952731931013970, guid: 7ca89b203b8d4b94fae39e501fa09881, type: 3}
   - {fileID: 1337632624722926868, guid: 5cf010af4a358ec42a7591d95abf9763, type: 3}
@@ -6029,10 +6029,10 @@ MonoBehaviour:
   maxAplitudeOfTorque: 0.5
   periodOfTorque: 0.1
   firstSpikePeriod: 0.22
-  firstSpikeSize: 1.25
+  firstSpikeSize: 1.7
   latterSpikePeriod: 0.42
   latterSpikeSize: 0.25
-  baseTorqueDuringFishing: 0.75
+  baseTorqueDuringFishing: 0.85
   maxIntervalOfNibbling: 2
   minIntervalOfNibbling: 1
   maxTimeOfNibbling: 7
@@ -6078,7 +6078,7 @@ MonoBehaviour:
   numberOfApearanceFishes: 4
   fishingRecord: []
   UIByLeftController: {fileID: 926939753}
-  timeLimitToEscape: 6
+  timeLimitToEscape: 12
   normalizedSpeedLimitToBreakFishingLine: 1
   lure: {fileID: 919132148541792436}
   fightingCount: 0
@@ -6550,7 +6550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482231234}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8161,7 +8161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816209320}
   m_LocalRotation: {x: -0.0045000482, y: 0, z: 0, w: -0.99998987}
-  m_LocalPosition: {x: 0, y: 0.1505896, z: -1212.6484}
+  m_LocalPosition: {x: 127.0096, y: 184.23634, z: -1151.656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
