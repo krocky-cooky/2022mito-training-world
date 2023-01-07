@@ -37,7 +37,9 @@ namespace TRAVE_unity
 
 
         private GUIStyle centeredLabel;
+        private GUIStyle monitoringConnection;
         private GUIStyle monitoringLabel;
+        private GUIStyle monitoringValue;
 
 
         public void OnEnable()
@@ -83,9 +85,19 @@ namespace TRAVE_unity
             centeredLabel.fontStyle = FontStyle.Bold;
             centeredLabel.alignment = TextAnchor.MiddleCenter;
 
+            monitoringConnection = new GUIStyle(GUI.skin.label);
+            monitoringConnection.fontStyle = FontStyle.Bold;
+            monitoringConnection.normal.textColor = isConnected.boolValue ? Color.green : Color.red;
+            monitoringConnection.alignment = TextAnchor.MiddleCenter;
+
             monitoringLabel = new GUIStyle(GUI.skin.label);
             monitoringLabel.fontStyle = FontStyle.Normal;
             monitoringLabel.alignment = TextAnchor.MiddleCenter;
+
+            monitoringValue = new GUIStyle(GUI.skin.label);
+            monitoringValue.fontStyle = FontStyle.Normal;
+            monitoringValue.normal.textColor = Color.green;
+            monitoringValue.alignment = TextAnchor.MiddleCenter;
 
             serializedObject.Update();
 
@@ -145,12 +157,68 @@ namespace TRAVE_unity
             GUIHelper.EndVerticalPadded();
 
             EditorGUILayout.LabelField("TRAVE Device Monitoring", centeredLabel);
-            EditorGUILayout.LabelField(ConvertLabel("Is Connected", isConnected.boolValue.ToString()), monitoringLabel);
-            EditorGUILayout.LabelField(ConvertLabel("Motor Mode", motorMode.stringValue), monitoringLabel);
-            EditorGUILayout.LabelField(ConvertLabel("Current Torque", torque.floatValue.ToString()), monitoringLabel);
-            EditorGUILayout.LabelField(ConvertLabel("Current Speed", speed.floatValue.ToString()), monitoringLabel);
-            EditorGUILayout.LabelField(ConvertLabel("Current position", position.floatValue.ToString()), monitoringLabel);
-            EditorGUILayout.LabelField(ConvertLabel("Current integration angle", integrationAngle.floatValue.ToString()), monitoringLabel);
+            GUIHelper.BeginVerticalPadded();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("State", monitoringLabel);
+            EditorGUILayout.LabelField(isConnected.boolValue ? "Connected" : "Not connected", monitoringConnection);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(0.5f));
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Motor Mode", monitoringLabel);
+            EditorGUILayout.LabelField(motorMode.stringValue, monitoringValue);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(0.5f));
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Motor Mode", monitoringLabel);
+            EditorGUILayout.LabelField(motorMode.stringValue, monitoringValue);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(0.5f));
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Current Torque", monitoringLabel);
+            EditorGUILayout.LabelField(torque.floatValue.ToString(), monitoringValue);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(0.5f));
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Current Speed", monitoringLabel);
+            EditorGUILayout.LabelField(speed.floatValue.ToString(), monitoringValue);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(0.5f));
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Current Position", monitoringLabel);
+            EditorGUILayout.LabelField(position.floatValue.ToString(), monitoringValue);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(0.5f));
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Current integration angle", monitoringLabel);
+            EditorGUILayout.LabelField(integrationAngle.floatValue.ToString(), monitoringValue);
+            EditorGUILayout.EndHorizontal();
+            
+            GUIHelper.EndVerticalPadded();
 
 
             serializedObject.ApplyModifiedProperties();
