@@ -28,6 +28,13 @@ namespace Fishing.State
         // 速度超過時間
         private float _excessSpeedTime;
 
+        // キャリブレーション用の変数
+        // 速度0指令時のトルクのリスト
+        private List<float> _torquesAtZeroSpeed = new List<float>();
+        // トルク制御時のトルクのリスト
+        private List<float> _torquesAtTorqueCommand = new List<float>();
+
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
@@ -60,14 +67,17 @@ namespace Fishing.State
         {
             _currentTimeCount += Time.deltaTime;
 
+            // トルクの読み取り
+            // _readTorque
 
             // モータへの指令
-            // if (_currentTimeCount < master.staticTimeAtCalibration){
-            //     device.SetSpeedMode(0.0f, 4.5f);
-            // }else{
-            //     device.SetTorqueMode()
-            // }
-            // device.Apply();
+            if (_currentTimeCount < master.staticTimeAtCalibration){
+                master.device.SetSpeedMode(0.0f, 4.5f);
+            }else{
+                float _sendingTorque;
+                _sendingTorque = GetTorqueEqualToUserPower();
+                master.device.SetTorqueMode(_sendingTorque);
+            }
 
             
             // トルクを負荷ゲージで表示
@@ -138,6 +148,13 @@ namespace Fishing.State
             return (int)StateType;
         }
 
+        // ユーザーの発揮筋力と等しいトルクを算出
+        // PID的に計算
+        float GetTorqueEqualToUserPower(){
+            return 1.5f;
+        }
+
+        // トルクと位置の関係を記録する
 
 
     }

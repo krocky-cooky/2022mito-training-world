@@ -3387,6 +3387,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1290723663}
     m_Modifications:
+    - target: {fileID: 6798241760927372484, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+        type: 3}
+      propertyPath: portName
+      value: COM6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798241760927372484, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+        type: 3}
+      propertyPath: portNameIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798241760927372484, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+        type: 3}
+      propertyPath: communicationType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6835771489023127269, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
         type: 3}
       propertyPath: m_Name
@@ -6139,7 +6154,7 @@ MonoBehaviour:
   - {fileID: 2177996821029986448, guid: f3f43ceba49aa2d4cb297b9a488dd7f9, type: 3}
   viewerObject: {fileID: 813061342}
   communicationInterface: {fileID: 1322611939}
-  torqueSendingInterval: 0.1
+  commandSendingInterval: 0.1
   myHandle: {fileID: 855910966}
   targetHandle: {fileID: 1990566654}
   gameMaster: {fileID: 1290723664}

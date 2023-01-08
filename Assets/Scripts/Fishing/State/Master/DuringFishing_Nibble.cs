@@ -115,11 +115,11 @@ namespace Fishing.State
             // 針にかかる
             if (currentTimeCount > _timeOfNibbling)
             {
-                // // 初回または10回ごとにキャリブレーション
-                // if (master.fightingCount % 10 == 0)
-                // {
-                //     return (int)MasterStateController.StateType.DuringFishing_Calibration;
-                // }
+                // 初回または10回ごとにキャリブレーション
+                if (master.fightingCount % 10 == 0)
+                {
+                    return (int)MasterStateController.StateType.DuringFishing_Calibration;
+                }
 
                 return (int)MasterStateController.StateType.DuringFishing_FishOnTheHook;
             }
