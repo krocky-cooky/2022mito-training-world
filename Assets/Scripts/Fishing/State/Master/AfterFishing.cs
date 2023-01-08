@@ -55,6 +55,9 @@ namespace Fishing.State
 
             // ファイト回数を追加
             master.fightingCount += 1;
+
+            // 負荷を小さくする
+            master.sendingTorque = Mathf.Max(master.sendingTorque - 1.0f, master.baseTorqueDuringFishing);
         }
 
         public override void OnExit()
