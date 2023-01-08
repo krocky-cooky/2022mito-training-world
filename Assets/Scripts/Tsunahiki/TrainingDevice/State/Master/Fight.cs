@@ -6,6 +6,7 @@ using util;
 using communication;
 using tsunahiki.game;
 using tsunahiki.trainingDevice.stateController;
+using TRAVE;
 
 
 namespace tsunahiki.trainingDevice.state 
@@ -15,6 +16,7 @@ namespace tsunahiki.trainingDevice.state
         private Vector3 _cubeStartPosition;
         private Vector3 _opponentHandleStartPosition;
         private float _fromLastTorqueUpdated = 0.0f;
+        private TRAVEDevice _device = TRAVEDevice.GetDevice();
 
         public override void OnEnter() 
         {
@@ -27,7 +29,9 @@ namespace tsunahiki.trainingDevice.state
 
 
         public override void OnExit()
-        {}
+        {
+            stateController.master.resetWind();
+        }
 
         public override int StateUpdate()
         {
@@ -46,16 +50,56 @@ namespace tsunahiki.trainingDevice.state
                 opponentHandlePos.z -= (normalizedForceGaugePos - 0.5f)*stateController.opponentMotionAmplitude;
                 opponentHandlePos.z += controllerPositionFromCenter;
                 stateController.opponentHandle.transform.position = opponentHandlePos;
+
             }
+
+            {
+                //勝敗状況によるエフェクト
+                //要素：対戦相手アバターの表情
+                if(stateController.master.fightCondition == TrainingDeviceType.TrainingDevice) //筋トレデバイス優勢
+                {
+                    stateController.master.setLosingAvatarExpression();
+                    
+
+                }
+                else if(stateController.master.fightCondition == TrainingDeviceType.ForceGauge) //握力系優勢
+                {
+                    stateController.master.setWinningAvatarExpression();
+                }
+                else 
+                {
+
+                }
+            }
+
+            {
+                //ゲームの優劣によるエフェクト
+                //要素：風
+                if(stateController.master.superiority == TrainingDeviceType.TrainingDevice)
+                {
+                    stateController.master.setFavorableWind();
+                }
+                else if(stateController.master.superiority == TrainingDeviceType.ForceGauge)
+                {
+                    stateController.master.setAdverseWind();
+                }
+                else
+                {
+
+                }
+            }
+
 
             {
                 //握力系トルクの反映
                 float opponentValue = stateController.coordinator.getOpponentValue();
                 float sendingTorque = opponentValue * stateController.master.gripStrengthMultiplier;
+                _device.SetTorqueMode(sendingTorque);
                 _fromLastTorqueUpdated += Time.deltaTime;
                 if(_fromLastTorqueUpdated > stateController.torqueSendingInterval)
                 {
-                    UpdateTorque(sendingTorque);
+                    _device.Apply();
+                    Debug.Log($"Torque {sendingTorque} has sent to Training Device");
                     _fromLastTorqueUpdated = 0.0f;
                 }
             }
@@ -83,14 +127,7 @@ namespace tsunahiki.trainingDevice.state
             return (int)StateType;
         }
 
-        private void UpdateTorque(float torque,float speed = 10.0f)
-        {
-            SendingDataFormat data = new SendingDataFormat();
-            data.setTorque(torque,speed);
-            stateController.communicationInterface.sendData(data);
-
-            Debug.Log($"Torque {torque} has sent to Training Device");
-        }
+        
         
     }
 }

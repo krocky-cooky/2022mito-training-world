@@ -31,7 +31,7 @@ namespace tsunahiki.trainingDevice.state
         public override int StateUpdate()
         {
             RemoteTsunahikiDataFormat opponentData = stateController.coordinator.getOpponentData();
-            if(opponentData.stateId == (int)MasterStateController.StateType.Ready)
+            if(opponentData.stateId == (int)MasterStateController.StateType.Ready || stateController.testMode)
             {
                 StartCoroutine(DecideSuperiorityCoroutine());
 

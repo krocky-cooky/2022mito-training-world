@@ -6,6 +6,7 @@ using util;
 using communication;
 using tsunahiki.game;
 using tsunahiki.trainingDevice.stateController;
+using TRAVE;
 
 
 namespace tsunahiki.trainingDevice.state
@@ -21,17 +22,22 @@ namespace tsunahiki.trainingDevice.state
         {
             stateController = GetComponent<MasterStateController>();
             StateType = stateType;
-
         }
 
         //速度ゼロ指令
         protected void restore()
         {
-            SendingDataFormat data = new SendingDataFormat();
-            data.setSpeed(0.0f);
-            stateController.communicationInterface.sendData(data);
+            TRAVEDevice device = TRAVEDevice.GetDevice();
+            device.SetSpeedMode(0.0f);
+            device.Apply();
         }
 
-
+        //ワイヤ巻取り
+        protected void reelWire()
+        {
+            TRAVEDevice device = TRAVEDevice.GetDevice();
+            device.SetSpeedMode(2.0f);
+            device.Apply();
+        }
     }
 }

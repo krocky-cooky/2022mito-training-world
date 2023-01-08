@@ -41,6 +41,7 @@ namespace communication
                 OnDataReceived(_message);
             }
             _isNewMessageReceived = false;
+            Debug.Log("hello");
         }
 
         void OnDestroy()

@@ -51,9 +51,11 @@ XR_MecanimIKPlus/
 Yughues Free PBR Metal Plates/
 NatureManufacture Assets/
 Simple Garage/
+ParticlePack/
 
 # Large DLLs
 
 *.dll 
 *.onnx
 Assets/Packages
+
