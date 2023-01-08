@@ -34,7 +34,8 @@ namespace Fishing.State
             // トルクの指定
             // _fisrtTorque = master.fish.weight / master.fishWeightPerTorque;
             // master.sendingTorque = Mathf.Max(_fisrtTorque - master.torqueReduction, 0.75f);
-            master.sendingTorque = 1.0f;
+            // master.sendingTorque = 1.0f;
+            master.device.SetTorqueMode(1.0f);
 
             // 音声を再生
             master.FishSoundWithHP0.Play();
@@ -63,7 +64,7 @@ namespace Fishing.State
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            master.tensionSlider.value = master.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 直前の位置の更新
             if ((currentTimeCount - _whenPreviousPosition) > master.timeOfRaising){

@@ -40,7 +40,8 @@ namespace Fishing.State
             Debug.Log("hit prob is" + probabilityOfFishOnTheHook.ToString());
 
             // 釣りモード時のトルク指令
-            master.sendingTorque = master.baseTorqueDuringFishing;
+            // master.sendingTorque = master.baseTorqueDuringFishing;
+            master.device.SetTorqueMode(master.baseTorqueDuringFishing);
 
             master.frontViewUiText.text = "During fishing";
 
@@ -81,7 +82,7 @@ namespace Fishing.State
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            master.tensionSlider.value = master.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
             
             // 釣り上げ予定の魚を動かす
             master.MoveFishOnEllipse(master.fish, currentTimeCount, 10.0f, 1.0f, 0.5f, -90.0f, 0.0f);

@@ -62,7 +62,8 @@ namespace Fishing.State
             // _maxTorque = master.fish.torque;
             _minTorque = master.fish.weight / master.fishWeightPerTorque;
             _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
-            master.sendingTorque = _maxTorque;
+            // master.sendingTorque = _maxTorque;
+            master.device.SetTorqueMode(_maxTorque);
 
             // 音声を再生
             master.FishSoundOnTheHook.Play();
@@ -101,7 +102,7 @@ namespace Fishing.State
             
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            master.tensionSlider.value = master.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 魚の暴れる強さ
             // 引きあげるほど強くなる
@@ -125,7 +126,8 @@ namespace Fishing.State
             // トルクの最大最小範囲を超えないようにする
             _normalizedTorque = master.fish.currentIntensityOfMovements + master.trainingDevice.currentNormalizedPosition - 0.5f;
             _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
-            master.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
+            // master.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
+            master.device.SetTorqueMode(_minTorque + _normalizedTorque * _torqueDecrease);
 
             // ロープの音の大きさとピッチを変更
             // 音もピッチもトルクのp乗に比例。これで高域をシャープにする

@@ -70,7 +70,7 @@ namespace Fishing.State
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            master.tensionSlider.value = master.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 魚が突く感触をトルクで再現
             if ((currentTimeCount - _previousSpikeTime) > _spikeInterval){
@@ -86,14 +86,17 @@ namespace Fishing.State
                 Invoke("PlayNibbleVibration", master.buffurTimeForNibbleSound);
             }
             if (currentTimeCount < (_spikeEndTime - master.latterSpikePeriod)){
-                master.sendingTorque = master.firstSpikeSize;
+                // master.sendingTorque = master.firstSpikeSize;
+                master.device.SetTorqueMode(master.firstSpikeSize);
                 Debug.Log("fisrt spike");
             }else if(currentTimeCount < _spikeEndTime){
-                master.sendingTorque = master.latterSpikeSize;
+                // master.sendingTorque = master.latterSpikeSize;
+                master.device.SetTorqueMode(master.latterSpikeSize);
                 Debug.Log("latter spike");
                 // master.NibbleSound.Play();
             }else{
-                master.sendingTorque = master.baseTorqueDuringFishing;
+                // master.sendingTorque = master.baseTorqueDuringFishing;
+                master.device.SetTorqueMode(master.baseTorqueDuringFishing);
             }
 
 
@@ -112,11 +115,11 @@ namespace Fishing.State
             // 針にかかる
             if (currentTimeCount > _timeOfNibbling)
             {
-                // 初回または10回ごとにキャリブレーション
-                if (master.fightingCount % 10 == 0)
-                {
-                    return (int)MasterStateController.StateType.DuringFishing_Calibration;
-                }
+                // // 初回または10回ごとにキャリブレーション
+                // if (master.fightingCount % 10 == 0)
+                // {
+                //     return (int)MasterStateController.StateType.DuringFishing_Calibration;
+                // }
 
                 return (int)MasterStateController.StateType.DuringFishing_FishOnTheHook;
             }

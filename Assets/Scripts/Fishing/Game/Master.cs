@@ -15,7 +15,7 @@ namespace Fishing.Game
 
     public class Master : MonoBehaviour
     {   
-        TRAVEDevice device = TRAVEDevice.GetDevice();
+        public TRAVEDevice device = TRAVEDevice.GetDevice();
 
         const int MAX_LOG_LINES = 10;
 
@@ -40,7 +40,7 @@ namespace Fishing.Game
         [SerializeField]
         private MainCommunicationInterface communicationInterface;
         [SerializeField]
-        private float torqueSendingInterval = 0.1f;
+        private float commandSendingInterval = 0.1f;
 
 
         // 自分が持っているハンドルの位置
@@ -53,7 +53,7 @@ namespace Fishing.Game
 
         private float time = 0.0f;
         private float _previoussendingTorque = 0.0f;
-        private float _previousTorqueSendingTime = 0.0f;
+        private float _previousCommandSendingTime = 0.0f;
         private bool duringReelingWire = false;
 
 
@@ -229,6 +229,9 @@ namespace Fishing.Game
         // ファイト回数(=釣った回数＆逃げられた回数)
         public int fightingCount = 0;
 
+        // キャリブレーション開始直後の速度0指令時間
+        public float staticTimeAtCalibration;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -267,12 +270,19 @@ namespace Fishing.Game
 
             // ワイヤ巻き取りまたはプレイ中のトルク指令
             // ワイヤ巻き取りの操作があればそれを優先し、なければプレイ中のトルク指令を行う
+            // if(OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
+            // {
+            //     UpdateTorque(0.75f);
+            // }else{
+            //     UpdateTorque(sendingTorque);
+            // }
             if(OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
             {
-                UpdateTorque(0.75f);
-            }else{
-                UpdateTorque(sendingTorque);
+                device.SetTorqueMode(0.75f);
             }
+
+            // モータへの制御指令を一定時間間隔で送信
+            UpdateCommand();
 
             // 回遊用の魚を動かす
             if(swimmingAroundFishes.Count > 0){
@@ -316,21 +326,30 @@ namespace Fishing.Game
         }
 
         //トルクを更新
-        private void UpdateTorque(float torque, float speed = 10.0f)
-        {
-            if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
+        // private void UpdateTorque(float torque, float speed = 10.0f)
+        // {
+        //     if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
+        //         return;
+        //     }
+        //     // SendingDataFormat data = new SendingDataFormat();
+        //     // data.setTorque(torque, speed);
+        //     // communicationInterface.sendData(data);
+        //     device.SetTorqueMode(torque);
+        //     device.Apply();
+
+        //     Debug.Log("send torque" + torque.ToString());
+        //     _previoussendingTorque = sendingTorque;
+        //     _previousTorqueSendingTime = time;
+            
+        // }
+
+        // 指令を更新
+        private void UpdateCommand(){
+            if ((time - _previousCommandSendingTime) <commandSendingInterval){
                 return;
             }
-            // SendingDataFormat data = new SendingDataFormat();
-            // data.setTorque(torque, speed);
-            // communicationInterface.sendData(data);
-            device.SetTorqueMode(torque);
             device.Apply();
-
-            Debug.Log("send torque" + torque.ToString());
-            _previoussendingTorque = sendingTorque;
-            _previousTorqueSendingTime = time;
-            
+            _previousCommandSendingTime = time;
         }
 
 
