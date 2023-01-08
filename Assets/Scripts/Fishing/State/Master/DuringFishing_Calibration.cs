@@ -21,7 +21,7 @@ namespace Fishing.State
         public Fish fish;
 
 
-        // 最大トルク. これは魚の重量に比例
+        // 最大トルク.
         private float _maxTorque;
         // 最小トルク
         private float _minTorque;
@@ -55,11 +55,13 @@ namespace Fishing.State
 
         public override void OnEnter()
         {
-            Debug.Log("DuringFishing_Calibration");
+            Debug.Log("DuringFishing_FishOnTheHook");
 
             // トルクの指定
             // _maxTorque = master.fish.weight / master.fishWeightPerTorque;
-            _maxTorque = master.fish.torque;
+            // _maxTorque = master.fish.torque;
+            _minTorque = master.fish.weight / master.fishWeightPerTorque;
+            _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
             master.sendingTorque = _maxTorque;
 
             // 音声を再生
@@ -76,7 +78,7 @@ namespace Fishing.State
             _fishAngle = 0.0f;
             _maxHP = master.fish.HP;
             _torqueDecrease = Mathf.Min(master.torqueReduction, _maxTorque - 0.75f);
-            _minTorque = _maxTorque - _torqueDecrease;
+            // _minTorque = _maxTorque - _torqueDecrease;
             _normalizedTorque = 0.0f;
             master.tensionSliderGameObject.SetActive(master.tensionSliderIsOn);
 
@@ -140,12 +142,13 @@ namespace Fishing.State
             }
 
             // トルクに応じてリールの色を調整
-            _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
-            if (_normalizedTorque < 0.5f){
-                master.rope.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
-            }else{
-                master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
-            }
+            // _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
+            // if (_normalizedTorque < 0.5f){
+            //     master.rope.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
+            // }else{
+            //     master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
+            // }
+            master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f), (byte)(255.0f), 1);       
 
 
             // 魚が針から逃げる

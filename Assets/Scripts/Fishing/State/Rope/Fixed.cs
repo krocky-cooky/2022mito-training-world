@@ -45,7 +45,7 @@ namespace Fishing.State
             }
 
 
-            if ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishOnTheHook){
+            if (((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishOnTheHook)  || (((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Calibration))){
                 return (int)RopeStateController.StateType.FollowsFish;
             }
 

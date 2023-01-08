@@ -41,6 +41,7 @@ namespace Fishing.State
         public override void OnExit()
         {
             master.lure.SetActive(true);
+            master.fish.isFishShadow = false;
         }
 
         public override int StateUpdate()

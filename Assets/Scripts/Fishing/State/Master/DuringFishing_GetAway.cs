@@ -39,6 +39,7 @@ namespace Fishing.State
 
         public override void OnExit()
         {
+            master.fish.isFishShadow = false;
         }
 
         public override int StateUpdate()
