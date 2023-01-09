@@ -43,13 +43,13 @@ namespace Fishing.State
             rope.ropeRelayBelowHandleTransform.position = rope.fish.transform.position;
             rope.ropeRelayBelowHandleTransform.rotation = rope.fish.transform.rotation;
 
-            if (((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.AfterFishing) || ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing)){
+            if (((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.AfterFishing) || ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.BeforeFishing)){
                 return (int)RopeStateController.StateType.FollowsHandle;
             }
-            if ((int)rope.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait){
+            if (((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_Wait) || ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_GetAway) || ((int)rope.master.masterStateController.CurrentState == (int)MasterStateController.StateType.DuringFishing_FishingLineBreaks)){
                 return (int)RopeStateController.StateType.Fixed;
             }
-            
+
             return (int)StateType;
         }
     }

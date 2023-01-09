@@ -1359,7 +1359,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 17de4ee6feb57084da85b69659fda6ea, type: 2}
   opponentFace: 0
   _masterForForceGauge: {fileID: 5607557278429839117}
-  _reflectsHMD: 0
+  _reflectsHMD: 1
   _HMD: {fileID: 5607557278531358609}
   _face: {fileID: 8540762849929881654}
   _lengthOfNeck: -1.5

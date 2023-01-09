@@ -20,11 +20,11 @@ namespace Fishing.State
         {
             Debug.Log("BeforeFishing");
 
-            masterStateController.frontViewUiText.text = "Press X button to start";
+            master.frontViewUiText.text = "Press X button to start";
 
-            masterStateController.gameMaster.sendingTorque = 0.0f;
+            master.sendingTorque = 0.0f;
 
-            masterStateController.tensionSliderGameObject.SetActive(false);
+            master.tensionSliderGameObject.SetActive(false);
         }
 
         public override void OnExit()
@@ -35,7 +35,7 @@ namespace Fishing.State
         {
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+            master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {

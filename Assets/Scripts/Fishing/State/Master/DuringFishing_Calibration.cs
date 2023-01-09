@@ -12,7 +12,7 @@ using Fishing.Object;
 namespace Fishing.State
 {
 
-    public class DuringFishing_FishOnTheHook : MasterStateBase
+    public class DuringFishing_Calibration : MasterStateBase
     {
         // タイムカウント
         private float _currentTimeCount;
