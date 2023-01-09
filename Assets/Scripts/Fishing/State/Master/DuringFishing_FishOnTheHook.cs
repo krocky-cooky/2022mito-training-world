@@ -60,8 +60,9 @@ namespace Fishing.State
             // トルクの指定
             // _maxTorque = master.fish.weight / master.fishWeightPerTorque;
             // _maxTorque = master.fish.torque;
-            _minTorque = master.fish.weight / master.fishWeightPerTorque;
-            _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
+            _minTorque = master.fish.torque;
+            // _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
+            _maxTorque = _minTorque + 0.1f;
             // master.sendingTorque = _maxTorque;
             master.device.SetTorqueMode(_maxTorque);
 
@@ -106,7 +107,7 @@ namespace Fishing.State
 
             // 魚の暴れる強さ
             // 引きあげるほど強くなる
-            master.fish.currentIntensityOfMovements = master.trainingDevice.currentNormalizedPosition;
+            master.fish.currentIntensityOfMovements =  master.trainingDevice.currentNormalizedPosition;
 
 
             // 魚がカラダをひねる強さを変化
@@ -124,10 +125,12 @@ namespace Fishing.State
             // 魚の暴れ具合に対してバーの高さが、ぴったりなら中間トルク、高ければトルクが大きくなり、低ければトルクが弱くなる
             // 魚の暴れ具合が、強い時はバーをさげ、弱い時はバーをあげながら、リールのテンションを一定に保つ
             // トルクの最大最小範囲を超えないようにする
-            _normalizedTorque = master.fish.currentIntensityOfMovements + master.trainingDevice.currentNormalizedPosition - 0.5f;
-            _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
-            // master.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
-            master.device.SetTorqueMode(_minTorque + _normalizedTorque * _torqueDecrease);
+            // _normalizedTorque = master.fish.currentIntensityOfMovements + master.trainingDevice.currentNormalizedPosition - 0.5f;
+            // _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
+            // // master.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
+            // master.device.SetTorqueMode(_minTorque + _normalizedTorque * _torqueDecrease);
+            _normalizedTorque = master.fish.currentIntensityOfMovements;
+            master.device.SetTorqueMode(Mathf.Lerp(_minTorque, _maxTorque, _normalizedTorque));
 
             // ロープの音の大きさとピッチを変更
             // 音もピッチもトルクのp乗に比例。これで高域をシャープにする

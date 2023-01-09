@@ -229,8 +229,15 @@ namespace Fishing.Game
         // ファイト回数(=釣った回数＆逃げられた回数)
         public int fightingCount = 0;
 
-        // キャリブレーション開始直後の速度0指令時間
-        public float staticTimeAtCalibration;
+        // // キャリブレーション開始直後の速度0指令時間
+        // public float staticTimeAtCalibration;
+
+        // キャリブレーション用の変数
+        public float firstTorqueBeforeCalibration; // 最初のトルク
+        public float velocityAtNegativeAction; // ネガティブ動作時の速度
+        public float cutoffRatioOfTime; // ネガティブ動作の初期はユーザーの力が立ち上がる途中なので、いくつかデータを切り落とす
+        public float topPercentile; // 上位?%のデータを最高値とする
+        public float bottomPercentile;// 下位?%のデータを最高値とする
 
         // Start is called before the first frame update
         void Start()
@@ -299,6 +306,9 @@ namespace Fishing.Game
             foreach(string oneRecored in fishingRecord) {
                 UIByLeftController.text += oneRecored + "\n";
             }
+
+            // モータのデータ読み取り
+            Debug.Log("read torque is " + device.torque.ToString());
         }
 
         //VR空間上のログ情報に追加

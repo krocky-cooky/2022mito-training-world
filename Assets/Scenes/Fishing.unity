@@ -6140,7 +6140,7 @@ MonoBehaviour:
   sendingTorque: 0
   masterStateController: {fileID: 1895901906}
   fishUpPosition: {fileID: 244489748}
-  minUserPower: 2
+  minUserPower: 1.5
   maxUserPower: 2.5
   fishSpecies:
   - {fileID: 8944952731931013970, guid: 7ca89b203b8d4b94fae39e501fa09881, type: 3}
@@ -6231,7 +6231,11 @@ MonoBehaviour:
   normalizedSpeedLimitToBreakFishingLine: 1
   lure: {fileID: 0}
   fightingCount: 0
-  staticTimeAtCalibration: 2
+  firstTorqueBeforeCalibration: 1.2
+  velocityAtNegativeAction: 2
+  cutoffRatioOfTime: 0.2
+  topPercentile: 0.05
+  bottomPercentile: 0.05
 --- !u!1 &1322611934
 GameObject:
   m_ObjectHideFlags: 0
@@ -8072,7 +8076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: 0.44
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
       propertyPath: m_LocalPosition.z
