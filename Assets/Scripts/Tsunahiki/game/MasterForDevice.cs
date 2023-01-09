@@ -39,6 +39,7 @@ namespace tsunahiki.game
         
 
         // トルク÷握力計の値
+        public float defaultGripStrengthMultiplier = 4.0f;
         public float gripStrengthMultiplier = 4.0f;
 
         
@@ -67,7 +68,6 @@ namespace tsunahiki.game
             superiority = randomOutput == 1 ? 
                 TrainingDeviceType.TrainingDevice : 
                 TrainingDeviceType.ForceGauge;
-            decideGripStrengthMultiplier();
         }
 
         //勝敗を記録ゲームセットの場合trueを返す
@@ -77,9 +77,16 @@ namespace tsunahiki.game
             return false;
         }
 
+        public void setDefaultGripStrengthMultiplier(float input)
+        {
+            defaultGripStrengthMultiplier = input;
+            decideGripStrengthMultiplier();
+
+        }
+
         private void decideGripStrengthMultiplier()
         {
-
+            gripStrengthMultiplier = defaultGripStrengthMultiplier;
         }
 
         public void addLog(string message)
