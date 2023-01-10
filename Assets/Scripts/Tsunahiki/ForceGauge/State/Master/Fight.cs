@@ -28,7 +28,8 @@ namespace tsunahiki.forceGauge.state
                 superiorityMessage = "DisAdvantageous";
             }
 
-            masterForForceGauge.frontViewUI.text = "Fight !!\n" + "Time " + masterForForceGauge.opponentData.timeCount.ToString() + "\n" + superiorityMessage;
+            // masterForForceGauge.frontViewUI.text = "Fight !!\n" + "Time " + masterForForceGauge.opponentData.timeCount.ToString() + "\n" + superiorityMessage;
+            masterForForceGauge.frontViewUI.text = "Fight !!";
             
             masterForForceGauge.myBeam.isFired = true;
             masterForForceGauge.OpponentPlayer.beamController.isFired = true;

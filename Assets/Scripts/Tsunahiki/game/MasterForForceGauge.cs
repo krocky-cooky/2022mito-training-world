@@ -59,7 +59,7 @@ namespace tsunahiki.game
         [SerializeField]
         public RemoteCoordinator _coordinator;
         [SerializeField]
-        public ForceGauge _myForceGauge;
+        public ForceGauge myForceGauge;
 
 
         // 自他の位置
@@ -115,7 +115,7 @@ namespace tsunahiki.game
 
             
             // 自分のビームの強度に、握力計の正規化値を代入
-            myBeam.normalizedScale = _myForceGauge.outputPosition;
+            myBeam.normalizedScale = myForceGauge.outputPosition;
            
             {
                 // 通信をしてないときはここでエラーが出てUpdate()処理が止まる

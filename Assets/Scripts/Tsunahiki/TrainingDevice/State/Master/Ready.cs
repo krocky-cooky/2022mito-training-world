@@ -34,12 +34,11 @@ namespace tsunahiki.trainingDevice.state
             if(opponentData.stateId == (int)MasterStateController.StateType.Ready || stateController.testMode)
             {
                 StartCoroutine(DecideSuperiorityCoroutine());
-
             }
 
             if(_gameStart)
             {
-                int nextState = (int)MasterStateController.StateType.Fight;
+                int nextState = (int)MasterStateController.StateType.Calibration;
                 stateController.coordinator.communicationData.stateId = nextState;
                 return nextState;
             }
