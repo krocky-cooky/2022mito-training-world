@@ -20,6 +20,7 @@ namespace communication
         Fight,
         EndOfFight,
         GameSet,
+        Calibration,
     }
 
     public class ReceivingDataFormat

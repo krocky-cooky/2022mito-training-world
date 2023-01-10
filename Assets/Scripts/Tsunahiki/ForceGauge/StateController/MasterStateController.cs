@@ -21,6 +21,7 @@ namespace tsunahiki.forceGauge.stateController
             Fight,
             EndOfFight,
             GameSet,
+            Calibration,
         }
 
         // 初期化処理
@@ -41,6 +42,9 @@ namespace tsunahiki.forceGauge.stateController
 
             stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
             stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);
+
+            stateDic[(int)StateType.Calibration] = gameObject.AddComponent<Calibration>();
+            stateDic[(int)StateType.Calibration].Initialize((int)StateType.Calibration);
 
             CurrentState = initializeStateType;
             stateDic[CurrentState].OnEnter();

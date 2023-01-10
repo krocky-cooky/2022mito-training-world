@@ -21,7 +21,7 @@ namespace tsunahiki.forceGauge.state
         public override void OnEnter()
         {
             Debug.Log("Set Up");
-            masterForForceGauge.frontViewUI.text = "Set Up\nSet your force";
+            masterForForceGauge.frontViewUI.text = "Set Up";
 
             masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
         }
@@ -53,7 +53,7 @@ namespace tsunahiki.forceGauge.state
                     return (int)MasterStateController.StateType.Ready;
                 }
             }else{
-                masterForForceGauge.frontViewUI.text = "Set Up\nSet Maximum Force";
+                masterForForceGauge.frontViewUI.text = "Set Up";
             }
 
 
