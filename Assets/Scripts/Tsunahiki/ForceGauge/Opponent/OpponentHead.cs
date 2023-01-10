@@ -92,6 +92,14 @@ namespace tsunahiki.forceGauge
             this.transform.position = _initHeadPosition + (_currentPositionOfHMD - _initPositionOfHMD) * _movementScalingFactor;
             this.transform.eulerAngles = _initHeadEulerAngle + (_currentEulerAngleOfHMD - _initEulerAngleOfHMD);
 
+            Debug.Log("eulerAngles" + this.transform.eulerAngles.y.ToString());
+
+            // 頭が反対方向に向かないようにする
+            if (this.transform.eulerAngles.y > 90f & this.transform.eulerAngles.y <= 180f){
+                this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, 180f - this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            }else if (this.transform.eulerAngles.y < 270f & this.transform.eulerAngles.y > 180f){
+                this.transform.eulerAngles = new Vector3(this.transform.eulerAngles.x, 540f - this.transform.eulerAngles.y, this.transform.eulerAngles.z);
+            }
 
             // 胴体の位置を更新
             // _opponentAvatarBody.position = new Vector3(this.transform.position.x, this.transform.position.y + _lengthOfNeck, this.transform.position.z);
