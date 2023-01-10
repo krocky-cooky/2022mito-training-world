@@ -17,6 +17,8 @@ namespace TRAVE_unity
         //セットアップ用変数群
         public CommunicationType communicationType = CommunicationType.Serial;
         public bool printMessage = true;
+        public float maxTorque = 4.0f;
+        public float maxSpeed = 5.0f;
         public string sendingText;
 
         public string portName;
@@ -48,12 +50,13 @@ namespace TRAVE_unity
 
         private void AllocateParams()
         {
+            TRAVEReceivingFormat currentProfile = _device.currentProfile;
             isConnected = _device.isConnected;
             motorMode = _device.motorMode;
-            torque = _device.torque;
-            speed = _device.speed;
-            position = _device.position;
-            integrationAngle = _device.integrationAngle;
+            torque = currentProfile.trq;
+            speed = currentProfile.spd;
+            position = currentProfile.pos;
+            integrationAngle = currentProfile.integrationAngle;
         }
 
         public void sendFieldText()

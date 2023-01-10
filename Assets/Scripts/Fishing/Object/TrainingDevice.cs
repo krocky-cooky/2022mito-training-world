@@ -27,6 +27,10 @@ namespace Fishing.Object
         // ハンドル等がストローク全体の中で相対的にどの位置にあるかを返す
         // 例えば、ハンドルの最低位置が10cm、最高位置が110cmで、現在地が20cmなら、ストローク全体100cmの中で下から10cmのところにあるので、0.1である
         public float currentNormalizedPosition = 0.0f;
+        private float _previousNormalizedPosition = 0.0f;
+
+        // ハンドルの正規化速度
+        public float currentNormalizedVelocity;
 
         [SerializeField]
         private GameObject rightControllerAnchor;
@@ -47,7 +51,9 @@ namespace Fishing.Object
             // currentAbsPosition = Input.mousePosition.y;
             // currentAbsPosition = _socketClient.integrationAngleForSkySailing;
             // currentAbsPosition = rightControllerAnchor.transform.position.y - SailingShip.transform.position.y;
-            // currentAbsPosition = rightControllerAnchor.transform.position.y;
+            // currentAbsPosition = rightControllerAnchor.transform.position.y;]
+
+            _previousNormalizedPosition = currentNormalizedPosition;
 
             if (inputInterface == InputInterface.Mouse){
                 currentAbsPosition = Input.mousePosition.y;
@@ -56,6 +62,8 @@ namespace Fishing.Object
             }
 
             currentNormalizedPosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));
+            currentNormalizedVelocity = (currentNormalizedPosition - _previousNormalizedPosition) / Time.deltaTime;
+
             // マシンのハンドル等のストロークポジション登録
             if(OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))
             {

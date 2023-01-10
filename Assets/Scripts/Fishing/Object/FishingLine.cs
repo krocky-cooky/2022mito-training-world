@@ -19,7 +19,7 @@ public class FishingLine : MonoBehaviour
     public Transform ropeRelayBelowHandleTransform;
 
     // マスターのコントローラー
-    public MasterStateController masterStateController;
+    public Master master;
 
     // ロープの固定位置
     public Vector3 fixedPosition;

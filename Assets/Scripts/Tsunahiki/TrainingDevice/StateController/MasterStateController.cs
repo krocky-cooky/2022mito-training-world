@@ -69,6 +69,7 @@ namespace tsunahiki.trainingDevice.stateController
             Fight,
             EndOfFight,
             GameSet,
+            Calibration
         }
 
         // 初期化処理
@@ -87,6 +88,8 @@ namespace tsunahiki.trainingDevice.stateController
             stateDic[(int)StateType.EndOfFight] = gameObject.AddComponent<Fight>();
             stateDic[(int)StateType.EndOfFight].Initialize((int)StateType.Fight);
 
+            stateDic[(int)StateType.Calibration] = gameObject.AddComponent<Calibration>();
+            stateDic[(int)StateType.Calibration].Initialize((int)StateType.Calibration);
             // stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
             // stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);
 
