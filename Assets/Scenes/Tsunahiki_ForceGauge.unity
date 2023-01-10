@@ -13154,7 +13154,7 @@ MonoBehaviour:
   gripStrengthMultiplier: 0
   viewerObject: {fileID: 0}
   _coordinator: {fileID: 5607557277670804043}
-  _myForceGauge: {fileID: 5607557276487021727}
+  myForceGauge: {fileID: 5607557276487021727}
   myTransform: {fileID: 5607557278531358619}
   opponentTransform: {fileID: 543450653623199043}
   flareMovingTime: 0.5

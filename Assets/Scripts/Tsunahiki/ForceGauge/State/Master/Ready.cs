@@ -31,9 +31,9 @@ namespace tsunahiki.forceGauge.state
         {
             masterForForceGauge.OpponentPlayer.head.SetInitTransform();
 
-            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight)
+            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Calibration)
             {   
-                return (int)MasterStateController.StateType.Fight;
+                return (int)MasterStateController.StateType.Calibration;
             }
 
             return (int)StateType;
