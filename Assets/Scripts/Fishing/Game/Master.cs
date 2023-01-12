@@ -388,5 +388,40 @@ namespace Fishing.Game
             // 針回りに回転
             fish.transform.RotateAround(basePointForSwimmingAround, Vector3.up, angleAroundNeedle);
         }
+
+
+        // 指定の重量の魚を、指定の匹数だけ出現させて返す
+        public List<Fish> GetFishesOfSpecifiedWeight(List<GameObject> _fishSpecies,int _numberOfFishes, float _minTorque, float _maxTorque){
+            List<Fish> _appearingFishes = new List<Fish>();
+            int tryCount = 0;
+
+            // 指定した匹数だけ繰り返す
+            while (_appearingFishes.Count < _numberOfFishes & tryCount < 10000){
+                tryCount += 1;
+
+                // 魚をランダムに取得
+                Fish _candidateFishPrefab;
+                _candidateFishPrefab = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
+
+                // 魚の釣り上げ時の負荷(トルク)が指定範囲内なら追加
+                if ((_candidateFishPrefab.torque > _minTorque) & (_candidateFishPrefab.torque < _maxTorque)){
+                    Fish _candidateFishInstance;
+                    _candidateFishInstance = GameObject.Instantiate(_candidateFishPrefab, transform.position, transform.rotation);
+                    _appearingFishes.Add(_candidateFishInstance);
+
+                    // 魚の初期化
+                    _candidateFishInstance.isFishShadow = false;
+                    _candidateFishInstance.isFishBody = false;
+                    _candidateFishInstance.splash.SetActive(false);
+                    _candidateFishInstance.twistSpeed = minSpeedOfFishTwist;
+                    _candidateFishInstance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+            }
+
+            return _appearingFishes;
+        }
+
     }
+
+    
 }

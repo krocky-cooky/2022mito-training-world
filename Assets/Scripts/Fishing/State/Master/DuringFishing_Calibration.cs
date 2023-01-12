@@ -34,6 +34,9 @@ namespace Fishing.State
         // 速度指令して強制的にネガティブ動作をさせるかどうかのフラグ
         bool _isNegativeAction = false;
 
+        // キャリブレーション後に魚を再修正
+        public Fish reacquiredFish = new Fish();
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
@@ -63,6 +66,13 @@ namespace Fishing.State
             OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
 
             master.fish.splash.SetActive(false);
+
+
+            // キャリブレーションした結果の筋力に合わせた魚を表示
+            reacquiredFish = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.8f, master.minUserPower * 1.2f)[0];
+            master.fish.isFishShadow = false;
+            master.fish.splash.SetActive(false);
+            master.fish = reacquiredFish;
         }
 
         public override int StateUpdate()
