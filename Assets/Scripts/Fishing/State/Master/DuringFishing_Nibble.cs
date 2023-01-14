@@ -95,8 +95,8 @@ namespace Fishing.State
                 Debug.Log("latter spike");
                 // master.NibbleSound.Play();
             }else{
-                // master.sendingTorque = master.baseTorqueDuringFishing;
-                master.device.SetTorqueMode(master.baseTorqueDuringFishing);
+                // master.sendingTorque = master.minTorqueDuringFishing;
+                master.device.SetTorqueMode(master.minTorqueDuringFishing);
             }
 
 

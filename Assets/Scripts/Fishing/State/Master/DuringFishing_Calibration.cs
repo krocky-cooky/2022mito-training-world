@@ -64,7 +64,7 @@ namespace Fishing.State
             master.fish.splash.SetActive(true);
 
             // キャリブレーション前に、ユーザーの最低パワーを基準値に再設定
-            master.minUserPower = master.firstTorqueBeforeCalibration;
+            master.minUserPower = master.minTorqueDuringFishing;
 
             // 記録を初期化
             master.measuredTorques = new List<float>(); // 計測したトルクのリスト
@@ -84,6 +84,7 @@ namespace Fishing.State
             reacquiredFish = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
             master.fish.isFishShadow = false;
             master.fish.splash.SetActive(false);
+            reacquiredFish.transform.position = master.fish.transform.position;
             master.fish = reacquiredFish;
             master.fish.isFishBody = true;
         }
@@ -101,10 +102,10 @@ namespace Fishing.State
             }
 
             // モータへの指令
-            if(!(_isNegativeAction) & (master.minUserPower == master.firstTorqueBeforeCalibration)){
+            if(!(_isNegativeAction) & (master.minUserPower == master.minTorqueDuringFishing)){
                 // 最初は一定のトルクを与えて、まず最高位置まで持ち上げる
                 master.device.SetTorqueMode(master.minUserPower);
-            }else if(!(_isNegativeAction) & (master.minUserPower != master.firstTorqueBeforeCalibration)){
+            }else if(!(_isNegativeAction) & (master.minUserPower != master.minTorqueDuringFishing)){
                 // トルク計測後はユーザーの最低パワーを代入
                 // ただし、すっぽ抜けないようにゆっくり負荷を下げる
                 _timeCountForLighteningSlowly += Time.deltaTime;
@@ -118,7 +119,7 @@ namespace Fishing.State
 
             // ユーザーの最高出力と最低出力を更新
             // トルク計算後もまだユーザーの出力記録が更新されていなければ、更新する
-            if (!(_isNegativeAction) & (master.measuredTorques.Count != 0) & (master.minUserPower == master.firstTorqueBeforeCalibration)){
+            if (!(_isNegativeAction) & (master.measuredTorques.Count != 0) & (master.minUserPower == master.minTorqueDuringFishing)){
                 // 計測データを処理したもの
                 List<float> _processedMeasuredTorques;
 
@@ -148,12 +149,17 @@ namespace Fishing.State
                 // 10RM ≒ 1RM * 0.8f
                 master.minUserPower -= 0.8f;
                 master.maxUserPower -= 0.8f;
-                master.minUserPower *= 0.714f;
-                master.maxUserPower *= 0.714f;
-                // master.minUserPower *= 0.714f * 0.8f;
-                // master.maxUserPower *= 0.714f * 0.8f;
-                if (master.minUserPower < master.firstTorqueBeforeCalibration){
-                    master.minUserPower = master.firstTorqueBeforeCalibration + 0.1f;
+                master.minUserPower *= 0.714f * 0.8f;
+                master.maxUserPower *= 0.714f * 0.8f;
+
+                // 制限の範囲内に収める
+                // if (master.minUserPower < master.minTorqueDuringFishing){
+                //     master.minUserPower = master.minTorqueDuringFishing + 0.1f;
+                //     master.maxUserPower = Mathf.max(master.minUserPower + 0.1f, mast)
+                // }
+                master.minUserPower = Mathf.Max(master.minTorqueDuringFishing, master.minUserPower);
+                master.maxUserPower = Mathf.Min(master.maxTorqueDuringFishing, master.maxUserPower);
+                if (master.minUserPower >= master.maxUserPower){
                     master.maxUserPower = master.minUserPower + 0.1f;
                 }
 
@@ -168,7 +174,7 @@ namespace Fishing.State
             // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 魚が暴れる強さ
-            master.fish.currentIntensityOfMovements = Mathf.Clamp01(0.2f * (master.device.torque / master.firstTorqueBeforeCalibration));
+            master.fish.currentIntensityOfMovements = Mathf.Clamp01(0.2f * (master.device.torque / master.minTorqueDuringFishing));
 
             // 魚がカラダをひねる強さを変化
             master.fish.twistSpeed = (master.maxSpeedOfFishTwist - master.minSpeedOfFishTwist) * master.fish.currentIntensityOfMovements + master.minSpeedOfFishTwist;

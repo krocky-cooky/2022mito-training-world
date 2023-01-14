@@ -114,8 +114,10 @@ namespace Fishing.Game
         public float latterSpikePeriod;
         public float latterSpikeSize;
 
-        //  釣り中のベーストルク
-        public float baseTorqueDuringFishing = 0.75f;
+        //  釣り中のトルク範囲
+        public float minTorqueDuringFishing;
+        public float maxTorqueDuringFishing;
+
 
         // 魚が針を突いているときのパラメータ
         // 魚が突く時間間隔の最大値と最小値
@@ -234,7 +236,6 @@ namespace Fishing.Game
         // public float staticTimeAtCalibration;
 
         // キャリブレーション用の変数
-        public float firstTorqueBeforeCalibration; // 最初のトルク
         public float velocityAtNegativeAction; // ネガティブ動作時の速度
         public float cutoffRatioOfTime; // ネガティブ動作の初期はユーザーの力が立ち上がる途中なので、いくつかデータを切り落とす
         public float topPercentile; // 上位?%のデータを最高値とする
@@ -307,7 +308,8 @@ namespace Fishing.Game
 
             // 釣果を表示
             UIByLeftController.text = "本日の釣果\n";
-            foreach(string oneRecored in fishingRecord) {
+            int _numberOfDisplayedFishes = Mathf.Min(fishingRecord.Count, 8);
+            foreach(string oneRecored in fishingRecord.Skip(fishingRecord.Count - _numberOfDisplayedFishes)) {
                 UIByLeftController.text += oneRecored + "\n";
             }
 
@@ -418,6 +420,10 @@ namespace Fishing.Game
                     // スケールおよび重量を変更
                     _candidateFishInstance.scale = _scale;
                     _candidateFishInstance.torque *= _scale;
+                    // _candidateFishInstance.weight *= _scale;
+
+                    // あとで自分の挙上重量がわかるように、weightとtorqueは相関させておく
+                    _candidateFishInstance.weight = _candidateFishInstance.torque * 4.0f;
 
                     // インスタンスを追加
                     _appearingFishes.Add(_candidateFishInstance);

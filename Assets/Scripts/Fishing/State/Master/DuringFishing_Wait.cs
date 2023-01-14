@@ -40,8 +40,8 @@ namespace Fishing.State
             Debug.Log("hit prob is" + probabilityOfFishOnTheHook.ToString());
 
             // 釣りモード時のトルク指令
-            // master.sendingTorque = master.baseTorqueDuringFishing;
-            master.device.SetTorqueMode(master.baseTorqueDuringFishing);
+            // master.sendingTorque = master.minTorqueDuringFishing;
+            master.device.SetTorqueMode(master.minTorqueDuringFishing);
 
             master.frontViewUiText.text = "During fishing";
 
@@ -65,6 +65,9 @@ namespace Fishing.State
 
             // ルアーが着水するまで魚を非表示
             Invoke("SetActiveOfAllFishes", master.rope.lureDropTime);
+
+            // ルアー着水の音
+            Invoke("PlaySoundOfLureLanding", master.rope.lureDropTime);
 
             master.tensionSliderGameObject.SetActive(false);
         }
@@ -157,6 +160,12 @@ namespace Fishing.State
                     _swimmingAroundFish.splash.SetActive(false);
                 }
             }
+
+        }
+
+        // ルアー着水の音
+        public void PlaySoundOfLureLanding(){
+            master.LureLandingSound.Play();
         }
 
     }

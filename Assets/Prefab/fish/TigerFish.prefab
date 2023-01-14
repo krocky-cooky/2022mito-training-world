@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: "\u30BF\u30A4\u30AC\u30FC\u30D5\u30A3\u30C3\u30B7\u30E5"
   weight: 0.7
-  torque: 2
+  torque: 1.6
   HP: 75.32848
   easeOfEscape: 0.21
   currentIntensityOfMovements: 0.09850901

@@ -35,8 +35,8 @@ namespace Fishing.State
 
             master.frontViewUiText.text = master.fish.species + " " + master.fish.weight.ToString("f2") + "kg";
 
-            // master.sendingTorque = master.baseTorqueDuringFishing;
-            master.device.SetTorqueMode(master.baseTorqueDuringFishing);
+            // master.sendingTorque = master.minTorqueDuringFishing;
+            master.device.SetTorqueMode(master.minTorqueDuringFishing);
 
             // 魚の表示を、水中の魚影モードから水上の実体モードに切り替え
             master.fish.isFishShadow = false;
@@ -50,16 +50,17 @@ namespace Fishing.State
 
             // 水しぶき
             master.fish.splash.SetActive(true);
+            master.FishGoOnTheWater.Play();
 
             // レコードに追加
-            master.fishingRecord.Add(master.fish.species + "  "  +  master.fish.weight.ToString() + "kg");
+            master.fishingRecord.Add(master.fish.species + "  "  +  master.fish.weight.ToString("f2") + "kg");
 
             // ファイト回数を追加
             master.fightingCount += 1;
 
             // 負荷を小さくする
-            // master.sendingTorque = Mathf.Max(master.sendingTorque - 1.0f, master.baseTorqueDuringFishing);
-            master.device.SetTorqueMode(Mathf.Max(master.sendingTorque - 1.0f, master.baseTorqueDuringFishing));
+            // master.sendingTorque = Mathf.Max(master.sendingTorque - 1.0f, master.minTorqueDuringFishing);
+            master.device.SetTorqueMode(Mathf.Max(master.sendingTorque - 1.0f, master.minTorqueDuringFishing));
         }
 
         public override void OnExit()
