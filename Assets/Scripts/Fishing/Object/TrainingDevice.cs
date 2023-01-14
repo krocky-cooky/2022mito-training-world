@@ -34,6 +34,8 @@ namespace Fishing.Object
 
         [SerializeField]
         private GameObject rightControllerAnchor;
+        [SerializeField]
+        private GameObject centerOfHandle;
         // [SerializeField]
         // private SailingShip SailingShip;
         [SerializeField]
@@ -58,7 +60,8 @@ namespace Fishing.Object
             if (inputInterface == InputInterface.Mouse){
                 currentAbsPosition = Input.mousePosition.y;
             }else{
-                currentAbsPosition = rightControllerAnchor.transform.position.y;
+                // currentAbsPosition = rightControllerAnchor.transform.position.y;
+                currentAbsPosition = centerOfHandle.transform.position.y;
             }
 
             currentNormalizedPosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));

@@ -29,8 +29,10 @@ namespace Fishing.State
         private float _excessSpeedTime;
 
         // キャリブレーション用の変数
-        // 計測したトルクのリスト
-        private List<float> _measuredTorques = new List<float>();
+        // // 計測したトルクのリスト
+        // private List<float> _measuredTorques = new List<float>();
+        // // 計測したポジションのリスト
+        // private List<float> _measuredPositions = new List<float>();
         // 速度指令して強制的にネガティブ動作をさせるかどうかのフラグ
         bool _isNegativeAction = false;
 
@@ -63,6 +65,11 @@ namespace Fishing.State
 
             // キャリブレーション前に、ユーザーの最低パワーを基準値に再設定
             master.minUserPower = master.firstTorqueBeforeCalibration;
+
+            // 記録を初期化
+            master.measuredTorques = new List<float>(); // 計測したトルクのリスト
+            master.measuredPositions = new List<float>(); // 計測したポジションのリスト
+            master.measuredNormalizedTorques = new List<float>(); // 計測した正規化トルクのリスト
         }
 
         public override void OnExit()
@@ -74,7 +81,7 @@ namespace Fishing.State
 
 
             // キャリブレーションした結果の筋力に合わせた魚を表示
-            reacquiredFish = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.8f, master.minUserPower * 1.2f)[0];
+            reacquiredFish = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
             master.fish.isFishShadow = false;
             master.fish.splash.SetActive(false);
             master.fish = reacquiredFish;
@@ -87,7 +94,7 @@ namespace Fishing.State
 
      
             // モータへの指令用のフラグの切り替え
-            if(!(_isNegativeAction) & (_measuredTorques.Count == 0) & (master.trainingDevice.currentNormalizedPosition > 0.9f)){
+            if(!(_isNegativeAction) & (master.measuredTorques.Count == 0) & (master.trainingDevice.currentNormalizedPosition > 0.9f)){
                 _isNegativeAction = true;
             }else if(_isNegativeAction & master.trainingDevice.currentNormalizedPosition < 0.1f){
                 _isNegativeAction = false;
@@ -105,18 +112,19 @@ namespace Fishing.State
                 master.device.SetTorqueMode(_sendTorque);
             }else{
                 master.device.SetSpeedMode(master.velocityAtNegativeAction, 6.0f);
-                _measuredTorques.Add(master.device.torque);
+                master.measuredTorques.Add(master.device.torque);
+                master.measuredPositions.Add(master.trainingDevice.currentNormalizedPosition);
             }
 
             // ユーザーの最高出力と最低出力を更新
             // トルク計算後もまだユーザーの出力記録が更新されていなければ、更新する
-            if (!(_isNegativeAction) & (_measuredTorques.Count != 0) & (master.minUserPower == master.firstTorqueBeforeCalibration)){
+            if (!(_isNegativeAction) & (master.measuredTorques.Count != 0) & (master.minUserPower == master.firstTorqueBeforeCalibration)){
                 // 計測データを処理したもの
                 List<float> _processedMeasuredTorques;
 
                 // 最初はユーザーの力が立ち上がる途中なのでカット
-                int _cutoffIndex = (int)((float)_measuredTorques.Count * master.cutoffRatioOfTime);
-                _processedMeasuredTorques = _measuredTorques.GetRange(_cutoffIndex, _measuredTorques.Count - _cutoffIndex);
+                int _cutoffIndex = (int)((float)master.measuredTorques.Count * master.cutoffRatioOfTime);
+                _processedMeasuredTorques = master.measuredTorques.GetRange(_cutoffIndex, master.measuredTorques.Count - _cutoffIndex);
 
                 // 計測したトルクをソート
                 _processedMeasuredTorques.Sort();
@@ -128,6 +136,12 @@ namespace Fishing.State
                 // 下から5%の値を最低値とする
                 int _minIndex = (int)((float)_processedMeasuredTorques.Count * master.bottomPercentile);
                 master.minUserPower = _processedMeasuredTorques[_minIndex];
+
+                // 計測した正規化トルクのリストを作成
+                foreach(float measuredTorque in master.measuredTorques)
+                {
+                    master.measuredNormalizedTorques.Add(Mathf.InverseLerp(master.minUserPower, master.maxUserPower, measuredTorque));
+                }
 
                 // 動摩擦力 = 0.4f, よって(ネガティブ時の動摩擦力 - ポジティブ時の動摩擦力) = 0.8f
                 // ポジティブ動作の筋力 = ネガティブ動産の筋力 * 0.714f
@@ -145,6 +159,7 @@ namespace Fishing.State
 
                 // キャリブレーション中の最後のトルク
                 _lastTorqueAtCalibration = master.device.torque;
+
             }
 
             
@@ -184,7 +199,7 @@ namespace Fishing.State
             master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f), (byte)(255.0f), 1);       
 
             // 魚を最高高さまで引き揚げたらAdfterFishingに移行
-            if (master.trainingDevice.currentNormalizedPosition >= 0.99 & !(_isNegativeAction) & (_measuredTorques.Count != 0)){
+            if (master.trainingDevice.currentNormalizedPosition >= 0.99 & !(_isNegativeAction) & (master.measuredTorques.Count != 0)){
                 return (int)MasterStateController.StateType.AfterFishing;
             }      
 

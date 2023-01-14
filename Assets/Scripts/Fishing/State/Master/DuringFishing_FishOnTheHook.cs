@@ -27,7 +27,7 @@ namespace Fishing.State
         private float _minTorque;
 
         // 正規化トルク. 最小なら0.0f, 最大なら1.0f
-        private float _normalizedTorque;
+        public float _normalizedTorque;
 
         // 魚の逃げるリスクを反映したゲージ
         // リールのテンションが緩いとゲージが減り、テンションが強すぎるとゲージが増える
@@ -61,10 +61,10 @@ namespace Fishing.State
             // _maxTorque = master.fish.weight / master.fishWeightPerTorque;
             // _maxTorque = master.fish.torque;
             _minTorque = master.fish.torque;
-            // _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
-            _maxTorque = _minTorque + 0.1f;
+            _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
+            // _maxTorque = _minTorque + 0.1f;
             // master.sendingTorque = _maxTorque;
-            master.device.SetTorqueMode(_maxTorque);
+            master.device.SetTorqueMode(_minTorque);
 
             // 音声を再生
             master.FishSoundOnTheHook.Play();
@@ -105,9 +105,16 @@ namespace Fishing.State
             // トルクの値の約4.0倍が負荷(kg)
             // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
+            // トルク送信
+            // 計測したプロファイルに沿う
+            int _targetIndex = master.GetIndexOfNearestValue(master.measuredPositions, master.trainingDevice.currentNormalizedPosition);
+            _normalizedTorque = master.measuredNormalizedTorques[_targetIndex];
+            master.device.SetTorqueMode(Mathf.Lerp(_minTorque, _maxTorque, _normalizedTorque));
+
             // 魚の暴れる強さ
-            // 引きあげるほど強くなる
-            master.fish.currentIntensityOfMovements =  master.trainingDevice.currentNormalizedPosition;
+            // トルクに合わせて変化
+            // master.fish.currentIntensityOfMovements =  master.trainingDevice.currentNormalizedPosition;
+            master.fish.currentIntensityOfMovements = _normalizedTorque;
 
 
             // 魚がカラダをひねる強さを変化
@@ -119,18 +126,6 @@ namespace Fishing.State
             master.fish.transform.Rotate(0.0f, - _angleVelocity * Time.deltaTime, 0.0f, Space.World);
             _fishAngle = (master.fish.transform.rotation.eulerAngles.y + master.initialAngle) *  Mathf.PI / 180.0f + Mathf.PI;
             master.fish.transform.position = master.centerOfRotation + (new Vector3(Mathf.Sin(_fishAngle), 0.0f, Mathf.Cos(_fishAngle))) * master.radius;
-
-
-            // トルク送信
-            // 魚の暴れ具合に対してバーの高さが、ぴったりなら中間トルク、高ければトルクが大きくなり、低ければトルクが弱くなる
-            // 魚の暴れ具合が、強い時はバーをさげ、弱い時はバーをあげながら、リールのテンションを一定に保つ
-            // トルクの最大最小範囲を超えないようにする
-            // _normalizedTorque = master.fish.currentIntensityOfMovements + master.trainingDevice.currentNormalizedPosition - 0.5f;
-            // _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
-            // // master.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
-            // master.device.SetTorqueMode(_minTorque + _normalizedTorque * _torqueDecrease);
-            _normalizedTorque = master.fish.currentIntensityOfMovements;
-            master.device.SetTorqueMode(Mathf.Lerp(_minTorque, _maxTorque, _normalizedTorque));
 
             // ロープの音の大きさとピッチを変更
             // 音もピッチもトルクのp乗に比例。これで高域をシャープにする

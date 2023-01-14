@@ -9,6 +9,7 @@ using Fishing.State;
 using Fishing.StateController;
 using Fishing.Object;
 using TRAVE;
+using System.Linq;
 
 namespace Fishing.Game
 {
@@ -238,6 +239,9 @@ namespace Fishing.Game
         public float cutoffRatioOfTime; // ネガティブ動作の初期はユーザーの力が立ち上がる途中なので、いくつかデータを切り落とす
         public float topPercentile; // 上位?%のデータを最高値とする
         public float bottomPercentile;// 下位?%のデータを最高値とする
+        public List<float> measuredTorques = new List<float>(); // 計測したトルクのリスト
+        public List<float> measuredPositions = new List<float>(); // 計測したポジションのリスト
+        public List<float> measuredNormalizedTorques = new List<float>(); // 計測した正規化トルクのリスト
 
         // Start is called before the first frame update
         void Start()
@@ -403,10 +407,19 @@ namespace Fishing.Game
                 Fish _candidateFishPrefab;
                 _candidateFishPrefab = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
 
+                // 魚のスケールをランダムに変更
+                float _scale = Random.Range(0.5f, 2.0f);
+
                 // 魚の釣り上げ時の負荷(トルク)が指定範囲内なら追加
-                if ((_candidateFishPrefab.torque > _minTorque) & (_candidateFishPrefab.torque < _maxTorque)){
+                if ((_candidateFishPrefab.torque * _scale > _minTorque) & (_candidateFishPrefab.torque * _scale < _maxTorque)){
                     Fish _candidateFishInstance;
                     _candidateFishInstance = GameObject.Instantiate(_candidateFishPrefab, transform.position, transform.rotation);
+
+                    // スケールおよび重量を変更
+                    _candidateFishInstance.scale = _scale;
+                    _candidateFishInstance.torque *= _scale;
+
+                    // インスタンスを追加
                     _appearingFishes.Add(_candidateFishInstance);
 
                     // 魚の初期化
@@ -419,6 +432,26 @@ namespace Fishing.Game
             }
 
             return _appearingFishes;
+        }
+
+
+        /// 目的の値に最も近い値を取得(float用)
+        public int GetIndexOfNearestValue(List<float> source, float targetValue){
+            if (source.Count == 0) {
+            Debug.LogError($"値が入っていないので、最も近い値を取得出来ません");
+            return -1;
+            }
+            
+            //目的の値との差の絶対値が最小の値を計算
+            var min = source.Min(value => Mathf.Abs(value - targetValue));
+            
+            //絶対値が最小の値だった物を最も近い値
+            var nearestValue = source.First(value => Mathf.Approximately(Mathf.Abs(value - targetValue), min));
+
+            // 最も近い値のindex
+            int index = source.IndexOf(nearestValue);
+
+            return index;
         }
 
     }
