@@ -37,6 +37,11 @@ namespace Fishing.State
         // キャリブレーション後に魚を再修正
         public Fish reacquiredFish = new Fish();
 
+        // キャリブレーション後の切り返し時にすっぽ抜けないように、段々負荷を下げる
+        private float _timeCountForLighteningSlowly = 0.0f;
+        private float _timeForLighteningSlowly = 3.0f;
+        private float _lastTorqueAtCalibration;
+
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
@@ -88,10 +93,15 @@ namespace Fishing.State
             }
 
             // モータへの指令
-            if(!(_isNegativeAction)){
+            if(!(_isNegativeAction) & (master.minUserPower == master.firstTorqueBeforeCalibration)){
                 // 最初は一定のトルクを与えて、まず最高位置まで持ち上げる
-                // トルク計測後であれば、ユーザの最低出力を代入
                 master.device.SetTorqueMode(master.minUserPower);
+            }else if(!(_isNegativeAction) & (master.minUserPower != master.firstTorqueBeforeCalibration)){
+                // トルク計測後はユーザーの最低パワーを代入
+                // ただし、すっぽ抜けないようにゆっくり負荷を下げる
+                _timeCountForLighteningSlowly += Time.deltaTime;
+                float _sendTorque = Mathf.Lerp(master.minUserPower, _lastTorqueAtCalibration, 1.0f -Mathf.Clamp01(_timeCountForLighteningSlowly / _timeForLighteningSlowly));
+                master.device.SetTorqueMode(_sendTorque);
             }else{
                 master.device.SetSpeedMode(master.velocityAtNegativeAction, 6.0f);
                 _measuredTorques.Add(master.device.torque);
@@ -118,14 +128,22 @@ namespace Fishing.State
                 int _minIndex = (int)((float)_processedMeasuredTorques.Count * master.bottomPercentile);
                 master.minUserPower = _processedMeasuredTorques[_minIndex];
 
+                // 動摩擦力 = 0.4f, よって(ネガティブ時の動摩擦力 - ポジティブ時の動摩擦力) = 0.8f
                 // ポジティブ動作の筋力 = ネガティブ動産の筋力 * 0.714f
                 // 10RM ≒ 1RM * 0.8f
-                master.minUserPower *= 0.714f * 0.8f;
-                master.maxUserPower *= 0.714f * 0.8f;
+                master.minUserPower -= 0.8f;
+                master.maxUserPower -= 0.8f;
+                master.minUserPower *= 0.714f;
+                master.maxUserPower *= 0.714f;
+                // master.minUserPower *= 0.714f * 0.8f;
+                // master.maxUserPower *= 0.714f * 0.8f;
                 if (master.minUserPower < master.firstTorqueBeforeCalibration){
                     master.minUserPower = master.firstTorqueBeforeCalibration + 0.1f;
                     master.maxUserPower = master.minUserPower + 0.1f;
                 }
+
+                // キャリブレーション中の最後のトルク
+                _lastTorqueAtCalibration = master.device.torque;
             }
 
             
