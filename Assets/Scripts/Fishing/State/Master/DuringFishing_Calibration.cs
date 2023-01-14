@@ -78,6 +78,7 @@ namespace Fishing.State
             master.fish.isFishShadow = false;
             master.fish.splash.SetActive(false);
             master.fish = reacquiredFish;
+            master.fish.isFishBody = true;
         }
 
         public override int StateUpdate()
