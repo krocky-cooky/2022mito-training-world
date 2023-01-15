@@ -17,96 +17,164 @@ namespace Fishing.State
         // タイムカウント
         private float _currentTimeCount;
 
-        // 魚のオブジェクト
-        public Fish fish;
-
-
-        // 最大トルク.
-        private float _maxTorque;
-        // 最小トルク
-        private float _minTorque;
-
-        // 正規化トルク. 最小なら0.0f, 最大なら1.0f
-        private float _normalizedTorque;
-
-        // 魚の逃げるリスクを反映したゲージ
-        // リールのテンションが緩いとゲージが減り、テンションが強すぎるとゲージが増える
-        // -1になるとリールが緩んで針が取れて魚が逃げ、1になるとリールが切れて魚が逃げる
-        private float _escapeGauge;
-
         // 魚の回転角[rad]と回転速度
         private float _fishAngle;
         private float _angleVelocity;
 
-        // 最大のHP
-        private float _maxHP;
 
         // トルクのp乗に音やピッチを比例させる
         private float _p;
 
-        // ロープの色の濃度
-        private float _colorIntensity;
-
-        // トルクの減少量
-        private float _torqueDecrease;
-
         // 速度超過時間
         private float _excessSpeedTime;
+
+        // キャリブレーション用の変数
+        // // 計測したトルクのリスト
+        // private List<float> _measuredTorques = new List<float>();
+        // // 計測したポジションのリスト
+        // private List<float> _measuredPositions = new List<float>();
+        // 速度指令して強制的にネガティブ動作をさせるかどうかのフラグ
+        bool _isNegativeAction = false;
+
+        // キャリブレーション後に魚を再修正
+        public Fish reacquiredFish = new Fish();
+
+        // キャリブレーション後の切り返し時にすっぽ抜けないように、段々負荷を下げる
+        private float _timeCountForLighteningSlowly = 0.0f;
+        private float _timeForLighteningSlowly = 3.0f;
+        private float _lastTorqueAtCalibration;
 
         public override void OnEnter()
         {
             Debug.Log("DuringFishing_FishOnTheHook");
 
-            // トルクの指定
-            // _maxTorque = master.fish.weight / master.fishWeightPerTorque;
-            // _maxTorque = master.fish.torque;
-            _minTorque = master.fish.weight / master.fishWeightPerTorque;
-            _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
-            master.sendingTorque = _maxTorque;
-
             // 音声を再生
             master.FishSoundOnTheHook.Play();
 
             // 魚をはりに移動
-            master.distanceFromRope = 0.0f;
-            master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(master.distanceFromRope, 0.0f, 0.0f);
+            master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + new Vector3(0.0f, 0.0f, 0.0f);
 
             // 初期化
             _currentTimeCount = 0f;
-            _escapeGauge = 0.0f;
             master.centerOfRotation = master.fish.transform.position - new Vector3(0.0f, 0.0f, master.radius);
             _fishAngle = 0.0f;
-            _maxHP = master.fish.HP;
-            _torqueDecrease = Mathf.Min(master.torqueReduction, _maxTorque - 0.75f);
-            // _minTorque = _maxTorque - _torqueDecrease;
-            _normalizedTorque = 0.0f;
             master.tensionSliderGameObject.SetActive(master.tensionSliderIsOn);
 
             // 水しぶき
             master.fish.splash.SetActive(true);
+
+            // キャリブレーション前に、ユーザーの最低パワーを基準値に再設定
+            master.minUserPower = master.minTorqueDuringFishing;
+
+            // 記録を初期化
+            master.measuredTorques = new List<float>(); // 計測したトルクのリスト
+            master.measuredPositions = new List<float>(); // 計測したポジションのリスト
+            master.measuredNormalizedTorques = new List<float>(); // 計測した正規化トルクのリスト
         }
 
         public override void OnExit()
         {
             master.FishSoundOnTheHook.Stop();
             OVRInput.SetControllerVibration(0.0f, 0.0f, OVRInput.Controller.RTouch);
-            master.fish.HP = _maxHP;
 
             master.fish.splash.SetActive(false);
+
+
+            // キャリブレーションした結果の筋力に合わせた魚を表示
+            reacquiredFish = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
+            master.fish.isFishShadow = false;
+            master.fish.splash.SetActive(false);
+            reacquiredFish.transform.position = master.fish.transform.position;
+            master.fish = reacquiredFish;
+            master.fish.isFishBody = true;
         }
 
         public override int StateUpdate()
         {
             _currentTimeCount += Time.deltaTime;
+
+     
+            // モータへの指令用のフラグの切り替え
+            if(!(_isNegativeAction) & (master.measuredTorques.Count == 0) & (master.trainingDevice.currentNormalizedPosition > 0.9f)){
+                _isNegativeAction = true;
+            }else if(_isNegativeAction & master.trainingDevice.currentNormalizedPosition < 0.1f){
+                _isNegativeAction = false;
+            }
+
+            // モータへの指令
+            if(!(_isNegativeAction) & (master.minUserPower == master.minTorqueDuringFishing)){
+                // 最初は一定のトルクを与えて、まず最高位置まで持ち上げる
+                master.device.SetTorqueMode(master.minUserPower);
+            }else if(!(_isNegativeAction) & (master.minUserPower != master.minTorqueDuringFishing)){
+                // トルク計測後はユーザーの最低パワーを代入
+                // ただし、すっぽ抜けないようにゆっくり負荷を下げる
+                _timeCountForLighteningSlowly += Time.deltaTime;
+                float _sendTorque = Mathf.Lerp(master.minUserPower, _lastTorqueAtCalibration, 1.0f -Mathf.Clamp01(_timeCountForLighteningSlowly / _timeForLighteningSlowly));
+                master.device.SetTorqueMode(_sendTorque);
+            }else{
+                master.device.SetSpeedMode(master.velocityAtNegativeAction, 6.0f);
+                master.measuredTorques.Add(master.device.torque);
+                master.measuredPositions.Add(master.trainingDevice.currentNormalizedPosition);
+            }
+
+            // ユーザーの最高出力と最低出力を更新
+            // トルク計算後もまだユーザーの出力記録が更新されていなければ、更新する
+            if (!(_isNegativeAction) & (master.measuredTorques.Count != 0) & (master.minUserPower == master.minTorqueDuringFishing)){
+                // 計測データを処理したもの
+                List<float> _processedMeasuredTorques;
+
+                // 最初はユーザーの力が立ち上がる途中なのでカット
+                int _cutoffIndex = (int)((float)master.measuredTorques.Count * master.cutoffRatioOfTime);
+                _processedMeasuredTorques = master.measuredTorques.GetRange(_cutoffIndex, master.measuredTorques.Count - _cutoffIndex);
+
+                // 計測したトルクをソート
+                _processedMeasuredTorques.Sort();
+
+                // 上から5%の値を最高値とする
+                int _maxIndex = _processedMeasuredTorques.Count - (int)((float)_processedMeasuredTorques.Count * master.topPercentile);
+                master.maxUserPower = _processedMeasuredTorques[_maxIndex];
+
+                // 下から5%の値を最低値とする
+                int _minIndex = (int)((float)_processedMeasuredTorques.Count * master.bottomPercentile);
+                master.minUserPower = _processedMeasuredTorques[_minIndex];
+
+                // 計測した正規化トルクのリストを作成
+                foreach(float measuredTorque in master.measuredTorques)
+                {
+                    master.measuredNormalizedTorques.Add(Mathf.InverseLerp(master.minUserPower, master.maxUserPower, measuredTorque));
+                }
+
+                // 動摩擦力 = 0.4f, よって(ネガティブ時の動摩擦力 - ポジティブ時の動摩擦力) = 0.8f
+                // ポジティブ動作の筋力 = ネガティブ動産の筋力 * 0.714f
+                // 10RM ≒ 1RM * 0.8f
+                master.minUserPower -= 0.8f;
+                master.maxUserPower -= 0.8f;
+                master.minUserPower *= 0.714f * 0.8f;
+                master.maxUserPower *= 0.714f * 0.8f;
+
+                // 制限の範囲内に収める
+                // if (master.minUserPower < master.minTorqueDuringFishing){
+                //     master.minUserPower = master.minTorqueDuringFishing + 0.1f;
+                //     master.maxUserPower = Mathf.max(master.minUserPower + 0.1f, mast)
+                // }
+                master.minUserPower = Mathf.Max(master.minTorqueDuringFishing, master.minUserPower);
+                master.maxUserPower = Mathf.Min(master.maxTorqueDuringFishing, master.maxUserPower);
+                if (master.minUserPower >= master.maxUserPower){
+                    master.maxUserPower = master.minUserPower + 0.1f;
+                }
+
+                // キャリブレーション中の最後のトルク
+                _lastTorqueAtCalibration = master.device.torque;
+
+            }
+
             
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            master.tensionSlider.value = master.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
-            // 魚の暴れる強さ
-            // 引きあげるほど強くなる
-            master.fish.currentIntensityOfMovements = master.trainingDevice.currentNormalizedPosition;
-
+            // 魚が暴れる強さ
+            master.fish.currentIntensityOfMovements = Mathf.Clamp01(0.2f * (master.device.torque / master.minTorqueDuringFishing));
 
             // 魚がカラダをひねる強さを変化
             master.fish.twistSpeed = (master.maxSpeedOfFishTwist - master.minSpeedOfFishTwist) * master.fish.currentIntensityOfMovements + master.minSpeedOfFishTwist;
@@ -118,56 +186,26 @@ namespace Fishing.State
             _fishAngle = (master.fish.transform.rotation.eulerAngles.y + master.initialAngle) *  Mathf.PI / 180.0f + Mathf.PI;
             master.fish.transform.position = master.centerOfRotation + (new Vector3(Mathf.Sin(_fishAngle), 0.0f, Mathf.Cos(_fishAngle))) * master.radius;
 
-
-            // トルク送信
-            // 魚の暴れ具合に対してバーの高さが、ぴったりなら中間トルク、高ければトルクが大きくなり、低ければトルクが弱くなる
-            // 魚の暴れ具合が、強い時はバーをさげ、弱い時はバーをあげながら、リールのテンションを一定に保つ
-            // トルクの最大最小範囲を超えないようにする
-            _normalizedTorque = master.fish.currentIntensityOfMovements + master.trainingDevice.currentNormalizedPosition - 0.5f;
-            _normalizedTorque = Mathf.Clamp01(_normalizedTorque);
-            master.sendingTorque = _minTorque + _normalizedTorque * _torqueDecrease;
-
             // ロープの音の大きさとピッチを変更
             // 音もピッチもトルクのp乗に比例。これで高域をシャープにする
             _p = 2.32f;
-            master.FishSoundOnTheHook.volume = master.minRopeSoundVolume + (1.0f - master.minRopeSoundVolume) * (Mathf.Pow(_normalizedTorque, _p));
-            master.FishSoundOnTheHook.pitch = master.minRopePitch + (3.0f - master.minRopePitch) * (Mathf.Pow(_normalizedTorque, _p));
+            master.FishSoundOnTheHook.volume = master.minRopeSoundVolume + (1.0f - master.minRopeSoundVolume) * (Mathf.Pow(master.fish.currentIntensityOfMovements, _p));
+            master.FishSoundOnTheHook.pitch = master.minRopePitch + (3.0f - master.minRopePitch) * (Mathf.Pow(master.fish.currentIntensityOfMovements, _p));
 
             // トルクに応じて右のリモコンの振動を生成
-            OVRInput.SetControllerVibration(0.01f, _normalizedTorque, OVRInput.Controller.RTouch);
+            OVRInput.SetControllerVibration(0.01f, master.fish.currentIntensityOfMovements, OVRInput.Controller.RTouch); 
+            OVRInput.SetControllerVibration(0.01f, 0.5f, OVRInput.Controller.RTouch);
 
             // トルクをゲージで表示
             if (master.tensionSliderIsOn){
-                master.tensionSlider.value = _normalizedTorque;
+                master.tensionSlider.value = master.fish.currentIntensityOfMovements;
             }
 
-            // トルクに応じてリールの色を調整
-            // _colorIntensity = Mathf.Abs(_normalizedTorque - 0.5f) * 2.0f;
-            // if (_normalizedTorque < 0.5f){
-            //     master.rope.targetRopeColor = new Color32((byte)(255.0f - 255.0f * _colorIntensity),(byte)(255.0f - 162.0f * _colorIntensity), (byte)(255.0f), 1);
-            // }else{
-            //     master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f - 175.0f * _colorIntensity), (byte)(255.0f - 255.0f * _colorIntensity), 1);
-            // }
+            // リールの色は白
             master.rope.targetRopeColor = new Color32((byte)(255.0f),(byte)(255.0f), (byte)(255.0f), 1);       
 
-
-            // 魚が針から逃げる
-            if (_currentTimeCount > master.timeLimitToEscape){
-                return (int)MasterStateController.StateType.DuringFishing_GetAway;
-            }
-
-            // リールが切れる
-            if (master.trainingDevice.currentNormalizedVelocity > master.normalizedSpeedLimitToBreakFishingLine){
-                _excessSpeedTime += Time.deltaTime;
-            }else{
-                _excessSpeedTime = 0.0f;
-            }
-            if (_excessSpeedTime > 0.1f){
-                return (int)MasterStateController.StateType.DuringFishing_FishingLineBreaks;
-            }
-
             // 魚を最高高さまで引き揚げたらAdfterFishingに移行
-            if (master.trainingDevice.currentNormalizedPosition >= 0.99){
+            if (master.trainingDevice.currentNormalizedPosition >= 0.99 & !(_isNegativeAction) & (master.measuredTorques.Count != 0)){
                 return (int)MasterStateController.StateType.AfterFishing;
             }      
 

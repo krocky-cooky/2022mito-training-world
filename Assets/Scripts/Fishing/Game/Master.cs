@@ -9,13 +9,14 @@ using Fishing.State;
 using Fishing.StateController;
 using Fishing.Object;
 using TRAVE;
+using System.Linq;
 
 namespace Fishing.Game
 {
 
     public class Master : MonoBehaviour
     {   
-        TRAVEDevice device = TRAVEDevice.GetDevice();
+        public TRAVEDevice device = TRAVEDevice.GetDevice();
 
         const int MAX_LOG_LINES = 10;
 
@@ -40,7 +41,7 @@ namespace Fishing.Game
         [SerializeField]
         private MainCommunicationInterface communicationInterface;
         [SerializeField]
-        private float torqueSendingInterval = 0.1f;
+        private float commandSendingInterval = 0.1f;
 
 
         // 自分が持っているハンドルの位置
@@ -53,7 +54,7 @@ namespace Fishing.Game
 
         private float time = 0.0f;
         private float _previoussendingTorque = 0.0f;
-        private float _previousTorqueSendingTime = 0.0f;
+        private float _previousCommandSendingTime = 0.0f;
         private bool duringReelingWire = false;
 
 
@@ -113,8 +114,10 @@ namespace Fishing.Game
         public float latterSpikePeriod;
         public float latterSpikeSize;
 
-        //  釣り中のベーストルク
-        public float baseTorqueDuringFishing = 0.75f;
+        //  釣り中のトルク範囲
+        public float minTorqueDuringFishing;
+        public float maxTorqueDuringFishing;
+
 
         // 魚が針を突いているときのパラメータ
         // 魚が突く時間間隔の最大値と最小値
@@ -229,6 +232,18 @@ namespace Fishing.Game
         // ファイト回数(=釣った回数＆逃げられた回数)
         public int fightingCount = 0;
 
+        // // キャリブレーション開始直後の速度0指令時間
+        // public float staticTimeAtCalibration;
+
+        // キャリブレーション用の変数
+        public float velocityAtNegativeAction; // ネガティブ動作時の速度
+        public float cutoffRatioOfTime; // ネガティブ動作の初期はユーザーの力が立ち上がる途中なので、いくつかデータを切り落とす
+        public float topPercentile; // 上位?%のデータを最高値とする
+        public float bottomPercentile;// 下位?%のデータを最高値とする
+        public List<float> measuredTorques = new List<float>(); // 計測したトルクのリスト
+        public List<float> measuredPositions = new List<float>(); // 計測したポジションのリスト
+        public List<float> measuredNormalizedTorques = new List<float>(); // 計測した正規化トルクのリスト
+
         // Start is called before the first frame update
         void Start()
         {
@@ -267,12 +282,19 @@ namespace Fishing.Game
 
             // ワイヤ巻き取りまたはプレイ中のトルク指令
             // ワイヤ巻き取りの操作があればそれを優先し、なければプレイ中のトルク指令を行う
+            // if(OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
+            // {
+            //     UpdateTorque(0.75f);
+            // }else{
+            //     UpdateTorque(sendingTorque);
+            // }
             if(OVRInput.Get(OVRInput.RawButton.LIndexTrigger))
             {
-                UpdateTorque(0.75f);
-            }else{
-                UpdateTorque(sendingTorque);
+                device.SetTorqueMode(0.75f);
             }
+
+            // モータへの制御指令を一定時間間隔で送信
+            UpdateCommand();
 
             // 回遊用の魚を動かす
             if(swimmingAroundFishes.Count > 0){
@@ -286,9 +308,13 @@ namespace Fishing.Game
 
             // 釣果を表示
             UIByLeftController.text = "本日の釣果\n";
-            foreach(string oneRecored in fishingRecord) {
+            int _numberOfDisplayedFishes = Mathf.Min(fishingRecord.Count, 8);
+            foreach(string oneRecored in fishingRecord.Skip(fishingRecord.Count - _numberOfDisplayedFishes)) {
                 UIByLeftController.text += oneRecored + "\n";
             }
+
+            // モータのデータ読み取り
+            Debug.Log("read torque is " + device.torque.ToString());
         }
 
         //VR空間上のログ情報に追加
@@ -316,21 +342,30 @@ namespace Fishing.Game
         }
 
         //トルクを更新
-        private void UpdateTorque(float torque, float speed = 10.0f)
-        {
-            if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
+        // private void UpdateTorque(float torque, float speed = 10.0f)
+        // {
+        //     if ((time - _previousTorqueSendingTime) < torqueSendingInterval){
+        //         return;
+        //     }
+        //     // SendingDataFormat data = new SendingDataFormat();
+        //     // data.setTorque(torque, speed);
+        //     // communicationInterface.sendData(data);
+        //     device.SetTorqueMode(torque);
+        //     device.Apply();
+
+        //     Debug.Log("send torque" + torque.ToString());
+        //     _previoussendingTorque = sendingTorque;
+        //     _previousTorqueSendingTime = time;
+            
+        // }
+
+        // 指令を更新
+        private void UpdateCommand(){
+            if ((time - _previousCommandSendingTime) <commandSendingInterval){
                 return;
             }
-            // SendingDataFormat data = new SendingDataFormat();
-            // data.setTorque(torque, speed);
-            // communicationInterface.sendData(data);
-            device.SetTorqueMode(torque);
             device.Apply();
-
-            Debug.Log("send torque" + torque.ToString());
-            _previoussendingTorque = sendingTorque;
-            _previousTorqueSendingTime = time;
-            
+            _previousCommandSendingTime = time;
         }
 
 
@@ -359,5 +394,73 @@ namespace Fishing.Game
             // 針回りに回転
             fish.transform.RotateAround(basePointForSwimmingAround, Vector3.up, angleAroundNeedle);
         }
+
+
+        // 指定の重量の魚を、指定の匹数だけ出現させて返す
+        public List<Fish> GetFishesOfSpecifiedWeight(List<GameObject> _fishSpecies,int _numberOfFishes, float _minTorque, float _maxTorque){
+            List<Fish> _appearingFishes = new List<Fish>();
+            int tryCount = 0;
+
+            // 指定した匹数だけ繰り返す
+            while (_appearingFishes.Count < _numberOfFishes & tryCount < 10000){
+                tryCount += 1;
+
+                // 魚をランダムに取得
+                Fish _candidateFishPrefab;
+                _candidateFishPrefab = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
+
+                // 魚のスケールをランダムに変更
+                float _scale = Random.Range(0.5f, 2.0f);
+
+                // 魚の釣り上げ時の負荷(トルク)が指定範囲内なら追加
+                if ((_candidateFishPrefab.torque * _scale > _minTorque) & (_candidateFishPrefab.torque * _scale < _maxTorque)){
+                    Fish _candidateFishInstance;
+                    _candidateFishInstance = GameObject.Instantiate(_candidateFishPrefab, transform.position, transform.rotation);
+
+                    // スケールおよび重量を変更
+                    _candidateFishInstance.scale = _scale;
+                    _candidateFishInstance.torque *= _scale;
+                    // _candidateFishInstance.weight *= _scale;
+
+                    // あとで自分の挙上重量がわかるように、weightとtorqueは相関させておく
+                    _candidateFishInstance.weight = _candidateFishInstance.torque * 4.0f;
+
+                    // インスタンスを追加
+                    _appearingFishes.Add(_candidateFishInstance);
+
+                    // 魚の初期化
+                    _candidateFishInstance.isFishShadow = false;
+                    _candidateFishInstance.isFishBody = false;
+                    _candidateFishInstance.splash.SetActive(false);
+                    _candidateFishInstance.twistSpeed = minSpeedOfFishTwist;
+                    _candidateFishInstance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+            }
+
+            return _appearingFishes;
+        }
+
+
+        /// 目的の値に最も近い値を取得(float用)
+        public int GetIndexOfNearestValue(List<float> source, float targetValue){
+            if (source.Count == 0) {
+            Debug.LogError($"値が入っていないので、最も近い値を取得出来ません");
+            return -1;
+            }
+            
+            //目的の値との差の絶対値が最小の値を計算
+            var min = source.Min(value => Mathf.Abs(value - targetValue));
+            
+            //絶対値が最小の値だった物を最も近い値
+            var nearestValue = source.First(value => Mathf.Approximately(Mathf.Abs(value - targetValue), min));
+
+            // 最も近い値のindex
+            int index = source.IndexOf(nearestValue);
+
+            return index;
+        }
+
     }
+
+    
 }

@@ -40,7 +40,8 @@ namespace Fishing.State
             Debug.Log("hit prob is" + probabilityOfFishOnTheHook.ToString());
 
             // 釣りモード時のトルク指令
-            master.sendingTorque = master.baseTorqueDuringFishing;
+            // master.sendingTorque = master.minTorqueDuringFishing;
+            master.device.SetTorqueMode(master.minTorqueDuringFishing);
 
             master.frontViewUiText.text = "During fishing";
 
@@ -56,14 +57,17 @@ namespace Fishing.State
 
             // // 自分の最小筋力の±10%以内の重量の魚を取得
             // // 釣り上げ予定の魚
-            master.fishToBeCaught = GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.8f, master.minUserPower * 1.2f)[0];
+            master.fishToBeCaught = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
             master.fish = master.fishToBeCaught;
             master.rope.fish = master.fish;
             // // 泳ぎ回る予定の魚
-            master.swimmingAroundFishes = GetFishesOfSpecifiedWeight(master.fishSpecies, master.numberOfApearanceFishes - 1, master.minUserPower * 0.8f, master.minUserPower * 1.2f);
+            master.swimmingAroundFishes = master.GetFishesOfSpecifiedWeight(master.fishSpecies, master.numberOfApearanceFishes - 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f);
 
             // ルアーが着水するまで魚を非表示
             Invoke("SetActiveOfAllFishes", master.rope.lureDropTime);
+
+            // ルアー着水の音
+            Invoke("PlaySoundOfLureLanding", master.rope.lureDropTime);
 
             master.tensionSliderGameObject.SetActive(false);
         }
@@ -81,7 +85,7 @@ namespace Fishing.State
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            master.tensionSlider.value = master.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
             
             // 釣り上げ予定の魚を動かす
             master.MoveFishOnEllipse(master.fish, currentTimeCount, 10.0f, 1.0f, 0.5f, -90.0f, 0.0f);
@@ -109,36 +113,36 @@ namespace Fishing.State
             return (int)StateType;
         }
 
-        // 指定の重量の魚を、指定の匹数だけ出現させて返す
-        public List<Fish> GetFishesOfSpecifiedWeight(List<GameObject> _fishSpecies,int _numberOfFishes, float _minTorque, float _maxTorque){
-            List<Fish> _appearingFishes = new List<Fish>();
-            int tryCount = 0;
+        // // 指定の重量の魚を、指定の匹数だけ出現させて返す
+        // public List<Fish> GetFishesOfSpecifiedWeight(List<GameObject> _fishSpecies,int _numberOfFishes, float _minTorque, float _maxTorque){
+        //     List<Fish> _appearingFishes = new List<Fish>();
+        //     int tryCount = 0;
 
-            // 指定した匹数だけ繰り返す
-            while (_appearingFishes.Count < _numberOfFishes & tryCount < 10000){
-                tryCount += 1;
+        //     // 指定した匹数だけ繰り返す
+        //     while (_appearingFishes.Count < _numberOfFishes & tryCount < 10000){
+        //         tryCount += 1;
 
-                // 魚をランダムに取得
-                Fish _candidateFishPrefab;
-                _candidateFishPrefab = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
+        //         // 魚をランダムに取得
+        //         Fish _candidateFishPrefab;
+        //         _candidateFishPrefab = _fishSpecies[Random.Range (0, _fishSpecies.Count)].GetComponent<Fish>();
 
-                // 魚の釣り上げ時の負荷(トルク)が指定範囲内なら追加
-                if ((_candidateFishPrefab.torque > _minTorque) & (_candidateFishPrefab.torque < _maxTorque)){
-                    Fish _candidateFishInstance;
-                    _candidateFishInstance = GameObject.Instantiate(_candidateFishPrefab, transform.position, transform.rotation);
-                    _appearingFishes.Add(_candidateFishInstance);
+        //         // 魚の釣り上げ時の負荷(トルク)が指定範囲内なら追加
+        //         if ((_candidateFishPrefab.torque > _minTorque) & (_candidateFishPrefab.torque < _maxTorque)){
+        //             Fish _candidateFishInstance;
+        //             _candidateFishInstance = GameObject.Instantiate(_candidateFishPrefab, transform.position, transform.rotation);
+        //             _appearingFishes.Add(_candidateFishInstance);
 
-                    // 魚の初期化
-                    _candidateFishInstance.isFishShadow = false;
-                    _candidateFishInstance.isFishBody = false;
-                    _candidateFishInstance.splash.SetActive(false);
-                    _candidateFishInstance.twistSpeed = master.minSpeedOfFishTwist;
-                    _candidateFishInstance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                }
-            }
+        //             // 魚の初期化
+        //             _candidateFishInstance.isFishShadow = false;
+        //             _candidateFishInstance.isFishBody = false;
+        //             _candidateFishInstance.splash.SetActive(false);
+        //             _candidateFishInstance.twistSpeed = master.minSpeedOfFishTwist;
+        //             _candidateFishInstance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        //         }
+        //     }
 
-            return _appearingFishes;
-        }
+        //     return _appearingFishes;
+        // }
 
         // すべての魚を表示
         public void SetActiveOfAllFishes(){
@@ -156,10 +160,15 @@ namespace Fishing.State
                     _swimmingAroundFish.splash.SetActive(false);
                 }
             }
+
+        }
+
+        // ルアー着水の音
+        public void PlaySoundOfLureLanding(){
+            master.LureLandingSound.Play();
         }
 
     }
-
 
 
 }

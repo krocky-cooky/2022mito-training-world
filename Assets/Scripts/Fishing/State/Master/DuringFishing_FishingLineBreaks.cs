@@ -35,7 +35,8 @@ namespace Fishing.State
             master.fightingCount += 1;
 
             // 負荷を小さくする
-            master.sendingTorque = Mathf.Max(master.sendingTorque - 1.0f, master.baseTorqueDuringFishing);
+            // master.sendingTorque = Mathf.Max(master.sendingTorque - 1.0f, master.minTorqueDuringFishing);
+            master.device.SetTorqueMode(Mathf.Max(master.sendingTorque - 1.0f, master.minTorqueDuringFishing));
         }
 
         public override void OnExit()

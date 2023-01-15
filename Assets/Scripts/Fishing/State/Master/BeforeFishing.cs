@@ -22,7 +22,8 @@ namespace Fishing.State
 
             master.frontViewUiText.text = "Press X button to start";
 
-            master.sendingTorque = 0.0f;
+            // master.sendingTorque = 0.0f;
+            master.device.SetTorqueMode(0.0f);
 
             master.tensionSliderGameObject.SetActive(false);
         }
@@ -35,7 +36,7 @@ namespace Fishing.State
         {
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            master.tensionSlider.value = master.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             if (OVRInput.GetDown(OVRInput.RawButton.X) || Input.GetMouseButtonDown(1))
             {

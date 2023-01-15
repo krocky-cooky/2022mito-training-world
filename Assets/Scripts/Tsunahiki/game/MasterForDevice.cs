@@ -25,6 +25,8 @@ namespace tsunahiki.game
         private GameObject favorableWind;
         [SerializeField]
         private GameObject adverseWind;
+        [SerializeField]
+        private float multiplierOffset = 1.5f;
 
         [HideInInspector]
         public Queue<string> viewerTextQueue = new Queue<string>();
@@ -86,7 +88,7 @@ namespace tsunahiki.game
 
         private void decideGripStrengthMultiplier()
         {
-            gripStrengthMultiplier = defaultGripStrengthMultiplier;
+            gripStrengthMultiplier = defaultGripStrengthMultiplier*multiplierOffset;
         }
 
         public void addLog(string message)
