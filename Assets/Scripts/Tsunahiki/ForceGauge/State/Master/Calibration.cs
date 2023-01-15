@@ -23,6 +23,7 @@ namespace tsunahiki.forceGauge.state
             Debug.Log("Calibration");
 
             masterForForceGauge.frontViewUI.text = "Fight !!";
+            StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "Fight!!", 3.0f));
             
             masterForForceGauge.myBeam.isFired = true;
             masterForForceGauge.OpponentPlayer.beamController.isFired = true;

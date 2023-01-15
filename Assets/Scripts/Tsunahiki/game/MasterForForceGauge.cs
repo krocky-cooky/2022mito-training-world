@@ -17,6 +17,7 @@ namespace tsunahiki.game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public Text frontViewUI;
+        public Text UIFollowingEyes;
 
         public float moveParameter;
 
@@ -141,5 +142,18 @@ namespace tsunahiki.game
             Debug.Log("manuallyInputOpponentData run");
         }
 
+        // UIに表示
+        // 一定時間後に削除
+        public IEnumerator DisplayOnUI(Text textUI, string message, float displayingTime)
+        {
+            // メッセージ表示
+            textUI.text = message;
+
+            // 一定時間待つ
+            yield return new WaitForSeconds(displayingTime);
+
+            // メッセージ削除
+            textUI.text = "";
+        }
     }
 }

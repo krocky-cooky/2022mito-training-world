@@ -24,6 +24,8 @@ namespace tsunahiki.forceGauge.state
             masterForForceGauge.frontViewUI.text = "Set Up";
 
             masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
+
+            
         }
 
         public override void OnExit()
