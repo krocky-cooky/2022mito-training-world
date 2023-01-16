@@ -106,9 +106,9 @@ namespace tsunahiki.trainingDevice.state
 
             {
                 //勝敗がついたとき
-                if(false)
+                if(stateController.trainingDevice.currentNormalizedPosition >= 0.95f || stateController.trainingDevice.currentNormalizedPosition <= 0.05f)
                 {
-                    if(stateController.master.updateResult())
+                    if(stateController.master.updateResult(stateController.trainingDevice.currentNormalizedPosition >= 0.95f))
                     {
                         int nextState = (int)MasterStateController.StateType.GameSet;
                         stateController.coordinator.communicationData.stateId = nextState;

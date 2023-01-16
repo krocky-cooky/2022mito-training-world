@@ -39,6 +39,10 @@ namespace tsunahiki.trainingDevice.stateController
         public float torqueSendingInterval = 0.2f; //トルク送信の間隔
 
         public GameObject opponentAvatar;
+        
+        public Vector3 countDownTextPosition = new Vector3(0,1,-3);
+
+        public DynamicTextData textData;
 
 
 
@@ -47,6 +51,10 @@ namespace tsunahiki.trainingDevice.stateController
         public float maxTorque = 0.0f; //発揮筋力最大値
         
         public bool maxTorqueRegistered = false; //_maxTorqueを決定したか
+
+        //Ready State 
+
+        public DynamicTextData countDownTextData;
         
 
         //Fight State

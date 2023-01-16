@@ -10,6 +10,7 @@ using pseudogame.game;
 
 
 using WebSocketSharp;
+using TRAVE_unity;
 
 
 namespace communication
@@ -23,6 +24,7 @@ namespace communication
         private string receivedMessage; // AWSのWebSocketAPIを介して受信したメッセージを格納
 
         public bool isConnected = false;
+        TRAVELogger _logger = TRAVELogger.GetInstance;
 
         [SerializeField]
         private string webSocketURL;
@@ -68,14 +70,13 @@ namespace communication
 
             _socket.OnMessage += (s,e) => 
             {
-                Debug.Log(e.Data);
 
                 if(!e.Data.Contains("server error"))
                 {
                     receivedText = e.Data;
                     
                 }
-                Debug.Log(e.Data);
+                _logger.writeLog(e.Data);
                 // receivedMessage = JsonUtility.FromJson<ReceivingRemoteDataFormat>(receivedText).message;
             };
             
