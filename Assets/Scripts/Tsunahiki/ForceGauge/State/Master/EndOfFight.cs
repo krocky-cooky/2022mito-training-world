@@ -34,13 +34,13 @@ namespace tsunahiki.forceGauge.state
             // 勝ったら相手に、負けたら自分に、、ドローなら初期位置に、中央のフレアの行先を設定
             if ((int)masterForForceGauge.opponentData.latestWinner == masterForForceGauge.myDeviceId){   
                 _flareDestinaion = masterForForceGauge.opponentTransform.position;
-                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "You Win!", 2.0f));
+                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "You Win!", 3.0f));
             }else if ((int)masterForForceGauge.opponentData.latestWinner == (int)TrainingDeviceType.Nothing){
                 _flareDestinaion = _initPosition;
-                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "Draw", 2.0f));
+                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "Draw", 3.0f));
             }else{
                 _flareDestinaion = masterForForceGauge.myTransform.position;
-                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "You Lose...", 2.0f));
+                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "You Lose...", 3.0f));
             }
 
             masterForForceGauge.centerFlare.SetActive(true);

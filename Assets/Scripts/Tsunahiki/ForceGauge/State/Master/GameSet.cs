@@ -29,10 +29,13 @@ namespace tsunahiki.forceGauge.state
             _winCounts = masterForForceGauge.victoryCounts - masterForForceGauge.defeatCounts;
             if (_winCounts > 0){
                 _resultMessage = "You Win !!";
+                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "Game Set!\nYou Win!", 3.0f));
             }else if(_winCounts < 0){
                 _resultMessage = "You Lose...";
+                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "Game Set!\nYou Lose...", 3.0f));
             }else{
                 _resultMessage = "Draw";
+                StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "Game Set!\nDraw", 3.0f));
             }
 
             masterForForceGauge.frontViewUI.text = _resultMessage + "\nPress A Button to go to Set Up Mode";
