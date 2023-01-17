@@ -57,11 +57,11 @@ namespace Fishing.State
 
             // // 自分の最小筋力の±10%以内の重量の魚を取得
             // // 釣り上げ予定の魚
-            master.fishToBeCaught = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
+            master.fishToBeCaught = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, (master.minUserPower + master.maxUserPower) / 2.0f * 0.9f, (master.minUserPower + master.maxUserPower) / 2.0f * 1.1f)[0];
             master.fish = master.fishToBeCaught;
             master.rope.fish = master.fish;
             // // 泳ぎ回る予定の魚
-            master.swimmingAroundFishes = master.GetFishesOfSpecifiedWeight(master.fishSpecies, master.numberOfApearanceFishes - 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f);
+            master.swimmingAroundFishes = master.GetFishesOfSpecifiedWeight(master.fishSpecies, master.numberOfApearanceFishes - 1, (master.minUserPower + master.maxUserPower) / 2.0f * 0.9f, (master.minUserPower + master.maxUserPower) / 2.0f * 1.1f);
 
             // ルアーが着水するまで魚を非表示
             Invoke("SetActiveOfAllFishes", master.rope.lureDropTime);

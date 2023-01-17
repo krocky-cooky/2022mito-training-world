@@ -29,6 +29,8 @@ namespace tsunahiki.forceGauge.state
 
             _initPosition = masterForForceGauge.centerFlare.transform.position;
 
+            masterForForceGauge.frontViewUI.text = "End Of Fight";
+
             _initTime = masterForForceGauge.time;
 
             // 勝ったら相手に、負けたら自分に、、ドローなら初期位置に、中央のフレアの行先を設定

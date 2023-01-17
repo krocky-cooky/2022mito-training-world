@@ -65,6 +65,7 @@ namespace Fishing.State
 
             // キャリブレーション前に、ユーザーの最低パワーを基準値に再設定
             master.minUserPower = master.minTorqueDuringFishing;
+            master.maxUserPower = master.minTorqueDuringFishing + 0.1f;
 
             // 記録を初期化
             master.measuredTorques = new List<float>(); // 計測したトルクのリスト
@@ -81,7 +82,7 @@ namespace Fishing.State
 
 
             // キャリブレーションした結果の筋力に合わせた魚を表示
-            reacquiredFish = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, master.minUserPower * 0.9f, master.minUserPower * 1.1f)[0];
+            reacquiredFish = master.GetFishesOfSpecifiedWeight(master.fishSpecies, 1, (master.minUserPower + master.maxUserPower) / 2.0f * 0.9f, (master.minUserPower + master.maxUserPower) / 2.0f * 1.1f)[0];
             master.fish.isFishShadow = false;
             master.fish.splash.SetActive(false);
             reacquiredFish.transform.position = master.fish.transform.position;
@@ -95,7 +96,7 @@ namespace Fishing.State
 
      
             // モータへの指令用のフラグの切り替え
-            if(!(_isNegativeAction) & (master.measuredTorques.Count == 0) & (master.trainingDevice.currentNormalizedPosition > 0.9f)){
+            if(!(_isNegativeAction) & (master.measuredTorques.Count == 0) & (master.trainingDevice.currentNormalizedPosition > 0.7f)){
                 _isNegativeAction = true;
             }else if(_isNegativeAction & master.trainingDevice.currentNormalizedPosition < 0.1f){
                 _isNegativeAction = false;
@@ -109,7 +110,7 @@ namespace Fishing.State
                 // トルク計測後はユーザーの最低パワーを代入
                 // ただし、すっぽ抜けないようにゆっくり負荷を下げる
                 _timeCountForLighteningSlowly += Time.deltaTime;
-                float _sendTorque = Mathf.Lerp(master.minUserPower, _lastTorqueAtCalibration, 1.0f -Mathf.Clamp01(_timeCountForLighteningSlowly / _timeForLighteningSlowly));
+                float _sendTorque = Mathf.Lerp((master.maxUserPower + master.minUserPower) / 2.0f, _lastTorqueAtCalibration, 1.0f -Mathf.Clamp01(_timeCountForLighteningSlowly / _timeForLighteningSlowly));
                 master.device.SetTorqueMode(_sendTorque);
             }else{
                 master.device.SetSpeedMode(master.velocityAtNegativeAction, 6.0f);
@@ -141,7 +142,8 @@ namespace Fishing.State
                 // 計測した正規化トルクのリストを作成
                 foreach(float measuredTorque in master.measuredTorques)
                 {
-                    master.measuredNormalizedTorques.Add(Mathf.InverseLerp(master.minUserPower, master.maxUserPower, measuredTorque));
+                    // master.measuredNormalizedTorques.Add(Mathf.InverseLerp(master.minUserPower, master.maxUserPower, measuredTorque));
+                    master.measuredNormalizedTorques.Add(0.5f);
                 }
 
                 // 動摩擦力 = 0.4f, よって(ネガティブ時の動摩擦力 - ポジティブ時の動摩擦力) = 0.8f
