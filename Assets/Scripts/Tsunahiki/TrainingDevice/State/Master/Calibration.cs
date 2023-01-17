@@ -27,7 +27,7 @@ namespace tsunahiki.trainingDevice.state
 
         public override void OnExit() 
         {
-
+            _endRegistration = false;
         }
 
         public override int StateUpdate()
