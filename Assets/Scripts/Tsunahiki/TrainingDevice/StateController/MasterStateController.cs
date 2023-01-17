@@ -44,6 +44,10 @@ namespace tsunahiki.trainingDevice.stateController
 
         public DynamicTextData resultTextData;
 
+        public GameObject minWall;
+
+        public GameObject maxWall;
+
 
 
         //SetUp State
