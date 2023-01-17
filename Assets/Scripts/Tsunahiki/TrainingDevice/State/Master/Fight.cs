@@ -105,9 +105,11 @@ namespace tsunahiki.trainingDevice.state
             }
 
             {
+                Debug.Log("here1");
                 //勝敗がついたとき
-                if(stateController.trainingDevice.currentNormalizedPosition >= 0.95f || stateController.trainingDevice.currentNormalizedPosition <= 0.05f)
+                if(stateController.trainingDevice.currentNormalizedPosition >= 0.95f || stateController.trainingDevice.currentNormalizedPosition <= 0.05f || (stateController.testMode && Input.GetMouseButton(0)))
                 {
+                    Debug.Log("here");
                     if(stateController.master.updateResult(stateController.trainingDevice.currentNormalizedPosition >= 0.95f))
                     {
                         int nextState = (int)MasterStateController.StateType.GameSet;

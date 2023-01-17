@@ -27,6 +27,8 @@ namespace tsunahiki.trainingDevice.state
 
         public override void OnExit() 
         {
+            _duringCoroutine = false;
+            _gameStart = false;
 
         }
 

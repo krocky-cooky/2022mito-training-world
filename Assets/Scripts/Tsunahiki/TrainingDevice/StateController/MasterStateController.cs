@@ -93,11 +93,12 @@ namespace tsunahiki.trainingDevice.stateController
             stateDic[(int)StateType.Fight] = gameObject.AddComponent<Fight>();
             stateDic[(int)StateType.Fight].Initialize((int)StateType.Fight);
 
-            stateDic[(int)StateType.EndOfFight] = gameObject.AddComponent<Fight>();
-            stateDic[(int)StateType.EndOfFight].Initialize((int)StateType.Fight);
+            stateDic[(int)StateType.EndOfFight] = gameObject.AddComponent<EndOfFight>();
+            stateDic[(int)StateType.EndOfFight].Initialize((int)StateType.EndOfFight);
 
             stateDic[(int)StateType.Calibration] = gameObject.AddComponent<Calibration>();
             stateDic[(int)StateType.Calibration].Initialize((int)StateType.Calibration);
+
             // stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
             // stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);
 
