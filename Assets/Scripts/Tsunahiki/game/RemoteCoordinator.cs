@@ -101,7 +101,6 @@ namespace tsunahiki.game
         private float getValueFromTrainingDevice()
         {
             float retval = _trainingDevice.currentNormalizedPosition;
-            Debug.Log(retval);
             return retval;
         }
 

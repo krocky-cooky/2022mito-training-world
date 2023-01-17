@@ -46,7 +46,6 @@ namespace tsunahiki.game
             }
 
             currentNormalizedPosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));
-            Debug.Log(currentNormalizedPosition);
             // マシンのハンドル等のストロークポジション登録
             if(OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))
             {

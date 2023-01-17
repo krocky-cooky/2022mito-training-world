@@ -39,6 +39,10 @@ namespace tsunahiki.trainingDevice.stateController
         public float torqueSendingInterval = 0.2f; //トルク送信の間隔
 
         public GameObject opponentAvatar;
+        
+        public Vector3 countDownTextPosition = new Vector3(0,1,-3);
+
+        public DynamicTextData textData;
 
 
 
@@ -47,6 +51,10 @@ namespace tsunahiki.trainingDevice.stateController
         public float maxTorque = 0.0f; //発揮筋力最大値
         
         public bool maxTorqueRegistered = false; //_maxTorqueを決定したか
+
+        //Ready State 
+
+        public DynamicTextData countDownTextData;
         
 
         //Fight State
@@ -85,11 +93,12 @@ namespace tsunahiki.trainingDevice.stateController
             stateDic[(int)StateType.Fight] = gameObject.AddComponent<Fight>();
             stateDic[(int)StateType.Fight].Initialize((int)StateType.Fight);
 
-            stateDic[(int)StateType.EndOfFight] = gameObject.AddComponent<Fight>();
-            stateDic[(int)StateType.EndOfFight].Initialize((int)StateType.Fight);
+            stateDic[(int)StateType.EndOfFight] = gameObject.AddComponent<EndOfFight>();
+            stateDic[(int)StateType.EndOfFight].Initialize((int)StateType.EndOfFight);
 
             stateDic[(int)StateType.Calibration] = gameObject.AddComponent<Calibration>();
             stateDic[(int)StateType.Calibration].Initialize((int)StateType.Calibration);
+
             // stateDic[(int)StateType.GameSet] = gameObject.AddComponent<GameSet>();
             // stateDic[(int)StateType.GameSet].Initialize((int)StateType.GameSet);
 

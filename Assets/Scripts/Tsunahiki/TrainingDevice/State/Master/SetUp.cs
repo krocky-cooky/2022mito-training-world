@@ -18,7 +18,6 @@ namespace tsunahiki.trainingDevice.state
             restore();
             Debug.Log("set up start");
             stateController.master.addLog("SetUp");
-
         }
 
         public override void OnExit() 
@@ -36,7 +35,7 @@ namespace tsunahiki.trainingDevice.state
             // }
 
 
-            if(OVRInput.GetDown(stateController.buttonAllotment.Ready))
+            if(OVRInput.GetDown(stateController.buttonAllotment.Ready) || Input.GetMouseButton(0))
             {
 
                 int nextState = (int)MasterStateController.StateType.Ready;

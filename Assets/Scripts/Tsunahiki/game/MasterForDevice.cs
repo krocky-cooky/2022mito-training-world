@@ -13,7 +13,7 @@ namespace tsunahiki.game
     public class MasterForDevice : MonoBehaviour
     {   
         const int MAX_LOG_LINES = 10;
-
+        private const int TOTAL_WIN_COUNT = 3;
         private System.Random _randomGenerator = new System.Random();
         private int _trainingDeviceVictoryCount = 0;
         private int _forceGaugeVictoryCount = 0;
@@ -73,9 +73,15 @@ namespace tsunahiki.game
         }
 
         //勝敗を記録ゲームセットの場合trueを返す
-        public bool updateResult()
+        public bool updateResult(bool deviceWin)
         {
-            
+            currentWinner = deviceWin ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
+            if(deviceWin)_trainingDeviceVictoryCount++;
+            else _forceGaugeVictoryCount++;
+            if(_trainingDeviceVictoryCount == TOTAL_WIN_COUNT || _forceGaugeVictoryCount == TOTAL_WIN_COUNT)
+            {
+                return true;
+            }
             return false;
         }
 
@@ -111,7 +117,7 @@ namespace tsunahiki.game
             {
                 writeText += arr[i] + "\n";
             }
-            print(writeText);
+            //print(writeText);
             viewerObject.GetComponent<Text>().text = writeText;
         }
 
