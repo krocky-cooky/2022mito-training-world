@@ -42,7 +42,11 @@ namespace tsunahiki.trainingDevice.stateController
         
         public Vector3 countDownTextPosition = new Vector3(0,1,-3);
 
-        public DynamicTextData textData;
+        public DynamicTextData resultTextData;
+
+        public GameObject minWall;
+
+        public GameObject maxWall;
 
 
 

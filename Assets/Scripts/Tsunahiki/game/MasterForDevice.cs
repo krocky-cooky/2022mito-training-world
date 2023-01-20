@@ -87,14 +87,14 @@ namespace tsunahiki.game
 
         public void setDefaultGripStrengthMultiplier(float input)
         {
-            defaultGripStrengthMultiplier = input;
+            //defaultGripStrengthMultiplier = input;
             decideGripStrengthMultiplier();
 
         }
 
         private void decideGripStrengthMultiplier()
         {
-            gripStrengthMultiplier = defaultGripStrengthMultiplier*multiplierOffset;
+            //gripStrengthMultiplier = defaultGripStrengthMultiplier*multiplierOffset;
         }
 
         public void addLog(string message)

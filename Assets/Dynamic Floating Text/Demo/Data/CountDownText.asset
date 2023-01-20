@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: CountDownText
   m_EditorClassIdentifier: 
   id: 
-  colours: []
-  sizes: []
+  colours:
+  - {r: 1, g: 1, b: 1, a: 1}
+  sizes:
+  - 2
   font: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   bold: 1
   italic: 0
   underline: 0
   strikethrough: 0
-  lifetime: 100
+  lifetime: 0.8
   numberOfColourAlternations: 0
   numberOfSizeAlternations: 0
   colourAlternationDuration: 0

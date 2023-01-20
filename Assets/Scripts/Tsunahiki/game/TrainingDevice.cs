@@ -16,6 +16,10 @@ namespace tsunahiki.game
     {
         [SerializeField]
         private InputInterface inputInterface;
+        [SerializeField]
+        private GameObject minWall;
+        [SerializeField]
+        private GameObject maxWall;
 
         // ハンドル等の最大位置と最小位置
         public float maxAbsPosition = 0.0f;
@@ -59,9 +63,15 @@ namespace tsunahiki.game
                 Debug.Log("Input.GetMouseButton(2)");
                 if (minAbsPosition > currentAbsPosition){
                     minAbsPosition = currentAbsPosition;
+                    Vector3 pos = minWall.transform.position;
+                    pos.z = minAbsPosition;
+                    minWall.transform.position = pos;
                 }
                 if (maxAbsPosition < currentAbsPosition){
                     maxAbsPosition = currentAbsPosition;
+                    Vector3 pos = maxWall.transform.position;
+                    pos.z = maxAbsPosition;
+                    maxWall.transform.position = pos;
                 }
             }
         }
