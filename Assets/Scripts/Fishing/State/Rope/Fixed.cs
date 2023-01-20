@@ -21,7 +21,7 @@ namespace Fishing.State
         public override void OnEnter()
         {
             Debug.Log("Fixed");
-            rope.fixedPosition = new Vector3(rope.centerOfHandle.position.x,rope.centerOfHandle.position.y - rope.ropeLengthDuringFishing, rope.centerOfHandle.position.z);
+            rope.fixedPosition = new Vector3(rope.centerOfHandle.position.x,rope.centerOfHandle.position.y - rope.ropeLengthDuringFishing, rope.centerOfHandle.position.z - 0.5f);
             rope.fixedRotation = rope.master.ropeRelayBelowHandle.transform.rotation;
 
             _initTime = rope.time;
