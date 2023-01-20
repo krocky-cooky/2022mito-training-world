@@ -58,12 +58,10 @@ namespace Fishing.State
             Debug.Log("DuringFishing_FishOnTheHook");
 
             // トルクの指定
-            // _maxTorque = master.fish.weight / master.fishWeightPerTorque;
-            // _maxTorque = master.fish.torque;
-            _minTorque = master.fish.torque;
-            _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower);
-            // _maxTorque = _minTorque + 0.1f;
-            // master.sendingTorque = _maxTorque;
+            // 最大トルクと最小トルクの平均値が魚の重量に一致するようにする
+            _minTorque = master.minUserPower;
+            // _maxTorque = _minTorque * (master.maxUserPower / master.minUserPower)+
+            _maxTorque = master.fish.torque * 2.0f - _minTorque;
             master.device.SetTorqueMode(_minTorque);
 
             // 音声を再生
@@ -110,6 +108,7 @@ namespace Fishing.State
             int _targetIndex = master.GetIndexOfNearestValue(master.measuredPositions, master.trainingDevice.currentNormalizedPosition);
             _normalizedTorque = master.measuredNormalizedTorques[_targetIndex];
             master.device.SetTorqueMode(Mathf.Lerp(_minTorque, _maxTorque, _normalizedTorque));
+
 
             // 魚の暴れる強さ
             // トルクに合わせて変化
