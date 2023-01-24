@@ -95,24 +95,22 @@ namespace tsunahiki.trainingDevice.state
             {
                 //握力系トルクの反映
                 float opponentValue = stateController.coordinator.getOpponentValue();
-                float sendingTorque = opponentValue * stateController.master.gripStrengthMultiplier;
+                float sendingTorque = stateController.master.calculateSendingTorque(opponentValue);
                 _device.SetTorqueMode(sendingTorque);
-                _fromLastTorqueUpdated += Time.deltaTime;
-                if(_fromLastTorqueUpdated > stateController.torqueSendingInterval)
+                if(_device.Apply())
                 {
-                    _device.Apply();
                     Debug.Log($"Torque {sendingTorque} has sent to Training Device");
-                    _fromLastTorqueUpdated = 0.0f;
                 }
+                
             }
 
             {
-                Debug.Log("here1");
                 //勝敗がついたとき
                 if(stateController.trainingDevice.currentNormalizedPosition >= 1.0f || stateController.trainingDevice.currentNormalizedPosition <= 0.0f || (stateController.testMode && Input.GetMouseButton(0)))
                 {
-                    Debug.Log("here");
-                    if(stateController.master.updateResult(stateController.trainingDevice.currentNormalizedPosition >= 0.95f))
+                    bool won = stateController.trainingDevice.currentNormalizedPosition >= 0.95;
+                    stateController.master.resultTurnipAction(won);
+                    if(stateController.master.updateResult(won))
                     {
                         int nextState = (int)MasterStateController.StateType.GameSet;
                         stateController.coordinator.communicationData.stateId = nextState;

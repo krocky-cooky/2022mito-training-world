@@ -18,6 +18,7 @@ namespace tsunahiki.trainingDevice.state
             restore();
             Debug.Log("set up start");
             stateController.master.addLog("SetUp");
+            stateController.master.resultTurnipAction(true);
         }
 
         public override void OnExit() 

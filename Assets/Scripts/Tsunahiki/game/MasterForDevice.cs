@@ -18,6 +18,7 @@ namespace tsunahiki.game
         private int _trainingDeviceVictoryCount = 0;
         private int _forceGaugeVictoryCount = 0;
         private int _drawyCount = 0;
+        private Vector3 _initialTurnipVelocity = new Vector3(0,20,2);
 
         [SerializeField]
         private GameObject viewerObject;
@@ -27,6 +28,8 @@ namespace tsunahiki.game
         private GameObject adverseWind;
         [SerializeField]
         private float multiplierOffset = 1.5f;
+        [SerializeField]
+        private GameObject turnip;
 
         [HideInInspector]
         public Queue<string> viewerTextQueue = new Queue<string>();
@@ -109,6 +112,17 @@ namespace tsunahiki.game
             }
         }
 
+        public void resultTurnipAction(bool won)
+        {
+            Rigidbody rb = turnip.AddComponent<Rigidbody>();
+            rb.velocity = _initialTurnipVelocity;
+        }
+
+        public void resetTurnip()
+        {
+            Destroy(turnip.GetComponent<Rigidbody>());
+        }
+
         private void writeLog()
         {
             string[] arr = viewerTextQueue.ToArray();
@@ -119,6 +133,11 @@ namespace tsunahiki.game
             }
             //print(writeText);
             viewerObject.GetComponent<Text>().text = writeText;
+        }
+        
+        public float calculateSendingTorque(float opponentNormalizedValue)
+        {
+            return opponentNormalizedValue*gripStrengthMultiplier;
         }
 
         //対戦相手が負けそうな状況におけるアバターの動き
