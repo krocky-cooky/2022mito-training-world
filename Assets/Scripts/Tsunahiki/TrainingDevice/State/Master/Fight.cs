@@ -30,13 +30,13 @@ namespace tsunahiki.trainingDevice.state
 
         public override void OnExit()
         {
-            stateController.master.resetWind();
-            reelWire();
-            
+            restore();
         }
 
         public override int StateUpdate()
         {
+            stateController.master.rotateTurnip(stateController.trainingDevice.currentNormalizedPosition);
+
 
             
             {
