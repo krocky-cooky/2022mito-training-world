@@ -29,7 +29,8 @@ namespace Fishing.State
         private float _excessSpeedTime;
 
         // キャリブレーション後に魚を再修正
-        public Fish reacquiredFish = new Fish();
+        // public Fish reacquiredFish = new Fish();
+        public Fish reacquiredFish;
 
         // キャリブレーション後の切り返し時にすっぽ抜けないように、段々負荷を下げる
         private float _timeCountForLighteningSlowly = 0.0f;
@@ -98,8 +99,8 @@ namespace Fishing.State
                 master.minUserPower = _processedMeasuredTorques[_minIndex];
 
                 // 10RM ≒ 1RM * 0.8f
-                master.minUserPower *= 0.8f;
-                master.maxUserPower *= 0.8f;
+                master.minUserPower *= 0.9f;
+                master.maxUserPower *= 0.9f;
 
                 // // 制限の範囲内に収める
                 master.minUserPower = Mathf.Max(master.minTorqueDuringFishing, master.minUserPower);
@@ -113,6 +114,7 @@ namespace Fishing.State
             foreach(float measuredTorque in master.measuredTorques)
             {
                 master.measuredNormalizedTorques.Add(Mathf.InverseLerp(master.minUserPower, master.maxUserPower, measuredTorque));
+                // master.measuredNormalizedTorques.Add(1.0f);
             }
 
 
