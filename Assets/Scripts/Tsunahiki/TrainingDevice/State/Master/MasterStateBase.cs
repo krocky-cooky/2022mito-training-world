@@ -28,8 +28,8 @@ namespace tsunahiki.trainingDevice.state
         protected void restore()
         {
             TRAVEDevice device = TRAVEDevice.GetDevice();
-            device.SetSpeedMode(0.0f,0.5f);
-            device.Apply();
+            device.SetSpeedMode(0.0f,1.0f);
+            device.Apply(true);
         }
 
         //ワイヤ巻取り

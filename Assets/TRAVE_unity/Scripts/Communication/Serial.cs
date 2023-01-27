@@ -30,10 +30,14 @@ namespace TRAVE_unity
             }
         }
 
-        public override void Start()
+        public override void Awake()
         {
             _serialPort = new SerialPort(_portName, _baudRate, Parity.None, 8, StopBits.One);
             Connect();
+        }
+
+        public override void Start()
+        {
         }
 
 
@@ -59,7 +63,7 @@ namespace TRAVE_unity
 
             if(isConnected)
             {
-                _logger.writeLog("Serial Port has Already Opened.", TRAVELogger.LogLevel.Info);
+                _logger.writeLog("Serial Port has already opened.", TRAVELogger.LogLevel.Info);
                 return;
             }
 

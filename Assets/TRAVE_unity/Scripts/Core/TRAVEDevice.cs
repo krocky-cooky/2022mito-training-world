@@ -8,15 +8,15 @@ namespace TRAVE
     {
         private static TRAVEDevice _device = new TRAVEDevice();
 
-        private double MIN_SENDING_INTERVAL = 100.0;
+        private double MIN_SENDING_INTERVAL = 200.0;
+        private string MOTOR_COMMAND_PREFIX = "m";
+        private string COVNVERTER_COMMAND_PREFIX = "p";
 
         private CommunicationType _communicationType;
         private CommunicationBase _communicationBase;
         private TRAVESendingFormat _currentMotorState = new TRAVESendingFormat();
         private TRAVESendingFormat _dataToSend = new TRAVESendingFormat();
         private DateTime _timeOfPreviousSend;
-        private string _motorCommandPrefix = "m";
-        private string _converterCommandPrefix = "p";
         private float _maxTorque;
         private float _maxSpeed;
     
@@ -89,6 +89,7 @@ namespace TRAVE
             return _device;
         }
 
+
         internal void _masterMethod_AllocateParams(SettingParams settingParams)
         {
             // allocation of parameters
@@ -108,6 +109,11 @@ namespace TRAVE
             _maxTorque = settingParams.maxTorque;
             _maxSpeed = settingParams.maxSpeed;
             _communicationBase.AllocateParams(settingParams);
+        }
+
+        internal void _masterMethod_Awake()
+        {
+            _communicationBase.Awake();
         }
 
         internal void _masterMethod_Start()
@@ -136,7 +142,7 @@ namespace TRAVE
         }
         
 
-        public void SetTorqueMode(float torque, float spdLimit = 10.0f)
+        public void SetTorqueMode(float torque, float spdLimit = 10.0f, float spdLimitLiftup = 10.0f)
         {
             _dataToSend.target = "trq";
             if(torque > _maxTorque)
@@ -146,10 +152,11 @@ namespace TRAVE
             }
             _dataToSend.trq = torque;
             _dataToSend.spdLimit = spdLimit;
+            _dataToSend.spdLimitLiftup = spdLimitLiftup;
         }
 
         //<sammary> 速度指令モードに変更し、スピード値をセットする </sammary>
-        public void SetSpeedMode(float speed, float trqLimit = 2.0f)
+        public void SetSpeedMode(float speed, float trqLimit = 6.0f)
         {
             _dataToSend.target = "spd";
             if(speed > _maxSpeed)
@@ -163,25 +170,25 @@ namespace TRAVE
 
         public bool TurnOnMotor()
         {
-            string command = _motorCommandPrefix + "1";
+            string command = MOTOR_COMMAND_PREFIX + "1";
             return _communicationBase.SendString(command);
         }
 
         public bool TurnOffMotor()
         {
-            string command = _motorCommandPrefix + "0";
+            string command = MOTOR_COMMAND_PREFIX + "0";
             return _communicationBase.SendString(command);
         }
 
         public bool TurnOnConverter()
         {
-            string command = _converterCommandPrefix + "1";
+            string command = COVNVERTER_COMMAND_PREFIX + "1";
             return _communicationBase.SendString(command);
         }
 
         public bool TurnOffConverter()
         {
-            string command = _converterCommandPrefix + "0";
+            string command = COVNVERTER_COMMAND_PREFIX + "0";
             return _communicationBase.SendString(command);
         }
 
@@ -198,9 +205,9 @@ namespace TRAVE
         }
 
         //<sammary> モーターに変更を適用する </sammary>
-        public bool Apply()
+        public bool Apply(bool forceChange = false)
         {
-            if(CheckSendingInterval())
+            if(CheckSendingInterval() || forceChange)
             {
                 _currentMotorState = _dataToSend;
                 if(_communicationBase.SendData(_dataToSend))

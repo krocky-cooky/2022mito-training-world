@@ -17,6 +17,12 @@ namespace TRAVE_unity
         SerializedProperty printMessage;
         SerializedProperty printSerialMessage;
         SerializedProperty sendingText;
+        SerializedProperty operationType;
+        SerializedProperty torque;
+        SerializedProperty speed;
+        SerializedProperty speedLimit;
+        SerializedProperty speedLimitLiftup;
+        SerializedProperty torqueLimit;
 
         //For Serial.cs
         SerializedProperty portName;
@@ -47,6 +53,12 @@ namespace TRAVE_unity
             maxTorque = serializedObject.FindProperty(nameof(settingParams.maxTorque));
             maxSpeed = serializedObject.FindProperty(nameof(settingParams.maxSpeed));
             sendingText = serializedObject.FindProperty(nameof(settingParams.sendingText));
+            operationType = serializedObject.FindProperty(nameof(settingParams.operationType));
+            torque = serializedObject.FindProperty(nameof(settingParams.torqueModeTorque));
+            speed = serializedObject.FindProperty(nameof(settingParams.speedModeSpeed));
+            speedLimit = serializedObject.FindProperty(nameof(settingParams.torqueModeSpeedLimit));
+            speedLimitLiftup = serializedObject.FindProperty(nameof(settingParams.torqueModeSpeedLimitLiftup));
+            torqueLimit = serializedObject.FindProperty(nameof(settingParams.speedModeTorqueLimit));
 
             portName = serializedObject.FindProperty(nameof(settingParams.portName));
             portNameIndex = serializedObject.FindProperty(nameof(settingParams.portNameIndex));
@@ -118,37 +130,9 @@ namespace TRAVE_unity
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.PropertyField(maxTorque);
             EditorGUILayout.PropertyField(maxSpeed);
-            if(EditorApplication.isPlaying)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(sendingText);
-                if(GUILayout.Button("Send Text"))
-                {
-                    settingParams.sendFieldText();
-                }
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                if(GUILayout.Button("Turn On Motor", turnOnButtonStyle))
-                {
-                    settingParams.TurnOnMotor();
-                }
-                if(GUILayout.Button("Turn Off Motor", turnOffButtonStyle))
-                {
-                    settingParams.TurnOffMotor();
-                }
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-                if(GUILayout.Button("Turn On Converter", turnOnButtonStyle))
-                {
-                    settingParams.TurnOnConverter();
-                }
-                if(GUILayout.Button("Turn Off Converter", turnOffButtonStyle))
-                {
-                    settingParams.TurnOffConverter();
-                }
-                EditorGUILayout.EndHorizontal();
-            }
             GUIHelper.EndVerticalPadded();
+            
+            
 
             switch(settingParams.communicationType)
             {
@@ -176,6 +160,65 @@ namespace TRAVE_unity
                     GUIHelper.EndVerticalPadded();
                     break;
 
+            }
+
+            if(EditorApplication.isPlaying)
+            {
+                EditorGUILayout.LabelField("Realtime operation", centeredLabelStyle);
+                GUIHelper.BeginVerticalPadded();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PropertyField(sendingText);
+                if(GUILayout.Button("Send Text"))
+                {
+                    settingParams.sendFieldText();
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                if(GUILayout.Button("Turn On Motor", turnOnButtonStyle))
+                {
+                    settingParams.TurnOnMotor();
+                }
+                if(GUILayout.Button("Turn Off Motor", turnOffButtonStyle))
+                {
+                    settingParams.TurnOffMotor();
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                if(GUILayout.Button("Turn On Converter", turnOnButtonStyle))
+                {
+                    settingParams.TurnOnConverter();
+                }
+                if(GUILayout.Button("Turn Off Converter", turnOffButtonStyle))
+                {
+                    settingParams.TurnOffConverter();
+                }
+                EditorGUILayout.EndHorizontal();
+
+                //motor operation command
+                EditorGUILayout.Space(10);
+                GUIHelper.BeginVerticalPadded();
+                EditorGUILayout.PropertyField(operationType);
+                if(settingParams.operationType == DeviceOperationType.Torque)
+                {
+                    EditorGUILayout.PropertyField(torque,new GUIContent("Torque"));
+                    EditorGUILayout.PropertyField(speedLimit,new GUIContent("Speed Limit"));
+                    EditorGUILayout.PropertyField(speedLimitLiftup,new GUIContent("Speed Limit Liftup"));
+                    if(GUILayout.Button("Apply", turnOnButtonStyle))
+                    {
+                        settingParams.Apply();
+                    }
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField(speed,new GUIContent("Speed"));
+                    EditorGUILayout.PropertyField(torqueLimit, new GUIContent("Torque Limit"));
+                    if(GUILayout.Button("Apply", turnOnButtonStyle))
+                    {
+                        settingParams.Apply();
+                    }
+                }
+                GUIHelper.EndVerticalPadded();
+                GUIHelper.EndVerticalPadded();
             }
 
             EditorGUILayout.LabelField("TRAVE Device Monitoring", centeredLabelStyle);
