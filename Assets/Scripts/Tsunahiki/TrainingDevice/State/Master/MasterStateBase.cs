@@ -28,7 +28,7 @@ namespace tsunahiki.trainingDevice.state
         protected void restore()
         {
             TRAVEDevice device = TRAVEDevice.GetDevice();
-            device.SetSpeedMode(0.0f,1.0f);
+            device.SetSpeedMode(0.0f,0.5f);
             device.Apply(true);
         }
 
@@ -36,7 +36,7 @@ namespace tsunahiki.trainingDevice.state
         protected void reelWire()
         {
             TRAVEDevice device = TRAVEDevice.GetDevice();
-            device.SetSpeedMode(2.0f);
+            device.SetSpeedMode(3.0f);
             device.Apply();
         }
     }

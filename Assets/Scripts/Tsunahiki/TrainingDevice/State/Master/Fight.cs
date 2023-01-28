@@ -115,6 +115,7 @@ namespace tsunahiki.trainingDevice.state
                     {
                         int nextState = (int)MasterStateController.StateType.GameSet;
                         stateController.coordinator.communicationData.stateId = nextState;
+                        stateController.coordinator.communicationData.latestWinner = (int)stateController.master.latestWinner;
                         return nextState;
                     }
                     else

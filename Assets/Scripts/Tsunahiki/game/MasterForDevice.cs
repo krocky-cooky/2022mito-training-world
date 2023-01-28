@@ -46,6 +46,8 @@ namespace tsunahiki.game
         public TrainingDeviceType fightCondition; //対戦中の勝敗状況; どちらが勝ちそうな状況か
         [HideInInspector]
         public MasterStateController masterStateController;
+        [HideInInspector]
+        public TrainingDeviceType latestWinner;
         
 
         // トルク÷握力計の値
@@ -90,6 +92,7 @@ namespace tsunahiki.game
             else _forceGaugeVictoryCount++;
             if(_trainingDeviceVictoryCount == TOTAL_WIN_COUNT || _forceGaugeVictoryCount == TOTAL_WIN_COUNT)
             {
+                latestWinner = _trainingDeviceVictoryCount == TOTAL_WIN_COUNT ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
                 return true;
             }
             return false;
@@ -179,6 +182,10 @@ namespace tsunahiki.game
             if(_device.speed < -1.5f)
             {
                 gripStrengthMultiplier += 0.001f;
+            }
+            else if(_device.speed <= 1.0f)
+            {
+                gripStrengthMultiplier += 0.0001f;
             }
             return opponentNormalizedValue*gripStrengthMultiplier;
         }
