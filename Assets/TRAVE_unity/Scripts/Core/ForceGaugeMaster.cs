@@ -7,35 +7,35 @@ using TRAVE;
 
 namespace TRAVE_unity
 {
-    public class DeviceMaster : MonoBehaviour 
+    public class ForceGaugeMaster : MonoBehaviour 
     {
-        private TRAVEDevice _trave = TRAVEDevice.GetDevice();
+        private TRAVEForceGauge _forceGauge = TRAVEForceGauge.GetDevice();
         private TRAVELogger _logger = TRAVELogger.GetInstance;
 
 
         void Awake()
         {
             SettingParams settingParams = GetComponent<SettingParams>();
-           _trave._masterMethod_AllocateParams(settingParams);
+           _forceGauge._masterMethod_AllocateParams(settingParams);
            _logger.printMessage = settingParams.printMessage;
-           _trave._masterMethod_Awake();
+           _forceGauge._masterMethod_Awake();
 
         }
 
 
         void Start()
         {
-            _trave._masterMethod_Start();  
+            _forceGauge._masterMethod_Start();  
         }
 
         void Update()
         {
-            _trave._masterMethod_Update();
+            _forceGauge._masterMethod_Update();
         }
 
         void OnApplicationQuit()
         {
-            _trave._masterMethod_OnApplicationQuit();
+            _forceGauge._masterMethod_OnApplicationQuit();
         }
 
          
