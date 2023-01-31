@@ -34,7 +34,7 @@ namespace tsunahiki.forceGauge.state
             _initTime = masterForForceGauge.time;
 
             // 勝ったら相手に、負けたら自分に、、ドローなら初期位置に、中央のフレアの行先を設定
-            if ((int)masterForForceGauge.opponentData.latestWinner == masterForForceGauge.myDeviceId){   
+            if ((int)masterForForceGauge.opponentData.latestWinner == masterForForceGauge.myDeviceId){
                 _flareDestinaion = masterForForceGauge.opponentTransform.position;
                 StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "You Win!", 3.0f));
             }else if ((int)masterForForceGauge.opponentData.latestWinner == (int)TrainingDeviceType.Nothing){

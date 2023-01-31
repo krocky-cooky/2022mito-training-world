@@ -11,12 +11,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using communication;
+using TRAVE;
 
 
 namespace tsunahiki.game
 {
     public class ForceGauge : MonoBehaviour
     {
+        public TRAVEForceGauge forceGauge = TRAVEForceGauge.GetDevice();
+
         // Start is called before the first frame update
         // 力の最大と最小
         public float maxForce = 0.0f;
@@ -87,7 +90,8 @@ namespace tsunahiki.game
             }
             if (inputInterface == InputInterface.HandDyameter){
                 if (serialHandler.isRunning){
-                    currentForce = serialHandler.getReceivedDataOfForceGauge().force;
+                    // currentForce = serialHandler.getReceivedDataOfForceGauge().force;
+                    currentForce = forceGauge.force;
                     Debug.Log("grip value is " + currentForce.ToString());
                 }
             }

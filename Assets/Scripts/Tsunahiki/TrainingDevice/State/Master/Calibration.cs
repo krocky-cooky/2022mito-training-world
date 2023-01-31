@@ -7,6 +7,7 @@ using communication;
 using tsunahiki.game;
 using tsunahiki.trainingDevice.stateController;
 using TRAVE;
+using TRAVE_unity;
 
 
 namespace tsunahiki.trainingDevice.state 

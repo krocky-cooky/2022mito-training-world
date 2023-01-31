@@ -2499,6 +2499,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &984407285 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1442025455}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1016615836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,6 +2891,85 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1380944956}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1442025455
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5607557278429839114}
+    m_Modifications:
+    - target: {fileID: 6001271991491883924, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: forceGaugePortName
+      value: COM5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883924, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: forceGaugePortNameIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883925, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001271991491883926, guid: a50dbde089a5d2b47848f197006d55a9,
+        type: 3}
+      propertyPath: m_Name
+      value: TRAVE-forceGauge
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a50dbde089a5d2b47848f197006d55a9, type: 3}
 --- !u!1 &1447610535
 GameObject:
   m_ObjectHideFlags: 0
@@ -13455,6 +13540,7 @@ Transform:
   - {fileID: 5607557276487021713}
   - {fileID: 5607557277670804045}
   - {fileID: 1040434247}
+  - {fileID: 984407285}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
