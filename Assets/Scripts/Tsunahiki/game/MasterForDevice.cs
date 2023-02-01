@@ -18,6 +18,9 @@ namespace tsunahiki.game
         private int _trainingDeviceVictoryCount = 0;
         private int _forceGaugeVictoryCount = 0;
         private int _drawyCount = 0;
+        private Vector3 _initialTurnipVelocity = new Vector3(0,20,2);
+        private Quaternion _initialTurnipRotation;
+        private Vector3 _initialTurnipPosition;
 
         [SerializeField]
         private GameObject viewerObject;
@@ -27,7 +30,11 @@ namespace tsunahiki.game
         private GameObject adverseWind;
         [SerializeField]
         private float multiplierOffset = 1.5f;
-
+        [SerializeField]
+        private GameObject turnip;
+        [SerializeField]
+        private float _debugNormalizedValue = 0.5f;
+        
         [HideInInspector]
         public Queue<string> viewerTextQueue = new Queue<string>();
         [HideInInspector]
@@ -54,7 +61,8 @@ namespace tsunahiki.game
         void Start()
         {
             masterStateController.Initialize((int)MasterStateController.StateType.SetUp);
-            resetWind();
+            _initialTurnipRotation = turnip.transform.rotation;
+            _initialTurnipPosition = turnip.transform.position;
         }
 
         // Update is called once per frame
@@ -62,6 +70,7 @@ namespace tsunahiki.game
         {
             masterStateController.UpdateSequence();
             writeLog();
+            
         }
 
         public void decideSuperiority()
@@ -109,6 +118,42 @@ namespace tsunahiki.game
             }
         }
 
+        public void rotateTurnip(float normalizedValue)
+        {
+            float zeroCenter = (normalizedValue - 0.5f) * 2;
+            float rotationValue = zeroCenter*60;
+            turnip.transform.rotation = _initialTurnipRotation* Quaternion.Euler(rotationValue,0,0);
+            Debug.Log(Mathf.Abs(zeroCenter));
+            if(Mathf.Abs(zeroCenter) >= 0.6f)
+            {
+                vibrateTurnip(1.0f);
+            }
+            
+        }
+
+        public void vibrateTurnip(float vibrationAmplitude)
+        {
+            Vector3 turnipPosition = _initialTurnipPosition;
+            float x_diff = Random.Range(-vibrationAmplitude,vibrationAmplitude) * vibrationAmplitude;
+            float y_diff = Random.Range(-vibrationAmplitude,vibrationAmplitude) * vibrationAmplitude;
+            float z_diff = Random.Range(-vibrationAmplitude,vibrationAmplitude) * vibrationAmplitude;
+            turnipPosition.x += x_diff;
+            turnipPosition.y += y_diff;
+            turnipPosition.z += z_diff;
+            turnip.transform.position = turnipPosition;
+        }
+
+        public void resultTurnipAction(bool won)
+        {
+            Rigidbody rb = turnip.AddComponent<Rigidbody>();
+            rb.velocity = _initialTurnipVelocity;
+        }
+
+        public void resetTurnip()
+        {
+            Destroy(turnip.GetComponent<Rigidbody>());
+        }
+
         private void writeLog()
         {
             string[] arr = viewerTextQueue.ToArray();
@@ -119,6 +164,11 @@ namespace tsunahiki.game
             }
             //print(writeText);
             viewerObject.GetComponent<Text>().text = writeText;
+        }
+        
+        public float calculateSendingTorque(float opponentNormalizedValue)
+        {
+            return opponentNormalizedValue*gripStrengthMultiplier;
         }
 
         //対戦相手が負けそうな状況におけるアバターの動き
@@ -152,6 +202,7 @@ namespace tsunahiki.game
             favorableWind.SetActive(false);
             adverseWind.SetActive(false);
         }
+
 
 
 

@@ -28,7 +28,7 @@ namespace tsunahiki.trainingDevice.state
         protected void restore()
         {
             TRAVEDevice device = TRAVEDevice.GetDevice();
-            device.SetTorqueMode(1.0f,2.0f);
+            device.SetSpeedMode(0.0f,0.5f);
             device.Apply();
         }
 
