@@ -92,7 +92,7 @@ namespace tsunahiki.game
             else _forceGaugeVictoryCount++;
             if(_trainingDeviceVictoryCount == TOTAL_WIN_COUNT || _forceGaugeVictoryCount == TOTAL_WIN_COUNT)
             {
-                latestWinner = _trainingDeviceVictoryCount == TOTAL_WIN_COUNT ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
+                // latestWinner = _trainingDeviceVictoryCount == TOTAL_WIN_COUNT ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
                 return true;
             }
             return false;
@@ -127,7 +127,6 @@ namespace tsunahiki.game
             float zeroCenter = (normalizedValue - 0.5f) * 2;
             float rotationValue = zeroCenter*30;
             turnip.transform.rotation = _initialTurnipRotation* Quaternion.Euler(rotationValue,0,0);
-            Debug.Log(Mathf.Abs(zeroCenter));
             if(Mathf.Abs(zeroCenter) >= 0.6f)
             {
                 vibrateTurnip(0.5f);
@@ -181,11 +180,11 @@ namespace tsunahiki.game
         {
             if(_device.speed < -1.5f)
             {
-                gripStrengthMultiplier += 0.001f;
+                gripStrengthMultiplier += 0.005f;
             }
             else if(_device.speed <= 1.0f)
             {
-                gripStrengthMultiplier += 0.0001f;
+                gripStrengthMultiplier += 0.001f;
             }
             return opponentNormalizedValue*gripStrengthMultiplier;
         }
