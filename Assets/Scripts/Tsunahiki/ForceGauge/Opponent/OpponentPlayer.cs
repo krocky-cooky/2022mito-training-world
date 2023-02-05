@@ -66,16 +66,24 @@ namespace tsunahiki.forceGauge
 
 
             // 表情変化
-            if (_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight){
+            if ((_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight) || (_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Calibration)){
                 // 対戦中の表情変化
-                if (normalizedPower < _firstThresholdForChangingFace){
-                    head.opponentFace = OpponentHead.OpponentFace.FightFace1;
-                }else if (normalizedPower > _secondThresholdForChangingFace){
-                    head.opponentFace = OpponentHead.OpponentFace.FightFace3;
+                // 優勢・劣勢に応じて表情変化
+                if (_masterForForceGauge.opponentData.normalizedData < 0.25f){
+                    head.opponentFace = OpponentHead.OpponentFace.DefeatedFace;
+                }else if (_masterForForceGauge.opponentData.normalizedData > 0.75f){
+                    head.opponentFace = OpponentHead.OpponentFace.WinningFace;
                 }else{
-                    head.opponentFace = OpponentHead.OpponentFace.FightFace2;
+                    head.opponentFace = OpponentHead.OpponentFace.FightFace3;
                 }
-                Debug.Log("face changing");
+                // if (normalizedPower < _firstThresholdForChangingFace){
+                //     head.opponentFace = OpponentHead.OpponentFace.FightFace1;
+                // }else if (normalizedPower > _secondThresholdForChangingFace){
+                //     head.opponentFace = OpponentHead.OpponentFace.FightFace3;
+                // }else{
+                //     head.opponentFace = OpponentHead.OpponentFace.FightFace2;
+                // }
+                // Debug.Log("face changing");
             } else if(_masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.EndOfFight){
                 // 対戦終了時の表情変化
                 if ((_masterForForceGauge.opponentData.latestWinner == _masterForForceGauge.myDeviceId)){

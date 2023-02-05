@@ -89,11 +89,13 @@ namespace tsunahiki.game
                 currentForce = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick)[1];
             }
             if (inputInterface == InputInterface.HandDyameter){
-                if (serialHandler.isRunning){
-                    // currentForce = serialHandler.getReceivedDataOfForceGauge().force;
-                    currentForce = forceGauge.force;
-                    Debug.Log("grip value is " + currentForce.ToString());
-                }
+                currentForce = forceGauge.force;
+                Debug.Log("grip value is " + currentForce.ToString());
+                // if (serialHandler.isRunning){
+                //     // currentForce = serialHandler.getReceivedDataOfForceGauge().force;
+                //     currentForce = forceGauge.force;
+                //     Debug.Log("grip value is " + currentForce.ToString());
+                // }
             }
             
             _outputVelocity = CalculateVelocityProportionalToForce();

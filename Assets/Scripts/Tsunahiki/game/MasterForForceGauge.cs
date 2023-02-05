@@ -128,6 +128,7 @@ namespace tsunahiki.game
                 // Debug.Log("normalizedDevicePos is " + normalizedDevicePos.ToString());
             }
 
+            Debug.Log("opponent normalized data is " + opponentData.normalizedData.ToString());
 
         }
 

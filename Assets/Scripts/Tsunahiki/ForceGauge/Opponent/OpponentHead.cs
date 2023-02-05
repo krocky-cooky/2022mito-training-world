@@ -43,8 +43,8 @@ namespace tsunahiki.forceGauge
         // private Transform _opponentAvatarBody;
         [SerializeField]
         private GameObject _face;
-        [SerializeField]
-        private float _lengthOfNeck;
+        // [SerializeField]
+        // private float _lengthOfNeck;
 
         //頭の並進運動を一定倍に増幅する際の倍率
         [SerializeField]
