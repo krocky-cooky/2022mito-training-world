@@ -44,21 +44,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39be49a198d56fc43a31599622a33682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  communicationType: 2
+  deviceCommunicationType: 0
   printMessage: 1
+  printSerialMessage: 0
   maxTorque: 4.5
   maxSpeed: 5
   sendingText: 
-  portName: (Unselected)
-  portNameIndex: -1
-  baudRate: 115200
-  baudRateIndex: 0
-  isConnected: 0
-  motorMode: -
+  operationType: 0
+  torqueModeTorque: 0
+  torqueModeSpeedLimit: 1
+  torqueModeSpeedLimitLiftup: 10
+  speedModeSpeed: 0
+  speedModeTorqueLimit: 1
+  devicePortName: (Unselected)
+  devicePortNameIndex: -1
+  deviceBaudRate: 0
+  deviceBaudRateIndex: 0
+  deviceIsConnected: 0
+  motorMode: '-'
   torque: 0
   speed: 0
   position: 0
   integrationAngle: 0
+  forceGaugeCommunicationType: 0
+  forceGaugePortName: 
+  forceGaugePortNameIndex: 0
+  forceGaugeBaudRate: 0
+  forceGaugeBaudRateIndex: 0
+  forceGaugeIsConnected: 0
+  force: 0
 --- !u!114 &7861987791636080251
 MonoBehaviour:
   m_ObjectHideFlags: 0

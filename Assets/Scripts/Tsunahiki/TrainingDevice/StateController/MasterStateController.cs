@@ -69,6 +69,10 @@ namespace tsunahiki.trainingDevice.stateController
         
         public float opponentMotionAmplitude = 0.5f; //対戦相手の手の動きの振幅
 
+        public AudioSource turnipMotionAudio;
+
+        public AudioSource turnipPonAudio;
+
 
 
         

@@ -74,22 +74,22 @@ namespace tsunahiki.trainingDevice.state
                 }
             }
 
-            {
-                //ゲームの優劣によるエフェクト
-                //要素：風
-                if(stateController.master.superiority == TrainingDeviceType.TrainingDevice)
-                {
-                    stateController.master.setFavorableWind();
-                }
-                else if(stateController.master.superiority == TrainingDeviceType.ForceGauge)
-                {
-                    stateController.master.setAdverseWind();
-                }
-                else
-                {
+            // {
+            //     //ゲームの優劣によるエフェクト
+            //     //要素：風
+            //     if(stateController.master.superiority == TrainingDeviceType.TrainingDevice)
+            //     {
+            //         stateController.master.setFavorableWind();
+            //     }
+            //     else if(stateController.master.superiority == TrainingDeviceType.ForceGauge)
+            //     {
+            //         stateController.master.setAdverseWind();
+            //     }
+            //     else
+            //     {
 
-                }
-            }
+            //     }
+            // }
 
 
             {
@@ -105,11 +105,17 @@ namespace tsunahiki.trainingDevice.state
             }
 
             {
+                Debug.Log($"{stateController.trainingDevice.currentNormalizedPosition}!!1");
                 //勝敗がついたとき
-                if(stateController.trainingDevice.currentNormalizedPosition >= 1.0f || stateController.trainingDevice.currentNormalizedPosition <= 0.0f || (stateController.testMode && Input.GetMouseButton(0)))
+                if(stateController.trainingDevice.currentNormalizedPosition >= 0.95f || stateController.trainingDevice.currentNormalizedPosition <= 0.05f || (stateController.testMode && Input.GetMouseButton(0)))
                 {
+                    stateController.turnipPonAudio.Play();
                     bool won = stateController.trainingDevice.currentNormalizedPosition >= 0.95;
                     stateController.master.resultTurnipAction(won);
+                    TrainingDeviceType latestWinner = won ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
+                    stateController.coordinator.communicationData.latestWinner = (int)latestWinner;
+                    stateController.coordinator.communicationData.latestWinner = (int)stateController.master.latestWinner;
+
                     if(stateController.master.updateResult(won))
                     {
                         int nextState = (int)MasterStateController.StateType.GameSet;
@@ -124,6 +130,13 @@ namespace tsunahiki.trainingDevice.state
                     }
                 }
 
+            }
+
+            {
+                if(Mathf.Abs(_device.speed) >= 2.0f) 
+                {
+                    stateController.turnipMotionAudio.Play();
+                }
             }
             
             return (int)StateType;
