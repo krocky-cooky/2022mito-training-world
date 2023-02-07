@@ -33,6 +33,14 @@ namespace tsunahiki.trainingDevice.state
                 int nextState = (int)MasterStateController.StateType.Ready;
                 stateController.coordinator.communicationData.stateId = nextState;
                 return nextState;
+            } 
+            else if(OVRInput.GetDown(stateController.buttonAllotment.ReelWire))
+            {
+                reelWire();
+            } 
+            else if(OVRInput.GetUp(stateController.buttonAllotment.ReelWire))
+            {
+                restore();
             }
             return (int)StateType;
         }

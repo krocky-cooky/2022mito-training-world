@@ -6,6 +6,7 @@ using util;
 using communication;
 using tsunahiki.game;
 using tsunahiki.trainingDevice.stateController;
+using TRAVE;
 
 
 namespace tsunahiki.trainingDevice.state 
@@ -23,6 +24,7 @@ namespace tsunahiki.trainingDevice.state
             restore();  
             stateController.master.addLog("Ready");
             stateController.master.resetTurnip();
+            stateController.centerCube.SetActive(true);
 
         }
 
@@ -58,6 +60,11 @@ namespace tsunahiki.trainingDevice.state
         private IEnumerator GameStartCountdownCoroutine()
         {
             _duringCoroutine = true;
+            TRAVEDevice device = TRAVEDevice.GetDevice();
+            device.SetTorqueMode(1.0f,6.0f);
+            device.Apply(true);
+            
+            
             for(int i = 0;i < _countDownSeconds; ++i) 
             {
                 //画面表示する秒数

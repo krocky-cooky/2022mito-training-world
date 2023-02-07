@@ -112,9 +112,10 @@ namespace tsunahiki.trainingDevice.state
                     stateController.turnipPonAudio.Play();
                     bool won = stateController.trainingDevice.currentNormalizedPosition >= 0.95;
                     stateController.master.resultTurnipAction(won);
+                    stateController.centerCube.SetActive(false);
                     TrainingDeviceType latestWinner = won ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
                     stateController.coordinator.communicationData.latestWinner = (int)latestWinner;
-                    stateController.coordinator.communicationData.latestWinner = (int)stateController.master.latestWinner;
+                    stateController.master.latestWinner = latestWinner;
 
                     if(stateController.master.updateResult(won))
                     {
