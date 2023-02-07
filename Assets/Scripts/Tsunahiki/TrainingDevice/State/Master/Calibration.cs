@@ -33,8 +33,7 @@ namespace tsunahiki.trainingDevice.state
 
         public override int StateUpdate()
         {
-            TRAVEReceivingFormat data = _device.GetReceivedData();
-            _maxTorque = Mathf.Max(_maxTorque, data.trq);
+            _maxTorque = Mathf.Max(_maxTorque, _device.torque);
             if(_endRegistration)
             {
                 stateController.master.setDefaultGripStrengthMultiplier(_maxTorque);

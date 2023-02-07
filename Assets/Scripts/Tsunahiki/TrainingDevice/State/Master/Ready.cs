@@ -22,6 +22,7 @@ namespace tsunahiki.trainingDevice.state
         {
             restore();  
             stateController.master.addLog("Ready");
+            stateController.master.resetTurnip();
 
         }
 

@@ -22,7 +22,7 @@ namespace tsunahiki.game
         private GameObject maxWall;
 
         // ハンドル等の最大位置と最小位置
-        public float maxAbsPosition = 0.0f;
+        public float maxAbsPosition = 0.001f;
         public float minAbsPosition = 0.0f;
 
         // ハンドル等の絶対位置
@@ -46,10 +46,12 @@ namespace tsunahiki.game
             if (inputInterface == InputInterface.Mouse){
                 currentAbsPosition = Input.mousePosition.y;
             }else{
-                currentAbsPosition = rightControllerAnchor.transform.position.z;
+                if(float.IsNaN(rightControllerAnchor.transform.position.z)) currentAbsPosition = 0.0f;
+                else currentAbsPosition = rightControllerAnchor.transform.position.z;
             }
 
             currentNormalizedPosition = Mathf.Clamp01((currentAbsPosition - minAbsPosition) / (maxAbsPosition - minAbsPosition));
+            if(float.IsNaN(currentNormalizedPosition))currentNormalizedPosition = 0.5f;
             // マシンのハンドル等のストロークポジション登録
             if(OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetMouseButtonDown(2))
             {

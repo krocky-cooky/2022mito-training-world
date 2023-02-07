@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TRAVE;
 using communication;
 using tsunahiki.trainingDevice.stateController;
 
@@ -21,6 +21,7 @@ namespace tsunahiki.game
         private Vector3 _initialTurnipVelocity = new Vector3(0,20,2);
         private Quaternion _initialTurnipRotation;
         private Vector3 _initialTurnipPosition;
+        private TRAVEDevice _device = TRAVEDevice.GetDevice();
 
         [SerializeField]
         private GameObject viewerObject;
@@ -45,6 +46,8 @@ namespace tsunahiki.game
         public TrainingDeviceType fightCondition; //対戦中の勝敗状況; どちらが勝ちそうな状況か
         [HideInInspector]
         public MasterStateController masterStateController;
+        [HideInInspector]
+        public TrainingDeviceType latestWinner;
         
 
         // トルク÷握力計の値
@@ -89,6 +92,7 @@ namespace tsunahiki.game
             else _forceGaugeVictoryCount++;
             if(_trainingDeviceVictoryCount == TOTAL_WIN_COUNT || _forceGaugeVictoryCount == TOTAL_WIN_COUNT)
             {
+                // latestWinner = _trainingDeviceVictoryCount == TOTAL_WIN_COUNT ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
                 return true;
             }
             return false;
@@ -121,12 +125,11 @@ namespace tsunahiki.game
         public void rotateTurnip(float normalizedValue)
         {
             float zeroCenter = (normalizedValue - 0.5f) * 2;
-            float rotationValue = zeroCenter*60;
+            float rotationValue = zeroCenter*30;
             turnip.transform.rotation = _initialTurnipRotation* Quaternion.Euler(rotationValue,0,0);
-            Debug.Log(Mathf.Abs(zeroCenter));
             if(Mathf.Abs(zeroCenter) >= 0.6f)
             {
-                vibrateTurnip(1.0f);
+                vibrateTurnip(0.5f);
             }
             
         }
@@ -146,12 +149,19 @@ namespace tsunahiki.game
         public void resultTurnipAction(bool won)
         {
             Rigidbody rb = turnip.AddComponent<Rigidbody>();
-            rb.velocity = _initialTurnipVelocity;
+            Vector3 vel = _initialTurnipVelocity;
+            if(!won)
+            {
+                vel.z *= -1;
+            }
+            rb.velocity = vel;
         }
 
         public void resetTurnip()
         {
             Destroy(turnip.GetComponent<Rigidbody>());
+            turnip.transform.position = _initialTurnipPosition;
+            turnip.transform.rotation = _initialTurnipRotation;
         }
 
         private void writeLog()
@@ -168,6 +178,14 @@ namespace tsunahiki.game
         
         public float calculateSendingTorque(float opponentNormalizedValue)
         {
+            if(_device.speed < -1.5f)
+            {
+                gripStrengthMultiplier += 0.005f;
+            }
+            else if(_device.speed <= 1.0f)
+            {
+                gripStrengthMultiplier += 0.001f;
+            }
             return opponentNormalizedValue*gripStrengthMultiplier;
         }
 
