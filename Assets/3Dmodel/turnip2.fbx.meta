@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Turnip
-    second: {fileID: 2800000, guid: f23e592827570e4429a9736322033232, type: 3}
+    second: {fileID: 2800000, guid: b37a8df2c11afbf4d841ad914a46f93c, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

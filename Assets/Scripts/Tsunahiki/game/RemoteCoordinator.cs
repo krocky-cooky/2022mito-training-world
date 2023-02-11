@@ -67,6 +67,7 @@ namespace tsunahiki.game
                     communicationData.rotationX = _HMD.eulerAngles.x;
                     communicationData.rotationY = _HMD.eulerAngles.y;
                     communicationData.rotationZ = _HMD.eulerAngles.z;
+                    communicationData.deviceInterface = (int)TrainingDeviceType.TrainingDevice;
                     text = JsonUtility.ToJson(communicationData);
                 }
                 else if(_deviceType == TrainingDeviceType.ForceGauge) 
@@ -80,6 +81,7 @@ namespace tsunahiki.game
                     communicationData.rotationX = _HMD.eulerAngles.x;
                     communicationData.rotationY = _HMD.eulerAngles.y;
                     communicationData.rotationZ = _HMD.eulerAngles.z;
+                    communicationData.deviceInterface = (int)TrainingDeviceType.ForceGauge;
                     text = JsonUtility.ToJson(communicationData);
                 }
                 Debug.Log("hoge"+text);
