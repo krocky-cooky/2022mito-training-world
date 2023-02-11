@@ -6649,7 +6649,7 @@ MonoBehaviour:
   numberOfApearanceFishes: 4
   fishingRecord: []
   UIByLeftController: {fileID: 926939753}
-  timeLimitToEscape: 12
+  timeLimitToEscape: 30
   normalizedSpeedLimitToBreakFishingLine: 1
   lure: {fileID: 1801025113}
   fightingCount: 0
@@ -7216,8 +7216,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482231234}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -9, y: -2.35, z: 3.7400002}
+  m_LocalRotation: {x: 0.20265014, y: 0.78123564, z: 0.31839043, w: -0.49722373}
+  m_LocalPosition: {x: 0.65794975, y: -0.4815178, z: 0.751814}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
