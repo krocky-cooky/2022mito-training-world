@@ -1,28 +1,31 @@
 using TRAVE_unity;
 using UnityEngine;
+using System;
 
 namespace TRAVE
 {
-    public class TRAVEDevice
+    public class TRAVEDevice : TRAVEBase<TRAVEDevice>
     {
-        private static TRAVEDevice _device = new TRAVEDevice();
+        private double MIN_SENDING_INTERVAL = 200.0;
+        private string MOTOR_COMMAND_PREFIX = "m";
+        private string COVNVERTER_COMMAND_PREFIX = "p";
 
         private CommunicationType _communicationType;
         private CommunicationBase _communicationBase;
         private TRAVESendingFormat _currentMotorState = new TRAVESendingFormat();
         private TRAVESendingFormat _dataToSend = new TRAVESendingFormat();
-        private string _motorCommandPrefix = "m";
-        private string _converterCommandPrefix = "p";
+        private DateTime _timeOfPreviousSend;
         private float _maxTorque;
         private float _maxSpeed;
-        
+    
 
-        private TRAVELogger _logger = TRAVELogger.GetInstance;
+        public TRAVEReceivingFormat currentProfile{ get;set; } = new TRAVEReceivingFormat();
 
         public bool isConnected
         {
             get
             {
+                if(_communicationBase == null) return false;
                 return _communicationBase.isConnected;
             }
         }
@@ -31,39 +34,66 @@ namespace TRAVE
         {
             get
             {
-                return _currentMotorState.target == "trq" ? "Torque Mode" : "Speed Mode";
+                return currentProfile.target == "trq" ? "Torque Mode" : "Speed Mode";
             }   
         }
 
-        public float torque{ get;set; }
-        public float speed{ get; set; }
-        public float position{ get; set; }
-        public float integrationAngle{ get; set; }
-
-
-        private TRAVEDevice()
-        {  
-        }
-
-        public static TRAVEDevice GetDevice()
+        public float torque
         {
-            return _device;
+            get
+            {
+                return currentProfile.trq;
+            }
         }
 
-        internal void _masterMethod_AllocateParams(SettingParams settingParams)
+        public float speed
+        {
+            get
+            {
+                return currentProfile.spd;
+            }
+        }
+
+        public float position 
+        {
+            get 
+            {
+                return currentProfile.pos;
+            }
+        }
+
+        public float integrationAngle 
+        {
+            get 
+            {
+                return currentProfile.integrationAngle;
+            }
+        }
+
+
+
+        private bool CheckSendingInterval()
+        {
+            int comparison = DateTime.Now.CompareTo(_timeOfPreviousSend.AddMilliseconds(MIN_SENDING_INTERVAL));
+            return comparison > 0;
+        }
+
+
+        public override void _masterMethod_AllocateParams(SettingParams settingParams)
         {
             // allocation of parameters
-            _communicationType = settingParams.communicationType;
+            _communicationType = settingParams.deviceCommunicationType;
+            TrainingDeviceType type = TrainingDeviceType.Device;
             switch(_communicationType)
             {
                 case CommunicationType.Serial:
-                    _communicationBase = new Serial();
+                    _communicationBase = new Serial(type);
                     break;
                 case CommunicationType.WebSockets:
-                    _communicationBase = new WebSockets();
+                    _communicationBase = new WebSockets(type);
                     break;
                 case CommunicationType.Bluetooth:
-                    _communicationBase = new Bluetooth();
+                    _communicationBase = new Bluetooth(type);
                     break;
             }
             _maxTorque = settingParams.maxTorque;
@@ -71,29 +101,26 @@ namespace TRAVE
             _communicationBase.AllocateParams(settingParams);
         }
 
-        internal void _masterMethod_Start()
+        public override void _masterMethod_Awake()
+        {
+            _communicationBase.Awake();
+        }
+
+        public override void _masterMethod_Start()
         {
             _communicationBase.Start();
+            _timeOfPreviousSend = DateTime.Now;
             
         }
 
-        internal void _masterMethod_Update()
+        public override void _masterMethod_Update()
         {
             _communicationBase.Update();
-
-            { //allocate parameters for monitoring
-                TRAVEReceivingFormat data = GetReceivedData();
-                torque = data.trq;
-                speed = data.spd;
-                position = data.pos;
-                integrationAngle = data.integrationAngle;
-
-            }
-
+            currentProfile = GetReceivedData();
         }
 
 
-        internal void _masterMethod_OnApplicationQuit()
+        public override void _masterMethod_OnApplicationQuit()
         {
             _communicationBase.OnApplicationQuit();
         }
@@ -105,7 +132,7 @@ namespace TRAVE
         }
         
 
-        public void SetTorqueMode(float torque, float spdLimit = 10.0f)
+        public void SetTorqueMode(float torque, float spdLimit = 10.0f, float spdLimitLiftup = 10.0f)
         {
             _dataToSend.target = "trq";
             if(torque > _maxTorque)
@@ -115,10 +142,11 @@ namespace TRAVE
             }
             _dataToSend.trq = torque;
             _dataToSend.spdLimit = spdLimit;
+            _dataToSend.spdLimitLiftup = spdLimitLiftup;
         }
 
         //<sammary> 速度指令モードに変更し、スピード値をセットする </sammary>
-        public void SetSpeedMode(float speed, float trqLimit = 2.0f)
+        public void SetSpeedMode(float speed, float trqLimit = 6.0f)
         {
             _dataToSend.target = "spd";
             if(speed > _maxSpeed)
@@ -132,25 +160,25 @@ namespace TRAVE
 
         public bool TurnOnMotor()
         {
-            string command = _motorCommandPrefix + "1";
+            string command = MOTOR_COMMAND_PREFIX + "1";
             return _communicationBase.SendString(command);
         }
 
         public bool TurnOffMotor()
         {
-            string command = _motorCommandPrefix + "0";
+            string command = MOTOR_COMMAND_PREFIX + "0";
             return _communicationBase.SendString(command);
         }
 
         public bool TurnOnConverter()
         {
-            string command = _converterCommandPrefix + "1";
+            string command = COVNVERTER_COMMAND_PREFIX + "1";
             return _communicationBase.SendString(command);
         }
 
         public bool TurnOffConverter()
         {
-            string command = _converterCommandPrefix + "0";
+            string command = COVNVERTER_COMMAND_PREFIX + "0";
             return _communicationBase.SendString(command);
         }
 
@@ -167,10 +195,26 @@ namespace TRAVE
         }
 
         //<sammary> モーターに変更を適用する </sammary>
-        public bool Apply()
+        public bool Apply(bool forceChange = false)
         {
-            _currentMotorState = _dataToSend;
-            return _communicationBase.SendData(_dataToSend);
+            if(CheckSendingInterval() || forceChange)
+            {
+                _currentMotorState = _dataToSend;
+                if(_communicationBase.SendData(_dataToSend))
+                {
+                    _timeOfPreviousSend = DateTime.Now;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                _logger.writeLog("Transmission interval is too short.", TRAVELogger.LogLevel.Warn);
+                return false;
+            }
         }
 
         public TRAVEReceivingFormat GetReceivedData()

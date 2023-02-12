@@ -12,6 +12,7 @@ namespace TRAVE_unity
     {
         private string _portName;
         private int _baudRate;
+        private bool _printSerialMessage = false;
 
         private SerialPort _serialPort;
         private Task _readingTask;
@@ -21,6 +22,9 @@ namespace TRAVE_unity
 
         private TRAVELogger _logger = TRAVELogger.GetInstance;
 
+        public Serial(TrainingDeviceType type) : base(type) 
+        {}
+
         public override bool isConnected
         {
             get 
@@ -29,10 +33,14 @@ namespace TRAVE_unity
             }
         }
 
-        public override void Start()
+        public override void Awake()
         {
             _serialPort = new SerialPort(_portName, _baudRate, Parity.None, 8, StopBits.One);
             Connect();
+        }
+
+        public override void Start()
+        {
         }
 
 
@@ -58,7 +66,7 @@ namespace TRAVE_unity
 
             if(isConnected)
             {
-                _logger.writeLog("Serial Port has Already Opened.", TRAVELogger.LogLevel.Info);
+                _logger.writeLog("Serial Port has already opened.", TRAVELogger.LogLevel.Info);
                 return;
             }
 
@@ -85,8 +93,17 @@ namespace TRAVE_unity
 
         public override void AllocateParams(SettingParams settingParams)
         {
-            _portName = settingParams.portName;
-            _baudRate = settingParams.baudRate;
+            if(_deviceType == TrainingDeviceType.Device)
+            {    _portName = settingParams.devicePortName;
+                _baudRate = settingParams.deviceBaudRate;
+                _printSerialMessage = settingParams.printSerialMessage;
+            }
+            else if(_deviceType == TrainingDeviceType.ForceGauge)
+            {
+                _portName = settingParams.forceGaugePortName;
+                _baudRate = settingParams.forceGaugeBaudRate;
+                _printSerialMessage = settingParams.printSerialMessage;
+            }
         }
         
 
@@ -126,6 +143,10 @@ namespace TRAVE_unity
                     {
                         string message = _serialPort.ReadLine();
                         receivedString = message;
+                        if(_printSerialMessage)
+                        {
+                            _logger.writeLog(receivedString, TRAVELogger.LogLevel.Info);
+                        }
                     }
                     catch (System.Exception e)
                     {
@@ -163,7 +184,6 @@ namespace TRAVE_unity
             if(isConnected)
             {
                 string message = JsonUtility.ToJson(sendingData);
-                _logger.writeLog(message);
                 return Write(message);
             }
             else

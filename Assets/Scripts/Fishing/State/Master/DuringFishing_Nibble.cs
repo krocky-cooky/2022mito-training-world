@@ -35,8 +35,12 @@ namespace Fishing.State
         // 魚が突く音を視覚や力覚と同期させるバッファ
         private float _timeCountForNibbleSound = 100.0f;
 
-        // 魚のGameObjectの配列
-        private GameObject[] fishGameObjects;
+        // 針を突く魚の振動の方向ベクトル
+        // (魚の位置ベクトル) = (ルアーの位置ベクトル) + (針を突く魚の振動の方向ベクトル)
+        private Vector3 _directionVectorOfNibble;
+
+        // 針と魚の間の正規化距離
+        private float _normalizedDistanceBetweenFishAndLure;
 
         public override void OnEnter()
         {
@@ -47,9 +51,11 @@ namespace Fishing.State
             _previousSpikeTime = 0.0f;
             _spikeEndTime = 0.0f;
             _spikeInterval = 0.0f;
-            _timeOfNibbling = Random.Range(masterStateController.minTimeOfNibbling, masterStateController.maxTimeOfNibbling);
+            _timeOfNibbling = Random.Range(master.minTimeOfNibbling, master.maxTimeOfNibbling);
             _timeCountForNibble = 100.0f;
             _timeCountForNibbleSound = 100.0f;
+
+            _directionVectorOfNibble = master.fish.transform.position - master.ropeRelayBelowHandle.transform.position;
         }
 
         public override void OnExit()
@@ -64,51 +70,57 @@ namespace Fishing.State
 
             // トルクを負荷ゲージで表示
             // トルクの値の約4.0倍が負荷(kg)
-            masterStateController.tensionSlider.value = masterStateController.gameMaster.sendingTorque * 4.0f;
+            // master.tensionSlider.value = master.sendingTorque * 4.0f;
 
             // 魚が突く感触をトルクで再現
             if ((currentTimeCount - _previousSpikeTime) > _spikeInterval){
-                _spikeEndTime = currentTimeCount + masterStateController.firstSpikePeriod + masterStateController.latterSpikePeriod;
+                _spikeEndTime = currentTimeCount + master.firstSpikePeriod + master.latterSpikePeriod;
                 _previousSpikeTime = currentTimeCount;
-                _spikeInterval = Random.Range(masterStateController.minIntervalOfNibbling, masterStateController.maxIntervalOfNibbling);
-                _timeCountForNibble = masterStateController.buffurTimeForNibble;
+                _spikeInterval = Random.Range(master.minIntervalOfNibbling, master.maxIntervalOfNibbling);
+                _timeCountForNibble = master.buffurTimeForNibble;
 
                 // 音発生
-                Invoke("PlayNibbleSound", masterStateController.buffurTimeForNibbleSound);
+                Invoke("PlayNibbleSound", master.buffurTimeForNibbleSound);
 
                 // 振動発生
-                Invoke("PlayNibbleVibration", masterStateController.buffurTimeForNibbleSound);
+                Invoke("PlayNibbleVibration", master.buffurTimeForNibbleSound);
             }
-            if (currentTimeCount < (_spikeEndTime - masterStateController.latterSpikePeriod)){
-                masterStateController.gameMaster.sendingTorque = masterStateController.firstSpikeSize;
+            if (currentTimeCount < (_spikeEndTime - master.latterSpikePeriod)){
+                // master.sendingTorque = master.firstSpikeSize;
+                master.device.SetTorqueMode(master.firstSpikeSize);
                 Debug.Log("fisrt spike");
             }else if(currentTimeCount < _spikeEndTime){
-                masterStateController.gameMaster.sendingTorque = masterStateController.latterSpikeSize;
+                // master.sendingTorque = master.latterSpikeSize;
+                master.device.SetTorqueMode(master.latterSpikeSize);
                 Debug.Log("latter spike");
-                // masterStateController.NibbleSound.Play();
+                // master.NibbleSound.Play();
             }else{
-                masterStateController.gameMaster.sendingTorque = masterStateController.baseTorqueDuringFishing;
+                // master.sendingTorque = master.minTorqueDuringFishing;
+                master.device.SetTorqueMode(master.minTorqueDuringFishing);
             }
 
 
             // 魚が突く様子を視覚表現
-            // masterStateController.distanceFromRope = masterStateController.SizeOfFishNibble * Mathf.Abs(Mathf.Cos(currentTimeCount * Mathf.PI / (masterStateController.firstPeriodOfFishNibble + masterStateController.latterPeriodOfFishNibble)));
-            // masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
-
-            if ((_timeCountForNibble > 0.0f) && (_timeCountForNibble < masterStateController.firstPeriodOfFishNibble)){
-                masterStateController.distanceFromRope = masterStateController.SizeOfFishNibble * (1.0f - (_timeCountForNibble / masterStateController.firstPeriodOfFishNibble));
-            }else if((_timeCountForNibble > 0.0f) && (_timeCountForNibble < (masterStateController.firstPeriodOfFishNibble + masterStateController.latterPeriodOfFishNibble))){
-                masterStateController.distanceFromRope = masterStateController.SizeOfFishNibble * ((_timeCountForNibble - masterStateController.firstPeriodOfFishNibble) / masterStateController.latterPeriodOfFishNibble);
+            if ((_timeCountForNibble > 0.0f) && (_timeCountForNibble < master.firstPeriodOfFishNibble)){
+                _normalizedDistanceBetweenFishAndLure = (1.0f - (_timeCountForNibble / master.firstPeriodOfFishNibble));
+            }else if((_timeCountForNibble > 0.0f) && (_timeCountForNibble < (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble))){
+                _normalizedDistanceBetweenFishAndLure = ((_timeCountForNibble - master.firstPeriodOfFishNibble) / master.latterPeriodOfFishNibble);
             }
-            if (_timeCountForNibble > (masterStateController.firstPeriodOfFishNibble + masterStateController.latterPeriodOfFishNibble)){
+            if (_timeCountForNibble > (master.firstPeriodOfFishNibble + master.latterPeriodOfFishNibble)){
                 _timeCountForNibble =100.0f;
             }
-            masterStateController.fish.transform.position = masterStateController.ropeRelayBelowHandle.transform.position + new Vector3(masterStateController.distanceFromRope, 0.0f, 0.0f);
+            master.fish.transform.position = master.ropeRelayBelowHandle.transform.position + _normalizedDistanceBetweenFishAndLure * _directionVectorOfNibble;
 
 
             // 針にかかる
             if (currentTimeCount > _timeOfNibbling)
             {
+                // 初回または10回ごとにキャリブレーション
+                if (master.fightingCount % 10 == 0)
+                {
+                    return (int)MasterStateController.StateType.DuringFishing_Calibration;
+                }
+
                 return (int)MasterStateController.StateType.DuringFishing_FishOnTheHook;
             }
 
@@ -122,7 +134,7 @@ namespace Fishing.State
         }
 
         public void PlayNibbleSound(){
-            masterStateController.NibbleSound.Play();
+            master.NibbleSound.Play();
         }
 
         public void PlayNibbleVibration(){

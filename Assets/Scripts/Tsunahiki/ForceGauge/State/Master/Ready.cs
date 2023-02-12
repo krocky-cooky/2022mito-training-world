@@ -20,6 +20,7 @@ namespace tsunahiki.forceGauge.state
         {
             Debug.Log("Ready");
             masterForForceGauge.frontViewUI.text = "Ready...\n" + "Victory Count: " + masterForForceGauge.victoryCounts.ToString() + "\nDefeat Count: " + masterForForceGauge.defeatCounts.ToString() + "\nDraw Count: " + masterForForceGauge.drawCounts.ToString();
+            StartCoroutine(masterForForceGauge.DisplayOnUI(masterForForceGauge.UIFollowingEyes, "Ready...", 5.0f));
             masterForForceGauge.centerFlare.GetComponent<CreateBeamLine>().enabled = false;
         }
 
@@ -31,9 +32,9 @@ namespace tsunahiki.forceGauge.state
         {
             masterForForceGauge.OpponentPlayer.head.SetInitTransform();
 
-            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Fight)
+            if ((int)masterForForceGauge.opponentData.stateId == (int)TsunahikiStateType.Calibration)
             {   
-                return (int)MasterStateController.StateType.Fight;
+                return (int)MasterStateController.StateType.Calibration;
             }
 
             return (int)StateType;

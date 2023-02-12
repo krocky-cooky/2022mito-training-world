@@ -9,6 +9,9 @@ namespace TRAVE_unity
     public class Bluetooth : CommunicationBase 
     {
 
+        public Bluetooth(TrainingDeviceType type) : base(type) 
+        {}
+
         
 
         public override bool isConnected
@@ -17,6 +20,11 @@ namespace TRAVE_unity
             {
                 return true;
             }
+        }
+
+        public override void Awake()
+        {
+            
         }
 
 

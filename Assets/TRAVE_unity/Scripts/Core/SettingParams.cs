@@ -11,37 +11,68 @@ namespace TRAVE_unity
         Bluetooth,
     }
 
+    public enum DeviceOperationType
+    {
+        Torque,
+        Speed
+    }
+
 
     public class SettingParams : MonoBehaviour
     {
+
+        //TRAVEDevice用
         //セットアップ用変数群
-        public CommunicationType communicationType = CommunicationType.Serial;
+        public CommunicationType deviceCommunicationType = CommunicationType.Serial;
         public bool printMessage = true;
+        public bool printSerialMessage = false;
         public float maxTorque = 4.0f;
         public float maxSpeed = 5.0f;
         public string sendingText;
+        public DeviceOperationType operationType = DeviceOperationType.Torque;
+        public float torqueModeTorque = 0.0f;
+        public float torqueModeSpeedLimit = 1.0f;
+        public float torqueModeSpeedLimitLiftup = 10.0f;
+        public float speedModeSpeed = 0.0f;
+        public float speedModeTorqueLimit = 1.0f;
 
-        public string portName;
-        public int portNameIndex;
-        public int baudRate;
-        public int baudRateIndex;
+        public string devicePortName;
+        public int devicePortNameIndex;
+        public int deviceBaudRate;
+        public int deviceBaudRateIndex;
 
 
         //モニタリング用変数群
-        public bool isConnected = false;
-        public string motorMode = "not started";
+        public bool deviceIsConnected = false;
+        public string motorMode = "-";
         public float torque = 0.0f;
         public float speed = 0.0f;
         public float position = 0.0f;
         public float integrationAngle = 0.0f; 
 
 
-        private TRAVEDevice _device;
+        //TRAVEForceGauge用
+        //セットアップ用変数群
+        public CommunicationType forceGaugeCommunicationType = CommunicationType.Serial;
+        public string forceGaugePortName;
+        public int forceGaugePortNameIndex;
+        public int forceGaugeBaudRate;
+        public int forceGaugeBaudRateIndex;
 
-        void Start()
+        //モニタリング用変数群
+        public bool forceGaugeIsConnected = false;
+        public float force;
+
+
+        private TRAVEDevice _device;
+        private TRAVEForceGauge _forceGauge;
+
+        void Awake()
         {
             _device = TRAVEDevice.GetDevice();
+            _forceGauge = TRAVEForceGauge.GetDevice();
         }
+
 
         void LateUpdate()
         {
@@ -50,12 +81,21 @@ namespace TRAVE_unity
 
         private void AllocateParams()
         {
-            isConnected = _device.isConnected;
-            motorMode = _device.motorMode;
-            torque = _device.torque;
-            speed = _device.speed;
-            position = _device.position;
-            integrationAngle = _device.integrationAngle;
+            {
+                TRAVEReceivingFormat currentProfile = _device.currentProfile;
+                deviceIsConnected = _device.isConnected;
+                motorMode = _device.motorMode;
+                torque = currentProfile.trq;
+                speed = currentProfile.spd;
+                position = currentProfile.pos;
+                integrationAngle = currentProfile.integrationAngle;
+            }
+
+            {
+                TRAVEReceivingFormat currentProfile = _forceGauge.currentProfile;
+                forceGaugeIsConnected = _forceGauge.isConnected;
+                force = currentProfile.force;
+            }
         }
 
         public void sendFieldText()
@@ -81,6 +121,19 @@ namespace TRAVE_unity
         public void TurnOffConverter()
         {
             _device.TurnOffConverter();
+        }
+
+        public void Apply()
+        {
+            if(operationType == DeviceOperationType.Torque)
+            {
+                _device.SetTorqueMode(torqueModeTorque, torqueModeSpeedLimit, torqueModeSpeedLimitLiftup);
+            }
+            else
+            {
+                _device.SetSpeedMode(speedModeSpeed, speedModeTorqueLimit);
+            }
+            _device.Apply();
         }
     }
 }

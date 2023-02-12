@@ -17,6 +17,7 @@ namespace tsunahiki.game
 
         public Queue<string> viewerTextQueue = new Queue<string>();
         public Text frontViewUI;
+        public Text UIFollowingEyes;
 
         public float moveParameter;
 
@@ -59,7 +60,7 @@ namespace tsunahiki.game
         [SerializeField]
         public RemoteCoordinator _coordinator;
         [SerializeField]
-        public ForceGauge _myForceGauge;
+        public ForceGauge myForceGauge;
 
 
         // 自他の位置
@@ -115,7 +116,7 @@ namespace tsunahiki.game
 
             
             // 自分のビームの強度に、握力計の正規化値を代入
-            myBeam.normalizedScale = _myForceGauge.outputPosition;
+            myBeam.normalizedScale = myForceGauge.outputPosition;
            
             {
                 // 通信をしてないときはここでエラーが出てUpdate()処理が止まる
@@ -141,5 +142,18 @@ namespace tsunahiki.game
             Debug.Log("manuallyInputOpponentData run");
         }
 
+        // UIに表示
+        // 一定時間後に削除
+        public IEnumerator DisplayOnUI(Text textUI, string message, float displayingTime)
+        {
+            // メッセージ表示
+            textUI.text = message;
+
+            // 一定時間待つ
+            yield return new WaitForSeconds(displayingTime);
+
+            // メッセージ削除
+            textUI.text = "";
+        }
     }
 }

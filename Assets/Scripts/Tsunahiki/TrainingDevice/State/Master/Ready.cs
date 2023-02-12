@@ -6,25 +6,32 @@ using util;
 using communication;
 using tsunahiki.game;
 using tsunahiki.trainingDevice.stateController;
+using TRAVE;
 
 
 namespace tsunahiki.trainingDevice.state 
 {
     public class Ready : MasterStateBase
     {
-        private int _countDownSeconds = 4;
+        private int _countDownSeconds = 3;
         private bool _gameStart = false;
+        private int restSeconds = 4;
+        private bool _duringCoroutine = false;
 
 
         public override void OnEnter() 
         {
             restore();  
             stateController.master.addLog("Ready");
+            stateController.master.resetTurnip();
+            stateController.centerCube.SetActive(true);
 
         }
 
         public override void OnExit() 
         {
+            _duringCoroutine = false;
+            _gameStart = false;
 
         }
 
@@ -33,13 +40,13 @@ namespace tsunahiki.trainingDevice.state
             RemoteTsunahikiDataFormat opponentData = stateController.coordinator.getOpponentData();
             if(opponentData.stateId == (int)MasterStateController.StateType.Ready || stateController.testMode)
             {
-                StartCoroutine(DecideSuperiorityCoroutine());
-
+                if(!_duringCoroutine)
+                    StartCoroutine(DecideSuperiorityCoroutine());
             }
 
             if(_gameStart)
             {
-                int nextState = (int)MasterStateController.StateType.Fight;
+                int nextState = (int)MasterStateController.StateType.Calibration;
                 stateController.coordinator.communicationData.stateId = nextState;
                 return nextState;
             }
@@ -52,13 +59,20 @@ namespace tsunahiki.trainingDevice.state
         //カウントダウン用コルーチン
         private IEnumerator GameStartCountdownCoroutine()
         {
+            _duringCoroutine = true;
+            TRAVEDevice device = TRAVEDevice.GetDevice();
+            device.SetTorqueMode(1.0f,6.0f);
+            device.Apply(true);
+            
+            
             for(int i = 0;i < _countDownSeconds; ++i) 
             {
                 //画面表示する秒数
-                int restSeconds = _countDownSeconds - i - 1;
-
+                restSeconds = _countDownSeconds - i;
+                DynamicTextManager.CreateText(stateController.countDownTextPosition,restSeconds.ToString(),stateController.countDownTextData);
                 yield return new WaitForSeconds(1);
             }
+            DynamicTextManager.CreateText(stateController.countDownTextPosition, "Start !!", stateController.countDownTextData);
             _gameStart = true;
         }
 
@@ -71,6 +85,8 @@ namespace tsunahiki.trainingDevice.state
             StartCoroutine(GameStartCountdownCoroutine());
             yield break;
         }
+
+  
 
     }
 }

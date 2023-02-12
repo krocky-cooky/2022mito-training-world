@@ -30,11 +30,13 @@ namespace tsunahiki.trainingDevice.state
 
         public override void OnExit()
         {
-            stateController.master.resetWind();
+            restore();
         }
 
         public override int StateUpdate()
         {
+            stateController.master.rotateTurnip(stateController.trainingDevice.currentNormalizedPosition);
+
 
             
             {
@@ -72,43 +74,50 @@ namespace tsunahiki.trainingDevice.state
                 }
             }
 
-            {
-                //ゲームの優劣によるエフェクト
-                //要素：風
-                if(stateController.master.superiority == TrainingDeviceType.TrainingDevice)
-                {
-                    stateController.master.setFavorableWind();
-                }
-                else if(stateController.master.superiority == TrainingDeviceType.ForceGauge)
-                {
-                    stateController.master.setAdverseWind();
-                }
-                else
-                {
+            // {
+            //     //ゲームの優劣によるエフェクト
+            //     //要素：風
+            //     if(stateController.master.superiority == TrainingDeviceType.TrainingDevice)
+            //     {
+            //         stateController.master.setFavorableWind();
+            //     }
+            //     else if(stateController.master.superiority == TrainingDeviceType.ForceGauge)
+            //     {
+            //         stateController.master.setAdverseWind();
+            //     }
+            //     else
+            //     {
 
-                }
-            }
+            //     }
+            // }
 
 
             {
                 //握力系トルクの反映
                 float opponentValue = stateController.coordinator.getOpponentValue();
-                float sendingTorque = opponentValue * stateController.master.gripStrengthMultiplier;
+                float sendingTorque = stateController.master.calculateSendingTorque(opponentValue);
                 _device.SetTorqueMode(sendingTorque);
-                _fromLastTorqueUpdated += Time.deltaTime;
-                if(_fromLastTorqueUpdated > stateController.torqueSendingInterval)
+                if(_device.Apply())
                 {
-                    _device.Apply();
                     Debug.Log($"Torque {sendingTorque} has sent to Training Device");
-                    _fromLastTorqueUpdated = 0.0f;
                 }
+                
             }
 
             {
+                Debug.Log($"{stateController.trainingDevice.currentNormalizedPosition}!!1");
                 //勝敗がついたとき
-                if(false)
+                if(stateController.trainingDevice.currentNormalizedPosition >= 0.95f || stateController.trainingDevice.currentNormalizedPosition <= 0.05f || (stateController.testMode && Input.GetMouseButton(0)))
                 {
-                    if(stateController.master.updateResult())
+                    stateController.turnipPonAudio.Play();
+                    bool won = stateController.trainingDevice.currentNormalizedPosition >= 0.95;
+                    stateController.master.resultTurnipAction(won);
+                    stateController.centerCube.SetActive(false);
+                    TrainingDeviceType latestWinner = won ? TrainingDeviceType.TrainingDevice : TrainingDeviceType.ForceGauge;
+                    stateController.coordinator.communicationData.latestWinner = (int)latestWinner;
+                    stateController.master.latestWinner = latestWinner;
+
+                    if(stateController.master.updateResult(won))
                     {
                         int nextState = (int)MasterStateController.StateType.GameSet;
                         stateController.coordinator.communicationData.stateId = nextState;
@@ -122,6 +131,13 @@ namespace tsunahiki.trainingDevice.state
                     }
                 }
 
+            }
+
+            {
+                if(Mathf.Abs(_device.speed) >= 2.0f) 
+                {
+                    stateController.turnipMotionAudio.Play();
+                }
             }
             
             return (int)StateType;

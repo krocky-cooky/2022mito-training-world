@@ -18,7 +18,7 @@ namespace tsunahiki.trainingDevice.state
             restore();
             Debug.Log("set up start");
             stateController.master.addLog("SetUp");
-
+            //stateController.master.resultTurnipAction(true);
         }
 
         public override void OnExit() 
@@ -28,27 +28,21 @@ namespace tsunahiki.trainingDevice.state
 
         public override int StateUpdate()
         {
-            if(!stateController.maxTorqueRegistered)
-            {
-                //最大トルクの記録
-                ReceivingDataFormat data = stateController.communicationInterface.getReceivedData();
-                stateController.maxTorque = Mathf.Max(stateController.maxTorque,data.trq);
-            }
+            // if(!stateController.maxTorqueRegistered)
+            // {
+            //     //最大トルクの記録
+            //     ReceivingDataFormat data = stateController.communicationInterface.getReceivedData();
+            //     stateController.maxTorque = Mathf.Max(stateController.maxTorque,data.trq);
+            // }
 
 
-            if(OVRInput.GetDown(stateController.buttonAllotment.Ready))
+            if(OVRInput.GetDown(stateController.buttonAllotment.Ready) || Input.GetMouseButton(0))
             {
-                if(stateController.maxTorqueRegistered)
-                {   
-                    int nextState = (int)MasterStateController.StateType.Ready;
-                    stateController.coordinator.communicationData.stateId = nextState;
-                    Debug.Log(stateController.coordinator.communicationData.stateId);
-                    return nextState;
-                }
-            }
-            else if(OVRInput.GetDown(stateController.buttonAllotment.TorqueRegistered))
-            {
-                fixMaxTorque(!stateController.maxTorqueRegistered,true);
+
+                int nextState = (int)MasterStateController.StateType.Ready;
+                stateController.coordinator.communicationData.stateId = nextState;
+                Debug.Log(stateController.coordinator.communicationData.stateId);
+                return nextState;
 
             }
             else if(OVRInput.GetDown(stateController.buttonAllotment.ReelWire))
@@ -59,7 +53,6 @@ namespace tsunahiki.trainingDevice.state
             {
                 restore();
             }
-
             
             return (int)StateType;
         }

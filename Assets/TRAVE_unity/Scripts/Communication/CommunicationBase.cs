@@ -7,7 +7,16 @@ namespace TRAVE_unity
 {
     public abstract class CommunicationBase
     {
+        protected TrainingDeviceType _deviceType;
+
+        public CommunicationBase(TrainingDeviceType type = TrainingDeviceType.Device)
+        {
+            _deviceType = type;
+        }
+
         public abstract bool isConnected{get;}
+
+        public abstract void Awake();
 
         public abstract void Start();
 
