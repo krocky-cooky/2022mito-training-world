@@ -2526,7 +2526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &318121378
 Transform:
   m_ObjectHideFlags: 0
@@ -3295,7 +3295,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 81275642ad4f39b4ab756d9726855058, type: 2}
+  - {fileID: 2100000, guid: 6fa48c2a126d0d74e8bb671b62e8cb1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3433,7 +3433,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 81275642ad4f39b4ab756d9726855058, type: 2}
+  - {fileID: 2100000, guid: 6fa48c2a126d0d74e8bb671b62e8cb1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7173,6 +7173,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1772564228}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1154613282 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6798241760927372486, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1208477852}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1170316643
 GameObject:
   m_ObjectHideFlags: 0
@@ -7285,6 +7291,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1290723663}
     m_Modifications:
+    - target: {fileID: 6798241760927372484, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+        type: 3}
+      propertyPath: maxTorque
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798241760927372484, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+        type: 3}
+      propertyPath: deviceBaudRate
+      value: 115200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798241760927372484, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+        type: 3}
+      propertyPath: devicePortName
+      value: COM3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798241760927372484, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
+        type: 3}
+      propertyPath: devicePortNameIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6835771489023127269, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
         type: 3}
       propertyPath: m_Name
@@ -7766,8 +7792,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.010604098, z: 0.020028062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1785957461}
   - {fileID: 1322611935}
+  - {fileID: 1154613282}
   - {fileID: 1895901905}
   m_Father: {fileID: 0}
   m_RootOrder: 16
@@ -7865,7 +7891,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1290723663}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1322611936
 MonoBehaviour:
@@ -9547,12 +9573,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781687242}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1785957461 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6835771489023127272, guid: 1d96ce5bf4bacd74dab0e77944e1780b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1208477852}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1792241209 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 462066, guid: ce816f2e6abb0504092c23ed9b970dfd,
@@ -10369,7 +10389,7 @@ MonoBehaviour:
   _spaceBetweenWall: 8
   _trainingTorque: 1.3
   _gameOverCollisionCount: 5
-  _wallSpeed: 0.05
+  _wallSpeed: 0.02
   _wallHeight: 00000000000000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   _collisionSound: {fileID: 8300000, guid: 558fd692bd4b96849815a02675a001b5, type: 3}
   _getPointSound: {fileID: 8300000, guid: bbaf64b613b08754dabbfed48e81fa95, type: 3}

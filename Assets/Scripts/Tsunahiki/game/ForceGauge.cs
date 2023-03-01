@@ -91,9 +91,10 @@ namespace tsunahiki.game
             if (inputInterface == InputInterface.HandDyameter){
                 if (serialHandler.isRunning){
                     // currentForce = serialHandler.getReceivedDataOfForceGauge().force;
-                    currentForce = forceGauge.force;
+                    
                     Debug.Log("grip value is " + currentForce.ToString());
                 }
+                currentForce = forceGauge.force;
             }
             
             _outputVelocity = CalculateVelocityProportionalToForce();

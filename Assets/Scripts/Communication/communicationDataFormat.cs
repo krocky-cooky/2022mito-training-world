@@ -120,6 +120,7 @@ namespace communication
             stateId = 0;
             superiority = (int)TrainingDeviceType.TrainingDevice;
             latestWinner = (int)TrainingDeviceType.Nothing;
+            deviceTorque = 0.0f;
             timeCount = 0.0f;
 
             positionX = 0.0f;
@@ -143,6 +144,8 @@ namespace communication
         public int latestWinner;
 
         public float timeCount;
+
+        public float deviceTorque;
 
         // デバイスに装着されたリモコンの位置・回転
         public float positionX;

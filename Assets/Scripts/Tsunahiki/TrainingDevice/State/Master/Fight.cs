@@ -101,6 +101,7 @@ namespace tsunahiki.trainingDevice.state
                 {
                     Debug.Log($"Torque {sendingTorque} has sent to Training Device");
                 }
+                stateController.coordinator.communicationData.deviceTorque = _device.torque;
                 
             }
 
